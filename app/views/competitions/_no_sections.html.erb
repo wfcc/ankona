@@ -1,0 +1,11 @@
+<div class="section" id="no_section">
+  <p><%= many_sections_link 'There are multiple sections' %></p>
+  <% new_or_existing = section.new_record? ? 'new' : 'existing' %>
+  <% prefix = "competition[#{new_or_existing}_section_attributes][]" %>
+  <% fields_for prefix, section do |section_form| -%>
+    <%= label :section,'Theme' %><br/>
+    <%= section_form.text_area :theme, :style => 'height:10em;width:60em' %>
+    <br/>
+  <% end -%>
+</div>
+

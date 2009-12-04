@@ -1,0 +1,28 @@
+<% if current_user %>
+
+<% if @collections.empty? %>
+  <h1>You have no collections.</h1>
+<% else -%>
+  <h1>Listing collections</h1>
+
+  <table>
+    <tr>
+    </tr>
+  <% @collections.each do |collection| %>
+    <tr>
+      <td><%=h collection.id %>
+      <td><%=h collection.name %>
+      <td><%=h collection.user.name if collection.user %>
+      <td><%=h collection.public ? 'x' : '' %>
+      <td><%=h collection.diagrams.count %></td>
+
+      <td><%= link_to 'Edit', edit_collection_path(collection) %></td>
+      <td><%= link_to 'Destroy', collection, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+<% end -%>
+<br />
+
+<%= link_to 'Create collection', new_collection_path %>
+<% end %>

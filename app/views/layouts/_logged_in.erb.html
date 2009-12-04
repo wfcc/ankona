@@ -1,0 +1,9 @@
+<div style="text-align:center;float:right;border:dashed grey 1px;font-size:larger;padding:1ex;background-color:#DED">
+  <% if current_user_session -%>
+    <%= current_user.name %> <br/>
+    <div style="font-size:x-small">[<%= link_to 'Logout', '/logout' %>]</div>
+  <% else -%>
+    <%= link_to 'Log in', '/login' %>, or<br/>
+    <%= link_to 'register', '/signup' %>
+  <% end -%>
+  </div>

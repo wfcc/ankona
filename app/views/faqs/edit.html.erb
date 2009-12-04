@@ -1,0 +1,16 @@
+<h1>Editing faq</h1>
+
+<% form_for(@faq) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :body %><br />
+    <%= f.text_area :body %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @faq %> |
+<%= link_to 'Back', faqs_path %>

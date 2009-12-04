@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  label: MyString
+  published: 2009-04-19
+  position: MyString
+  stipulation: MyString
+  twin: MyString
+  solution: MyText
+  tested: false
+
+two:
+  label: MyString
+  published: 2009-04-19
+  position: MyString
+  stipulation: MyString
+  twin: MyString
+  solution: MyText
+  tested: false

@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user: 
+  name: MyString
+  announce: MyText
+  open: false
+  deadline: 2009-10-27 21:36:05
+  complete: false
+  results: MyText
+
+two:
+  user: 
+  name: MyString
+  announce: MyText
+  open: false
+  deadline: 2009-10-27 21:36:05
+  complete: false
+  results: MyText

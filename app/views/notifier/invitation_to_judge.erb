@@ -1,0 +1,10 @@
+This is an automatically generated message.
+
+A user of dia-x.info site, <%= @user %>, has invited you to
+be a judge of the following competition:
+
+Competition: <%= @section.competition.name %>
+    Section: <%= @section.name %>
+
+To ACCEPT invitation, please follow this link: <%= invites_url + '/accept/' + @invite.code %>.
+To DECLINE invitation, please go instead to <%= invites_url + '/decline/' + @invite.code %>.

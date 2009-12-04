@@ -1,0 +1,30 @@
+<h1>Current competitions</h1>
+
+<table class="diagrams">
+
+  <% @competitions.each do |competition| %>
+    <tr class="clickable"
+      onclick="window.location.href = '<%= url_for competition %>'"><td>
+    <span style="font:normal x-large Arial;clear:right"><%=h competition.name %></span>
+    <% unless competition['open'] -%>
+      <span style="color:red">[closed] </span>
+    <% end -%><br/>
+    Submission deadline: <%=h competition.deadline.to_s :long %><br/>
+    Director: <%=h competition.user.name %>
+    <div style="white-space:pre;margin-left:5em;clear:left"><%=h competition.announce %></div>
+      <% @i=0; competition.sections.each do |section| %>
+          <h4 style="margin-left:10em"><%=h section.name %></h4>
+          <span style="margin-left:10em"><%=h section.theme %></span>
+      <% end %>
+      <%=h competition.complete %>
+      <%=h competition.results %>
+      <%= link_to 'Show', competition %>
+      <%= link_to 'Edit', edit_competition_path(competition) %>
+      <%= link_to 'Destroy', competition, :confirm => 'Are you sure?', :method => :delete %></td>
+    <br style="clear:left;margin:3em"/>
+    </td></tr>
+  <% end %>
+</table>
+<br />
+
+<%= link_to 'New competition', new_competition_path %>

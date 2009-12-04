@@ -1,0 +1,10 @@
+form text { color: yellow }
+
+div.pagination
+  { float: left
+  }
+
+div.pagestat
+  { float: right
+  }
+

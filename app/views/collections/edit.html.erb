@@ -1,0 +1,17 @@
+<h1>Editing collection</h1>
+
+<% form_for(@collection, :builder => LabelingFormBuilder) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.check_box :public %>
+  </p>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', collections_path %>

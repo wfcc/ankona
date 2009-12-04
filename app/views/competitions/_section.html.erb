@@ -1,0 +1,21 @@
+<div class="section">
+ <% new_or_existing = section.new_record? ? 'new' : 'existing' %>
+  <% prefix = "competition[#{new_or_existing}_section_attributes][]" %>
+  <% fields_for prefix, section do |section_form| -%>
+    <% @num = @num + 1 -%>
+    <p/>
+    <%= label :section, 'Section name' %><br/><%= section_form.text_field :name, :size => 30 %><br/>
+    <% unless section.users.empty? %>
+      <%= label :section,'Section judge(-s)' %>
+      <%= section.users.map{|u|u.name}.join ', ' %><br/>
+    <% end %>
+    <%#= label :section, 'Invite judge' %><%# text_field_tag (j = "judge_#{@num}") %>
+    <%#= submit_to_remote :a, 'Send invitation', :update => 'notice', :method => :post,
+      :url => { :controller => 'invites', :action => 'create' } %>
+      <br/>
+    <%= label :section, 'Section theme' %><br/><%= section_form.text_area :theme, :size => '37x3', :style => 'height:5em;width:50em' %>
+    <%= link_to_function "remove" , "$(this).up('.section').remove()" %>
+    <br/>
+  <% end -%>
+</div>
+

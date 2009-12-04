@@ -1,0 +1,10 @@
+<div class="author">
+  <% new_or_existing = author.new_record? ? 'new' : 'existing' %>
+  <% prefix = "diagram[#{new_or_existing}_author_attributes][]" %>
+  <% fields_for prefix, author do |author_form| -%>
+    <%= label :author,'Author' %><%= author_form.text_field :name %>
+    <%= link_to_function "remove" , "$(this).up('.author').remove()" %>
+    <br/>
+  <% end -%>
+</div>
+

@@ -1,0 +1,68 @@
+<h2 ><%=h @competition.name %></h2>
+<% if may_edit? @competition -%>
+  <%= link_to 'Edit', edit_competition_path(@competition) %><br/>
+  <h3>Invite judges:</h3>
+  <% form_for @competition, :url => {:action => 'judge'}  do |f| %>
+
+      <%= f.label 'E-mail of a person you want to invite to judge' %>
+      <%= text_field_tag :judge_email, :size => 30 %>
+      <%= f.hidden_field :id %>
+      <%= f.label 'Section' %>
+      <%= collection_select :competition, :section_ids, @competition.sections,
+        :id, :name %>
+      <%= f.submit 'Invite' %>
+
+  <% end %>
+<% end -%>
+
+<p>Director: <b><%=h @competition.user.name %></b></p>
+<p>
+  <b>Announce:</b>
+  <%=h @competition.announce %>
+</p>
+
+<p>
+  <b>Open:</b>
+  <%=h @competition.open %>
+</p>
+
+<p>
+  <b>Deadline:</b>
+  <%=h @competition.deadline %>
+</p>
+
+<p>
+  <b>Complete:</b>
+  <%=h @competition.complete %>
+</p>
+
+<p>
+  <b>Results:</b>
+  <%=h @competition.results %>
+</p>
+
+<% @competition.sections.each do |section| %>
+
+  <h2><%= section.name %></h2>
+  <%= section.id %>
+  <table>
+  <% section.diagrams.each do |diagram| %>
+    <tr>
+    <td><h3><%= diagram.id %></h3>
+        <%=  @competition.formal ? '' : diagram.authors.map{|x|x.name}.join(', ') %>
+    </td>
+    <td>
+      <div style="padding:0; position:relative">
+      <%= image_tag '/fen/' + diagram.position, :class => :board -%>
+      </div>
+    </td>
+    <td><%= diagram.stipulation %><br/>
+        <%= diagram.solution %>
+    </td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>
+
+<%= link_to 'Back', competitions_path %>
+

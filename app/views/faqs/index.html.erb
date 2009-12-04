@@ -1,0 +1,20 @@
+<h1>Listing faqs</h1>
+
+<table>
+  <tr>
+    <th>Body</th>
+  </tr>
+
+<% @faqs.each do |faq| %>
+  <tr>
+    <td><%=h faq.body %></td>
+    <td><%= link_to 'Show', faq %></td>
+    <td><%= link_to 'Edit', edit_faq_path(faq) %></td>
+    <td><%= link_to 'Destroy', faq, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New faq', new_faq_path %>

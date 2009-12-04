@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  competition: 
+  user: 
+  name: MyString
+  theme: MyText
+  pattern: MyString
+
+two:
+  competition: 
+  user: 
+  name: MyString
+  theme: MyText
+  pattern: MyString

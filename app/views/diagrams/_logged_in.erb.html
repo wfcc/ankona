@@ -1,0 +1,7 @@
+<div style="float:right;border:dashed grey 1px;font-size:smaller">
+  <% if current_user_session -%>
+  <%= "Logged in as #{current_user.login}. "%><%= link_to 'Logout', '/logout' %>
+  <% else -%>
+    <%= link_to "Log in", '/login' %>
+  <% end -%>
+  </div>

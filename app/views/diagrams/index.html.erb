@@ -1,0 +1,58 @@
+<h1>Listing diagrams</h1>
+
+<% form_tag :diagrams, :method => :get do %>
+
+  Author:
+  <%= text_field_tag 'search[authors]', '', :size => 10 %>
+  Stipulation:
+  <%= text_field_tag 'search[stipulation]', '', :size => 5 %>
+  Collection:
+  <%= collection_select :search, :collections,
+      (current_user ? Collection.user_id_eq(current_user.id) : Collection.public_eq(true)),
+      :id, :name,
+      {:include_blank => true, :selected => @scoll} %>
+  <%= submit_tag 'Apply filter' %>
+<% end -%>
+<% if current_user -%>
+  <p class="fine">“Public” collections will not be shown, only those created by you.</p>
+<% else -%>
+  <p class="fine">Only “public” collections will be shown.</p>
+<% end -%>
+
+<%= will_paginate @diagrams %>
+<div class="pagestat"><%= page_entries_info @diagrams %></div>
+<br style="clear:both"/>
+<table class="diagrams">
+
+<% @diagrams.each do |diagram| %>
+  <tr class="clickable"
+    onclick="window.location.href = '<%= url_for diagram %>'">
+    <td style="vertical-align:top;color:#46D"><%=h diagram.id %></td>
+    <td><h3><%=h diagram.authors.collect(&:name).to_sentence %></h3>
+        <br style="height:3em"/>
+        <%=h [ diagram.source, diagram.label ].join ' ' %><br/>
+        <%=h diagram.published %>
+     </td>
+    <td width="202px" height="202px">
+      <div style="padding:0; position:relative">
+      <%= image_tag '/fen/' + diagram.position, :class => :noBorder if diagram.position -%>
+      </div>
+    </td>
+    <td><%=h diagram.stipulation %><br/>
+        <%=h diagram.twin %>
+    </td>
+    <td style="vertical-align:top"><pre class="solution"><%=h diagram.solution %></pre><br/>
+      <p style="vertical-aligh:bottom"><%=  diagram.tested ? 'C+' : '' %></p>
+    </td>
+    <td style="color:#281"><%=h diagram.collections.collect(&:name).join ', ' %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= will_paginate @diagrams %>
+<div class="pagestat"><%= page_entries_info @diagrams %></div>
+<br style="clear:both"/>
+<%= link_to 'New diagram', new_diagram_path %>

@@ -1,0 +1,49 @@
+<%= link_to 'Back', diagrams_path %>
+<% if may_edit? @diagram -%>
+  | <%= link_to 'Edit', edit_diagram_path(@diagram) %>
+  | <%= link_to 'Destroy', @diagram, :confirm => 'Are you sure?', :method => :delete %>
+  <br/><br/>You may submit this diagram to an open competition:
+  <% form_for @diagram, :url => {:action => 'section'} do |f| %>
+
+      <%= collection_select :diagram, :section_ids,
+        Section.all,
+        :id, :name,
+        { :selected => nil, :include_blank => true },
+        { :name => 'diagram[section_ids][]', :style => 'width:24em' }
+      %>
+      <%= f.submit 'Submit to competition' %>
+      <p class="fine">You will not be able to edit this diagram after submission.</p>
+
+  <% end %>
+    <% unless @diagram.sections.empty? -%>
+      <b>Submitted to competitions:</b>
+      <%=h @diagram.sections.map(&:name).join ', ' %>
+    <% end -%>
+<% end -%>
+
+
+<div style="text-align:center">
+  <p>
+    <%=h @diagram.authors.collect(&:name).join ', ' %>
+  </p>
+  <p> <%=h @diagram.label %> </p>
+  <p> <%=h @diagram.source %> </p>
+  <p> <%=h @diagram.published %> </p>
+      <div  id="divBlank" style="padding:0; position:relative">
+        <%= image_tag '/fen/' + @diagram.position  , :id => 'blank', :class => :noBorder -%>
+      </div>
+      <div id="pcount"></div><br/>
+  <p><%=h @diagram.stipulation %></p>
+  <p><%=h @diagram.twin %></p>
+  <p>
+    <pre class="solution">
+      <%=h @diagram.solution %>
+    </pre>
+  </p>
+  <p>
+    <%=h @diagram.tested ? 'C+' : 'C-' %>
+  </p>
+</div>
+<p style="color:#281"><%=h @diagram.collections.collect(&:name).join ', ' %></p>
+<span style="font-size:smaller">Entered by: <%=h @diagram.user ? @diagram.user.name : '' %>
+</span>
