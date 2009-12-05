@@ -47,7 +47,7 @@ class InvitesController < ApplicationController
       flash[:error] = 'This invitation code is not found.'
     when (params[:accepted] and not current_user)
       flash[:error] = 'You need to be registered and logged in.'
-      redirect_to url_for :controller => :user_sessions, :action => :new
+      redirect_to url_for(:controller => :user_sessions, :action => :new)
     else
       sect = Section.find @invite.item
       @name =  sect.competition.name
