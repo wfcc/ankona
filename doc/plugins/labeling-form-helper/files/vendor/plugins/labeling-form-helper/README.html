@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>vendor/plugins/labeling-form-helper/README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Aug 16 15:59:47 +0300 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>Labeling Form Helper</h1>
+<p>
+Adds auto-labeling with some custom options to Rails&#8217; form helpers by
+extending ActionView::Helpers::FormBuilder and <a
+href="../../../../classes/ActionView/Helpers/FormTagHelper.html">ActionView::Helpers::FormTagHelper</a>.
+</p>
+<p>
+In these examples, :labeling_form_builder is an instance of <a
+href="../../../../classes/LabelingFormBuilder.html">LabelingFormBuilder</a>
+such as you would get using the :form_for helper&#8216;s :builder option or
+by setting it as the application default in your environment or other
+configuration.
+</p>
+<pre>
+  &gt;&gt; labeling_form_builder.text_field :attr_name
+  =&gt; &lt;label for=&quot;thing_attr_name&quot;&gt;Attr name&lt;/label&gt;&lt;input ... /&gt;
+
+  &gt;&gt; labeling_form_builder.text_field :attr_name, :label =&gt; 'yeah, foo'
+  =&gt; &lt;label for=&quot;thing_attr_name&quot;&gt;yeah, foo&lt;/label&gt;&lt;input ... /&gt;
+
+  &gt;&gt; labeling_form_builder.text_field :attr_name, :label =&gt; false
+  =&gt; &lt;input ... /&gt;
+</pre>
+<p>
+To ease integration of the _tag helpers, the labeling behavior is off by
+default unless you at least specify :label =&gt; true.
+</p>
+<pre>
+  &gt;&gt; text_field_tag :attr_name
+  =&gt; &lt;input ... /&gt;
+
+  &gt;&gt; text_field_tag :attr_name, :label =&gt; true
+  =&gt; &lt;label for=&quot;attr_name&quot;&gt;Attr name&lt;/label&gt;&lt;input ... /&gt;
+</pre>
+<p>
+Wrapping the input can be useful for checks and radios, as well as a style
+hook of sorts in some situations. The interface shown is identical for the
+form builder.
+</p>
+<pre>
+  &gt;&gt; check_box_tag :attr_name, :label =&gt; { :wrap =&gt; true }
+  =&gt; &lt;label for=&quot;attr_name&quot;&gt;Attr name &lt;input ... /&gt;&lt;/label&gt;
+
+  &gt;&gt; check_box_tag :attr_name, :label =&gt; { :after =&gt; true }
+  =&gt; &lt;input ... /&gt;&lt;label for=&quot;attr_name&quot;&gt;Attr name&lt;/label&gt;
+
+  &gt;&gt; radio_button_tag :attr_name, :label =&gt; { :wrap =&gt; true, :after =&gt; true }
+  =&gt; &lt;label for=&quot;attr_name&quot;&gt;&lt;input ... /&gt; Attr name&lt;/label&gt;
+
+  &gt;&gt; radio_button_tag :attr_name, :label =&gt; { :wrap =&gt; :after }
+  =&gt; &lt;label for=&quot;attr_name&quot;&gt;&lt;input ... /&gt; Attr name&lt;/label&gt;
+</pre>
+<p>
+Valid values for the :label option are:
+</p>
+<pre>
+  * true   - This will render with the default auto-labeling behavior. This is only useful for the _tag helpers which act as normal unless the :label option is set.
+  * false  - This will render the normal behavior i.e. without a label. This is only useful for the LabelingFormBuilder which adds the behavior from this plugin by default.
+  * String - Customize the label text, normally the humanized version of the attribute name for the field.
+  * Hash   - Customize text with :text and the order of the label + input pair and/or whether or not the label wraps the input using :wrap and/or :after. Any other HTML tag attribute options will be applied to the label tag.
+</pre>
+<p>
+You can easily set the <a
+href="../../../../classes/LabelingFormBuilder.html">LabelingFormBuilder</a>
+as the application default using the following expression:
+</p>
+<pre>
+  &gt;&gt; ActionView::Base.default_form_builder = LabelingFormBuilder
+</pre>
+<p>
+The LabelingFormTagHelper is enabled by default, but its behavior is not
+applied to the normal _tag helpers unless you use the :label option.
+</p>
+<p>
+Please label responsibly.
+</p>
+<p>
+CONTRIBUTORS
+</p>
+<pre>
+  * Seth Thomas Rasmussen : http://greatseth.com : sethrasmussen@gmail.com
+  * Jeremy Kemper : http://bitsweat.net
+</pre>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
