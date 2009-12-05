@@ -1,6 +1,5 @@
-rails --version '>= 2.3.5'
 searchlogic --version '>= 2.3.9'
 validatable
 gd2
 random_data
-labeling-form-helper
+labeling_form_helper
