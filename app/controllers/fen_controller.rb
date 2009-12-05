@@ -1,6 +1,5 @@
 class FenController < ApplicationController
 
-   require 'gd2'
    include GD2
 
 FIGDIR = 'public/images/fig/'

@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
         store_location
         flash[:error] = "You must be logged in to access this."
         #redirect_to new_user_session_url
-        redirect_to url_for :controller => :user_sessions, :action => :new
+        redirect_to url_for, :controller => :user_sessions, :action => :new
         return false
       end
     end
