@@ -1,6 +1,6 @@
 class FenController < ApplicationController
 
-   include GD2
+#   include GD2
 
 FIGDIR = 'public/images/fig/'
 SUFFIX = '.gif'
