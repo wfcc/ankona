@@ -2,4 +2,3 @@ searchlogic --version '>= 2.3.9'
 validatable
 gd2
 random_data
-labeling_form_helper
