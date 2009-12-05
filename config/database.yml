@@ -35,7 +35,7 @@ production:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: shakodat_production
+  database: shakodat_development
   pool: 5
   username: root
   password: 
