@@ -10,19 +10,17 @@
      <%= f.text_field :source, :size => 40 %>
   </p>
   <p><%= f.label 'Number' %><br/>
-    <%= f.text_field :label, :size => 6 %></p>
-    <p class="fine">Label, diagram ID, or like</p>
+    <%= f.text_field :label, :size => 6 %>
+    <span class="fine"> Label, diagram ID, or like</span></p>
   <p> <%= f.label 'Published' %><br/>
     <%= f.date_select :published,
       {:start_year => 1800, :include_blank => true} %>
   </p>
   <p><%= f.label 'FEN' %><br/>
      <%= f.text_field :position, :label => 'FEN' %></p>
-     <p class="fine">editable</p>
   </p><%= f.label 'Position (w/b)' %><br/>
     <%= f.text_field :white, :size => 40 %><br/>
     <%= f.text_field :black, :size => 40 %></p>
-    <p class="fine">editable<p>
   <p>
     <div  id="divBlank" style="padding:0; width:202px;height:202px;position:relative">
       <%= image_tag '/fen', :id => 'blank', :style=>'position:absolute;z-index:-1' %>
