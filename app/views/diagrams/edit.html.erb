@@ -8,14 +8,14 @@
   <p><%= f.label 'Source' %><br/>
      <%= f.text_field :source, :size => 40 %>
   </p>
-  <table><tr>
+  <table class="zero"><tr>
     <td><%= f.label 'Number' %></td>
     <td><%= f.label 'Published' %></td></tr><tr>
-    <td><%= f.text_field :label, :size => 6 %></td>
+    <td><%= f.text_field :label, :size => 6 %><br/>
+      <span class="fine">Diagram ID, label</span></td>
     <td><%= f.date_select :published,
       {:start_year => 1800, :include_blank => true} %></td>
   </tr></table>
-    <span class="fine"> Label, diagram ID, or like</span></p>
 
   </p>
   <p><%= f.label 'FEN' %><br/>
@@ -44,7 +44,7 @@
   </div>
   <div class="span-12 last" id="second">
 
-  Entered by: <%= @diagram.user ? @diagram.user.login : '' %>
+  Entered by: <%= @diagram.user ? @diagram.user.login : '' %><br/>
   <%= f.label 'Collections' %><br/>
   <%= collection_select :diagram, :collection_ids,
     Collection.all(:conditions => {:public => true }) |
