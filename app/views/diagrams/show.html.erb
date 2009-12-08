@@ -14,22 +14,23 @@
       <%= f.submit 'Submit to competition' %>
       <p class="fine">You will not be able to edit this diagram after submission.</p>
 
+
+    <%= f.label 'Collections' %><br/>
+    <%= collection_select :diagram, :collection_ids,
+      Collection.all(:conditions => {:public => true }) |
+      [] |
+      (current_user ? current_user.collections : []),
+      :id, :name,
+      { :selected => @diagram.collection_ids },
+      { :multiple => true, :name => 'diagram[collection_ids][]', :style => 'width:24em' }
+  -%>
+     <p class="fine">multiple select: Ctrl-click / ⌘-click to select more</p>
   <% end %>
-    <% unless @diagram.sections.empty? -%>
+<% end -%>
+
+<% unless @diagram.sections.empty? -%>
       <b>Submitted to competitions:</b>
       <%=h @diagram.sections.map(&:name).join ', ' %>
-    <% end -%>
-
-  <%= f.label 'Collections' %><br/>
-  <%= collection_select :diagram, :collection_ids,
-    Collection.all(:conditions => {:public => true }) |
-    [] |
-    (current_user ? current_user.collections : []),
-    :id, :name,
-		{ :selected => @diagram.collection_ids },
-		{ :multiple => true, :name => 'diagram[collection_ids][]', :style => 'width:24em' }
--%>
-   <p class="fine">multiple select: Ctrl-click / ⌘-click to select more</p>
 <% end -%>
 
 <div style="text-align:center">
