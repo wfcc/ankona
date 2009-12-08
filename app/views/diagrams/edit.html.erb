@@ -4,7 +4,6 @@
 <% form_for(@diagram) do |f| %>
   <%= f.error_messages %>
 
-  Entered by: <%= @diagram.user ? @diagram.user.login : '' %>
   <div class="span-12" id="first">
   <p><%= f.label 'Source' %><br/>
      <%= f.text_field :source, :size => 40 %>
@@ -42,7 +41,8 @@
   </div>
   <div class="span-12 last" id="second">
 
-  <%= label :diagram,  'Collections', nil %><br/>
+  Entered by: <%= @diagram.user ? @diagram.user.login : '' %>
+  <%= f.label 'Collections' %><br/>
   <%= collection_select :diagram, :collection_ids,
     Collection.all(:conditions => {:public => true }) |
     [] |
