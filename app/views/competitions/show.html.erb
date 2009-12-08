@@ -1,19 +1,8 @@
 <h2 ><%=h @competition.name %></h2>
 <% if may_edit? @competition -%>
   <%= link_to 'Edit', edit_competition_path(@competition) %><br/>
-  <h3>Invite judges:</h3>
-  <% form_for @competition, :url => {:action => 'judge'}  do |f| %>
-
-      <%= f.label 'E-mail of a person you want to invite to judge' %>
-      <%= text_field_tag :judge_email, :size => 30 %>
-      <%= f.hidden_field :id %>
-      <%= f.label 'Section' %>
-      <%= collection_select :competition, :section_ids, @competition.sections,
-        :id, :name %>
-      <%= f.submit 'Invite' %>
-
-  <% end %>
 <% end -%>
+
 
 <p>Director: <b><%=h @competition.user.name %></b></p>
 <p>
@@ -44,7 +33,26 @@
 <% @competition.sections.each do |section| %>
 
   <h2><%= section.name %></h2>
-  <%= section.id %>
+  <%#= section.id %>
+  <p>Judges confirmed: <%= section.users.empty? ? 'none' : section.users.map(&:name) %></p>
+  <% if may_edit? @competition -%>
+    <% form_for @competition, :url => {:action => 'judge'}  do |f| %>
+
+        <%= f.label 'Send invitation to judge to e-mail' %>
+        <%= text_field_tag :judge_email, '', :size => 30 %>
+        <%= f.hidden_field :id %>
+        <% if @competition.sections.count > 1 %>
+          <%= f.label 'Section' %>
+          <%= collection_select :competition, :section_ids, @competition.sections,
+            :id, :name %>
+        <% else -%>
+          <%= collection_select :competition, :section_ids, @competition.sections,
+            :id, :name %>
+        <% end -%>
+        <%= f.submit 'Invite' %>
+
+    <% end %>
+  <% end -%>
   <table>
   <% section.diagrams.each do |diagram| %>
     <tr>

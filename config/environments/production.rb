@@ -2,7 +2,7 @@
 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
-config.cache_classes = true
+config.cache_classes = false
 
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = false
@@ -26,5 +26,6 @@ config.action_view.cache_template_loading            = false
 
 # Enable threaded mode
 # config.threadsafe!
+
 require 'validatable'
 require 'gd2'

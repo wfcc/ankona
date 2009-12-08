@@ -56,8 +56,11 @@ Rails::Initializer.run do |config|
 
   config.gem "RedCloth", :lib => "redcloth"
 
+
 end
 
 require "will_paginate"
 require 'random_data'
-#require 'search_logic'
+require 'gd2'
+#require 'validatable'
+

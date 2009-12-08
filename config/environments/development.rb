@@ -21,5 +21,3 @@ ActionMailer::Base.smtp_settings = {
 ActionMailer::Base.delivery_method = :sendmail
 ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(:post => '%d %b %Y, %H:%M')
 
-#require 'validatable'
-
