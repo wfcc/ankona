@@ -183,7 +183,7 @@ div#solution
    }
 .stderr { color: red }
 .stdout {color: blue }
-p.fine
+.fine
   { font-size: smaller
   ; color: #BBB
   }
