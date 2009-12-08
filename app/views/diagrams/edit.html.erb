@@ -6,7 +6,7 @@
 
   Entered by: <%= @diagram.user ? @diagram.user.login : '' %>
   <div class="span-12" id="first">
-  <p><%= label 'Source' %>
+  <p><%= f.label 'Source' %>
      <%= f.text_field :source, :size => 40 %>
   </p>
   <p>
