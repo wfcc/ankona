@@ -19,8 +19,18 @@
       <b>Submitted to competitions:</b>
       <%=h @diagram.sections.map(&:name).join ', ' %>
     <% end -%>
-<% end -%>
 
+  <%= f.label 'Collections' %><br/>
+  <%= collection_select :diagram, :collection_ids,
+    Collection.all(:conditions => {:public => true }) |
+    [] |
+    (current_user ? current_user.collections : []),
+    :id, :name,
+		{ :selected => @diagram.collection_ids },
+		{ :multiple => true, :name => 'diagram[collection_ids][]', :style => 'width:24em' }
+-%>
+   <p class="fine">multiple select: Ctrl-click / ⌘-click to select more</p>
+<% end -%>
 
 <div style="text-align:center">
   <p>
