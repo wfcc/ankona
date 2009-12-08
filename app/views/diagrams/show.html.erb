@@ -4,7 +4,6 @@
   | <%= link_to 'Destroy', @diagram, :confirm => 'Are you sure?', :method => :delete %>
   <br/><br/>You may submit this diagram to an open competition:
   <% form_for @diagram, :url => {:action => 'section'} do |f| %>
-
       <%= collection_select :diagram, :section_ids,
         Section.all,
         :id, :name,
@@ -13,8 +12,9 @@
       %>
       <%= f.submit 'Submit to competition' %>
       <p class="fine">You will not be able to edit this diagram after submission.</p>
+  <% end -%>
 
-
+  <% form_for @diagram do |f| %>
     <%= f.label 'Collections' %><br/>
     <%= collection_select :diagram, :collection_ids,
       Collection.all(:conditions => {:public => true }) |
@@ -25,8 +25,8 @@
       { :multiple => true, :name => 'diagram[collection_ids][]', :style => 'width:24em' }
   -%>
      <p class="fine">multiple select: Ctrl-click / ⌘-click to select more</p>
+      <%= f.submit 'Save changes to collections' %>
   <% end %>
-<% end -%>
 
 <% unless @diagram.sections.empty? -%>
       <b>Submitted to competitions:</b>
