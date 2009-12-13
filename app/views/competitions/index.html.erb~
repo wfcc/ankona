@@ -7,7 +7,7 @@
       onclick="window.location.href = '<%= url_for competition %>'"><td>
     <span style="font:normal x-large Arial;clear:right"><%=h competition.name %></span><br>
 <% logger.info competition.status.inspect %>
-    Status: <%= Status.find(:first, :conditions => {:table => 'competitions', :value => (competition.status or 0)}).h_display %>
+    Status: <%= Status.find(:first, :conditions => {:table => 'competitions', :value => (competition.status or 0)}).display %>
 
     <br>Submission deadline: <%=h competition.deadline.to_s :long %><br/>
     Director: <%=h competition.user.name %>

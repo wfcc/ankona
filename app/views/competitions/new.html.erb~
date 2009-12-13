@@ -10,6 +10,7 @@
      <%= f.collection_select :status, Status.search.table_eq('competitions').all,
         :value, :name %>
 
+
   <p><%= f.label 'Name of this competition' %><br />
      <%= f.text_field :name, :size => 80 %></p>
 

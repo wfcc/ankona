@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 18) do
+ActiveRecord::Schema.define(:version => 22) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 18) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "formal"
+    t.integer  "status"
   end
 
   create_table "diagrams", :force => true do |t|
@@ -130,6 +131,13 @@ ActiveRecord::Schema.define(:version => 18) do
   create_table "sections_users", :id => false, :force => true do |t|
     t.integer "section_id"
     t.integer "user_id"
+  end
+
+  create_table "statuses", :force => true do |t|
+    t.string  "table"
+    t.string  "name"
+    t.integer "value"
+    t.string  "h_display"
   end
 
   create_table "users", :force => true do |t|

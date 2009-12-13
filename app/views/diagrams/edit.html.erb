@@ -11,7 +11,7 @@
     <%= f.text_field :white, :size => 40 %><br/>
     <%= f.text_field :black, :size => 40 %></p>
   <p>
-    <div  id="divBlank" style="padding:0; width:202px;height:202px;position:relative">
+    <div id="divBlank" style="padding:0; width:202px;height:202px;position:relative">
       <%= image_tag '/fen', :id => 'blank', :style=>'position:absolute;z-index:-1' %>
     </div>
     <div id="pcount"></div><br/>
@@ -25,7 +25,7 @@
     <%= f.label 'Twin' %>
     <%= f.text_field :twin, :size => 20 %>
   </p>
-  <p>
+  <p><%= f.label 'C+' %>
     <%= f.check_box :tested, :label => 'C+' %>
   </p>
   </div>
@@ -70,8 +70,7 @@
 
 <%#      :url => 'http://util.dia-x.info/popeye/solve' %>
      <div id="solution">Popeye solution will be here</div>
-
-Entered by: <%= @diagram.user ? @diagram.user.name : '' %><br/>
+     <p class="fine">Entered by <%= @diagram.user ? @diagram.user.name : '' %><p/>
 
 <% end %>
 
