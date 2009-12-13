@@ -32,18 +32,28 @@ function initVars(){
 } //*************************************
 function fenToInternal(){
 
-  ; clearBoard()
   ; var i = 0
+  ; clearBoard()
   ; var fen = $('diagram_position').value
-  ; fen = fen.replace(/\d+/g, function(x){return '1'.times(Number(x))})
-  ; fen = fen.replace(/[^kqrbspn\/1]/ig, '1') // strip wrong FEN characters
-  ; fen = fen.replace(/n/, 's') 
-  ; fen = fen.replace(/N/, 'S') // no Nightriders in FEN, only Knights
-  ; var a1 = fen.split('/')
-  ; a1.each (function(row)
-      { row += '1'.times(8 - row.length)
-      ; aBoard[i++] = row.toArray()
-      })
+  ; fen = fen.replace(/n/g, 's')
+  ; fen = fen.replace(/N/g, 'S') // no Nightriders in FEN, only Knights
+
+  ; if (fen.match('/'))
+    { fen = fen.replace(/\d+/g, function(x){return '1'.times(Number(x))})
+    ; fen = fen.replace(/[^kqrbspn\/1]/ig, '1') // strip wrong FEN characters
+    ;  var a1 = fen.split('/')
+    ; a1.each (function(row)
+        { row += '1'.times(8 - row.length)
+        ; aBoard[i++] = row.toArray()
+        })
+    } else
+    { fen = fen.replace(/\d/g, function(x){return '1'.times(Number(x))})
+    ; fen = fen.replace(/[^kqrbspn\/1]/ig, '1') // strip wrong FEN characters
+    ; fen += '1'.times(64 - fen.length)
+    ; for (var i=0; i<8; i++)
+      { aBoard[i] = fen.slice(i*8,i*8+8).toArray()
+      }
+    }
 
 } //*************************************
 function notationToInternal(){
@@ -91,7 +101,7 @@ function internalToDiagram(){
 } //*************************************
 function internalToFen(){
 
-  ; $('diagram_position').value = 
+  ; $('diagram_position').value =
     aBoard.join('/').replace(/,/g,'').replace(/\d+/g,function(x){return x.length})
 
 } //*************************************
@@ -103,7 +113,7 @@ function internalToNotation(){
       { var piece = aBoard[i][j]
       ; if(piece=='1') return
       ; (piece < 'a' ? aWhite : aBlack).push(
-          (piece.match(/p/i) ? piece.toLowerCase() : piece.toUpperCase()) + 
+          (piece.match(/p/i) ? piece.toLowerCase() : piece.toUpperCase()) +
           String.fromCharCode(j+97) + (8-i).toString())
       })
     })
@@ -282,9 +292,5 @@ function moveBoard(d) { // move position left/up/down/up
   ; internalToFen()
   ; return false
 
-//  ; a1.each (function(row)
-//      { row += '1'.times(8 - row.length)
-//      ; aBoard[i++] = row.toArray()
-//      })
 } //*************************************
 
