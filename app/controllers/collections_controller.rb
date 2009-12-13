@@ -52,7 +52,7 @@ class CollectionsController < ApplicationController
 
     respond_to do |format|
       unless current_user_session
-        flash[:error] = 'You could do that if you were logged in.  Alas, you weren\'t.'
+        flash[:error] = 'You could do that if you were logged in. But you aren\'t, so you can\'t.'
         redirect_to login_path
       else
         @collection.user = current_user
@@ -91,7 +91,7 @@ class CollectionsController < ApplicationController
     @collection = Collection.find(params[:id])
     if may_edit? @collection
       @collection.destroy
-
+      flash[:notice] = "Collection deleted."
       respond_to do |format|
         format.html { redirect_to(collections_url) }
         format.xml  { head :ok }

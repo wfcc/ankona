@@ -60,4 +60,4 @@ SUFFIX = '.gif'
          board.merge_from @fig[c], i+1, j+1, 0,0,25,25,1
       end
    end
-  end
+end

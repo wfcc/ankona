@@ -13,16 +13,17 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Original</th>
   </tr>
 
 <% @authors.each do |author| %>
   <tr>
     <td><%=h author.name %></td>
     <td><%=h author.original %></td>
-    <td><%= link_to 'Show', author %></td>
-    <td><%= link_to 'Edit', edit_author_path(author) %></td>
-    <td><%= link_to '☒', author, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if is_admin? %>
+      <td><%= link_to 'Show', author %></td>
+      <td><%= link_to 'Edit', edit_author_path(author) %></td>
+      <td><%= link_to '☒', author, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end -%>
   </tr>
 <% end %>
 </table>

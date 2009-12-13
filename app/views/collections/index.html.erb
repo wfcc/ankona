@@ -13,11 +13,11 @@
       <td><%=h collection.id %>
       <td><%=h collection.name %>
       <td><%=h collection.user.name if collection.user %>
-      <td><%=h collection.public ? 'x' : '' %>
+      <td><%=h collection.public ? 'public' : '' %>
       <td><%=h collection.diagrams.count %></td>
 
       <td><%= link_to 'Edit', edit_collection_path(collection) %></td>
-      <td><%= link_to 'Destroy', collection, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to '☒', collection, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
   </table>

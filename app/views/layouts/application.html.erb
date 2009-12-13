@@ -17,7 +17,7 @@
 
   <%= render :partial => 'layouts/logged_in' %>
 
-  <ul id="menu">
+  <ul class="menu">
     <li><%= link_to 'Competitions', :controller => 'competitions' %>
     <li><%= link_to 'Diagrams', :controller => 'diagrams' %>
     <li><%= link_to 'Authors', :controller => 'authors' %>
@@ -26,12 +26,11 @@
     <li>
     <li><%= link_to 'Feedback', :controller => 'posts' %>
   </ul>
-  <p style="clear:both;height:1ex"/>
 
   <% if    flash[:notice] -%><p class="notice"><%= flash[:notice] %></p>
   <% elsif flash[:error] -%> <p class="error"><%= flash[:error] %></p>
   <% else %>                 <p class="nomessage">&nbsp;</p><% end -%>
-<div class="container" style="clear:both;padding-top:2ex">
+<div class="container" style="clear:both;padding-top:2px">
 	<%= yield  %>
 </div>
 <div style="text-align:right;padding-top:1em">

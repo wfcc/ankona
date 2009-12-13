@@ -1,17 +1,17 @@
 <h1>Editing collection</h1>
 
-<% form_for(@collection, :builder => LabelingFormBuilder) do |f| %>
+<%# form_for(@collection, :builder => LabelingFormBuilder) do |f| %>
+<% form_for(@collection) do |f| %>
   <%= f.error_messages %>
-  <p>
+  <p><%= f.label 'Name' %>
     <%= f.text_field :name %>
   </p>
-  <p>
-    <%= f.check_box :public %>
+  <p><%= f.label 'Public' %>
+    <%= f.check_box :public %><br/>
+    <span class="fine">Public collections are visible to everybody.</span>
   </p>
 
   <p>
     <%= f.submit 'Update' %>
   </p>
 <% end %>
-
-<%= link_to 'Back', collections_path %>

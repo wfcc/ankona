@@ -121,25 +121,22 @@ require 'open3'
   end
   #--------------------------------------------------
   def solve
-      Open3.popen3  '/usr/local/bin/py' do |input, output, error|
-         input.puts <<-EOD
+       stdin = <<-EOD
             BeginProblem
             Option NoBoard #{params[:pyopts]}
             Stipulation #{params[:diagram][:stipulation]}
             Pieces
              White #{ nrm(params[:diagram][:white])}
              Black #{ nrm(params[:diagram][:black])}
-            #{params[:twin]}
+            #{params[:diagram][:twin]}
             EndProblem
             EOD
-         input.close_write
 
-         @outres = output.gets nil
-         @outres.gsub! /^.*\)$/, ''
-         @outres.strip!
-         @errres = error.gets(nil)
-      end
-      render :layout => false
+      res = Net::HTTP.post_form(URI.parse('http://util.dia-x.info/popeye/solve'),
+           {:pyinput => stdin})
+
+      logger.info "<<< #{res.body} >>>"
+      render :text => res.body
   end
 ###################################################
   private
