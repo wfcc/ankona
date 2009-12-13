@@ -2,8 +2,9 @@
 	<%= form.label :login, 'Your email, it will be used as login' %><br />
 	<%= form.text_field :login %>
 </p><p>
-	<%= form.label :name, 'Your name.  Real name, please' %><br />
-	<%= form.text_field :name,  :size => 40 %>
+	<%= form.label :name, 'Your name' %><br />
+	<%= form.text_field :name,  :size => 40 %><br />
+  <span style="fine">Real name, please
 </p><p>
 	<%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
 	<%= form.password_field :password, :size => 10 %>
