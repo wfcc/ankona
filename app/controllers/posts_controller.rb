@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   before_filter :require_admin, :only => [:destroy, :edit, :show]
-  before_filter :require_user
+#  before_filter :require_user
 
   # GET /posts
   # GET /posts.xml
