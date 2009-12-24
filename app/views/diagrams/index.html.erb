@@ -31,7 +31,7 @@
     <td style="vertical-align:top;color:#46D"><%=h diagram.id %></td>
     <td><h3><%=h diagram.authors.collect(&:name).to_sentence %></h3>
         <br style="height:3em"/>
-        <%=h [ diagram.source, diagram.label ].join ' ' %><br/>
+        <%=h [ diagram.source, diagram.label ].join(' ') %><br/>
         <%=h diagram.published %>
      </td>
     <td width="202px" height="202px">
@@ -45,7 +45,7 @@
     <td style="vertical-align:top"><pre class="solution"><%=h diagram.solution %></pre><br/>
       <p style="vertical-aligh:bottom"><%=  diagram.tested ? 'C+' : '' %></p>
     </td>
-    <td style="color:#281"><%=h diagram.collections.collect(&:name).join ', ' %>
+    <td style="color:#281"><%=h diagram.collections.collect(&:name).join(', ') %>
     </td>
   </tr>
 <% end %>

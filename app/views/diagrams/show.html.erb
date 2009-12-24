@@ -8,7 +8,7 @@
 <div class="span-7 append-1">
   <div style="text-align:center">
     <p>
-      <%=h @diagram.authors.collect(&:name).join ', ' %>
+      <%=h @diagram.authors.collect(&:name).join(', ') %>
     </p>
     <p> <%=h @diagram.label %> <br/>
         <%=h @diagram.source %> <br/>
@@ -19,7 +19,7 @@
           <%= image_tag '/fen/' + @diagram.position  , :id => 'blank', :class => :noBorder -%>
         </div>
         <div style="text-align:right;padding-right:3em;font-size:x-small">
-          <%= @diagram.position.scan(/[A-Z]/).count -%>+<%= @diagram.position.scan(/[a-z]/).count -%>
+          <%= @diagram.position.scan(/[A-Z]/).size -%>+<%= @diagram.position.scan(/[a-z]/).size -%>
         </div>
     <p>
       <%=h @diagram.stipulation %><br/>
@@ -49,7 +49,7 @@
 
     <p class="greeny-highlight"><% unless @diagram.sections.empty? -%>
           Submitted to competitions:<br/>
-          <b><%=h @diagram.sections.map(&:name).join ', ' %></b>
+          <b><%=h @diagram.sections.map(&:name).join(', ') %></b>
     <% end -%></p>
 
     <% form_for @diagram do |f| %>
@@ -68,6 +68,6 @@
   <% end -%>
 </div>
 <p style="clear:both"/>
-<p style="color:#281"><%=h @diagram.collections.collect(&:name).join ', ' %></p>
-<span style="font-size:smaller">Entered by: <%=h @diagram.user ? @diagram.user.name : '' %>
+<p style="color:#281"><%=h @diagram.collections.collect(&:name).join(', ') %></p>
+<span style="font-size:smaller">Entered by: <%=h @diagram.user ? @diagram.user.name : 'system' %>
 </span>
