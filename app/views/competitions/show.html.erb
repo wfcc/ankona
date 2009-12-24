@@ -1,8 +1,12 @@
-<h2 ><%=h @competition.name %></h2>
 <% if may_edit? @competition -%>
-  <%= link_to 'Edit', edit_competition_path(@competition) %><br/>
+  <ul class="menu">
+  <li><%= link_to 'Back', competitions_path %>
+  <li><%= link_to 'Edit', edit_competition_path(@competition) %>
+  <li><%= link_to 'Destroy', @competition, :confirm => 'Are you sure?', :method => :delete %>
+  </ul>
 <% end -%>
-
+<p style="clear:both">&nbsp;</p>
+<h2 ><%=h @competition.name %></h2>
 <p><b>Status:</b>
   <%= Status.find(:first, :conditions =>
     {:table => 'competitions', :value => (@competition.status or 0)}).h_display %></p>

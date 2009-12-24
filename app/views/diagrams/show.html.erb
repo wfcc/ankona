@@ -38,8 +38,8 @@
     <p>You may submit this diagram to an open competition:
     <% form_for @diagram, :url => {:action => 'section'} do |f| %>
         <%= collection_select :diagram, :section_ids,
-          Section.all,
-          :id, :name,
+          Section.search.competition_id_gt(0).all,
+          :id, :name_cs,
           { :selected => nil, :include_blank => true },
           { :name => 'diagram[section_ids][]', :style => 'width:24em' }
         %>
@@ -47,10 +47,10 @@
         <p class="fine">You will not be able to edit this diagram after submission.</p>
     <% end -%></p>
 
-    <p class="greeny-highlight"><% unless @diagram.sections.empty? -%>
-          Submitted to competitions:<br/>
-          <b><%=h @diagram.sections.map(&:name).join(', ') %></b>
-    <% end -%></p>
+    <% unless @diagram.sections.empty? -%>
+          <p class="greeny-highlight">Submitted to competitions:<br/>
+          <b><%=h @diagram.sections.map(&:name).join(', ') %></b></p>
+    <% end -%>
 
     <% form_for @diagram do |f| %>
       <%= f.label 'Collections' %><br/>

@@ -1,6 +1,6 @@
 class Competition < ActiveRecord::Base
   belongs_to :user
-  has_many :sections
+  has_many :sections, :dependent => :destroy
   after_update :save_sections
   validates_presence_of :name
 
