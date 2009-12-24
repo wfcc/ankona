@@ -5,7 +5,7 @@ class Section < ActiveRecord::Base
   has_and_belongs_to_many :diagrams
 
   def name_cs
- 'xxx'
-#    competition.name + (name.nil? ? '' : ' / ' + name)
+# 'xxx'
+    (competition.nil? ? '' : competition.name.to_s) + (name.nil? ? '' : ' / ' + name)
   end
 end
