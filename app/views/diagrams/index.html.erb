@@ -1,12 +1,13 @@
 <h1>Listing diagrams</h1>
 
+<%= link_to 'New diagram', new_diagram_path %>
 <% form_tag :diagrams, :method => :get do %>
 
-  Author:
+  Filter search by author:
   <%= text_field_tag 'search[authors]', '', :size => 10 %>
-  Stipulation:
+  stipulation:
   <%= text_field_tag 'search[stipulation]', '', :size => 5 %>
-  Collection:
+  collection:
   <%= collection_select :search, :collections,
       (current_user ? Collection.user_id_eq(current_user.id) : Collection.public_eq(true)),
       :id, :name,
@@ -14,9 +15,9 @@
   <%= submit_tag 'Apply filter' %>
 <% end -%>
 <% if current_user -%>
-  <p class="fine">“Public” collections will not be shown, only those created by you.</p>
+  <p class="fine">Other people's “Public” collections will not be shown, only those created by you.</p>
 <% else -%>
-  <p class="fine">Only “public” collections will be shown.</p>
+  <p class="fine">Only “public” collections will be shown, as you are not logged in.</p>
 <% end -%>
 
 <%= will_paginate @diagrams %>

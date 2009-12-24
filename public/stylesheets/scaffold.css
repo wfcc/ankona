@@ -122,7 +122,7 @@ ul.menu li a
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-#menu li a:hover
+ul.menu li a:hover
 {
   background: #889;
   color: #fff;
@@ -176,7 +176,7 @@ div#solution
    ; font: 14px monospace courier
    ; background-color: #EEE
    ; border: 1px dashed #BB6
-   ; padding: 1em 
+   ; padding: 1em
    }
 .stderr { color: red }
 .stdout {color: blue }
@@ -200,6 +200,7 @@ img.board
   }
 pre.solution
   { white-space: pre-wrap
+  ; text-indent: 0
   }
 table.diagrams td
   { vertical-align: top
@@ -207,4 +208,11 @@ table.diagrams td
   }
 table.zero td
   { padding: 0
+  }
+.greeny-highlight
+  { background-color: #cea
+  ; border: 1px solid #bcb
+  ; -moz-border-radius: 5px
+  ; -webkit-border-radius: 5px
+  ; padding: 10px
   }

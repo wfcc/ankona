@@ -19,7 +19,9 @@
       <%=h competition.complete ? '[complete]' : '' %>
       <%=h competition.results %>
       <%#= link_to 'Show', competition %>
-      <%= link_to 'Edit', edit_competition_path(competition) %>
+      <% if may_edit? competition -%>
+        <%= link_to 'Edit', edit_competition_path(competition) %>
+      <% end -%>
     <br style="clear:left;margin:3em"/>
     </td></tr>
   <% end %>

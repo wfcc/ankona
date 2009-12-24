@@ -1,6 +1,8 @@
 class CollectionsController < ApplicationController
   # GET /collections
   # GET /collections.xml
+  before_filter :require_user, :only => [:destroy, :edit, :show]
+
   def index
     case
     when (is_admin?)

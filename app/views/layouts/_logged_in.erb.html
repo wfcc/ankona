@@ -1,9 +1,26 @@
-<div style="text-align:center;float:right;border:dashed grey 1px;font-size:larger;padding:1ex;background-color:#DED">
-  <% if current_user_session -%>
-    <%= current_user.name %> <br/>
-    <div style="font-size:x-small">[<%= link_to 'Logout', '/logout' %>]</div>
+<% if current_user_session -%>
+  <div style=
+  "text-align:center
+  ;float:right
+  ;border:dashed grey 1px
+  ;font-size:larger
+  ;padding:1ex
+  ;background-color:#D8E8D0
+  ;-moz-border-radius: 3px
+  ;-webkit-border-radius: 3px
+  "><%= current_user.name %><br/>
+    <span style="font-size:x-small">[<%= link_to 'Logout', '/logout' %>]</span></div>
   <% else -%>
-    <%= link_to 'Log in', '/login' %>, or<br/>
+  <div style=
+  "text-align:center
+  ;float:right
+  ;border:dashed grey 1px
+  ;font-size:larger
+  ;padding:1ex
+  ;background-color:#E8D8D0
+  ;-moz-border-radius: 3px
+  ;-webkit-border-radius: 3px
+  "><%= link_to 'Log in', '/login' %>, or<br/>
     <%= link_to 'register', '/signup' %>
   <% end -%>
   </div>

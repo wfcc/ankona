@@ -1,22 +1,27 @@
 <% form_for (@import, :html => { :multipart => true }) do |f| %>
 
+  <p class="x">NB: Only CCV import is implemented now.</p>
+
   <%= f.error_messages %><br style="clear:both"/>
-  <%= label :uploaded_file,  'Import from file', nil %><br/>
-  <%= f.file_field :uploaded_file %><br style="clear:both"/>
+  <p><%= label :uploaded_file,  'Import from file', nil %><br/>
+  <%= f.file_field :uploaded_file %></p>
 
   <p><%= label :format, 'Format', nil %><br/>
   <% [ 'CCV', 'PBM', 'WinChloe', 'popeye' ].each do |format| %>
     <%= f.radio_button 'format', format, :checked => false  %>
     <%= format %><br/>
-  <% end %>
+  <% end %></p>
 
-  <br/><%= label :collection,  'Import into collection', nil %><br/>
+  <p><%= label :collection,  'Import into collection', nil %><br/>
   <%= f.collection_select 'collection',
     (current_user ? current_user.collections : []),
     :id, :name,
 		{ :selected => nil, :include_blank => true },
-		{ :style => 'width:24em' } -%>
+		{ :style => 'width:24em' } -%></p>
+  <% if current_user -%>
+    <p><%= f.submit 'Import' %></p>
+  <% else -%>
+    <p>You need to be logged in to import.</p>
+  <% end -%>
 
-  <br style="clear:both"/><%= f.submit 'Import' %>
 <% end %>
-

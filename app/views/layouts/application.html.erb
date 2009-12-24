@@ -15,18 +15,20 @@
 </head>
 <body>
 
-  <%= image_tag 'dia-x-logo.png', :style => 'margin:0 0 10px 20px' %>
+  <%= image_tag('dia-x-logo.png', :style => 'margin:0 0 0px 0px') %>
   <%= render :partial => 'layouts/logged_in' %>
 
   <ul class="menu">
-    <li><%= link_to 'Competitions', :controller => 'competitions' %>
-    <li><%= link_to 'Diagrams', :controller => 'diagrams' %>
-    <li><%= link_to 'Authors', :controller => 'authors' %>
-    <li><%= link_to 'Collections', :controller => 'collections' %>
-    <li><%= link_to 'Import', :controller => 'imports' %>
-    <li>
-    <li><%= link_to 'Feedback', :controller => 'posts' %>
+    <!-- li><%= link_to '/', :controller => 'faqs', :id => 1 -%></li -->
+    <li><%= link_to 'Competitions', :controller => 'competitions' -%></li>
+    <li><%= link_to 'Diagrams', :controller => 'diagrams' -%></li>
+    <li><%= link_to 'Authors', :controller => 'authors' -%></li>
+    <li><%= link_to 'Collections', :controller => 'collections' -%></li>
+    <li><%= link_to 'Import', :controller => 'imports' -%></li>
+    <li><%= link_to 'Feedback', :controller => 'posts' -%></li>
   </ul>
+
+  <div style="height:3px; clear:both"></div>
 
   <% if    flash[:notice] -%><p class="notice"><%= flash[:notice] %></p>
   <% elsif flash[:error] -%> <p class="error"><%= flash[:error] %></p>

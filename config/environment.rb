@@ -44,7 +44,7 @@ Rails::Initializer.run do |config|
   config.gem 'authlogic'
   config.gem 'mislav-will_paginate',
    :version => '~> 2.3.8',
-   :lib => 'will_paginate', 
+   :lib => 'will_paginate',
    :source => 'http://gems.github.com'
   config.gem "searchlogic",
     :lib     => 'searchlogic',
@@ -59,8 +59,7 @@ Rails::Initializer.run do |config|
 
 end
 
-require "will_paginate"
+require 'will_paginate'
 require 'random_data'
 require 'gd2'
-#require 'validatable'
-
+require 'validatable'

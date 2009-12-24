@@ -15,13 +15,13 @@ class ImportsController < ApplicationController
           logger.info @import.inspect
           while (line = @import.uploaded_file.gets)
             line.chomp!
-logger.info "[- #{line} -]"
+#logger.info "[- #{line} -]"
             case
             when line =~ /^Dg.*=new Array/
               d = Diagram.new(:user => current_user)
               d.save false
               black, white, number, author = '', '', 0, ''
-              logger.info '>> New Array'
+#logger.info '>> New Array'
             when line.empty?
                next if author.empty?
                d.white, d.black = white, black
@@ -29,14 +29,14 @@ logger.info "[- #{line} -]"
                author.split(/\s*,\s*/).each do |x|
                  d.authors << Author.find_or_create_by_name(x)
                end
-               logger.info ">> black: #{black} white: #{white} author: #{author}"
-               logger.info '|====> ' + d.inspect
+#logger.info ">> black: #{black} white: #{white} author: #{author}"
+#logger.info '|====> ' + d.inspect
                d.save false
                counter += 1
             when number <= 8
                f = line.split(/\D+/)
                f.shift
-               logger.info '>> pieces: ' + f.inspect
+ #logger.info '>> pieces: ' + f.inspect
                f.each_with_index do |piece, vertical|
                   next if piece == '0'
                   p = pieces[piece.to_i].upcase

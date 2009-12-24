@@ -1,6 +1,6 @@
 <ul class="menu">
 <li><%= link_to 'Back', diagrams_path %>
-<% if may_edit? @diagram -%>
+<% if may_edit? @diagram and @diagram.sections.count < 1-%>
   <li><%= link_to 'Edit', edit_diagram_path(@diagram) %>
   <li><%= link_to 'Destroy', @diagram, :confirm => 'Are you sure?', :method => :delete %>
 <% end -%>
@@ -10,32 +10,32 @@
     <p>
       <%=h @diagram.authors.collect(&:name).join ', ' %>
     </p>
-    <p> <%=h @diagram.label %> </p>
-    <p> <%=h @diagram.source %> </p>
-    <p> <%=h @diagram.published %> </p>
+    <p> <%=h @diagram.label %> <br/>
+        <%=h @diagram.source %> <br/>
+        <%=h @diagram.published %>
+    </p>
         <div  id="divBlank" style="padding:0; position:relative">
+          <% @diagram.position = '' unless @diagram.position -%>
           <%= image_tag '/fen/' + @diagram.position  , :id => 'blank', :class => :noBorder -%>
         </div>
-        <div id="pcount"></div><br/>
-    <p><%=h @diagram.stipulation %></p>
-    <p><%=h @diagram.twin %></p>
+        <div style="text-align:right;padding-right:3em;font-size:x-small">
+          <%= @diagram.position.scan(/[A-Z]/).count -%>+<%= @diagram.position.scan(/[a-z]/).count -%>
+        </div>
     <p>
-      <%=h @diagram.tested ? 'C+' : 'C-' %>
+      <%=h @diagram.stipulation %><br/>
+      <span style="font-size:smaller"><%=h @diagram.twin %></span>
     </p>
   </div>
 </div>
 <div class="span-8">
-      <pre class="solution">
-        <%=h @diagram.solution %>
-      </pre>
+    <p style="font-size:x-small">
+      <%=h @diagram.tested ? 'C+' : 'C-' %>
+    </p>
+      <pre class="solution"><%=h @diagram.solution -%></pre>
 </div>
 <div class="span-7 last">
   <% if may_edit? @diagram -%>
-    <% unless @diagram.sections.empty? -%>
-          <b>Submitted to competitions:</b>
-          <%=h @diagram.sections.map(&:name).join ', ' %>
-    <% end -%>
-    <p> You may submit this diagram to an open competition:
+    <p>You may submit this diagram to an open competition:
     <% form_for @diagram, :url => {:action => 'section'} do |f| %>
         <%= collection_select :diagram, :section_ids,
           Section.all,
@@ -45,7 +45,13 @@
         %>
         <%= f.submit 'Submit to competition' %>
         <p class="fine">You will not be able to edit this diagram after submission.</p>
-    <% end -%>
+    <% end -%></p>
+
+    <p class="greeny-highlight"><% unless @diagram.sections.empty? -%>
+          Submitted to competitions:<br/>
+          <b><%=h @diagram.sections.map(&:name).join ', ' %></b>
+    <% end -%></p>
+
     <% form_for @diagram do |f| %>
       <%= f.label 'Collections' %><br/>
       <%= collection_select :diagram, :collection_ids,

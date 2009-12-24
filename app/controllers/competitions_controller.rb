@@ -1,4 +1,7 @@
 class CompetitionsController < ApplicationController
+
+  before_filter :require_user, :only => [:destroy, :edit]
+
   # GET /competitions
   # GET /competitions.xml
   def index
