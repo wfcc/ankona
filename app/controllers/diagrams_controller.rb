@@ -124,14 +124,15 @@ require 'open3'
        stdin = <<-EOD
             BeginProblem
             Option NoBoard #{params[:pyopts]}
+            Option MaxTime 120
             Stipulation #{params[:diagram][:stipulation]}
             Pieces
              White #{ nrm(params[:diagram][:white])}
              Black #{ nrm(params[:diagram][:black])}
-            #{params[:diagram][:twin]}
+            #{twin_to_py params[:diagram][:twin]}
             EndProblem
             EOD
-
+      logger.info "<<stdin<< #{stdin} >>stdin>>"
       res = Net::HTTP.post_form(URI.parse('http://util.dia-x.info/popeye/solve'),
            {:pyinput => stdin})
 
@@ -145,5 +146,19 @@ require 'open3'
         a.size < 3 ? 'p' + a : a
      end.join(' ')
   end
+
+  def twin_to_py(t)
+    s = t
+    logger.info ("==<<== #{t} ==>>==")
+    case t
+    when nil, '', /^\d/ then s = ''
+    when /(\S+)\s*(↔|<.?.?>)\s*(\S+)/
+      s = "Twin Exchange #{$~[1][-2,2]} #{$~[3][-2,2]}"
+    when /(\S+)\s*(→|.?.?>)\s*(\S+)/
+      s = "Twin Move #{$~[1][-2,2]} #{$~[3][-2,2]}"
+    end
+    return s
+  end
+
 ###################################################
 end

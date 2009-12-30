@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
     def require_user
       unless current_user
         store_location
-        flash[:error] = "You must be logged in to access this."
+        flash[:error] = "You must be logged in to access this page."
         #redirect_to new_user_session_url
         redirect_to url_for, :controller => :user_sessions, :action => :new
         return false
@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
     def require_no_user
       if current_user
         store_location
-        flash[:error] = "You must be logged out to access this page"
+        flash[:error] = "You must be logged out to access this page."
         redirect_to account_url
         return false
       end
@@ -76,11 +76,4 @@ class ApplicationController < ActionController::Base
       Hash.new {|ht,k| ht[k] = autovivifying_hash}
     end
 
-    def require_admin
-      unless is_admin?
-        flash[:error] = "You are not supposed to be doing this."
-        redirect_to '/'
-        return false
-      end
-    end
 end
