@@ -1,0 +1,93 @@
+<h1>Editing diagram</h1>
+<%# form_for(@diagram, :builder => LabelingFormBuilder) do |f| %>
+<% form_for(@diagram) do |f| %>
+  <%= f.error_messages %>
+
+  <div class="span-12" id="first">
+
+  <p><%= f.label 'FEN' %><br/>
+     <%= f.text_field :position, :label => 'FEN' %></p>
+  </p><%= f.label 'Position (w/b)' %><br/>
+    <%= f.text_field :white, :size => 40 %><br/>
+    <%= f.text_field :black, :size => 40 %></p>
+  <p>
+    <div id="divBlank" style="padding:0; width:202px;height:202px;position:relative">
+      <%= image_tag '/fen', :id => 'blank', :style=>'position:absolute;z-index:-1' %>
+    </div>
+    <div id="pcount"></div><br/>
+
+    <% i = 0; %w{◁ ▽ △ ▷ CW CCW ↕}.each do |direction| %>
+      <%= button_to_function direction, "moveBoard('#{direction}')" -%>
+    <% end %>
+  </p>
+  <p><%= f.label 'Stipulation' %></br>
+    <%= f.text_field :stipulation, :size => 6 %><br/>
+    <%= f.label 'Twin' %>
+    <%= f.text_field :twin, :size => 20 %>
+  </p>
+  <p><%= f.label 'C+' %>
+    <%= f.check_box :tested, :label => 'C+' %>
+  </p>
+  </div>
+  <div class="span-12 last" id="second">
+  <%= f.label 'Authors' %><br/>
+  <div id="authors">
+    <%= render :partial => 'author', :collection => @diagram.authors %>
+  </div>
+  <p> <%= add_author_link "Add author" %> </p>
+  <p><%= f.label 'Source' %><br/>
+     <%= f.text_field :source, :size => 40 %>
+  </p>
+  <table class="zero"><tr>
+    <td><%= f.label 'Number' %></td>
+    <td><%= f.label 'Published' %></td></tr><tr>
+    <td><%= f.text_field :label, :size => 6 %><br/>
+      <span class="fine">Diagram ID, label</span></td>
+    <td><%= f.date_select :published,
+      {:start_year => 1800, :include_blank => true} %></td>
+  </tr></table>
+
+
+  <p><%= f.label 'Solution' %><br/>
+    <%= f.text_area :solution %>
+  </p>
+  <ul class="menu">
+    <li><%= link_to 'Don\'t save', @diagram %>
+    <li><%= link_to 'Back to list', diagrams_path %>
+  </ul><p style="clear:both"/>
+  </div>
+  <br style="clear:both"/>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+   <%= submit_to_remote 'solve', 'Solve',
+      :style => 'height:11em;width:7em;margin-top:3em',
+      :update => 'solution',
+      :condition => 'validateForm()',
+      :before => "$('solution').update('Popeye solving in progres...')",
+      :method => 'post',
+      :url => { :action => 'solve' } %>
+
+    Popeye options: <%= text_field_tag :pyopts, :size => 16, :value => 'Intelligent' %>
+
+     <div id="solution">Popeye solution will be here</div>
+     <p class="fine">Entered by <%= @diagram.user ? @diagram.user.name : '' %><p/>
+
+<% end %>
+
+<script>
+   PIECE = '';
+   $('diagram_white').observe('keyup', updateFen);
+   $('diagram_black').observe('keyup', updateFen);
+   $('diagram_position').observe('keyup', updateFromFen);
+
+   initVars();
+   ; if (! $('diagram_position').value)
+      { updateFen({keyCode: 50})
+   } else {
+       updateFromFen()
+   }
+
+//   $('blank').src = '/fen/' + $('diagram_fen').value;
+   $('diagram_white').focus();
+</script>

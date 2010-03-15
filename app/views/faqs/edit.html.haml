@@ -1,0 +1,11 @@
+%h1
+  Editing faq
+- form_for(@faq) do |f|
+  = f.error_messages
+  = f.label :body
+  = f.text_area :body, :cols => 50
+  = f.submit 'Update'
+
+= link_to 'Show', @faq
+|
+= link_to 'Back', faqs_path
