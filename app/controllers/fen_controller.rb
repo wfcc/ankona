@@ -23,7 +23,8 @@ SUFFIX = '.gif'
          end
       end
       # board done
-
+      #board = Image.load BOARD
+      
       @fig = {}
       params[:id].collect! do |rank|
          # replace numbers with spaces
@@ -40,7 +41,7 @@ SUFFIX = '.gif'
          end
          (j+=25; i=0) if (i+=25) > 180
       end
-      render :text => board.png, :content_type => 'image/png'
+      render :text => board.gif, :content_type => 'image/gif'
    end
 ###################################################
    private

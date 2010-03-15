@@ -3,7 +3,7 @@ EMAIL_FROM = 'dia-x automated message <bot@dia-x.info>'
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -46,20 +46,22 @@ Rails::Initializer.run do |config|
    :version => '~> 2.3.8',
    :lib => 'will_paginate',
    :source => 'http://gems.github.com'
-  config.gem "searchlogic",
-    :lib     => 'searchlogic',
-    :source  => 'http://gems.github.com',
-    :version => '~> 2.3.9'
+  config.gem "searchlogic"
+#    :lib     => 'searchlogic',
+#    :source  => 'http://gems.github.com',
+#   :version => '~> 2.3.9'
 #  config.gem "mbleigh-mash",
 #    :lib     => 'mash',
 #    :source  => 'http://gems.github.com'
 
-  config.gem "RedCloth", :lib => "redcloth"
-
+  config.gem "RedCloth", :lib => "redcloth"        
+  config.gem 'random_data'
+  config.gem 'gd2'
+  config.gem 'validatable'
 
 end
 
-require 'will_paginate'
-require 'random_data'
-require 'gd2'
-require 'validatable'
+#require 'will_paginate'
+#require 'random_data'
+#require 'gd2'
+#require 'validatable'

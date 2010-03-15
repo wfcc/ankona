@@ -27,5 +27,5 @@ config.action_view.cache_template_loading            = false
 # Enable threaded mode
 # config.threadsafe!
 
-require 'validatable'
-require 'gd2'
+#require 'validatable'
+#require 'gd2'

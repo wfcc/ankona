@@ -14,7 +14,7 @@ form text { color: yellow }
 */
 label
   { font-size: 120%
-  ; color: #681;
+  ; color: #681
   ; margin-right: 1ex
   ; clear: both
   ; vertical-align: middle
@@ -99,8 +99,7 @@ a:visited { color: #306; }
 a:hover { color: #fff; background-color:#666; }
 
 ul.menu
-  {
-  ; padding:0
+  { padding:0
   ; margin-bottom: 3px
   ; color:#fff
   ; white-space:nowrap
