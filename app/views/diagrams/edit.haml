@@ -3,10 +3,10 @@
   = f.error_messages
   #first.span-12
     = f.text_field :position, :label => 'FEN', :class => 'w90'
-    .fine English notation for FEN ("S" for Knight allowed): 2S5/1bQKpR2/4s3/...
-    .label Position (w/b)
+    .fine English notation for FEN ("S" for Knight allowed): “2S5/1bQKpR2/4s3/…”
+    .label Position (w/b)                                                          
     = f.text_field :white, :class => 'w90', :label => false
-    .fine ↕ FIDE notation: "Ka7 De1 Tf2 Lh3 Sh2 [p]e2"
+    .fine ↕ FIDE notation: “Ka7 De1 Tf2 Lh3 Sh2 [p]e2 …”
     = f.text_field :black, :class => 'w90', :label => false
 
     #divBlank= image_tag '/fen', :id => 'blank'

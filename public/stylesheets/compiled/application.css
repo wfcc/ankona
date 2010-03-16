@@ -243,17 +243,18 @@ img.board {
 /* line 206, ../../../app/stylesheets/application.sass */
 pre.solution {
   white-space: pre-wrap;
+  overflow: auto;
   text-indent: 0; }
 
-/* line 211, ../../../app/stylesheets/application.sass */
+/* line 212, ../../../app/stylesheets/application.sass */
 table.diagrams td {
   vertical-align: top;
   font-size: 11px; }
-/* line 215, ../../../app/stylesheets/application.sass */
+/* line 216, ../../../app/stylesheets/application.sass */
 table.zero td {
   padding: 0; }
 
-/* line 218, ../../../app/stylesheets/application.sass */
+/* line 219, ../../../app/stylesheets/application.sass */
 .greeny-highlight {
   background-color: #cea;
   border: 1px solid #bcb;
@@ -262,27 +263,27 @@ table.zero td {
   border-radius: 5px;
   padding: 10px; }
 
-/* line 224, ../../../app/stylesheets/application.sass */
+/* line 225, ../../../app/stylesheets/application.sass */
 #pcount {
   margin-bottom: 5px; }
 
-/* line 227, ../../../app/stylesheets/application.sass */
+/* line 228, ../../../app/stylesheets/application.sass */
 .em1 {
   height: 1em; }
 
-/* line 230, ../../../app/stylesheets/application.sass */
+/* line 231, ../../../app/stylesheets/application.sass */
 #divBlank {
   padding: 0;
   width: 202px;
   height: 202px;
   position: relative; }
 
-/* line 236, ../../../app/stylesheets/application.sass */
+/* line 237, ../../../app/stylesheets/application.sass */
 img.blank {
   position: absolute;
   z-index: -1; }
 
-/* line 240, ../../../app/stylesheets/application.sass */
+/* line 241, ../../../app/stylesheets/application.sass */
 .login {
   text-align: center;
   border: dashed grey 1px;
@@ -295,10 +296,18 @@ img.blank {
   -webkit-border-radius: 3px;
   border-radius: 3px; }
 
-/* line 250, ../../../app/stylesheets/application.sass */
+/* line 251, ../../../app/stylesheets/application.sass */
 .loggedin {
   background-color: #D8E8D0; }
 
-/* line 253, ../../../app/stylesheets/application.sass */
+/* line 254, ../../../app/stylesheets/application.sass */
 .loggedout {
   background-color: #E8D8D0; }
+
+/* line 257, ../../../app/stylesheets/application.sass */
+.xs {
+  font-size: smaller; }
+
+/* line 260, ../../../app/stylesheets/application.sass */
+.cgreen {
+  color: #228811; }

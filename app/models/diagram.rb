@@ -3,6 +3,7 @@ class Diagram < ActiveRecord::Base
   has_and_belongs_to_many :authors
   has_and_belongs_to_many :collections
   has_and_belongs_to_many :sections
+  has_many :publications
 
   validates_presence_of :stipulation
   validates_associated :authors

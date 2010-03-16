@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 22) do
+ActiveRecord::Schema.define(:version => 24) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -105,6 +105,12 @@ ActiveRecord::Schema.define(:version => 22) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "publications", :force => true do |t|
+    t.string  "name"
+    t.date    "published"
+    t.integer "diagram_id"
   end
 
   create_table "roles", :force => true do |t|

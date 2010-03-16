@@ -11,3 +11,4 @@ database/*
 tmp/*
 *.SAV
 *.sql
+doc/plugins/*

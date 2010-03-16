@@ -16,16 +16,6 @@ Rails::Initializer.run do |config|
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
 
-  # Specify gems that this application depends on and have them installed with rake gems:install
-  # config.gem "bj"
-  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
-  # config.gem "sqlite3-ruby", :lib => "sqlite3"
-  # config.gem "aws-s3", :lib => "aws/s3"
-
-  # Only load the plugins named here, in the order given (default is alphabetical).
-  # :all can be used as a placeholder for all plugins not explicitly named
-  # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
@@ -47,21 +37,12 @@ Rails::Initializer.run do |config|
    :lib => 'will_paginate',
    :source => 'http://gems.github.com'
   config.gem "searchlogic"
-#    :lib     => 'searchlogic',
-#    :source  => 'http://gems.github.com',
-#   :version => '~> 2.3.9'
-#  config.gem "mbleigh-mash",
-#    :lib     => 'mash',
-#    :source  => 'http://gems.github.com'
-
-  config.gem "RedCloth", :lib => "redcloth"        
+  config.gem "RedCloth", :lib => 'redcloth'
   config.gem 'random_data'
   config.gem 'gd2'
   config.gem 'validatable'
-
+                 
 end
+                
+#Haml::Template.options[:escape_html] = true
 
-#require 'will_paginate'
-#require 'random_data'
-#require 'gd2'
-#require 'validatable'
