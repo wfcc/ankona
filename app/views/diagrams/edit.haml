@@ -1,11 +1,13 @@
 %h1 Editing problem
-- form_for(@diagram, :builder => LabelingFormBuilder) do |f|
+/- form_for(@diagram, :builder => LabelingFormBuilder) do |f|
+- semantic_form_for @diagram do |f|
   = f.error_messages
   #first.span-12
-    = f.text_field :position, :label => 'FEN', :class => 'w90'
+    /= f.text_field :position, :label => 'FEN', :class => 'w90'
+    = f.input :position, :label => 'FEN', :class => 'w90'
     .fine English notation for FEN ("S" for Knight allowed): “2S5/1bQKpR2/4s3/…”
     .label Position (w/b)                                                          
-    = f.text_field :white, :class => 'w90', :label => false
+    = f.input :white, :class => 'w90', :label => false
     .fine ↕ FIDE notation: “Ka7 De1 Tf2 Lh3 Sh2 [p]e2 …”
     = f.text_field :black, :class => 'w90', :label => false
 
@@ -14,9 +16,9 @@
     - %w{◁ ▽ △ ▷ CW CCW ↕}.each do |direction|
       = button_to_function direction, "moveBoard('#{direction}')"
 
-    = f.text_field :stipulation, :size => 6
+    = f.input :stipulation, :size => 6
     %span.fine #2 | s#3 | h#2.5 | win | …
-    = f.text_field :twin, :size => 20
+    = f.input :twin, :size => 20
     %span.fine b) Se5->e6 | b) +Th3, c) Sh8<->La2 | 2.1;1.1 | …
     = f.check_box :tested, :label => 'C+'
   #second.span-12.last
@@ -29,12 +31,12 @@
     %table.zero
       %tr
         %td
-          = f.text_field :label, :size => 6
+          = f.input :label, :size => 6
           .fine Diagram ID, label
         %td
           = f.date_select :published, {:start_year => 1800, :include_blank => true}
     %p
-      = f.text_area :solution
+      = f.input :solution
     /
       %ul.menu
         %li

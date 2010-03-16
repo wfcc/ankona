@@ -40,7 +40,9 @@ Rails::Initializer.run do |config|
   config.gem "RedCloth", :lib => 'redcloth'
   config.gem 'random_data'
   config.gem 'gd2'
-  config.gem 'validatable'
+  config.gem 'validatable'  
+  config.gem 'formtastic'
+  
                  
 end
                 
