@@ -31,12 +31,9 @@
     = f.input :source, :class => 'w90'
     %table.zero
       %tr
-        %td
-          = f.input :label, :input_html => {:size => 15}, :hint => 'Diagram ID, label'
-        %td
-          = f.input :published, :as => :string, :input_html => {:size => 11}, :hint => 'YYYY-MM-DD'
-    %p
-      = f.input :solution, :hint => 'Try to adhere to FIDE piece notation: KDTLS.'
+        %td= f.input :label, :input_html => {:size => 15}, :hint => 'Diagram ID, label'
+        %td= f.input :published, :as => :string, :input_html => {:size => 11}, :hint => 'YYYY-MM-DD'
+    = f.input :solution, :input_html => {:rows => 25, :cols => 5}, :hint => 'Try to adhere to FIDE piece notation: KDTLS.'
     /
       %ul.menu
         %li
@@ -46,29 +43,37 @@
 
   .clear.em1
   = f.submit 'Save'
-  = submit_to_remote 'solve', 'Solve', |
-    :update => 'solution', :condition => 'validateForm()', |
-    :before => "$('solution').update('Popeye solving in progres...')", |
-    :method => 'post', :url => { :action => 'solve' }, :html => {:class => 'x'} |
-  Popeye options:
-  = text_field_tag :pyopts, (@diagram.stipulation =~ /^h/ ? 'Intelligent' : ''), :size => 50
-  #solution
-    Popeye solution will be here
-  %p.fine
-    Entered by
-    = @diagram.user ? @diagram.user.name : 'computer'
-    %script
-      PIECE = '';
-      $('diagram_white').observe('keyup', updateFen);
-      $('diagram_black').observe('keyup', updateFen);
-      $('diagram_position').observe('keyup', updateFromFen);
+  %fieldset
+    %legend &nbsp; popeye &nbsp;
+    = submit_to_remote 'solve', 'Solve', |
+      :update => 'solution', :condition => 'validateForm()', |
+      :before => "$('solution').update('Popeye solving in progres...')", |
+      :method => 'post', :url => { :action => 'solve' }, :html => {:class => 'x'} |
+    %br
+    %label(for = "pyconds" class = "modest") Popeye “condition” line
+    =text_field_tag :pyconds, ""
+    %span.fine circe, andernach, madrasi, masand, koeko, …
+    %br
+    %label(for = "pyopts" class = "modest") Popeye “options” line
+    =text_field_tag :pyopts, ""
+    %span.fine try, setplay, duplex, maxsolutions, intelligent, …   
+    #solution<>
+      %span#beforepy Popeye solution will go here
+%p.fine
+  Entered by
+  = @diagram.user ? @diagram.user.name : 'computer'
+  %script
+    PIECE = '';
+    $('diagram_white').observe('keyup', updateFen);
+    $('diagram_black').observe('keyup', updateFen);
+    $('diagram_position').observe('keyup', updateFromFen);
 
-      initVars();
-      ; if (! $('diagram_position').value)
-      { updateFen({keyCode: 50})
-      } else {
-      updateFromFen()
-      }
+    initVars();
+    ; if (! $('diagram_position').value)
+    { updateFen({keyCode: 50})
+    } else {
+    updateFromFen()
+    }
 
-      \//   $('blank').src = '/fen/' + $('diagram_fen').value;
-      $('diagram_white').focus();
+    \//   $('blank').src = '/fen/' + $('diagram_fen').value;
+    $('diagram_white').focus();

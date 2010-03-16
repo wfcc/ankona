@@ -34,11 +34,18 @@ label, .label {
   vertical-align: middle;
   display: block;
   font-weight: bold; }
-  /* line 49, ../../../app/stylesheets/application.sass */
+  /* line 48, ../../../app/stylesheets/application.sass */
+  label.modest, .label.modest {
+    display: inline;
+    font-weight: normal;
+    font-size: 100%;
+    float: left;
+    width: 25%; }
+  /* line 55, ../../../app/stylesheets/application.sass */
   label:after, .label:after {
     content: ":"; }
 
-/* line 53, ../../../app/stylesheets/application.sass */
+/* line 59, ../../../app/stylesheets/application.sass */
 div.fieldWithErrors, div.errorExplanation {
   border: 1px solid #c60;
   float: left;
@@ -51,11 +58,11 @@ div.fieldWithErrors, div.errorExplanation {
   -webkit-border-radius: 5px;
   border-radius: 5px; }
 
-/* line 63, ../../../app/stylesheets/application.sass */
+/* line 69, ../../../app/stylesheets/application.sass */
 .x {
   font-size: large; }
 
-/* line 66, ../../../app/stylesheets/application.sass */
+/* line 72, ../../../app/stylesheets/application.sass */
 .circled {
   border: 2px solid #5c1;
   padding: 10px 10px;
@@ -69,7 +76,7 @@ div.fieldWithErrors, div.errorExplanation {
   -webkit-border-radius: 10px;
   border-radius: 10px; }
 
-/* line 78, ../../../app/stylesheets/application.sass */
+/* line 84, ../../../app/stylesheets/application.sass */
 p.notice {
   border: 2px solid #5c1;
   color: #3a1;
@@ -85,7 +92,7 @@ p.notice {
   /* height: 1em */
   display: table-element;
   vertical-align: center; }
-/* line 84, ../../../app/stylesheets/application.sass */
+/* line 90, ../../../app/stylesheets/application.sass */
 p.error {
   border: 2px solid #c60;
   color: #a40;
@@ -101,7 +108,7 @@ p.error {
   /* height: 1em */
   display: table-element;
   vertical-align: center; }
-/* line 90, ../../../app/stylesheets/application.sass */
+/* line 96, ../../../app/stylesheets/application.sass */
 p.nomessage {
   float: left;
   clear: both;
@@ -115,40 +122,40 @@ p.nomessage {
   display: table-element;
   vertical-align: center; }
 
-/* line 94, ../../../app/stylesheets/application.sass */
+/* line 100, ../../../app/stylesheets/application.sass */
 pre.results {
   background-color: #eee;
   padding: 10px;
   font-size: 11px; }
 
-/* line 99, ../../../app/stylesheets/application.sass */
+/* line 105, ../../../app/stylesheets/application.sass */
 a.plain:hover {
   color: inherit;
   background-color: inherit; }
 
-/* line 103, ../../../app/stylesheets/application.sass */
+/* line 109, ../../../app/stylesheets/application.sass */
 a {
   color: #417;
   text-decoration: none; }
-  /* line 107, ../../../app/stylesheets/application.sass */
+  /* line 113, ../../../app/stylesheets/application.sass */
   a:visited {
     color: #306; }
-  /* line 110, ../../../app/stylesheets/application.sass */
+  /* line 116, ../../../app/stylesheets/application.sass */
   a:hover {
     color: #fff;
     background-color: #666; }
 
-/* line 115, ../../../app/stylesheets/application.sass */
+/* line 121, ../../../app/stylesheets/application.sass */
 ul.menu {
   padding: 0;
   margin-bottom: 3px;
   color: #fff;
   white-space: nowrap;
   list-style-type: none; }
-  /* line 122, ../../../app/stylesheets/application.sass */
+  /* line 128, ../../../app/stylesheets/application.sass */
   ul.menu li {
     display: inline; }
-    /* line 124, ../../../app/stylesheets/application.sass */
+    /* line 130, ../../../app/stylesheets/application.sass */
     ul.menu li a {
       padding: 0.2em 1em;
       margin-right: 2em;
@@ -162,16 +169,16 @@ ul.menu {
       -moz-border-radius: 4px;
       -webkit-border-radius: 4px;
       border-radius: 4px; }
-      /* line 136, ../../../app/stylesheets/application.sass */
+      /* line 142, ../../../app/stylesheets/application.sass */
       ul.menu li a:hover {
         background: #889;
         color: #fff; }
 
-/* line 140, ../../../app/stylesheets/application.sass */
+/* line 146, ../../../app/stylesheets/application.sass */
 .fieldWithErrors {
   display: table; }
 
-/* line 143, ../../../app/stylesheets/application.sass */
+/* line 149, ../../../app/stylesheets/application.sass */
 #errorExplanation {
   width: 400px;
   border: 2px solid red;
@@ -179,7 +186,7 @@ ul.menu {
   padding-bottom: 12px;
   margin-bottom: 20px;
   background-color: #f0f0f0; }
-  /* line 151, ../../../app/stylesheets/application.sass */
+  /* line 157, ../../../app/stylesheets/application.sass */
   #errorExplanation h2 {
     text-align: left;
     font-weight: bold;
@@ -188,74 +195,75 @@ ul.menu {
     margin: -7px;
     background-color: #c00;
     color: #fff; }
-  /* line 160, ../../../app/stylesheets/application.sass */
+  /* line 166, ../../../app/stylesheets/application.sass */
   #errorExplanation p {
     color: #333;
     margin-bottom: 0;
     padding: 5px; }
-  /* line 165, ../../../app/stylesheets/application.sass */
+  /* line 171, ../../../app/stylesheets/application.sass */
   #errorExplanation ul li {
     font-size: 12px;
     list-style: square; }
 
-/* line 170, ../../../app/stylesheets/application.sass */
+/* line 176, ../../../app/stylesheets/application.sass */
 div.pagination {
   float: left; }
-/* line 173, ../../../app/stylesheets/application.sass */
+/* line 179, ../../../app/stylesheets/application.sass */
 div.pagestat {
   float: right; }
-/* line 176, ../../../app/stylesheets/application.sass */
+/* line 182, ../../../app/stylesheets/application.sass */
 div#solution {
   white-space: pre-wrap;
   font: 14px monospace courier;
   background-color: #EEE;
   border: 1px dashed #BB6;
-  padding: 1em; }
+  padding: 1em;
+  margin-top: 1em; }
 
-/* line 183, ../../../app/stylesheets/application.sass */
+/* line 190, ../../../app/stylesheets/application.sass */
 .stderr {
   color: red; }
 
-/* line 186, ../../../app/stylesheets/application.sass */
+/* line 193, ../../../app/stylesheets/application.sass */
 .stdout {
   color: blue; }
 
-/* line 189, ../../../app/stylesheets/application.sass */
+/* line 196, ../../../app/stylesheets/application.sass */
 .fine {
   font-size: smaller;
   color: #BBB; }
 
-/* line 193, ../../../app/stylesheets/application.sass */
+/* line 200, ../../../app/stylesheets/application.sass */
 img.board {
   width: 202px;
   height: 202px; }
 
-/* line 197, ../../../app/stylesheets/application.sass */
+/* line 204, ../../../app/stylesheets/application.sass */
 .clickable {
   border-top: 1px dashed gray;
   margin-bottom: 1em; }
-  /* line 201, ../../../app/stylesheets/application.sass */
+  /* line 208, ../../../app/stylesheets/application.sass */
   .clickable:hover {
     background-color: #ddd;
     cursor: pointer;
     border: 1px solid red;
     margin-bottom: 1em; }
 
-/* line 207, ../../../app/stylesheets/application.sass */
+/* line 214, ../../../app/stylesheets/application.sass */
 pre.solution {
   white-space: pre-wrap;
   overflow: auto;
   text-indent: 0; }
 
-/* line 213, ../../../app/stylesheets/application.sass */
+/* line 220, ../../../app/stylesheets/application.sass */
 table.diagrams td {
   vertical-align: top;
   font-size: 11px; }
-/* line 217, ../../../app/stylesheets/application.sass */
+/* line 224, ../../../app/stylesheets/application.sass */
 table.zero td {
   padding: 0; }
 
-/* line 220, ../../../app/stylesheets/application.sass */
+/* line 227, ../../../app/stylesheets/application.sass */
 .greeny-highlight {
   background-color: #cea;
   border: 1px solid #bcb;
@@ -264,27 +272,27 @@ table.zero td {
   border-radius: 5px;
   padding: 10px; }
 
-/* line 226, ../../../app/stylesheets/application.sass */
+/* line 233, ../../../app/stylesheets/application.sass */
 #pcount {
   margin-bottom: 5px; }
 
-/* line 229, ../../../app/stylesheets/application.sass */
+/* line 236, ../../../app/stylesheets/application.sass */
 .em1 {
   height: 1em; }
 
-/* line 232, ../../../app/stylesheets/application.sass */
+/* line 239, ../../../app/stylesheets/application.sass */
 #divBlank {
   padding: 0;
   width: 202px;
   height: 202px;
   position: relative; }
 
-/* line 238, ../../../app/stylesheets/application.sass */
+/* line 245, ../../../app/stylesheets/application.sass */
 img.blank {
   position: absolute;
   z-index: -1; }
 
-/* line 242, ../../../app/stylesheets/application.sass */
+/* line 249, ../../../app/stylesheets/application.sass */
 .login {
   text-align: center;
   border: dashed grey 1px;
@@ -297,32 +305,38 @@ img.blank {
   -webkit-border-radius: 3px;
   border-radius: 3px; }
 
-/* line 252, ../../../app/stylesheets/application.sass */
+/* line 259, ../../../app/stylesheets/application.sass */
 .loggedin {
   background-color: #D8E8D0; }
 
-/* line 255, ../../../app/stylesheets/application.sass */
+/* line 262, ../../../app/stylesheets/application.sass */
 .loggedout {
   background-color: #E8D8D0; }
 
-/* line 258, ../../../app/stylesheets/application.sass */
+/* line 265, ../../../app/stylesheets/application.sass */
 .xs {
   font-size: smaller; }
 
-/* line 261, ../../../app/stylesheets/application.sass */
+/* line 268, ../../../app/stylesheets/application.sass */
 .cgreen {
   color: #228811; }
 
-/* line 264, ../../../app/stylesheets/application.sass */
-form.formtastic {
-  /* input[type="text"]
-   * width: 90% */ }
-  /* line 265, ../../../app/stylesheets/application.sass */
-  form.formtastic li {
-    list-style-type: none; }
-  /* line 267, ../../../app/stylesheets/application.sass */
-  form.formtastic p.inline-hints {
-    font-size: smaller;
-    color: #BBB;
-    margin: 0;
-    padding: 0; }
+/* line 272, ../../../app/stylesheets/application.sass */
+form.formtastic li {
+  list-style-type: none; }
+/* line 274, ../../../app/stylesheets/application.sass */
+form.formtastic p.inline-hints {
+  font-size: smaller;
+  color: #BBB;
+  margin: 0;
+  padding: 0; }
+
+/* line 280, ../../../app/stylesheets/application.sass */
+legend {
+  padding: 1em 0;
+  text-align: center; }
+
+/* line 284, ../../../app/stylesheets/application.sass */
+span#beforepy {
+  font: normal large Monospace;
+  color: #688F52; }

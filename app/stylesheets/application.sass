@@ -45,6 +45,12 @@ label, .label
   vertical-align: middle
   display: block   
   font-weight: bold
+  &.modest
+    display: inline
+    font-weight: normal
+    font-size: 100%
+    float: left
+    width: 25%
 
   &:after
     content: ":"
@@ -179,6 +185,7 @@ div
     background-color: #EEE
     border: 1px dashed #BB6
     padding: 1em
+    margin-top: 1em
 
 .stderr
   color: red
@@ -269,5 +276,11 @@ form.formtastic
     color: #BBB   
     margin: 0
     padding: 0   
-  /*input[type="text"]
-    width: 90%
+    
+legend
+  padding: 1em 0
+  text-align: center
+  
+span#beforepy
+  font: normal large Monospace
+  color: #688F52

@@ -121,11 +121,13 @@ require 'open3'
   end
   #--------------------------------------------------
   def solve
+      condition = params[:pyconds].blank? ? '' : "Condition #{params[:pyconds]}"
        stdin = <<-EOD
             BeginProblem
             Option NoBoard #{params[:pyopts]}
-            Option MaxTime 120
+            Option MaxTime 120             
             Stipulation #{params[:diagram][:stipulation]}
+            #{condition}
             Pieces
              White #{ nrm(params[:diagram][:white])}
              Black #{ nrm(params[:diagram][:black])}
