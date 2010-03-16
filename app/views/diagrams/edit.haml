@@ -1,42 +1,42 @@
 %h1 Editing problem
-/- form_for(@diagram, :builder => LabelingFormBuilder) do |f|
+/- form_for(@diagram, :builder => LabelingFormBuilder) do |f|       
+- Formtastic::SemanticFormBuilder.default_text_field_size = 70
 - semantic_form_for @diagram do |f|
   = f.error_messages
   #first.span-12
     /= f.text_field :position, :label => 'FEN', :class => 'w90'
-    = f.input :position, :label => 'FEN', :class => 'w90'
-    .fine English notation for FEN ("S" for Knight allowed): “2S5/1bQKpR2/4s3/…”
+    = f.input :position, :label => 'FEN', |
+      :hint => 'English notation for FEN ("S" for Knight allowed): “2S5/1bQKpR2/4s3/…”' |
     .label Position (w/b)                                                          
-    = f.input :white, :class => 'w90', :label => false
-    .fine ↕ FIDE notation: “Ka7 De1 Tf2 Lh3 Sh2 [p]e2 …”
-    = f.text_field :black, :class => 'w90', :label => false
+    = f.input :white, :class => 'w90', :label => false, |
+      :hint => '↕ FIDE notation: “Ka7 De1 Tf2 Lh3 Sh2 [p]e2 …”' |
+    = f.input :black, :class => 'w90', :label => false
 
     #divBlank= image_tag '/fen', :id => 'blank'
     #pcount
     - %w{◁ ▽ △ ▷ CW CCW ↕}.each do |direction|
       = button_to_function direction, "moveBoard('#{direction}')"
 
-    = f.input :stipulation, :size => 6
-    %span.fine #2 | s#3 | h#2.5 | win | …
-    = f.input :twin, :size => 20
-    %span.fine b) Se5->e6 | b) +Th3, c) Sh8<->La2 | 2.1;1.1 | …
-    = f.check_box :tested, :label => 'C+'
+    = f.input :stipulation, :input_html => {:size => 6}, :hint => '#2 | s#3 | h#2.5 | win | …'
+    = f.input :twin, :input_html => {:size => 20}, | 
+      :hint => 'b) Se5->e6 | b) +Th3, c) Sh8<->La2 | 2.1;1.1 | …' |
+    %span.label C+
+    = f.check_box :tested
   #second.span-12.last
     .label Authors
     #authors
       = render :partial => 'author', :collection => @diagram.authors
     %p
       = add_author_link "Add author"
-    = f.text_field :source, :class => 'w90'
+    = f.input :source, :class => 'w90'
     %table.zero
       %tr
         %td
-          = f.input :label, :size => 6
-          .fine Diagram ID, label
+          = f.input :label, :input_html => {:size => 15}, :hint => 'Diagram ID, label'
         %td
-          = f.date_select :published, {:start_year => 1800, :include_blank => true}
+          = f.input :published, :as => :string, :input_html => {:size => 11}, :hint => 'YYYY-MM-DD'
     %p
-      = f.input :solution
+      = f.input :solution, :hint => 'Try to adhere to FIDE piece notation: KDTLS.'
     /
       %ul.menu
         %li
@@ -51,7 +51,7 @@
     :before => "$('solution').update('Popeye solving in progres...')", |
     :method => 'post', :url => { :action => 'solve' }, :html => {:class => 'x'} |
   Popeye options:
-  = text_field_tag :pyopts, :size => 16, :value => 'Intelligent'
+  = text_field_tag :pyopts, (@diagram.stipulation =~ /^h/ ? 'Intelligent' : ''), :size => 50
   #solution
     Popeye solution will be here
   %p.fine

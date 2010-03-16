@@ -43,7 +43,8 @@ label, .label
   margin: 4px 1ex 0 0
   clear: both
   vertical-align: middle
-  display: block
+  display: block   
+  font-weight: bold
 
   &:after
     content: ":"
@@ -173,7 +174,7 @@ div
     float: right
 
   &#solution
-    white-space: pre
+    white-space: pre-wrap
     font: 14px monospace courier
     background-color: #EEE
     border: 1px dashed #BB6
@@ -258,4 +259,15 @@ img.blank
   font-size: smaller     
 
 .cgreen
-  color = #281
+  color = #281                       
+
+form.formtastic
+  li
+    list-style-type: none
+  p.inline-hints
+    font-size: smaller
+    color: #BBB   
+    margin: 0
+    padding: 0   
+  /*input[type="text"]
+    width: 90%
