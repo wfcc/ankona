@@ -10,25 +10,34 @@ body {
 form {
   margin-bottom: 1em; }
   /* line 27, ../../../app/stylesheets/application.sass */
-  form text {
-    color: yellow; }
-  /* line 29, ../../../app/stylesheets/application.sass */
   form textarea {
-    display: block; }
+    display: block;
+    width: 100%; }
+  /* line 30, ../../../app/stylesheets/application.sass */
+  form input[type="submit"] {
+    font-size: x-large; }
 
-/* line 32, ../../../app/stylesheets/application.sass */
-label {
+/* line 33, ../../../app/stylesheets/application.sass */
+input[type="button"].x {
+  font-size: x-large; }
+
+/* line 36, ../../../app/stylesheets/application.sass */
+input[type="text"].w90 {
+  width: 90%; }
+
+/* line 40, ../../../app/stylesheets/application.sass */
+label, .label {
   font-size: 120%;
   color: #681;
-  margin-right: 1ex;
+  margin: 4px 1ex 0 0;
   clear: both;
   vertical-align: middle;
   display: block; }
-  /* line 40, ../../../app/stylesheets/application.sass */
-  label:after {
+  /* line 48, ../../../app/stylesheets/application.sass */
+  label:after, .label:after {
     content: ":"; }
 
-/* line 44, ../../../app/stylesheets/application.sass */
+/* line 52, ../../../app/stylesheets/application.sass */
 div.fieldWithErrors, div.errorExplanation {
   border: 1px solid #c60;
   float: left;
@@ -41,11 +50,11 @@ div.fieldWithErrors, div.errorExplanation {
   -webkit-border-radius: 5px;
   border-radius: 5px; }
 
-/* line 54, ../../../app/stylesheets/application.sass */
+/* line 62, ../../../app/stylesheets/application.sass */
 .x {
   font-size: large; }
 
-/* line 57, ../../../app/stylesheets/application.sass */
+/* line 65, ../../../app/stylesheets/application.sass */
 .circled {
   border: 2px solid #5c1;
   padding: 10px 10px;
@@ -59,7 +68,7 @@ div.fieldWithErrors, div.errorExplanation {
   -webkit-border-radius: 10px;
   border-radius: 10px; }
 
-/* line 69, ../../../app/stylesheets/application.sass */
+/* line 77, ../../../app/stylesheets/application.sass */
 p.notice {
   border: 2px solid #5c1;
   color: #3a1;
@@ -75,7 +84,7 @@ p.notice {
   /* height: 1em */
   display: table-element;
   vertical-align: center; }
-/* line 75, ../../../app/stylesheets/application.sass */
+/* line 83, ../../../app/stylesheets/application.sass */
 p.error {
   border: 2px solid #c60;
   color: #a40;
@@ -91,7 +100,7 @@ p.error {
   /* height: 1em */
   display: table-element;
   vertical-align: center; }
-/* line 81, ../../../app/stylesheets/application.sass */
+/* line 89, ../../../app/stylesheets/application.sass */
 p.nomessage {
   float: left;
   clear: both;
@@ -105,35 +114,40 @@ p.nomessage {
   display: table-element;
   vertical-align: center; }
 
-/* line 85, ../../../app/stylesheets/application.sass */
+/* line 93, ../../../app/stylesheets/application.sass */
 pre.results {
   background-color: #eee;
   padding: 10px;
   font-size: 11px; }
 
-/* line 90, ../../../app/stylesheets/application.sass */
+/* line 98, ../../../app/stylesheets/application.sass */
+a.plain:hover {
+  color: inherit;
+  background-color: inherit; }
+
+/* line 102, ../../../app/stylesheets/application.sass */
 a {
   color: #417;
   text-decoration: none; }
-  /* line 94, ../../../app/stylesheets/application.sass */
+  /* line 106, ../../../app/stylesheets/application.sass */
   a:visited {
     color: #306; }
-  /* line 97, ../../../app/stylesheets/application.sass */
+  /* line 109, ../../../app/stylesheets/application.sass */
   a:hover {
     color: #fff;
     background-color: #666; }
 
-/* line 102, ../../../app/stylesheets/application.sass */
+/* line 114, ../../../app/stylesheets/application.sass */
 ul.menu {
   padding: 0;
   margin-bottom: 3px;
   color: #fff;
   white-space: nowrap;
   list-style-type: none; }
-  /* line 109, ../../../app/stylesheets/application.sass */
+  /* line 121, ../../../app/stylesheets/application.sass */
   ul.menu li {
     display: inline; }
-    /* line 111, ../../../app/stylesheets/application.sass */
+    /* line 123, ../../../app/stylesheets/application.sass */
     ul.menu li a {
       padding: 0.2em 1em;
       margin-right: 2em;
@@ -147,16 +161,16 @@ ul.menu {
       -moz-border-radius: 4px;
       -webkit-border-radius: 4px;
       border-radius: 4px; }
-      /* line 123, ../../../app/stylesheets/application.sass */
+      /* line 135, ../../../app/stylesheets/application.sass */
       ul.menu li a:hover {
         background: #889;
         color: #fff; }
 
-/* line 127, ../../../app/stylesheets/application.sass */
+/* line 139, ../../../app/stylesheets/application.sass */
 .fieldWithErrors {
   display: table; }
 
-/* line 130, ../../../app/stylesheets/application.sass */
+/* line 142, ../../../app/stylesheets/application.sass */
 #errorExplanation {
   width: 400px;
   border: 2px solid red;
@@ -164,7 +178,7 @@ ul.menu {
   padding-bottom: 12px;
   margin-bottom: 20px;
   background-color: #f0f0f0; }
-  /* line 138, ../../../app/stylesheets/application.sass */
+  /* line 150, ../../../app/stylesheets/application.sass */
   #errorExplanation h2 {
     text-align: left;
     font-weight: bold;
@@ -173,23 +187,23 @@ ul.menu {
     margin: -7px;
     background-color: #c00;
     color: #fff; }
-  /* line 147, ../../../app/stylesheets/application.sass */
+  /* line 159, ../../../app/stylesheets/application.sass */
   #errorExplanation p {
     color: #333;
     margin-bottom: 0;
     padding: 5px; }
-  /* line 152, ../../../app/stylesheets/application.sass */
+  /* line 164, ../../../app/stylesheets/application.sass */
   #errorExplanation ul li {
     font-size: 12px;
     list-style: square; }
 
-/* line 157, ../../../app/stylesheets/application.sass */
+/* line 169, ../../../app/stylesheets/application.sass */
 div.pagination {
   float: left; }
-/* line 160, ../../../app/stylesheets/application.sass */
+/* line 172, ../../../app/stylesheets/application.sass */
 div.pagestat {
   float: right; }
-/* line 163, ../../../app/stylesheets/application.sass */
+/* line 175, ../../../app/stylesheets/application.sass */
 div#solution {
   white-space: pre;
   font: 14px monospace courier;
@@ -197,49 +211,49 @@ div#solution {
   border: 1px dashed #BB6;
   padding: 1em; }
 
-/* line 170, ../../../app/stylesheets/application.sass */
+/* line 182, ../../../app/stylesheets/application.sass */
 .stderr {
   color: red; }
 
-/* line 173, ../../../app/stylesheets/application.sass */
+/* line 185, ../../../app/stylesheets/application.sass */
 .stdout {
   color: blue; }
 
-/* line 176, ../../../app/stylesheets/application.sass */
+/* line 188, ../../../app/stylesheets/application.sass */
 .fine {
   font-size: smaller;
   color: #BBB; }
 
-/* line 180, ../../../app/stylesheets/application.sass */
+/* line 192, ../../../app/stylesheets/application.sass */
 img.board {
   width: 202px;
   height: 202px; }
 
-/* line 184, ../../../app/stylesheets/application.sass */
+/* line 196, ../../../app/stylesheets/application.sass */
 .clickable {
   border-top: 1px dashed gray;
   margin-bottom: 1em; }
-  /* line 188, ../../../app/stylesheets/application.sass */
+  /* line 200, ../../../app/stylesheets/application.sass */
   .clickable:hover {
     background-color: #ddd;
     cursor: pointer;
     border: 1px solid red;
     margin-bottom: 1em; }
 
-/* line 194, ../../../app/stylesheets/application.sass */
+/* line 206, ../../../app/stylesheets/application.sass */
 pre.solution {
   white-space: pre-wrap;
   text-indent: 0; }
 
-/* line 199, ../../../app/stylesheets/application.sass */
+/* line 211, ../../../app/stylesheets/application.sass */
 table.diagrams td {
   vertical-align: top;
   font-size: 11px; }
-/* line 203, ../../../app/stylesheets/application.sass */
+/* line 215, ../../../app/stylesheets/application.sass */
 table.zero td {
   padding: 0; }
 
-/* line 206, ../../../app/stylesheets/application.sass */
+/* line 218, ../../../app/stylesheets/application.sass */
 .greeny-highlight {
   background-color: #cea;
   border: 1px solid #bcb;
@@ -247,3 +261,44 @@ table.zero td {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   padding: 10px; }
+
+/* line 224, ../../../app/stylesheets/application.sass */
+#pcount {
+  margin-bottom: 5px; }
+
+/* line 227, ../../../app/stylesheets/application.sass */
+.em1 {
+  height: 1em; }
+
+/* line 230, ../../../app/stylesheets/application.sass */
+#divBlank {
+  padding: 0;
+  width: 202px;
+  height: 202px;
+  position: relative; }
+
+/* line 236, ../../../app/stylesheets/application.sass */
+img.blank {
+  position: absolute;
+  z-index: -1; }
+
+/* line 240, ../../../app/stylesheets/application.sass */
+.login {
+  text-align: center;
+  border: dashed grey 1px;
+  font-size: larger;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  padding: 1ex;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px; }
+
+/* line 250, ../../../app/stylesheets/application.sass */
+.loggedin {
+  background-color: #D8E8D0; }
+
+/* line 253, ../../../app/stylesheets/application.sass */
+.loggedout {
+  background-color: #E8D8D0; }

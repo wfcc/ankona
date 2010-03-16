@@ -1,0 +1,91 @@
+%h1 Editing diagram
+  - form_for(@diagram) do |f|
+    = f.error_messages
+    #first.span-12
+      %p
+        = f.label 'FEN'
+        %br/
+        = f.text_field :position, :label => 'FEN'
+      = f.label 'Position (w/b)'
+      %br/
+      = f.text_field :white, :size => 40
+      %br/
+      = f.text_field :black, :size => 40
+      %p
+      #divBlank{:style => "padding:0; width:202px;height:202px;position:relative"}
+        = image_tag '/fen', :id => 'blank', :style=>'position:absolute;z-index:-1'
+      #pcount
+      %br/
+      - i = 0; %w{◁ ▽ △ ▷ CW CCW ↕}.each do |direction|
+        = button_to_function direction, "moveBoard('#{direction}')"
+      %p
+        = f.label 'Stipulation'
+        = f.text_field :stipulation, :size => 6
+        %br/
+        = f.label 'Twin'
+        = f.text_field :twin, :size => 20
+      %p
+        = f.label 'C+'
+        = f.check_box :tested, :label => 'C+'
+    #second.span-12.last
+      = f.label 'Authors'
+      %br/
+      #authors
+        = render :partial => 'author', :collection => @diagram.authors
+      %p
+        = add_author_link "Add author"
+      %p
+        = f.label 'Source'
+        %br/
+        = f.text_field :source, :size => 40
+      %table.zero
+        %tr
+          %td= f.label 'Number'
+          %td= f.label 'Published'
+        %tr
+          %td
+            = f.text_field :label, :size => 6
+            %br/
+            %span.fine Diagram ID, label
+          %td= f.date_select :published,                     |
+              {:start_year => 1800, :include_blank => true} |
+      %p
+        = f.label 'Solution'
+        %br/
+        = f.text_area :solution
+      %ul.menu
+        %li
+          = link_to 'Don\'t save', @diagram
+        %li
+          = link_to 'Back to list', diagrams_path
+      %p{:style => "clear:both"}
+    %br{:style => "clear:both"}/
+    %p
+      = f.submit 'Update'
+    = submit_to_remote 'solve', 'Solve',                                 |
+      :style => 'height:11em;width:7em;margin-top:3em',                  |
+      :update => 'solution',                                             |
+      :condition => 'validateForm()',                                    |
+      :before => "$('solution').update('Popeye solving in progres...')", |
+      :method => 'post',                                                 |
+      :url => { :action => 'solve' }                                     |
+    Popeye options: #{text_field_tag :pyopts, :size => 16, :value => 'Intelligent'}
+    #solution Popeye solution will be here
+    %p.fine
+      Entered by #{@diagram.user ? @diagram.user.name : ''}
+      %p
+  :javascript
+  PIECE = '';
+   $('diagram_white').observe('keyup', updateFen);
+   $('diagram_black').observe('keyup', updateFen);
+   $('diagram_position').observe('keyup', updateFromFen);
+
+   initVars();
+   ; if (! $('diagram_position').value)
+      { updateFen({keyCode: 50})
+   } else {
+       updateFromFen()
+   }
+
+//   $('blank').src = '/fen/' + $('diagram_fen').value;
+   $('diagram_white').focus();

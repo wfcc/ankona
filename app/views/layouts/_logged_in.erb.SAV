@@ -16,6 +16,9 @@
   ;float:right
   ;border:dashed grey 1px
   ;font-size:larger
+  ;position: fixed
+  ;top: 5px
+  ;right: 5px
   ;padding:1ex
   ;background-color:#E8D8D0
   ;-moz-border-radius: 3px

@@ -1,0 +1,15 @@
+%p
+  %b Name:
+  =h @author.name
+
+%p
+  %b Original:
+  =h @author.original
+
+%p
+  %b Birth date:
+  =h @author.birth_date
+
+= link_to 'Edit', edit_author_path(@author)
+= ' | '
+= link_to 'Back', authors_path

@@ -1,5 +1,5 @@
 !!!
-%html{ "xml:lang" => "en", :lang => "en", :xmlns => "http://www.w3.org/1999/xhtml" }
+%html(xmlns = "http://www.w3.org/1999/xhtml")
   %head
     %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }
     %title
@@ -16,10 +16,10 @@
     = stylesheet_link_tag 'compiled/application'
     = render :partial => 'layouts/google_analytics'
   %body
-    = image_tag('dia-x-logo.png', :style => 'margin:0 0 0px 0px')
+    %a.plain(href = '/')
+      = image_tag('dia-x-logo.png', :style => 'margin:0 0 0px 0px')
     = render :partial => 'layouts/logged_in'
     %ul.menu
-      %li= link_to '/', :controller => 'faqs', :id => 1
       %li= link_to 'Competitions', :controller => 'competitions'
       %li= link_to 'Problems', :controller => 'diagrams'
       %li= link_to 'Authors', :controller => 'authors'

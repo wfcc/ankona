@@ -1,0 +1,12 @@
+- if current_user_session
+  .login.loggedin
+    = current_user.name
+    %br/
+    %span{:style => "font-size:x-small"}
+      [#{link_to 'Logout', '/logout'}]
+- else
+  .login.loggedout
+    = link_to 'Log in', '/login'
+    , or
+    %br/
+    = link_to 'register', '/signup'

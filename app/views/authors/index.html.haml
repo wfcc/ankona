@@ -1,0 +1,32 @@
+%h1 Listing authors
+
+%h2 Filter
+- form_tag :authors, :method => :get do
+  Name:
+  = text_field_tag 'search[name]', '', :size => 20
+  = submit_tag 'Apply'
+
+= will_paginate @authors
+.pagestat= page_entries_info @authors
+%br(style="clear:both")
+
+%table
+  %tr
+    %th Name
+    - @authors.each do |author|
+      %tr
+        %td= author.name
+        %td= author.original
+        - if is_admin?
+          %td= link_to 'Show', author
+          %td= link_to 'Edit', edit_author_path(author)
+          %td= link_to '☒', author, :confirm => 'Are you sure?', :method => :delete
+
+%p/
+
+= will_paginate @authors
+.pagestat= page_entries_info @authors
+
+%br
+
+= link_to 'New author', new_author_path

@@ -13,7 +13,7 @@
   /*height: 1em*/
   display: table-element
   vertical-align: center
-                            
+
 
 body
   background-color: #fff
@@ -24,21 +24,29 @@ body
 
 form
   margin-bottom: 1em
-  text
-    color: yellow         
   textarea
     display: block
+    width: 100%
+  input[type="submit"]
+    font-size: x-large
 
-label
-  font-size: 120%  
-  color: #681  
-  margin-right: 1ex  
-  clear: both  
+input[type="button"].x
+  font-size: x-large
+
+input[type="text"].w90
+  width: 90%
+
+
+label, .label
+  font-size: 120%
+  color: #681
+  margin: 4px 1ex 0 0
+  clear: both
   vertical-align: middle
-  display: block  
+  display: block
 
   &:after
-    content: ":"  
+    content: ":"
 
 div
   &.fieldWithErrors, &.errorExplanation
@@ -48,7 +56,7 @@ div
     font-size: 120%
     color: #a40
     font-weight: bold
-    background-color: #faa 
+    background-color: #faa
     +rounded(5px)
 
 .x
@@ -68,28 +76,32 @@ div
 p
   &.notice
     border: 2px solid #5c1
-    color: #3a1   
-    background-color: #afa    
+    color: #3a1
+    background-color: #afa
     +message
 
   &.error
-    border: 2px solid #c60     
-    color: #a40  
-    background-color: #faa    
+    border: 2px solid #c60
+    color: #a40
+    background-color: #faa
     +message
 
   &.nomessage
     +message
-  
+
 
 pre.results
   background-color: #eee
   padding: 10px
   font-size: 11px
 
+a.plain:hover
+  color: inherit
+  background-color: inherit
+
 a
-  color: #417  
-  text-decoration: none  
+  color: #417
+  text-decoration: none
 
   &:visited
     color: #306
@@ -165,13 +177,13 @@ div
     font: 14px monospace courier
     background-color: #EEE
     border: 1px dashed #BB6
-    padding: 1em   
+    padding: 1em
 
 .stderr
-  color: red 
+  color: red
 
 .stdout
-  color: blue 
+  color: blue
 
 .fine
   font-size: smaller
@@ -205,6 +217,38 @@ table
 
 .greeny-highlight
   background-color: #cea
-  border: 1px solid #bcb  
+  border: 1px solid #bcb
   +rounded(5px)
   padding: 10px
+
+#pcount
+  margin-bottom: 5px
+
+.em1
+  height: 1em
+
+#divBlank
+  padding: 0
+  width: 202px
+  height: 202px
+  position: relative
+
+img.blank
+  position: absolute
+  z-index: -1
+
+.login
+  text-align: center
+  border: dashed grey 1px
+  font-size: larger
+  position: fixed
+  top: 5px
+  right: 5px
+  padding: 1ex
+  +rounded(3px)
+
+.loggedin
+  background-color: #D8E8D0
+
+.loggedout
+  background-color: #E8D8D0
