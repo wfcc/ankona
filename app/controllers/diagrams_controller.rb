@@ -149,7 +149,7 @@ require 'open3'
 
   def twin_to_py(t)
     s = t
-    logger.info ("==<<== #{t} ==>>==")
+    logger.info "==<<== #{t} ==>>=="
     case t
     when nil, '', /^\d/ then s = ''
     when /(\S+)\s*(↔|<.?.?>)\s*(\S+)/
