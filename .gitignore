@@ -9,3 +9,5 @@
 log/*
 database/*
 tmp/*
+*.SAV
+*.sql
