@@ -4,7 +4,7 @@ require 'open3'
 
   #active_scaffold :diagram
 
-#  before_filter :require_user, {:only => :edit}
+  before_filter :require_user, {:only => :edit}
 
 #--------------------------------------------------------
   # GET /diagrams
@@ -59,6 +59,10 @@ require 'open3'
     @diagram = Diagram.find(params[:id])
     @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
     @showIfFairy = @diagram.fairy.blank? ? 'display:none' : 'display:visible'
+    if @diagram.user_id != current_user.id
+      flash[:error] = "Unathorized."
+      render :show
+    end
   end
 
   # POST /diagrams

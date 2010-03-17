@@ -48,8 +48,9 @@ class ApplicationController < ActionController::Base
       unless current_user
         store_location
         flash[:error] = "You must be logged in to access this page."
+        redirect_to '/login'
         #redirect_to new_user_session_url
-        redirect_to url_for, :controller => :user_sessions, :action => :new
+#        redirect_to url_for, :controller => :user_sessions, :action => :new
         return false
       end
     end
