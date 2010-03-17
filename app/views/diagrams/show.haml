@@ -1,26 +1,21 @@
-%ul.menu
-  %li= link_to 'Back', diagrams_path
-  - if may_edit? @diagram and @diagram.sections.count < 1
-    %li= link_to 'Edit', edit_diagram_path(@diagram)
-    %li= link_to 'Destroy', @diagram, :confirm => 'Are you sure?', :method => :delete
-.clear
 .span-7.append-1
-  %div{ :style => "text-align:center" }
-    %p= @diagram.authors.collect(&:name).join(', ')
+  %div{ :style => "text-align:left;margin-top:1em" }
+    %p{ :style => "font:bold larger Arial" }= @diagram.authors.collect(&:name).join(', ')
     %p= @diagram.label
     %p= @diagram.source
     %p= @diagram.published
   #divBlank
     - @diagram.position = '' if @diagram.position.blank?
     = image_tag '/fen/' + @diagram.position, :id => 'blank'
-  %div{ :style => "text-align:right;padding-right:3em;font-size:x-small" }
+  %div{ :style => "text-align:right;padding-right:70px;font-size:x-small" }
     = @diagram.position.scan(/[A-Z]/).size
     +
     = @diagram.position.scan(/[a-z]/).size
   .d= @diagram.stipulation
   .xs= @diagram.twin
-.span-8
+  .xs= @diagram.fairy
   .xs= @diagram.tested ? 'C+' : 'C-'
+.span-8
   %pre.solution= @diagram.solution
 .span-7.last
   - if may_edit? @diagram
@@ -42,8 +37,14 @@
     = collection_select :diagram, :collection_ids, Collection.all(:conditions => {:public => true }) | [] | (current_user ? current_user.collections : []), :id, :name, { :selected => @diagram.collection_ids }, { :multiple => true, :name => 'diagram[collection_ids][]', :style => 'width:24em' }
     .fine multiple select: Ctrl-click / ⌘-click to select more
     = f.submit 'Save changes to collections'
+  .cgreen= @diagram.collections.collect(&:name).join(', ')
+  .xs
+    Entered by:
+    = @diagram.user ? @diagram.user.name : 'system'
+%ul.menu
+  %li= link_to 'Back', diagrams_path
+  - if may_edit? @diagram and @diagram.sections.count < 1
+    %li= link_to 'Edit', edit_diagram_path(@diagram)
+    %li= link_to 'Destroy', @diagram, :confirm => 'Are you sure?', :method => :delete
 
-.cgreen= @diagram.collections.collect(&:name).join(', ')
-%span.xs
-  Entered by:
-  = @diagram.user ? @diagram.user.name : 'system'
+

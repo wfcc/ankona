@@ -26,7 +26,7 @@
       %li= link_to 'Collections', :controller => 'collections'
       %li= link_to 'Import', :controller => 'imports'
       %li= link_to 'Feedback', :controller => 'posts'
-    %div{ :style => "height:50px; clear:both; margin:4px 0; display:block" }
+    %div{ :style => "height:50px; clear:both; margin:4px auto; text-align:center" }
       - if flash[:notice]
         %p.notice= flash[:notice]
       - elsif flash[:error]

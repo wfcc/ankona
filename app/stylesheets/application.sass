@@ -4,15 +4,15 @@
   border-radius = !radius
 
 =message
-  float: left
   clear: both
   padding: 8px 10px
   font-size: 120%
   font-weight: bold
   +rounded(8px)
   /*height: 1em*/
-  display: table-element
+  display: table
   vertical-align: center
+  margin: 0 auto
 
 
 body
@@ -121,9 +121,12 @@ a
 ul.menu
   padding: 0
   margin-bottom: 3px
-  color: #fff
+  color: #faa
   white-space: nowrap
   list-style-type: none
+  line-height: 100%
+  height: 2em
+  display: block
 
   li
     display: inline
@@ -276,11 +279,13 @@ form.formtastic
     color: #BBB   
     margin: 0
     padding: 0   
+  input[type="text"]
+    width: 80%
+  input[type="text"].c30p
+    width: 30%
     
 legend
   padding: 1em 0
   text-align: center
   
-span#beforepy
-  font: normal large Monospace
-  color: #688F52
+  

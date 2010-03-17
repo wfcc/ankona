@@ -4,7 +4,7 @@ require 'open3'
 
   #active_scaffold :diagram
 
-  before_filter :require_user, {:only => :edit}
+  before_filter :require_user, {:except => [:index, :show]}
 
 #--------------------------------------------------------
   # GET /diagrams
