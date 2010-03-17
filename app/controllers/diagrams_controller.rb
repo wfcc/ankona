@@ -60,7 +60,7 @@ require 'open3'
     @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
     @showIfFairy = @diagram.fairy.blank? ? 'display:none' : 'display:visible'
     if @diagram.user_id != current_user.id
-      flash[:error] = "Unathorized."
+      flash[:error] = "You are unauthorized to edit this problem."
       render :show
     end
   end
@@ -73,7 +73,7 @@ require 'open3'
     respond_to do |format|
       @diagram.user = current_user
       if @diagram.save
-        flash[:notice] = 'Diagram was successfully created.'
+        flash[:notice] = 'Problem was successfully created.'
         format.html { redirect_to(@diagram) }
         format.xml  { render :xml => @diagram, :status => :created, :location => @diagram }
       else
