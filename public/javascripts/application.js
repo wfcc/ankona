@@ -14,6 +14,12 @@
 ; aBoard = []
 ; arrayOfOnes = $w('1 1 1 1 1 1 1 1')
 
+; notationEnglish = 'KQRBSPkqrbsp'
+; notationFIDE    = 'KDTLSpKDTLSp'
+; nEngl = 'kqrbsp'
+; nFide = 'kdtlsp'
+
+
 //--------------------------------------
 function clearBoard() {
   ; $$('.pieceOnBoard').each (function(p) {p.remove()})
@@ -57,6 +63,28 @@ function fenToInternal(){
 
 } //*************************************
 function notationToInternal(){
+
+  ; clearBoard()
+  ; ['diagram_white', 'diagram_black'].each (function(color)
+    { $(color).value.toLowerCase().split(/\W/).each (function(p)
+       { if (p.length == 2) p = 'p' + p
+       ; if (p.length != 3) return
+       ; p = p.toLowerCase()
+       ; piece = p.charAt(0)
+       ; file = p.charCodeAt(1)
+       ; rank = p.charAt(2)
+       //; alert(file)
+       ; if (file< 97 || file>104) return // a — h
+       ; if (rank<'1' || rank>'8') return
+       ; if ('kdtlsp'.indexOf(piece) < 0) return
+       ; aBoard[8 - rank][file - 97]
+          = color=='diagram_white' 
+          ? nEngl.charAt(nFide.indexOf(piece)).toUpperCase()
+          : nEngl.charAt(nFide.indexOf(piece))
+      })
+    })
+} //*************************************
+function notationToInternal00(){
 
   ; clearBoard()
   ; ['diagram_white', 'diagram_black'].each (function(color)
@@ -113,7 +141,8 @@ function internalToNotation(){
       { var piece = aBoard[i][j]
       ; if(piece=='1') return
       ; (piece < 'a' ? aWhite : aBlack).push(
-          (piece.match(/p/i) ? piece.toLowerCase() : piece.toUpperCase()) +
+          /*(piece.match(/p/i) ? piece.toLowerCase() : piece.toUpperCase()) +*/
+          notationFIDE.substr(notationEnglish.indexOf(piece),1) +
           String.fromCharCode(j+97) + (8-i).toString())
       })
     })
@@ -177,7 +206,7 @@ function updateFromFen(e){
 } //*************************************
 function sortPieces(a,b) {
 
-   ; var pcs = 'KQRBSp'
+   ; var pcs = 'KDTLSp'
    ; return pcs.indexOf(a.substr(0,1)) -
       pcs.indexOf(b.substr(0,1)) 
 } //*************************************

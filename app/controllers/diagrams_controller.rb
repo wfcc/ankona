@@ -57,6 +57,8 @@ require 'open3'
 # GET /diagrams/1/edit
   def edit
     @diagram = Diagram.find(params[:id])
+    @showIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:hidden'
+    @hideIfFairy = @diagram.fairy.blank? ? 'display:hidden' : 'display:visible'
   end
 
   # POST /diagrams
@@ -144,9 +146,9 @@ require 'open3'
 ###################################################
   private
   def nrm(s)
-     return s.split(/[, ]+/).collect do |a|
-        a.size < 3 ? 'p' + a : a
-     end.join(' ')
+    return s.split(/[, ]+/).collect do |a|
+      (a.size < 3 ? 'P' + a : a).capitalize.tr 'DTL', 'QRB' # FIDE -> English
+    end.join(' ')
   end
 
   def twin_to_py(t)

@@ -9,7 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 24) do
+ActiveRecord::Schema.define(:version => 25) do
+
+  create_table "aaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d",                :null => false
+    t.integer "pay"
+  end
+
+  create_table "aaaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d_d",              :null => false
+    t.integer "pay"
+  end
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -22,6 +36,10 @@ ActiveRecord::Schema.define(:version => 24) do
   create_table "authors_diagrams", :id => false, :force => true do |t|
     t.integer "author_id"
     t.integer "diagram_id"
+  end
+
+  create_table "bubu", :id => false, :force => true do |t|
+    t.integer "id", :limit => 10, :precision => 10, :scale => 0
   end
 
   create_table "collections", :force => true do |t|
@@ -66,6 +84,7 @@ ActiveRecord::Schema.define(:version => 24) do
     t.string   "award"
     t.integer  "author_id"
     t.string   "source"
+    t.string   "fairy"
   end
 
   create_table "diagrams_collections", :id => false, :force => true do |t|

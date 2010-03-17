@@ -18,8 +18,11 @@
       = button_to_function direction, "moveBoard('#{direction}')"
 
     = f.input :stipulation, :input_html => {:size => 6}, :hint => '#2 | s#3 | h#2.5 | win | …'
-    = f.input :twin, :input_html => {:size => 20}, | 
-      :hint => 'b) Se5->e6 | b) +Th3, c) Sh8<->La2 | 2.1;1.1 | …' |
+    = f.input :twin, :input_html => {:size => 20}, :hint => 'b) Se5->e6 | b) +Th3, c) Sh8<->La2 | 2.1;1.1 | …'
+    =link_to_function 'Add fairy condition', "$('fairy').show(); $('showfairy').hide(); return true", |
+      :style => @hideIfFairy, :id => 'showfairy' |
+    #fairy(style = "#{@showIfFairy}")
+      =f.input :fairy, :input_html => {:size => 20}, :hint => 'List fairy conditions'
     %span.label C+
     = f.check_box :tested
   #second.span-12.last
@@ -51,11 +54,11 @@
       :method => 'post', :url => { :action => 'solve' }, :html => {:class => 'x'} |
     %br
     %label(for = "pyconds" class = "modest") Popeye “condition” line
-    =text_field_tag :pyconds, ""
+    =text_field_tag :pyconds, "", :size => 50
     %span.fine circe, andernach, madrasi, masand, koeko, …
     %br
     %label(for = "pyopts" class = "modest") Popeye “options” line
-    =text_field_tag :pyopts, ""
+    =text_field_tag :pyopts, "",  :size => 50
     %span.fine try, setplay, duplex, maxsolutions, intelligent, …   
     #solution<>
       %span#beforepy Popeye solution will go here
