@@ -57,8 +57,8 @@ require 'open3'
 # GET /diagrams/1/edit
   def edit
     @diagram = Diagram.find(params[:id])
-    @showIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:hidden'
-    @hideIfFairy = @diagram.fairy.blank? ? 'display:hidden' : 'display:visible'
+    @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
+    @showIfFairy = @diagram.fairy.blank? ? 'display:none' : 'display:visible'
   end
 
   # POST /diagrams

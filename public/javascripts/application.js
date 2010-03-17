@@ -322,4 +322,7 @@ function moveBoard(d) { // move position left/up/down/up
   ; return false
 
 } //*************************************
-
+function addFairyCondition() {
+  ; $('showfairy').hide()
+  ; $('fairy').show()
+}
