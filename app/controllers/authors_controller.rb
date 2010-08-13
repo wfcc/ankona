@@ -1,14 +1,8 @@
 class AuthorsController < ApplicationController
   # GET /authors
-  # GET /authors.xml
   def index
-#    searcher = Author.search(:ascend_by_name => true)
-#    if params[:search]
-#      searcher.name_like params[:search][:name] if params[:search][:name] != ''
-#    end
 
-#    @authors = searcher.paginate :page => params[:page]
-    @authors = Author.all.paginate :page => params[:page]
+    @authors = Author.where(:name.matches % "%#{params[:search_name]}%").paginate :page => params[:page]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +11,6 @@ class AuthorsController < ApplicationController
   end
 
   # GET /authors/1
-  # GET /authors/1.xml
   def show
     @author = Author.find(params[:id])
 
@@ -28,7 +21,6 @@ class AuthorsController < ApplicationController
   end
 
   # GET /authors/new
-  # GET /authors/new.xml
   def new
     @author = Author.new
 
@@ -44,7 +36,6 @@ class AuthorsController < ApplicationController
   end
 
   # POST /authors
-  # POST /authors.xml
   def create
     @author = Author.new(params[:author])
 
@@ -61,7 +52,6 @@ class AuthorsController < ApplicationController
   end
 
   # PUT /authors/1
-  # PUT /authors/1.xml
   def update
     @author = Author.find(params[:id])
 
@@ -78,7 +68,6 @@ class AuthorsController < ApplicationController
   end
 
   # DELETE /authors/1
-  # DELETE /authors/1.xml
   def destroy
     @author = Author.find(params[:id])
     @author.destroy
