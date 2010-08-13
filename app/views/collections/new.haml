@@ -1,0 +1,10 @@
+%h1 New collection
+Collection is a label that you can assign to your problems.
+A problem may be contained in one or more collections.
+%br/
+- form_for(@collection) do |f|
+  = f.error_messages
+  %p
+    = f.text_field :name
+    = f.submit 'Create'
+= link_to 'Back', collections_path

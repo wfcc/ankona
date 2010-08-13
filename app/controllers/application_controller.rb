@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
   # Likewise, all the methods added will be available for all controllers.
 
   helper_method :current_user_session, :current_user, :is_admin?, :may_edit?
-  filter_parameter_logging :password, :password_confirmation
 
   def may_edit?(o)
     return false unless current_user
