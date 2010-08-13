@@ -2,12 +2,13 @@ class AuthorsController < ApplicationController
   # GET /authors
   # GET /authors.xml
   def index
-    searcher = Author.search(:ascend_by_name => true)
-    if params[:search]
-      searcher.name_like params[:search][:name] if params[:search][:name] != ''
-    end
+#    searcher = Author.search(:ascend_by_name => true)
+#    if params[:search]
+#      searcher.name_like params[:search][:name] if params[:search][:name] != ''
+#    end
 
-    @authors = searcher.paginate :page => params[:page]
+#    @authors = searcher.paginate :page => params[:page]
+    @authors = Author.all.paginate :page => params[:page]
 
     respond_to do |format|
       format.html # index.html.erb

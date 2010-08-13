@@ -1,8 +1,0 @@
-<p>
-  <%= RedCloth.new(@faq.body).to_html %>
-</p>
-
-
-<% if is_admin? -%>
-  <%= link_to 'Edit', edit_faq_path(@faq) %>
-<% end -%>

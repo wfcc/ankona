@@ -1,0 +1,17 @@
+%h1
+  Log in, or #{link_to 'register', signup_path}
+- form_for @user_session, :url => login_url do |f|
+  %p
+    = f.error_messages
+    = f.label :login
+    = f.text_field :login
+  %p
+    = f.label :password
+    = f.password_field :password
+  %p
+    = f.label :remember_me
+    = f.check_box :remember_me
+  %p
+    = f.submit "Login"
+  %p
+    = link_to 'Renew lost password', :controller => 'password_resets', :action => 'new'

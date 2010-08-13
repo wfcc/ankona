@@ -1,3 +1,4 @@
+# coding: utf-8
 class DiagramsController < ApplicationController
 
 require 'open3'
