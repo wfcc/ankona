@@ -1,3 +1,13 @@
+GIT
+  remote: http://github.com/justinfrench/formtastic.git
+  revision: 42b4eb8
+  branch: rails3
+  specs:
+    formtastic (1.0.0)
+      actionpack (>= 2.3.0)
+      activesupport (>= 2.3.0)
+      i18n (>= 0.4.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -36,9 +46,6 @@ GEM
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    formtastic (0.9.10)
-      actionpack (>= 2.3.0)
-      activesupport (>= 2.3.0)
     haml (3.0.16)
     i18n (0.4.1)
     mail (2.2.5)
@@ -51,6 +58,7 @@ GEM
       arel (>= 0.4.0)
     mime-types (1.16)
     mysql (2.8.1)
+    mysql2 (0.1.9)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.9)
@@ -85,10 +93,11 @@ PLATFORMS
 DEPENDENCIES
   RedCloth (>= 4.0)
   authlogic
-  formtastic
+  formtastic!
   haml
   meta_where
   mysql (>= 2.8.1)
+  mysql2
   rails (= 3.0.0.rc)
   rmagick
   validatable

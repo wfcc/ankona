@@ -1,4 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
+  
+  root to: 'faqs#show', id: 1
+  match 'fen/(*id)' => 'fen#index'
+
+  
   map.resources :statuses
 
   map.resources :faqs
@@ -20,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'diagrams/solve/:id', :controller => 'diagrams', :action => 'solve'
   map.connect 'diagrams/section/:id', :controller => 'diagrams', :action => 'section'
 
-  map.connect 'fen/*id', :controller => 'fen'
+  #map.connect 'fen/*id', :controller => 'fen'
 
   map.signup '/signup', :controller => 'users', :action => 'create', :conditions => { :method => :post}
   map.signup '/signup', :controller => 'users', :action => 'new', :conditions => { :method => :get}
@@ -33,7 +38,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :imports
 
-  map.root :controller => 'faqs', :action => 'show', :id => 1
+#  map.root :controller => 'faqs', :action => 'show', :id => 1
 
 
 end

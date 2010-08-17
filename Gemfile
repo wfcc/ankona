@@ -31,9 +31,11 @@ gem 'rails', '3.0.0.rc'
 #  gem 'gd2-ffij'
   gem 'rmagick', :require => 'RMagick'
   gem 'validatable'  
-  gem 'formtastic'
   gem 'mysql', '>= 2.8.1'
   gem 'haml'
+  gem 'mysql2'
+  gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "rails3"
+  
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

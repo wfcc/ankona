@@ -1,7 +1,7 @@
 module AuthenticationHandling
   
   def self.included(base)
-    base.send(:filter_parameter_logging, :password, :password_confirmation)
+    #base.send(:filter_parameter_logging, :password, :password_confirmation)
     base.send(:helper_method, :current_user_session, :current_user)
   end
   

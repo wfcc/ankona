@@ -22,7 +22,7 @@
     .d
       You may submit this diagram to an open competition:
       - form_for @diagram, :url => {:action => 'section'} do |f|
-        = collection_select :diagram, :section_ids, Section.search.competition_id_gt(0).all, |
+        = collection_select :diagram, :section_ids, Section.where(:competition_id.gt => 0), |
         :id, :name_cs, { :selected => nil, :include_blank => true }, |
         { :name => 'diagram[section_ids][]', :style => 'width:24em' } |
         = f.submit 'Submit to competition'
@@ -35,7 +35,7 @@
   - form_for @diagram do |f|
     = f.label 'Collections'
     = collection_select :diagram, :collection_ids, Collection.all(:conditions => {:public => true }) | [] | (current_user ? current_user.collections : []), :id, :name, { :selected => @diagram.collection_ids }, { :multiple => true, :name => 'diagram[collection_ids][]', :style => 'width:24em' }
-    .fine multiple select: Ctrl-click / ⌘-click to select more
+    .fine multiple select: Ctrl-click / ⌘-click
     = f.submit 'Save changes to collections'
   .cgreen= @diagram.collections.collect(&:name).join(', ')
   .xs

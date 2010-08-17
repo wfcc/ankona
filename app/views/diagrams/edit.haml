@@ -46,7 +46,8 @@
   = f.submit 'Save'
   %fieldset
     %legend
-      = submit_to_remote 'solve', ' Solve with popeye ', |
+      -#= submit_to_remote 'solve', ' Solve with popeye ', |
+      = submit 'solve', ' Solve with popeye ', |
         :update => 'solution', :condition => 'validateForm()', |
         :before => "$('solution').update('Popeye solving in progres...')", |
         :method => 'post', :url => { :action => 'solve' }, :html => {:class => 'x'} |

@@ -1,6 +1,6 @@
 namespace :populate do
   desc 'diagrams'
-  task (:diagrams => :environment) do
+  task (:diagrams => 'environment') do
     Author.connection.execute 'TRUNCATE authors'
     Diagram.connection.execute 'TRUNCATE diagrams'
     Diagram.connection.execute 'TRUNCATE authors_diagrams'

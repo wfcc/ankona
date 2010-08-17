@@ -1,3 +1,5 @@
+-# coding: utf-8
+
 %h1 Listing diagrams
 = link_to 'New diagram', new_diagram_path
 - form_tag :diagrams, :method => :get do
@@ -7,7 +9,7 @@
   = text_field_tag 'search[stipulation]', '', :size => 5
   collection:
   = collection_select :search, :collections, |
-    (current_user ? Collection.user_id_eq(current_user.id) : Collection.public_eq(true)), |
+    (current_user ? Collection.where(:user_id.eq => current_user.id) : Collection.where(:public.eq => true)), |
     :id, :name, {:include_blank => true, :selected => @scoll} |
   = submit_tag 'Apply filter'
 - if current_user

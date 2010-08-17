@@ -1,64 +1,62 @@
+# encoding: UTF-8
+
 class FenController < ApplicationController
 
-   include GD2
+
+include Magick
 
 FIGDIR = 'public/images/fig/'
 SUFFIX = '.gif'
 
-   def index
-      cols, rows = 8, 8
-      flip = rows % 2
-      board = Image::IndexedColor.new cols*25+2, rows*25+2
-      white = board.palette.resolve Color[1.0, 1.0, 0.94]
-      black = board.palette.resolve Color[0.78,0.78,0.71]
-      @red  = board.palette.resolve Color[0.78,0.12,0.12]
-      board.draw do |pen|
-         pen.color = board.palette.resolve Color::BLACK
-         pen.fill
-         rows.times do |x|
-            cols.times do |y|
-               pen.color = flip ^ y%2 ^ x%2 > 0 ? black : white
-               pen.rectangle x*25+1,y*25+1,x*25+25,y*25+25,true
-            end
-         end
-      end
-      # board done
-      #board = Image.load BOARD
-      
-      @fig = {}
-      params[:id].collect! do |rank|
+###########################################################
+  def index
+    cols, rows = 8, 8
+    i, j = 0, 0
+    @dia = $board
+
+    if params[:id].present?
+      slashed = params[:id].split('/')
+      slashed.collect! do |rank|
          # replace numbers with spaces
-         rank.gsub!(/\d/) {' ' * $&.to_i}
+         rank.gsub!(/\d+/) {' ' * $&.to_i}
          rank.ljust(cols) # fill up
       end
-      i, j = 0, 0
-      params[:id].to_s.each_byte do |c|
+      
+      #logger.info slashed
+      slashed.join.each_byte do |c|
          unless c == 32
             c = c.chr
             c < 'a' ? c.downcase! : c = 'b' + c
             c.sub! /n/, 's'
-            putFig board, c, i, j
+            putFigM c, i, j
          end
          (j+=25; i=0) if (i+=25) > 180
       end
-      render :text => board.gif, :content_type => 'image/gif'
-   end
-###################################################
-   private
-###################################################
-   def putFig(board, c, i, j)
-      begin
-         @fig[c] = Image.import FIGDIR + c + SUFFIX unless @fig[c]
-      rescue
-         board.draw do |pen|
-            pen.color = @red
-            pen.move_to 25, 180
-            pen.font = Font::TrueType[
-               '/usr/share/fonts/truetype/msttcorefonts/times.ttf', 20]
-            pen.text "bad symbol '#{c}'"
-         end
-      else
-         board.merge_from @fig[c], i+1, j+1, 0,0,25,25,1
+    end
+
+    send_data @dia.to_blob, type: 'image/png', disposition: 'inline'
+  end
+###########################################################
+  private
+###########################################################
+  def putFigM(c, i, j)
+    begin
+      fig = Image.read(FIGDIR + c + SUFFIX)[0]
+    rescue
+      logger.info "bad  symbol #{c}"
+      pen = Magick::Draw.new
+      pen.annotate(@dia, 0,0,0,40, "bad symbol: #{c}") do
+        self.font_family = 'Georgia'
+        self.fill = '#FF5353'
+        self.stroke = 'transparent'
+        self.pointsize = 24
+        self.font_weight = BoldWeight
+        self.gravity = SouthGravity
       end
-   end
+    else
+      #logger.info "good symbol #{c}"
+      @dia = @dia.composite(fig, i+1, j+1, Magick::OverCompositeOp)
+    end
+  end
+###########################################################
 end

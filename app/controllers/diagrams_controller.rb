@@ -12,15 +12,16 @@ require 'open3'
   # GET /diagrams.xml
   def index
 
-    searcher = Diagram.search(:ascend_by_created_at => true)
-    if params[:search]
-      searcher.authors_name_like params[:search][:authors] if params[:search][:authors] != ''
-      searcher.collections_id_equals params[:search][:collections].to_i if params[:search][:collections] != ''
-      searcher.stipulation_like params[:search][:stipulation] if params[:search][:stipulation] != ''
-    end
+    searcher = Diagram.order(:created_at.asc)
+    if params[:search].present?
+      #searcher.where
+      #searcher.collections_id_equals params[:search][:collections].to_i if params[:search][:collections] != ''
+      #searcher.stipulation_like params[:search][:stipulation] if params[:search][:stipulation] != ''
+      searcher = searcher.where(:stipulation[params[:search][:stipulation]])
+   end
 
-    searcher.collections_public_equals true unless current_user
-    searcher.user_id_equals current_user.id if current_user
+    #searcher.collections_public_equals true unless current_user
+    #searcher.user_id_equals current_user.id if current_user
 
     @diagrams = searcher.paginate :page => params[:page]
 

@@ -8,5 +8,5 @@ class Array
   end
 end
 
-
+MetaWhere.operator_overload!
 
