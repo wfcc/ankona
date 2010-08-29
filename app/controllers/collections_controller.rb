@@ -14,10 +14,39 @@ class CollectionsController < ApplicationController
       redirect_to login_path
       return
     end
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @collections }
+    render layout: 'collection'
+  end
+  
+  def data
+    case
+    when (is_admin?)
+      @collections = Collection.all
+    when (current_user)
+      @collections = current_user.collections.all
     end
+  end
+  
+  def dbaction
+    id, name, public_ = params[:c0], params[:c1], params[:c2]
+ 		case params["!nativeeditor_status"]
+  	when 'inserted'
+  	  collection = Collection.new
+  	  collection.name = name
+  	  collection.public = public_
+      collection.user = current_user
+  	  collection.save!
+  	  @tid = collection.id
+	  when 'deleted'
+	    collection = Collection.find id
+	    collection.destroy
+	    @tid = id
+	  when 'updated'
+	    collection = Collection.find id
+	    collection.name = name
+	    collection.public = public_
+  	  collection.save!
+  	  @tid = id
+	  end
   end
 
   # GET /collections/1

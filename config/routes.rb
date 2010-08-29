@@ -3,6 +3,8 @@ ActionController::Routing::Routes.draw do |map|
   root to: 'faqs#show', id: 1
   match 'fen/(*id)' => 'fen#index'
 
+  match 'collections/data' => 'collections#data'
+  match 'collections/dbaction' => 'collections#dbaction'
   
   map.resources :statuses
 

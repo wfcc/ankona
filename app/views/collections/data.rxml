@@ -1,0 +1,10 @@
+xml.instruct!
+xml.rows do
+  @collections.each do |collection|
+    xml.row do
+      xml.cell collection.id
+      xml.cell collection.name
+      xml.cell collection.public
+    end
+  end
+end

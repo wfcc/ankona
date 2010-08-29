@@ -1,0 +1,40 @@
+- if current_user
+  - if @collections.empty?
+    %h1 You have no collections.
+  - else
+    %h1 Editing collections
+    /%table
+    /  %tr
+    /  - @collections.each do |collection|
+    /    %tr
+    /      %td
+    /        = h collection.id
+    /      %td
+    /        = h collection.name
+    /      %td
+    /        = h collection.user.name if collection.user
+    /      %td
+    /        = h collection.public ? 'public' : ''
+    /      %td= h collection.diagrams.count
+    /      %td= link_to 'Edit', edit_collection_path(collection)
+    /      %td= link_to '☒', collection, :confirm => 'Are you sure?', :method => :delete
+    %p.inline-hints Doubleclick or F2 to edit
+    #grid_here(style = "width:400px; height:600px;")
+    :javascript
+      var grid = new dhtmlXGridObject("grid_here");
+      grid.setImagePath("javascripts/dx/dhtmlxGrid/codebase/imgs/");
+      grid.setHeader("id, Name, Public");
+      grid.setColTypes("ro,ed,ch");
+      grid.setColAlign("left,right,right");
+
+      grid.setInitWidths("30,*,50");
+      grid.setSkin("dhx_web_ik");
+      grid.init();
+      grid.load('/collections/data');
+      
+      dp = new dataProcessor('/collections/dbaction');
+      dp.init(grid);
+    %input(type="button" value="Add" onclick="grid.addRow(grid.uid(),'-')")
+    %input(type="button" value="Delete" onclick="grid.deleteSelectedRows()")
+    
+    /= link_to 'Create collection', new_collection_path

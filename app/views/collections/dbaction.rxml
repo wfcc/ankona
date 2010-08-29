@@ -1,0 +1,5 @@
+xml.instruct!
+
+xml.data do
+	xml.tag!("action",{ "type" => @mode, "sid" => @id, "tid" => @tid }) 
+end
