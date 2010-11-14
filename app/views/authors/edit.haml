@@ -1,18 +1,12 @@
-%h1 Editing author
-- form_for(@author) do |f|
-  = f.error_messages
-  %p
-    = f.label :name
-    %br/
-    = f.text_field :name
-  %p
-    = f.label :original
-    %br/
-    = f.text_field :original
-  %p
-    = f.label :birth_date
-    %br/
-    = f.text_field :birth_date
+- title 'Editing author'
+- simple_form_for(@author) do |f|
+  = 'H=' + @author.id.to_s
+  = f.input :name
+  = f.input :original, hint: 'Original spelling in native alphabet'
+  = f.input :birth_date, as: :date, 
+    start_year: Date.today.year - 200,
+    end_year: Date.today.year - 10,
+    discard_day: false
   %p
     Has #{pluralize(@author.diagrams.size, 'problem')}.
   %p

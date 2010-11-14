@@ -52,7 +52,6 @@ SUFFIX = '.gif'
         self.gravity = SouthGravity
       end
     else
-      #logger.info "good symbol #{c}"
       @dia = @dia.composite(fig, i+1, j+1, Magick::OverCompositeOp)
     end
   end

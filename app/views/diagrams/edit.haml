@@ -1,8 +1,8 @@
 %h1 Editing problem
 /- form_for(@diagram, :builder => LabelingFormBuilder) do |f|       
 - Formtastic::SemanticFormBuilder.default_text_field_size = 50
-- semantic_form_for @diagram do |f|
-  = f.error_messages
+= simple_form_for @diagram do |f|
+  /= f.error_messages
   #first.span-12
     = f.input :position, :label => 'FEN', |
       :hint => 'English notation for FEN ("S" for Knight allowed): “2S5/1bQKpR2/4s3/…”' |
@@ -21,20 +21,19 @@
     =link_to_function 'Add fairy condition', "addFairyCondition()", :style => @hideIfFairy, :id => 'showfairy'
     #fairy(style = "#{@showIfFairy}")
       =f.input :fairy, :input_html => {:size => 20}, :hint => 'e.g. Circe, Andernach, Sentinels, …', :label => 'Fairy conditions'
-    %span.label C+
-    = f.check_box :tested
+    = f.check_box :tested, :label => 'C+'
   #second.span-12.last
     .label Authors
     #authors
-      = render :partial => 'author', :collection => @diagram.authors
+      = render partial: 'author', collection: @diagram.authors
     %p
       = add_author_link "Add author"
     = f.input :source
     %table.zero
       %tr
-        %td= f.input :label, :hint => 'Diagram ID, label'
-        %td= f.input :published, :as => :string, :hint => 'YYYY-MM-DD', :input_html => {:class => 'c30p'}
-    = f.input :solution, :input_html => {:rows => 25, :cols => 5}, :hint => 'Please adhere to FIDE piece notation: KDTLS.'
+        %td= f.input :label, hint: 'Diagram ID, label', input_html: {size: 10}
+        %td= f.input :published, as: :date, input_html: {class: 'c30p'}, hint: '-'
+    = f.input :solution, input_html: {rows: 25, cols: 5}, hint: 'Please adhere to FIDE piece notation: KDTLS.'
     /
       %ul.menu
         %li
@@ -65,16 +64,17 @@
   = @diagram.user ? @diagram.user.name : 'computer'
   %script
     PIECE = '';
-    $('diagram_white').observe('keyup', updateFen);
-    $('diagram_black').observe('keyup', updateFen);
-    $('diagram_position').observe('keyup', updateFromFen);
+    $('#diagram_white').bind('keyup', updateFen);
+    $('#diagram_black').bind('keyup', updateFen);
+    $('#diagram_position').bind('keyup', updateFromFen);
 
     initVars();
-    ; if (! $('diagram_position').value)
+    ; if (! $('#diagram_position').val())
     { updateFen({keyCode: 50})
     } else {
     updateFromFen()
     }
 
-    \//   $('blank').src = '/fen/' + $('diagram_fen').value;
-    $('diagram_white').focus();
+    \//   $('blank').src = '/fen/' + $('#diagram_fen').value;
+    $('#diagram_white').focus();
+    

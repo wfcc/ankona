@@ -1,20 +1,21 @@
 -# encoding: utf-8
-!!!
-%html(xmlns = "http://www.w3.org/1999/xhtml")
+!!! 5
+%html
   %head
     %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }
     %title
       dia-x:
       = controller.controller_name.humanize
       = controller.action_name
-    = javascript_include_tag :defaults
     = stylesheet_link_tag 'blueprint/screen.css'
     = stylesheet_link_tag 'blueprint/print.css', :media => 'print'
     /
-      [if IE]>
+      <[if IE]>
       <haml:loud> stylesheet_link_tag 'blueprint/ie.css' </haml:loud>
       <![endif]
-    = stylesheet_link_tag 'compiled/application'    
+    = stylesheet_link_tag 'application'    
+    = javascript_include_tag :defaults
+    = csrf_meta_tag
     = render :partial => 'layouts/google_analytics'
   %body
     %a.plain(href = '/')
@@ -38,4 +39,4 @@
       != yield
     %div{ :style => "text-align:right;padding-top:1em" }
       %span{ :style => "border-top:1px solid #bbb;font:normal smaller Arial" }
-        2009 © Organization, formerly known as FIDE PCCC
+        2009 © WFCC
