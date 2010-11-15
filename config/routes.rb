@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :faqs
 
   map.resources :invites
-  map.connect 'invites/accept/:code', :controller => 'invites', :action => 'react', :accepted => true
+  map.connect 'invites/accept/:code', controller: 'invites', action: 'react', accepted: true
   map.connect 'invites/decline/:code', :controller => 'invites', :action => 'react', :accepted => false
 
 
@@ -34,8 +34,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :account, :controller => 'users'
   map.resources :password_resets
 
-  map.login '/login',   :controller => 'user_sessions', :action => 'create', :conditions => { :method => :post}
-  map.login '/login',   :controller => 'user_sessions', :action => 'new', :conditions => { :method => :get}
+  map.login '/login', :controller => 'user_sessions', :action => 'create', :conditions => { :method => :post}
+  map.login '/login', :controller => 'user_sessions', :action => 'new', :conditions => { :method => :get}
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
 
   map.resources :imports

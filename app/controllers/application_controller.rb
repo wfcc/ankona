@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   def is_admin?
     return false unless current_user
-    return ! current_user.roles.where(:name => 'admin')
+    return current_user.roles.where(:name => 'admin').exists?
   end
 
   private

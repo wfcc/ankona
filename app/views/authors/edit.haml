@@ -1,6 +1,5 @@
 - title 'Editing author'
 - simple_form_for(@author) do |f|
-  = 'H=' + @author.id.to_s
   = f.input :name
   = f.input :original, hint: 'Original spelling in native alphabet'
   = f.input :birth_date, as: :date, 
@@ -13,4 +12,4 @@
     = f.submit 'Update'
 = link_to 'Show', @author
 |
-\#{link_to 'Back', authors_path}
+= link_to 'Back', authors_path
