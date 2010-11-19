@@ -1,3 +1,4 @@
+# coding: utf-8
 class InvitesController < ApplicationController
 
   before_filter :require_user, :except => :decline
