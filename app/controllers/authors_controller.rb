@@ -2,10 +2,15 @@ class AuthorsController < ApplicationController
   # GET /authors
   def index
 
+    @@pagination_options = {inner_window: 10, outer_window: 10}
     @authors = Author
       .where('source Is Not Null')
       .where(:name.matches % "%#{params[:search_name]}%")
-      .paginate page: params[:page], per_page: 99
+      .paginate(
+        page: params[:page],
+        per_page: 99 
+        )
+
 
     respond_to do |format|
       format.html # index.html.erb

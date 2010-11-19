@@ -11,17 +11,23 @@
 
 
 %table
-  %tr
-    %th .
+  %tr(style = 'background-color:LightSteelBlue')
+    %th &nbsp;
     %th Code
     %th Name
+    %th Original
+    %th Traditional romanization
+    %th &nbsp;
     - @authors.each do |author|
       - url = (is_admin? ? edit_author_url(author) : url_for(author))
       %tr.clickable(onclick = "window.location.href = '#{url}'")
         %td.xs= author.source
         %td.xs= author.code
-        %td= author.name
-        %td= author.original
+        %td(style = 'font-size:larger') 
+          = author.name
+        %td(style = 'color:brown') 
+          = author.original
+        %td= author.traditional
         - if is_admin?
           %td= link_to '☒', author, :confirm => 'Are you sure?', :method => :delete
 

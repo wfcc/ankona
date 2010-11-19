@@ -52,6 +52,7 @@ function romanize(string){
     .replace(/Г/g, 'G')
     .replace(/Д/g, 'D')
     .replace(/Е/g, 'E')
+    .replace(/Є/g, 'Je')
     .replace(/Ё/g, 'Ë')
     .replace(/Ж/g, 'Ž')
     .replace(/З/g, 'Z')

@@ -2,14 +2,17 @@
   = javascript_include_tag 'author'
 
 - title 'Editing author'
+
 - @nonroman = @author.original.present?
 - simple_form_for(@author) do |f|
   = f.input :name
   = link_to_function 'Original in non-roman alphabet', "originalNonroman()", |
     style: @hideIfNonroman, id: 'shownonroman' |
+
   #nonroman(style = "#{@showIfNonroman}")
     = f.input :original, hint: 'Original spelling in native alphabet'
     = f.input :traditional, hint: 'Common romanization'
+
   %p(style = "font-size:x-small")
     = f.input :birth_date, as: :date, 
       start_year: Date.today.year - 200,
