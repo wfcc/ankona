@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  
+
+  match "/stylesheets/:package.css" => AssetsApp.action(:stylesheets), as: 'stylesheets'
+
   root to: 'faqs#show', id: 1
   match 'fen/(*id)' => 'fen#index'
 

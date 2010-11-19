@@ -7,13 +7,7 @@
       dia-x:
       = controller.controller_name.humanize
       = controller.action_name
-    = stylesheet_link_tag 'blueprint/screen.css'
-    = stylesheet_link_tag 'blueprint/print.css', :media => 'print'
-    /
-      <[if IE]>
-      <haml:loud> stylesheet_link_tag 'blueprint/ie.css' </haml:loud>
-      <![endif]
-    = stylesheet_link_tag 'application'    
+    = stylesheet_link_tag stylesheets_path(package: :desktop)
     = javascript_include_tag :defaults
     = yield :scripts
     = csrf_meta_tag
