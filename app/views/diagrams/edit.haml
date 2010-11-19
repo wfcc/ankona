@@ -1,15 +1,13 @@
 %h1 Editing problem
-/- form_for(@diagram, :builder => LabelingFormBuilder) do |f|       
-- Formtastic::SemanticFormBuilder.default_text_field_size = 50
 = simple_form_for @diagram do |f|
   /= f.error_messages
   #first.span-12
-    = f.input :position, :label => 'FEN', |
-      :hint => 'English notation for FEN ("S" for Knight allowed): “2S5/1bQKpR2/4s3/…”' |
+    = f.input :position, label: 'FEN', |
+      hint: 'English notation for FEN ("S" for Knight allowed): “2S5/1bQKpR2/4s3/…”' |
     .label Position (w/b)                                                          
-    = f.input :white, :label => false, |
-      :hint => '↕ FIDE notation: “Ka7 De1 Tf2 Lh3 Sh2 [p]e2 …”' |
-    = f.input :black, :label => false
+    = f.input :white, label: false, |
+      hint: '↕ FIDE notation: “Ka7 De1 Tf2 Lh3 Sh2 [p]e2 …”' |
+    = f.input :black, label: false
 
     #divBlank= image_tag '/fen', :id => 'blank'
     #pcount
@@ -18,9 +16,9 @@
 
     = f.input :stipulation, :input_html => {:class => 'c30p'}, :hint => '#2 | s#3 | h#2.5 | win | …'
     = f.input :twin, :hint => 'b) Se5->e6 | b) +Th3, c) Sh8<->La2 | 2.1;1.1 | …'
-    =link_to_function 'Add fairy condition', "addFairyCondition()", :style => @hideIfFairy, :id => 'showfairy'
+    = link_to_function 'Add fairy condition', "addFairyCondition()", :style => @hideIfFairy, :id => 'showfairy'
     #fairy(style = "#{@showIfFairy}")
-      =f.input :fairy, :input_html => {:size => 20}, :hint => 'e.g. Circe, Andernach, Sentinels, …', :label => 'Fairy conditions'
+      = f.input :fairy, :input_html => {:size => 20}, :hint => 'e.g. Circe, Andernach, Sentinels, …', :label => 'Fairy conditions'
     = f.check_box :tested, :label => 'C+'
   #second.span-12.last
     .label Authors

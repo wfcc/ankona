@@ -16,11 +16,8 @@ gem 'rails', '>= 3.0.1'
 
   gem 'authlogic'
   gem 'will_paginate', '>= 3.0.pre'
-#  gem "searchlogic"
   gem 'meta_where'
   gem "RedCloth", '>= 4.0', :require => 'redcloth'
-#  gem 'random_data'
-#  gem 'gd2-ffij'
   gem 'rmagick', :require => 'RMagick'
   gem 'validatable'  
   gem 'mysql', '>= 2.8.1'

@@ -1,15 +1,30 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 25) do
+ActiveRecord::Schema.define(:version => 27) do
+
+  create_table "aaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d",                :null => false
+    t.integer "pay"
+  end
+
+  create_table "aaaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d_d",              :null => false
+    t.integer "pay"
+  end
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -17,11 +32,20 @@ ActiveRecord::Schema.define(:version => 25) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "birth_date"
+    t.string   "code"
+    t.string   "traditional"
+    t.string   "source"
+    t.integer  "code_i"
+    t.string   "code_a"
   end
 
   create_table "authors_diagrams", :id => false, :force => true do |t|
     t.integer "author_id"
     t.integer "diagram_id"
+  end
+
+  create_table "bubu", :id => false, :force => true do |t|
+    t.decimal "id", :precision => 10, :scale => 0
   end
 
   create_table "collections", :force => true do |t|

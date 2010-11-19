@@ -1,11 +1,20 @@
+- content_for :scripts do
+  = javascript_include_tag 'author'
+
 - title 'Editing author'
+- @nonroman = @author.original.present?
 - simple_form_for(@author) do |f|
   = f.input :name
-  = f.input :original, hint: 'Original spelling in native alphabet'
-  = f.input :birth_date, as: :date, 
-    start_year: Date.today.year - 200,
-    end_year: Date.today.year - 10,
-    discard_day: false
+  = link_to_function 'Original in non-roman alphabet', "originalNonroman()", |
+    style: @hideIfNonroman, id: 'shownonroman' |
+  #nonroman(style = "#{@showIfNonroman}")
+    = f.input :original, hint: 'Original spelling in native alphabet'
+    = f.input :traditional, hint: 'Common romanization'
+  %p(style = "font-size:x-small")
+    = f.input :birth_date, as: :date, 
+      start_year: Date.today.year - 200,
+      end_year: Date.today.year - 10,
+      discard_day: false
   %p
     Has #{pluralize(@author.diagrams.size, 'problem')}.
   %p
@@ -13,3 +22,7 @@
 = link_to 'Show', @author
 |
 = link_to 'Back', authors_path
+
+%script
+  $('#author_original').bind('keyup', updateName);
+

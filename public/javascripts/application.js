@@ -150,30 +150,6 @@ function validateForm(){
    }
    ; return true
 } //*************************************
-function updateTwin(e){
-
-  var m = [], r = ''
-  $('$twin').attr('value', '')
-  $('$twn').attr('value', $(toLowerCase().split(/.\)|\.|\,/).each(function(tw) {
-      if (tw.length < 3) return;
-      switch (true)
-      case m = tw.match(/(\w\w)-?>(\w\w)/), m!=null :
-         r='Move ' + m[1] + ' ' + m[2]
-         break
-      case m = tw.match(/\+(\w)(\w)(\w\w)/), m!=null :
-         r='Add '+ (m[1]=='w'?'White ':'Black ') + m[2]+m[3]
-         break
-      case m = tw.match(/\-(\w)(\w)(\w\w)/), m!=null :
-         r='Remove '+ (m[1]=='w'?'White ':'Black ') + m[2]+m[3]
-         break
-      case m = tw.match(/\w*(\w\w)<.*>\w*(\w\w)/), m!=null :
-         r='Exchange '+ m[1] + ' ' + m[2]
-         break
-      default: return
-      }
-      ; $('#twin').attr('value', $('#twin').attr('value') + ('Twin ' + r + "\n"))
-   })
-} //*************************************
 function updateFen(e){
 
    ; if (e.keyCode < 32 || e.keyCode > 58) return false;
@@ -313,4 +289,29 @@ function moveBoard(d) { // move position left/up/down/up
 function addFairyCondition() {
   ; $('showfairy').hide()
   ; $('fairy').show()
-}
+} //*************************************
+function updateTwin(e){
+
+  var m = [], r = ''
+  $('#twin').attr('value', '')
+  $('#twn').attr('value').toLowerCase().split(/.\)|\.|\,/).each(function(i, tw) {
+      if (tw.length < 3) return;
+      switch (true) {
+      case m = tw.match(/(\w\w)-?>(\w\w)/), m!=null :
+         r='Move ' + m[1] + ' ' + m[2]
+         break
+      case m = tw.match(/\+(\w)(\w)(\w\w)/), m!=null :
+         r='Add '+ (m[1]=='w'?'White ':'Black ') + m[2]+m[3]
+         break
+      case m = tw.match(/\-(\w)(\w)(\w\w)/), m!=null :
+         r='Remove '+ (m[1]=='w'?'White ':'Black ') + m[2]+m[3]
+         break
+      case m = tw.match(/\w*(\w\w)<.*>\w*(\w\w)/), m!=null :
+         r='Exchange '+ m[1] + ' ' + m[2]
+         break
+      default: return;
+      }
+      ; $('#twin').attr('value', $('#twin').attr('value') + ('Twin ' + r + "\n"))
+   })
+} //*************************************
+

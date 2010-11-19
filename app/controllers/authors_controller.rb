@@ -2,7 +2,10 @@ class AuthorsController < ApplicationController
   # GET /authors
   def index
 
-    @authors = Author.where(:name.matches % "%#{params[:search_name]}%").paginate :page => params[:page]
+    @authors = Author
+      .where('source Is Not Null')
+      .where(:name.matches % "%#{params[:search_name]}%")
+      .paginate page: params[:page], per_page: 99
 
     respond_to do |format|
       format.html # index.html.erb
@@ -33,6 +36,8 @@ class AuthorsController < ApplicationController
   # GET /authors/1/edit
   def edit
     @author = Author.find(params[:id])
+    @hideIfNonroman = @author.original.blank? ? 'display:visible' : 'display:none'
+    @showIfNonroman = @author.original.blank? ? 'display:none' : 'display:visible'
   end
 
   # POST /authors
@@ -56,7 +61,7 @@ class AuthorsController < ApplicationController
     @author = Author.find(params[:id])
 
     respond_to do |format|
-      if @author.update_attributes(params[:author])
+      if is_admin? and @author.update_attributes(params[:author])
         flash[:notice] = 'Author was successfully updated.'
         format.html { redirect_to(@author) }
         format.xml  { head :ok }

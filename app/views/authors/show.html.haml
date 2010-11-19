@@ -1,13 +1,21 @@
 %p
-  %b Name:
-  =h @author.name
+  Code:
+  %b 
+    =@author.code
 
 %p
-  %b Original:
-  =h @author.original
+  Name:
+  %b 
+    =@author.name
 
-%p
-  %b Birth date:
+- if @author.original.present?
+  %p
+    Original:
+    %b 
+      =h @author.original
+/
+  Birth date:
+  %b 
   =h @author.birth_date
 
 = link_to 'Edit', edit_author_path(@author)

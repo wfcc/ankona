@@ -298,3 +298,10 @@ em {
   color: #bbbbbb;
   margin: 0;
   padding: 0; }
+
+.clearboth {
+  clear: both; }
+
+.pagination em {
+  font-style: normal;
+  font-weight: bold; }
