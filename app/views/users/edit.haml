@@ -1,0 +1,15 @@
+%h1 Edit Account
+- form_for @user, :url => account_url do |f|
+  = f.error_messages
+  = render :partial => "form", :object => f
+  /- if not @user.roles.name_is('admin').empty?
+  /- if Role.includes(:users).where(name: 'admin').where('users.id' => @user.id).exists?
+  - if is_admin?
+    = collection_select :user, :role_ids,                |
+      Role.all(:order => 'name ASC'), :id, :name,        |
+      { :selected => @user.role_ids },                   |
+      { :multiple => true, :name => 'user[role_ids][]' } |
+  %p
+    = f.submit "Update"
+%br/
+= link_to "My Profile", account_path
