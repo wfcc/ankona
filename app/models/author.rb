@@ -18,9 +18,9 @@ protected
     
     nname = self.name.mb_chars.normalize(:kd).gsub(/[^\x20-\x7F]/,'').upcase.to_s
     nname.gsub!(/\(.*\)/, '') # no parens
-    nname.gsub!(/ MC/, ' ') # no McSomeone
-    nname.gsub!(/ O'/, ' ') # no O'Anybody
-    nname.gsub!(/ SR\.?$| JR\.?$/, '') # no sr or jr
+#    nname.gsub!(/ MC/, ' ') # no McSomeone
+#    nname.gsub!(/ O'/, ' ') # no O'Anybody
+#    nname.gsub!(/ SR\.?$| JR\.?$/, '') # no sr or jr
     nname.strip!
     nname =~ /^(.+)\s+(\S+)$/
     names, family = $1[0,1], $2[0,2]
