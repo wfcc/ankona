@@ -1,31 +1,26 @@
 class AuthorsController < ApplicationController
+
+  before_filter :require_admin, except: [:index, :show]
+
   # GET /authors
   def index
 
     @@pagination_options = {inner_window: 10, outer_window: 10}
     @authors = Author
-      .where('source Is Not Null')
+      .where(:source.eq => 'h')
       .where(:name.matches % "%#{params[:search_name]}%")
       .paginate(
         page: params[:page],
         per_page: 99 
         )
 
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @authors }
-    end
+    store_location
+    logger.info '*** ' + request.request_uri + ' ***'
   end
 
   # GET /authors/1
   def show
     @author = Author.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @author }
-    end
   end
 
   # GET /authors/new
@@ -67,6 +62,10 @@ class AuthorsController < ApplicationController
 
     respond_to do |format|
       if is_admin? and @author.update_attributes(params[:author])
+        if params[:code]['regenerate'] == '1'
+          @author.code = ''
+          @author.save
+        end
         flash[:notice] = 'Author was successfully updated.'
         format.html { redirect_to(@author) }
         format.xml  { head :ok }

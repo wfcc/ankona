@@ -21,7 +21,8 @@
     - @authors.each do |author|
       - url = (is_admin? ? edit_author_url(author) : url_for(author))
       %tr.clickable(onclick = "window.location.href = '#{url}'")
-        %td.xs= author.source
+        %td(style = 'font-size:xx-small') 
+          = author.source
         %td.xs= author.code
         %td(style = 'font-size:larger') 
           = author.name

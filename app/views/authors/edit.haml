@@ -4,7 +4,7 @@
 - title 'Editing author'
 
 - @nonroman = @author.original.present?
-- simple_form_for(@author) do |f|
+= simple_form_for(@author) do |f|
   = f.input :name
   = link_to_function 'Original in non-roman alphabet', "originalNonroman()", |
     style: @hideIfNonroman, id: 'shownonroman' |
@@ -12,6 +12,13 @@
   #nonroman(style = "#{@showIfNonroman}")
     = f.input :original, hint: 'Original spelling in native alphabet'
     = f.input :traditional, hint: 'Common romanization'
+
+  %p
+    = f.label 'Code'
+    = @author.code
+    = f.input :code, as: :hidden
+    = check_box 'code', 'regenerate'
+    Re-generate code
 
   %p(style = "font-size:x-small")
     = f.input :birth_date, as: :date, 
@@ -24,8 +31,9 @@
     = f.submit 'Update'
 = link_to 'Show', @author
 |
-= link_to 'Back', authors_path
+= link_to 'Back', session[:return_to]
 
 %script
   $('#author_original').bind('keyup', updateName);
+
 

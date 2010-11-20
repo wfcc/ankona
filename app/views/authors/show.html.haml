@@ -1,23 +1,33 @@
-%p
-  Code:
-  %b 
+
+.span-3
+  %b(style = 'font-size:x-large')
     =@author.code
 
-%p
-  Name:
-  %b 
-    =@author.name
-
-- if @author.original.present?
+.span-10(style = 'border-left:1px solid grey;padding-left:2em')
   %p
-    Original:
-    %b 
-      =h @author.original
-/
-  Birth date:
-  %b 
-  =h @author.birth_date
+    %b(style = 'font-size:larger')
+      =@author.name
 
-= link_to 'Edit', edit_author_path(@author)
-= ' | '
-= link_to 'Back', authors_path
+  - if @author.original.present?
+    %p
+      Original:
+      %br
+      %b
+        =h @author.original
+    %p
+      Traditional:
+      %br
+      %b 
+        =h @author.traditional
+  /
+    Birth date:
+    %b 
+    =h @author.birth_date
+
+%br.clearboth
+
+- if is_admin?
+  = link_to 'Edit', edit_author_path(@author)
+  = ' | '
+= link_to 'Back', session[:return_to]
+

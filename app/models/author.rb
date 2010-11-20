@@ -17,6 +17,11 @@ protected
     return unless self.code.blank?
     
     nname = self.name.mb_chars.normalize(:kd).gsub(/[^\x20-\x7F]/,'').upcase.to_s
+    nname.gsub!(/\(.*\)/, '') # no parens
+    nname.gsub!(/ MC/, ' ') # no McSomeone
+    nname.gsub!(/ O'/, ' ') # no O'Anybody
+    nname.gsub!(/ SR\.?$| JR\.?$/, '') # no sr or jr
+    nname.strip!
     nname =~ /^(.+)\s+(\S+)$/
     names, family = $1[0,1], $2[0,2]
     
@@ -24,10 +29,14 @@ protected
       .where('code Is Not Null')
       .where(:code.matches => family + '%' + names)
 
-    limit = 8 ** others.size.to_s(8).size # how many digits we need?
+    digit8 = ''
+    limit = others.size.to_s(8).size # how many digits we need?
+    limit.times do
+      digit8 += (2 + rand(8)).to_s
+    end
 
     while true
-      trycode = family + (2 + rand(limit)).to_s + names
+      trycode = family + digit8 + names
       unless others.find {|i| i.code == trycode}
         self.code = trycode
         logger.info "*** #{trycode} ***"

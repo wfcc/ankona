@@ -1,3 +1,7 @@
+function emptyCode(){
+  $('#author_code').val('')
+}
+
 function originalNonroman(){
 
   $('#shownonroman').hide()
@@ -34,6 +38,7 @@ function romanize(string){
     .replace(/с/g, 's')
     .replace(/т/g, 't')
     .replace(/у/g, 'u')
+    .replace(/ў/g, 'w')
     .replace(/ф/g, 'f')
     .replace(/х/g, 'h')
     .replace(/ц/g, 'c')
