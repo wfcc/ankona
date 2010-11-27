@@ -27,7 +27,7 @@ form
     display: block
     width: 100%
   input[type="submit"]
-    font-size: x-large
+    font-size: normal
 
 input[type="button"].x
   font-size: x-large
@@ -203,6 +203,10 @@ pre.solution
   text-indent: 0
 
 table
+  &.authors
+    clear: both
+    tr > th
+      background-color: LightSteelBlue
   &.diagrams td
     vertical-align: top
     font-size: 11px
@@ -282,13 +286,17 @@ em
 
 .clearboth
   clear: both
+  position: relative
 
 .pagination em
   font-style: normal
   font-weight: bold
 
 a.standout
-  background-color: rgb(200,255,200)
+  background-color: #6B8E23 + #333
   color: black
   padding: 1em
   +rounded(5px)
+  border: 1px solid green
+  display: table-cell
+  clear: both

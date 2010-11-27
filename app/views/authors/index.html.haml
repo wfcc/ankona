@@ -7,15 +7,12 @@
 
 = link_to 'New author', new_author_path, class: :standout
 
-%p.clearboth
 
 = will_paginate @authors
 .pagestat= page_entries_info @authors
 
-%p.clearboth
-
-%table
-  %tr(style = 'background-color:LightSteelBlue')
+%table.authors
+  %tr
     %th &nbsp;
     %th Code
     %th Name
@@ -41,7 +38,6 @@
 = will_paginate @authors
 .pagestat= page_entries_info @authors
 
-%br
-
-= link_to 'New author', new_author_path, class: :standout
+%p.clearboth
+  = link_to 'New author', new_author_path, class: :standout
 
