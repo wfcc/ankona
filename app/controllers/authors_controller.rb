@@ -6,9 +6,11 @@ class AuthorsController < ApplicationController
   def index
 
     @@pagination_options = {inner_window: 10, outer_window: 10}
+    search = "%#{params[:search_name]}%"
     @authors = Author
       .where(:source.eq => 'h')
-      .where(:name.matches % "%#{params[:search_name]}%")
+      .where((:name =~ search) | (:code =~ search) |
+        (:original =~ search) | (:traditional =~ search))
       .paginate(
         page: params[:page],
         per_page: 99 
@@ -26,18 +28,12 @@ class AuthorsController < ApplicationController
   # GET /authors/new
   def new
     @author = Author.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @author }
-    end
+    render :edit
   end
 
   # GET /authors/1/edit
   def edit
     @author = Author.find(params[:id])
-    @hideIfNonroman = @author.original.blank? ? 'display:visible' : 'display:none'
-    @showIfNonroman = @author.original.blank? ? 'display:none' : 'display:visible'
   end
 
   # POST /authors

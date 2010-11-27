@@ -39,8 +39,8 @@ class ApplicationController < ActionController::Base
 
     def require_admin
       unless is_admin?
-        store_location
         flash[:error] = "You may not do this."
+        redirect_to '/login'
         return false
       end
     end
