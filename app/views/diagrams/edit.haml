@@ -1,3 +1,6 @@
+- content_for :scripts do
+  = javascript_include_tag 'diagram'
+
 %h1 Editing problem
 = simple_form_for @diagram do |f|
   /= f.error_messages
@@ -23,9 +26,9 @@
   #second.span-12.last
     .label Authors
     #authors
-      = render partial: 'author', collection: @diagram.authors
-    %p
-      = add_author_link "Add author"
+      /= render partial: 'author', collection: @diagram.authors
+      = text_field_tag :author_name_first, '', class: :author_name
+    %a{id: :add_author} Add author
     = f.input :source
     %table.zero
       %tr
@@ -44,12 +47,12 @@
   %fieldset
     %legend
       -#= submit_to_remote 'solve', ' Solve with popeye ', |
-      = submit 'solve', ' Solve with popeye ', |
-        :update => 'solution', :condition => 'validateForm()', |
-        :before => "$('solution').update('Popeye solving in progres...')", |
-        :method => 'post', :url => { :action => 'solve' }, :html => {:class => 'x'} |
+    = submit 'solve', ' Solve with popeye ', |
+      :update => 'solution', :condition => 'validateForm()', |
+      :before => "$('solution').update('Popeye solving in progres...')", |
+      :method => 'post', :url => { :action => 'solve' }, :html => {:class => 'x'} |
     %label(for = "pyconds" class = "modest") Popeye “condition” line
-    =text_field_tag :pyconds, @diagram.fairy, :class => "c30p"
+    =text_field_tag :pyconds, @diagram.fairy, class: "c30p"
     %span.fine circe, andernach, madrasi, masand, koeko, …
     %br
     %label(for = "pyopts" class = "modest") Popeye “options” line
@@ -61,18 +64,5 @@
   Entered by
   = @diagram.user ? @diagram.user.name : 'computer'
   %script
-    PIECE = '';
-    $('#diagram_white').bind('keyup', updateFen);
-    $('#diagram_black').bind('keyup', updateFen);
-    $('#diagram_position').bind('keyup', updateFromFen);
+    diagram_initialize()
 
-    initVars();
-    ; if (! $('#diagram_position').val())
-    { updateFen({keyCode: 50})
-    } else {
-    updateFromFen()
-    }
-
-    \//   $('blank').src = '/fen/' + $('#diagram_fen').value;
-    $('#diagram_white').focus();
-    
