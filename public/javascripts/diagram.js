@@ -1,15 +1,20 @@
 
-function diagram_initialize()
+$(document).ready(function()
   {
-  $('#author_name_first').keyup(function()
-    {
-    alert($('#author_name_first').val())
-    })
   $('#add_author').click(function()
     {
-//    alert('bubu')
     $('#author_name_first').clone().appendTo('#authors')
     })
+
+  $('#author_name_first').autocomplete({
+    minLength: 3,
+    source: '/authors/json',
+    select: function(event, ui)
+      { 
+      $('#author_code').html(ui.item.value)
+      }
+    })
+  
   PIECE = ''
   $('#diagram_white').bind('keyup', updateFen)
   $('#diagram_black').bind('keyup', updateFen)
@@ -24,6 +29,6 @@ function diagram_initialize()
 
   //   $('blank').src = '/fen/' + $('#diagram_fen').value;
   $('#diagram_white').focus()
-  }
+  })
 
 

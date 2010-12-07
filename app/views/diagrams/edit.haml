@@ -1,4 +1,5 @@
 - content_for :scripts do
+  = javascript_include_tag 'jquery-ui-1.8.6.custom.min'
   = javascript_include_tag 'diagram'
 
 %h1 Editing problem
@@ -28,6 +29,7 @@
     #authors
       /= render partial: 'author', collection: @diagram.authors
       = text_field_tag :author_name_first, '', class: :author_name
+      #author_code
     %a{id: :add_author} Add author
     = f.input :source
     %table.zero
@@ -63,6 +65,4 @@
 %p.fine
   Entered by
   = @diagram.user ? @diagram.user.name : 'computer'
-  %script
-    diagram_initialize()
 

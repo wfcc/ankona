@@ -1,3 +1,4 @@
+# coding: utf-8
 class AuthorsController < ApplicationController
 
   before_filter :require_admin, except: [:index, :show]
@@ -11,6 +12,7 @@ class AuthorsController < ApplicationController
       .where(:source.eq => 'h')
       .where((:name =~ search) | (:code =~ search) |
         (:original =~ search) | (:traditional =~ search))
+      .order(:code)
       .paginate(
         page: params[:page],
         per_page: 99 
@@ -19,24 +21,32 @@ class AuthorsController < ApplicationController
     store_location
     logger.info '*** ' + request.request_uri + ' ***'
   end
-
+#----------------------------------------------------------------------
+  def json
+    search = "%#{params[:term]}%"
+    @authors = Author
+      .where(:source.eq => 'h')
+      .where((:name =~ search) | (:code =~ search) |
+        (:original =~ search) | (:traditional =~ search))
+      .map{|a| {value: a.name, label: a.code + ' | ' + a.name}}
+    render json: @authors
+  end
+#----------------------------------------------------------------------
   # GET /authors/1
   def show
     @author = Author.find(params[:id])
   end
-
-  # GET /authors/new
+# GET /authors/new ----------------------------------------------------------
+  
   def new
     @author = Author.new
     render :edit
   end
-
-  # GET /authors/1/edit
+# GET /authors/1/edit -------------------------------------------------------
   def edit
     @author = Author.find(params[:id])
   end
-
-  # POST /authors
+# POST /authors ------------------------------------------------------------
   def create
     @author = Author.new(params[:author])
 
