@@ -1,5 +1,5 @@
 - content_for :scripts do
-  = javascript_include_tag 'jquery-ui-1.8.6.custom.min'
+  = javascript_include_tag 'jquery.tokeninput'
   = javascript_include_tag 'diagram'
 
 %h1 Editing problem
@@ -27,10 +27,8 @@
   #second.span-12.last
     .label Authors
     #authors
-      /= render partial: 'author', collection: @diagram.authors
-      = text_field_tag :author_name_first, '', class: :author_name
-      #author_code
-    %a{id: :add_author} Add author
+      = hidden_field_tag :authors_json, @authors_json
+      = text_field_tag :authors_ids #, nil #, class: :author_name
     = f.input :source
     %table.zero
       %tr

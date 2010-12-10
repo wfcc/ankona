@@ -30,10 +30,7 @@ require 'open3'
       format.xml  { render :xml => @diagrams }
     end
   end
-
-#--------------------------------------------------------
-  # GET /diagrams/1
-  # GET /diagrams/1.xml
+#----- GET /diagrams/1 ------------------------------------------------------
   def show
     @diagram = Diagram.find(params[:id])
 
@@ -43,68 +40,39 @@ require 'open3'
     end
   end
 
-  # GET /diagrams/new
-  # GET /diagrams/new.xml
+#----- GET /diagrams/new ----------------------------------------------------
   def new
     @diagram = Diagram.new
-
-    render :action => 'edit'
+    render :edit
 #    respond_to do |format|
 #      format.html # new.html.erb
 #      format.xml  { render :xml => @diagram }
 #    end
   end
-#--------------------------------------------------------
-
-# GET /diagrams/1/edit
+#----- GET /diagrams/1/edit ----------------------------------------------
   def edit
     @diagram = Diagram.find(params[:id])
     @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
     @showIfFairy = @diagram.fairy.blank? ? 'display:none' : 'display:visible'
+    
+    @authors_json = @diagram.authors.map{|a| {id: a.id, name: a.name}}.to_json
+    
     if @diagram.user_id != current_user.id
       flash[:error] = "You are unauthorized to edit this problem."
       render :show
     end
   end
-
-  # POST /diagrams
-  # POST /diagrams.xml
+#----- POST /diagrams -----------------------------------------------------
   def create
     @diagram = Diagram.new(params[:diagram])
-
-    respond_to do |format|
-      @diagram.user = current_user
-      if @diagram.save
-        flash[:notice] = 'Problem was successfully created.'
-        format.html { redirect_to(@diagram) }
-        format.xml  { render :xml => @diagram, :status => :created, :location => @diagram }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @diagram.errors, :status => :unprocessable_entity }
-      end
-    end
+    save_diagram true
   end
-
-  # PUT /diagrams/1
-  # PUT /diagrams/1.xml
+#----- PUT /diagrams/1 -----------------------------------------------------
   def update
     @diagram = Diagram.find(params[:id])
-
-    respond_to do |format|
-      @diagram.user = current_user
-      if @diagram.update_attributes(params[:diagram])
-        flash[:notice] = 'Diagram was successfully updated.'
-        format.html { redirect_to(@diagram) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @diagram.errors, :status => :unprocessable_entity }
-      end
-    end
+    save_diagram false
   end
-
-  # DELETE /diagrams/1
-  # DELETE /diagrams/1.xml
+#----- DELETE /diagrams/1 --------------------------------------------------
   def destroy
     @diagram = Diagram.find(params[:id])
     @diagram.destroy
@@ -156,7 +124,7 @@ require 'open3'
       (a.size < 3 ? 'P' + a : a).capitalize.tr 'DTL', 'QRB' # FIDE -> English
     end.join(' ')
   end
-
+###################################################
   def twin_to_py(t)
     s = t
     logger.info "==<<== #{t} ==>>=="
@@ -169,6 +137,25 @@ require 'open3'
     end
     return s
   end
-
+###################################################
+  def save_diagram(is_create)
+    respond_to do |format|
+      @diagram.user = current_user
+      @diagram.authors = Author.find params[:authors_ids].split(',')
+      if @diagram.save
+        flash[:notice] = 'Problem was successfully saved.'
+        format.html { redirect_to(@diagram) }
+        if(is_create)
+          format.xml  { render :xml => @diagram, :status => :created, :location => @diagram }
+        else
+          format.xml  { head :ok }
+        end
+      else
+        flash[:error] = 'Problem was not saved due to errors.'
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @diagram.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
 ###################################################
 end

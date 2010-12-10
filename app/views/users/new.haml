@@ -1,0 +1,37 @@
+%h1 Register
+
+= form_for @user, url: signup_path do |form|
+  = form.error_messages
+  .container
+    .span-10
+      %p
+        = form.label :login, 'Your email, it will be used as login'
+        = form.text_field :login
+        %br
+        %span.fine It will also be used for password reminders and other functions
+
+      %p
+      %p
+        = form.label :password, form.object.new_record? ? nil : "Change password"
+        = form.password_field :password, :size => 10
+        %br
+        %span.fine Be reasonable, use hard passwords
+      %p
+        = form.label :password_confirmation
+        = form.password_field :password_confirmation, :size => 10
+    .span-10
+      %p
+        To be listed as author, you need a "handle".
+        We may already have you name on the list.
+        If you find yourself, you will be able to enter your own problems.
+        Try typing your name here (it may be spelled slightly differently):
+      %p
+        If you don't find yourself ("No results"), don't worry.  Just submit
+        the form as is.
+
+      = form.label :name, 'Your name'
+      = form.text_field :name, style: 'width:10em'
+        
+  = form.submit "Register"
+
+          

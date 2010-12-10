@@ -18,7 +18,7 @@
     %th Name
     %th Original
     %th Traditional romanization
-    %th &nbsp;
+    %th DEL
     - @authors.each do |author|
       - url = (is_admin? ? edit_author_url(author) : url_for(author))
       %tr.clickable(onclick = "window.location.href = '#{url}'")

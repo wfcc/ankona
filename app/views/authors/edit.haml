@@ -1,9 +1,6 @@
 - @hideIfNonroman = @author.original.blank? ? 'display:visible' : 'display:none'
 - @showIfNonroman = @author.original.blank? ? 'display:none' : 'display:visible'
 
-- content_for :scripts do
-  = javascript_include_tag 'author'
-
 - title 'Editing author'
 
 - @nonroman = @author.original.present?

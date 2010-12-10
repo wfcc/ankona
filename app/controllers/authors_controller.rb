@@ -1,11 +1,10 @@
 # coding: utf-8
 class AuthorsController < ApplicationController
 
-  before_filter :require_admin, except: [:index, :show]
+  before_filter :require_admin, except: [:index, :show, :json]
 
   # GET /authors
   def index
-
     @@pagination_options = {inner_window: 10, outer_window: 10}
     search = "%#{params[:search_name]}%"
     @authors = Author
@@ -23,21 +22,19 @@ class AuthorsController < ApplicationController
   end
 #----------------------------------------------------------------------
   def json
-    search = "%#{params[:term]}%"
+    search = "%#{params[:q]}%"
     @authors = Author
       .where(:source.eq => 'h')
       .where((:name =~ search) | (:code =~ search) |
         (:original =~ search) | (:traditional =~ search))
-      .map{|a| {value: a.name, label: a.code + ' | ' + a.name}}
+      .map{|a| {name: a.name, id: a.id}}
     render json: @authors
   end
-#----------------------------------------------------------------------
-  # GET /authors/1
+# GET /authors/1------------------------------------------------------
   def show
     @author = Author.find(params[:id])
   end
 # GET /authors/new ----------------------------------------------------------
-  
   def new
     @author = Author.new
     render :edit

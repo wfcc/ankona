@@ -12,7 +12,6 @@ class Author < ActiveRecord::Base
 
 protected
 #########################################
-#########################################
 
   def generate_code
     
@@ -27,24 +26,28 @@ protected
     nname =~ /^(.+)\s+(\S+)$/
     names, family = $1[0,1], $2[0,2]
     
-    others = Author
+    @others = Author
       .where('code Is Not Null')
       .where(:code.matches => family + '%' + names)
 
-    digit8 = ''
-    limit = others.size.to_s(8).size # how many digits we need?
-    limit.times do
-      digit8 += (2 + rand(8)).to_s
-    end
 
     while true
-      trycode = family + digit8 + names
-      unless others.find {|i| i.code == trycode}
+      trycode = family + random_code + names
+      unless @others.find {|i| i.code == trycode}
         self.code = trycode
         logger.info "*** #{trycode} ***"
         break
       end
     end
+  end
+  
+  def random_code
+    digit8 = ''
+    limit = @others.size.to_s(8).size # how many digits we need?
+    limit.times do
+      digit8 += (2 + rand(8)).to_s
+    end
+    return digit8
   end
 
 end

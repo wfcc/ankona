@@ -7,6 +7,7 @@
   = form.text_field :name,  :size => 40
   %span.fine Real name, please
 %p
+  = text_field_tag :handled_name
   = form.label :password, form.object.new_record? ? nil : "Change password"
   = form.password_field :password, :size => 10
   %br
