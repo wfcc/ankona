@@ -41,11 +41,11 @@ $(document).ready(function() {
   $('#diagram_position').bind('keyup', updateFromFen)
 
   initVars()
-  if (! $('#diagram_position').val())
-    { updateFen({keyCode: 50})
-    } else
-    { updateFromFen()
-    }
+  if (! $('#diagram_position').val()) {
+    updateFen({keyCode: 50}) 
+    } else {
+    updateFromFen()
+  }
 
   //   $('blank').src = '/fen/' + $('#diagram_fen').value;
   $('#diagram_white').focus()
@@ -58,11 +58,10 @@ $(document).ready(function() {
     , zIndex: 5
     })
   $('#blank').droppable(
-    {drop: function(event, ui) {
+    { drop: function(event, ui) {
       board = $('#blank').offset()
       aBoard[Math.floor((ui.offset.top - board.top + 12) / 25)]
         [Math.floor((ui.offset.left - board.left + 12) / 25)] = ui.helper.attr('data-id')
-
       fromInternal()
       }
     })
@@ -121,17 +120,17 @@ $(document).ready(function() {
     return false
   }) //*************************************
   function clearBoard() {
-    $('.pieceOnBoard').each (function(i,p) {$(p).remove()})
+
+    $('.pieceOnBoard').remove()
     aBoard = [];
     for(i=0;i<8;++i) {aBoard.push(arrayOfOnes.slice(0))}
   } //*************************************
   function initVars(){
 
     allPieces = ['wk','wq','wr','wb','ws','wp','bk','bq','br','bb','bs','bp']
-    aPieces = new Object
+    aPieces = {}
     $.each(allPieces, function(i,p)
-        { aPieces[p] = $('<img>')
-        aPieces[p].attr('src', '/images/fig/' + p + '.gif')
+        { aPieces[p] = '/images/fig/' + p + '.gif'
         })
   } //*************************************
   function fenToInternal(){
@@ -185,17 +184,16 @@ $(document).ready(function() {
   function internalToDiagram(){
 
     var p, im, top, left, color
-    $('.pieceOnBoard').each (function(i,p) {$(p).remove()});
-    for (var i=0; i<8; ++i) 
-      { for (var j=0; j<8; ++j) {
+    $('.pieceOnBoard').remove()
+    for (var i=0; i<8; ++i) {
+      for (var j=0; j<8; ++j) {
         p = aBoard[i][j]
-        var coor = i * 10 + j
         if (p=='1') {continue}
         color = p>'a'?'b':'w'
         left = j * 25 + 1
         top = i * 25 + 1 
         im = $('<img>')
-        im.attr('src', aPieces[color + p.toLowerCase()].attr('src'))
+        im.attr('src', aPieces[color + p.toLowerCase()])
           .css('position','absolute')
           .css('top', top)
           .css('left', left)
@@ -205,20 +203,18 @@ $(document).ready(function() {
           .mousedown(function(e) {
             var fig = $(this)
             aBoard[fig.data('x')][fig.data('y')] = '1'
-            //fig.remove()
             fromInternal()
           })
         $('#divBlank').append(im)
         }
       }  
 
-    ; var b = aBoard.join('').match(/[a-z]/g)
-    ; var w = aBoard.join('').match(/[A-Z]/g)
-    ; $('#pcount').html('(' + (w?w.length:'0') +' + '+ (b?b.length:'0')+')')
+    var b = aBoard.join('').match(/[a-z]/g)
+    var w = aBoard.join('').match(/[A-Z]/g)
+    $('#pcount').html('(' + (w?w.length:'0') +' + '+ (b?b.length:'0')+')')
 
   } //*************************************
   function internalToFen(){
-
     $('#diagram_position')
       .val(aBoard
         .join('/')
@@ -227,7 +223,6 @@ $(document).ready(function() {
 
   } //*************************************
   function internalToNotation(){
-
     var aWhite=[], aBlack=[]
     for(var i=0;i<8;++i) {
       for(var j=0;j<8;++j) {
@@ -243,7 +238,6 @@ $(document).ready(function() {
      $('#diagram_black').val(aBlack.sort(sortPieces).join(' '))
   } //*************************************
   function validateForm(){
-
      ; if ($('diagram_stipulation').value.length < 2)
         { new Effect.Highlight('diagram_stipulation', {startcolor:'ffffee',
            transition:Effect.Transitions.linear, duration:2})
@@ -254,40 +248,22 @@ $(document).ready(function() {
      ; return true
   } //*************************************
   function updateFen(e){
-
      if (e.keyCode < 32 || e.keyCode > 58) return false;
-
      notationToInternal()
      internalToDiagram()
      internalToFen()
      return true
-
   } //*************************************
   function updateFromFen(e){
-
      fenToInternal()
      internalToDiagram()
      internalToNotation()
      return true
-
   } //*************************************
   function sortPieces(a,b) {
-
      var pcs = 'KDTLSp'
      return pcs.indexOf(a.substr(0,1)) -
         pcs.indexOf(b.substr(0,1)) 
-  } //*************************************
-  function boardPressed(e) {
-
-     $('diagram_white').value =
-     'S'+
-     String.fromCharCode(97 + (e.clientX - e.element().offsetLeft) / 25) + 
-     String(Math.floor((- e.clientY + e.element().offsetTop) / 25) + 9) 
-     ;
-
-     ; updateFen({keyCode: 50})
-     ; updateFromFen()
-
   } //*************************************
   function addFairyCondition() {
     $('#showfairy').hide()
@@ -298,23 +274,23 @@ $(document).ready(function() {
     var m = [], r = ''
     $('#twin').val('')
     $('#twn').val(toLowerCase().split(/.\)|\.|\,/).each(function(i, tw) {
-        if (tw.length < 3) return;
-        switch (true) {
-        case m = tw.match(/(\w\w)-?>(\w\w)/), m!=null :
-           r='Move ' + m[1] + ' ' + m[2]
-           break
-        case m = tw.match(/\+(\w)(\w)(\w\w)/), m!=null :
-           r='Add '+ (m[1]=='w'?'White ':'Black ') + m[2]+m[3]
-           break
-        case m = tw.match(/\-(\w)(\w)(\w\w)/), m!=null :
-           r='Remove '+ (m[1]=='w'?'White ':'Black ') + m[2]+m[3]
-           break
-        case m = tw.match(/\w*(\w\w)<.*>\w*(\w\w)/), m!=null :
-           r='Exchange '+ m[1] + ' ' + m[2]
-           break
-        default: return;
-        }
-        ; $('#twin').attr('value', $('#twin').attr('value') + ('Twin ' + r + "\n"))
+      if (tw.length < 3) return;
+      switch (true) {
+      case m = tw.match(/(\w\w)-?>(\w\w)/), m!=null :
+         r='Move ' + m[1] + ' ' + m[2]
+         break
+      case m = tw.match(/\+(\w)(\w)(\w\w)/), m!=null :
+         r='Add '+ (m[1]=='w'?'White ':'Black ') + m[2]+m[3]
+         break
+      case m = tw.match(/\-(\w)(\w)(\w\w)/), m!=null :
+         r='Remove '+ (m[1]=='w'?'White ':'Black ') + m[2]+m[3]
+         break
+      case m = tw.match(/\w*(\w\w)<.*>\w*(\w\w)/), m!=null :
+         r='Exchange '+ m[1] + ' ' + m[2]
+         break
+      default: return;
+      }
+      $('#twin').attr('value', $('#twin').attr('value') + ('Twin ' + r + "\n"))
      }))
   } //*************************************
   function fromInternal() {

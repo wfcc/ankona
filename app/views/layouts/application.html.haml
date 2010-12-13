@@ -15,7 +15,7 @@
     = render partial: 'layouts/google_analytics'
   %body
     %a.plain(href = '/')
-      = image_tag('dia-x-logo.png', :style => 'margin:0 0 0px 0px')
+      = image_tag 'dia-x-logo.png'
     = render 'layouts/logged_in'
     %ul.menu
       %li= link_to 'Competitions', :controller => 'competitions'
