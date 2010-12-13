@@ -1,22 +1,29 @@
 - content_for :scripts do
-  = javascript_include_tag 'jquery.tokeninput'
-  = javascript_include_tag 'diagram'
+  /= javascript_include_tag 'jquery.tokeninput'
+  /= javascript_include_tag 'diagram'
 
 %h1 Editing problem
 = simple_form_for @diagram do |f|
   /= f.error_messages
   #first.span-12
     = f.input :position, label: 'FEN', |
-      hint: 'English notation for FEN ("S" for Knight allowed): “2S5/1bQKpR2/4s3/…”' |
+      hint: 'English notation for FEN'
     .label Position (w/b)                                                          
     = f.input :white, label: false, |
-      hint: '↕ FIDE notation: “Ka7 De1 Tf2 Lh3 Sh2 [p]e2 …”' |
+      hint: '↕ FIDE piece notation'
     = f.input :black, label: false
 
-    #divBlank= image_tag '/fen', :id => 'blank'
+    .cassete
+      -%w{k q r b s p}.each do |figurine|
+        = image_tag "/images/fig/b#{figurine}.gif", 'data-id' =>  figurine, class: 'todrag'
+    #divBlank= image_tag '/fen', id: 'blank'
+    .cassete
+      -%w{k q r b s p}.each do |figurine|
+        = image_tag "/images/fig/#{figurine}.gif", 'data-id' => figurine.upcase, class: 'todrag'
     #pcount
-    - %w{◁ ▽ △ ▷ CW CCW ↕}.each do |direction|
-      = button_to_function direction, "moveBoard('#{direction}')"
+    - %w{◁ ▽ △ ▷ ↻ ↺ ↕}.each do |direction|
+      %button{type: "button", class: "moveboard", 'data-name' => direction}
+        = direction
 
     = f.input :stipulation, :input_html => {:class => 'c30p'}, :hint => '#2 | s#3 | h#2.5 | win | …'
     = f.input :twin, :hint => 'b) Se5->e6 | b) +Th3, c) Sh8<->La2 | 2.1;1.1 | …'
@@ -28,7 +35,7 @@
     .label Authors
     #authors
       = hidden_field_tag :authors_json, @authors_json
-      = text_field_tag :authors_ids #, nil #, class: :author_name
+      = text_field_tag :authors_ids
     = f.input :source
     %table.zero
       %tr
@@ -38,7 +45,7 @@
     /
       %ul.menu
         %li
-          = link_to 'Don\'t save', @diagram
+          = link_to "Don't save", @diagram
         %li
           = link_to 'Back to list', diagrams_path
 

@@ -10,11 +10,9 @@ $(document).ready(function()
     , prePopulate: []
     , tokenLimit: 1
     , onSelect: function (selected){
-        console.log(selected)
         $('#handle').html(selected.id)
         $('#name').html(selected.name)
         $('.hideable').show()
-        
         return true
         }
     , classes:

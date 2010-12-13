@@ -17,13 +17,13 @@
         = form.password_field :password_confirmation, :size => 10
     .span-13 
       #accordion
-        %h4.accord I am listed in WFCC database.
+        %h3.accord I am listed in WFCC database.
         %div
           %p
             To be listed as author, you need a "handle".
-            We may already have you name on the list.
+            We may already have your name on the list.
             If you find yourself, you will be able to enter your own problems.
-            Try typing your name here (it may be spelled slightly differently):
+            Try typing your name here (it may be spelt differently):
 
           = form.label :name, 'Name'
           = text_field_tag :name_handle, '', style: 'width:10em'
@@ -35,10 +35,10 @@
             %p.hideable
               Name:
               %span.hideable.x#name
-        %h4.accord Just register me as a user.
+        %h3.accord I am not listed, just register me as a user.
         %div
-          I am not listed, or am not willing to link this registration
-          to authors in WCFF database at this time.
+          I am not in the WFCC database, or am not willing to link
+          this account to author at this time.  Just register me.
           
           = form.label :name, 'Name'
           = form.text_field :name, style: 'width:20em'
