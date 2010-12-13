@@ -9,10 +9,16 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
-    name = @user.name.split(',')[0]
-    author = Author.where(code: name)
-    @user.author = author[0] if author.present?
+    @user = User.new(params[:user]) 
+    handle = params[:name_handle]
+    if handle.present?
+      name = handle.split(',')[0]
+      author = Author.where(code: name)
+      if author.present?
+        @user.author = author[0] if author.present?
+        @user.name = author[0].name
+      end
+    end
     if @user.save
       flash[:notice] = "Account registered!"
       redirect_back_or_default account_url

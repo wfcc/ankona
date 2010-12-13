@@ -15,26 +15,33 @@
       %p
         = form.label :password_confirmation
         = form.password_field :password_confirmation, :size => 10
-    .span-10
-      %p
-        To be listed as author, you need a "handle".
-        We may already have you name on the list.
-        If you find yourself, you will be able to enter your own problems.
-        Try typing your name here (it may be spelled slightly differently):
-      %p
-        If you don't find yourself ("No results"), don't worry.  Just submit
-        the form as is.
-        
-      = form.label :name, 'Your name'
-      = form.text_field :name, style: 'width:10em'
+    .span-13 
+      #accordion
+        %h4.accord I am listed in WFCC database.
+        %div
+          %p
+            To be listed as author, you need a "handle".
+            We may already have you name on the list.
+            If you find yourself, you will be able to enter your own problems.
+            Try typing your name here (it may be spelled slightly differently):
 
-      %p.hideable#details(style = 'display:none;margin:30px 0 70px')
-        %p.hideable
-          Handle:
-          %span.hideable.x#handle
-        %p.hideable
-          Name:
-          %span.hideable.x#name
+          = form.label :name, 'Name'
+          = text_field_tag :name_handle, '', style: 'width:10em'
+
+          %p.hideable#details(style = 'visibility:hide;margin:10px 0 70px')
+            %p.hideable
+              Handle:
+              %span.hideable.x#handle
+            %p.hideable
+              Name:
+              %span.hideable.x#name
+        %h4.accord Just register me as a user.
+        %div
+          I am not listed, or am not willing to link this registration
+          to authors in WCFF database at this time.
+          
+          = form.label :name, 'Name'
+          = form.text_field :name, style: 'width:20em'
         
       = form.submit "Register"
 

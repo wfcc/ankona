@@ -12,6 +12,20 @@
 
 ActiveRecord::Schema.define(:version => 28) do
 
+  create_table "aaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d",                :null => false
+    t.integer "pay"
+  end
+
+  create_table "aaaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d_d",              :null => false
+    t.integer "pay"
+  end
+
   create_table "authors", :force => true do |t|
     t.string   "name"
     t.string   "original"
@@ -28,6 +42,10 @@ ActiveRecord::Schema.define(:version => 28) do
   create_table "authors_diagrams", :id => false, :force => true do |t|
     t.integer "author_id"
     t.integer "diagram_id"
+  end
+
+  create_table "bubu", :id => false, :force => true do |t|
+    t.decimal "id", :precision => 10, :scale => 0
   end
 
   create_table "collections", :force => true do |t|
@@ -170,7 +188,7 @@ ActiveRecord::Schema.define(:version => 28) do
     t.string   "country"
     t.text     "address"
     t.text     "comment"
-    t.string   "perishable_token",  :default => "", :null => false
+    t.string   "perishable_token",  :null => false
     t.integer  "author_id"
   end
 
