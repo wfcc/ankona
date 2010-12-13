@@ -23,11 +23,12 @@ class AuthorsController < ApplicationController
 #----------------------------------------------------------------------
   def json
     search = "%#{params[:q]}%"
+    handle = params[:handle].present? # return either IDs or handles
     @authors = Author
       .where(:source.eq => 'h')
       .where((:name =~ search) | (:code =~ search) |
         (:original =~ search) | (:traditional =~ search))
-      .map{|a| {name: a.name, id: a.id}}
+      .map{|a| {name: a.name, id: (handle ? a.code: a.id)}}
     render json: @authors
   end
 # GET /authors/1------------------------------------------------------

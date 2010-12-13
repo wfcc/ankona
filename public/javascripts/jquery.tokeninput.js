@@ -23,7 +23,8 @@ $.fn.tokenInput = function (url, options) {
         method: "GET",
         contentType: "json",
         queryParam: "q",
-        onResult: null
+        onResult: null,
+        onSelect: null
     }, options);
 
     settings.classes = $.extend({
@@ -316,7 +317,7 @@ $.TokenList = function (input, settings) {
       .insertBefore(input_token);
 
       // The 'delete token' button
-      $("<span>x</span>")
+      $("<span>×</span>")
           .addClass(settings.classes.tokenDelete)
           .appendTo(this_token)
           .click(function () {
@@ -352,6 +353,10 @@ $.TokenList = function (input, settings) {
             input_box.hide();
             hide_dropdown();
         }
+// I.K.
+			  if($.isFunction(settings.onSelect)) {
+			    settings.onSelect(li_data)
+  	    }
     }
 
     // Select a token in the token list
