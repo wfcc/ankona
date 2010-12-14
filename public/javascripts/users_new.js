@@ -1,8 +1,6 @@
-
 $(document).ready(function()
   {        
   $('#accordion').accordion({fillSpace: true})   
-  $('#user_submit').button()
   $('.hideable').hide()
   $('#name_handle').tokenInput('/authors/json?handle=1',
     { hintText: "Start typing your LAST NAME"

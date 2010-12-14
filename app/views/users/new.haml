@@ -1,9 +1,8 @@
-%h1 Register
-
 = form_for @user, url: signup_path do |form|
   = form.error_messages
   .container.clearboth
     .span-10
+      %h1 Register            
       %p
         = form.label :login, 'Your email, it will be used as login'
         = form.text_field :login
@@ -15,6 +14,8 @@
       %p
         = form.label :password_confirmation
         = form.password_field :password_confirmation, :size => 10
+
+      = form.submit "Register", class: 'button'
     .span-13 
       #accordion
         %h3.accord I am listed in WFCC database.
@@ -23,12 +24,12 @@
             To be listed as author, you need a "handle".
             We may already have your name on the list.
             If you find yourself, you will be able to enter your own problems.
-            Try typing your name here (it may be spelt differently):
+            Try typing your name here:
 
           = form.label :name, 'Name'
           = text_field_tag :name_handle, '', style: 'width:10em'
 
-          %p.hideable#details(style = 'visibility:hide;margin:10px 0 70px')
+          %p.hideable#details(style = 'visibility:hide;margin:10px 0 200px')
             %p.hideable
               Handle:
               %span.hideable.x#handle
@@ -41,8 +42,7 @@
           this account to author at this time.  Just register me.
           
           = form.label :name, 'Name'
-          = form.text_field :name, style: 'width:20em'
+          = form.text_field :name #, style: 'width:20em'
         
-      = form.submit "Register"
 
           
