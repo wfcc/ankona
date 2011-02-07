@@ -1,0 +1,12 @@
+-#
+  locals:
+    f - form context
+    child - Child to be displayed
+
+.child{id: child.id}
+  %h3 Child
+  = f.hidden_field :id
+  \...
+  %p
+    %a.child-remove{href: '#'} Remove the child above
+

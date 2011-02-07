@@ -1,45 +1,51 @@
 -# coding: utf-8
 
-%h1 Listing diagrams
-= link_to 'New diagram', new_diagram_path
-- form_tag :diagrams, :method => :get do
-  Filter search by author:
-  = text_field_tag 'search[authors]', '', :size => 10
-  stipulation:
-  = text_field_tag 'search[stipulation]', '', :size => 5
-  collection:
-  = collection_select :search, :collections, |
-    (current_user ? Collection.where(:user_id.eq => current_user.id) : Collection.where(:public.eq => true)), |
-    :id, :name, {:include_blank => true, :selected => @scoll} |
-  = submit_tag 'Apply filter'
-- if current_user
-  %p.fine Other people's “Public” collections will not be shown, only those created by you.
-- else
-  %p.fine Only “public” collections will be shown, as you are not logged in.
-= will_paginate @diagrams
-.pagestat= page_entries_info @diagrams
-%br{:style => "clear:both"}/
-%table.diagrams
-  - @diagrams.each do |diagram|
-    %tr.clickable{:onclick => "window.location.href = '#{url_for diagram}'"}
-      %td{:style => "vertical-align:top;color:#46D"}= h diagram.id
-      %td
-        %h3= h diagram.authors.collect(&:name).to_sentence
-        = h [ diagram.source, diagram.label ].join(' ')
-        %div= h diagram.published
-        .em1
-        %div= h diagram.stipulation
-        %div= h diagram.twin
-        %div= diagram.tested ? 'C+' : ''
-      %td{:height => "202px", :width => "202px"}
-        %div{:style => "padding:0; position:relative"}
-          = image_tag '/fen/' + diagram.position, :class => :noBorder if diagram.position
-      %td{:style => "vertical-align:top"}
-        %pre.solution= h diagram.solution
-      %td{:style => "color:#281"}
-        = h diagram.collections.collect(&:name).join(', ')
-%br/
-= will_paginate @diagrams
-.pagestat= page_entries_info @diagrams
-%br{:style => "clear:both"}/
-= link_to 'New diagram', new_diagram_path
+- if @diagrams.empty?
+  %h4 You have no problems.  Let's create some!
+  = link_to 'New problem', new_diagram_path, class: :button
+- else  
+  %h1 Listing diagrams
+  = link_to 'New problem', new_diagram_path, class: :button
+  - form_tag :diagrams, :method => :get do
+    Filter search by author:
+    = text_field_tag 'search[authors]', '', :size => 10
+    stipulation:
+    = text_field_tag 'search[stipulation]', '', :size => 5
+    /
+      collection:
+      = collection_select :search, :collections, (current_user ? |
+        Collection.where(:user_id.eq => current_user.id) : Collection.where(:public.eq => true)), |
+        :id, :name, {:include_blank => true, :selected => @scoll} |
+    = submit_tag 'Apply filter'
+  - if current_user
+    -# %p.fine Other people's “Public” collections will not be shown, only those created by you.
+  - else
+    %p.fine Only “public” collections will be shown, as you are not logged in.
+  = will_paginate @diagrams
+  .pagestat= page_entries_info @diagrams
+  %br{:style => "clear:both"}/
+  %table.diagrams
+    - @diagrams.each do |diagram|
+      %tr.clickable{:onclick => "window.location.href = '#{url_for diagram}'"}
+        %td{:style => "vertical-align:top;color:#46D"}= h diagram.id
+        %td
+          %h3= h diagram.authors.collect(&:name).to_sentence
+          = h [ diagram.source, diagram.label ].join(' ')
+          %div= h diagram.published
+          .em1
+          %div= h diagram.stipulation
+          %div= h diagram.twin
+          %div= diagram.tested ? 'C+' : ''
+        %td{:height => "202px", :width => "202px"}
+          %div{:style => "padding:0; position:relative"}
+            = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
+        %td{:style => "vertical-align:top"}
+          %pre.solution= h diagram.solution
+        /%td{:style => "color:#281"}
+        /  = h diagram.collections.collect(&:name).join(', ')
+        %td{:style => "color:#281"}
+          = h diagram.sections.collect(&:name).join(', ')
+  %br/
+  = will_paginate @diagrams
+  .pagestat= page_entries_info @diagrams
+  = link_to 'New problem', new_diagram_path, class: :button

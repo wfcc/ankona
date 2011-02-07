@@ -30,6 +30,16 @@ require 'open3'
       format.xml  { render :xml => @diagrams }
     end
   end
+# ===========================================================================
+  def mine
+    
+    @diagrams = Diagram
+      .where(:user_id.eq => current_user.id)
+      .paginate(page: params[:page])
+      
+    render :index
+  end
+  
 #----- GET /diagrams/1 ------------------------------------------------------
   def show
     @diagram = Diagram.find(params[:id])
@@ -89,11 +99,9 @@ require 'open3'
     @diagram.sections << Section.find(params[:diagram][:section_ids])
 
     flash[:notice] = "Diagram was submitted to this competition."
+  
+    render :show
 
-    respond_to do |format|
-      format.html { redirect_to(diagrams_url) }
-      format.xml  { head :ok }
-    end
   end
   #--------------------------------------------------
   def solve

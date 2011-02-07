@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
 
-#gem 'rails', '3.0.0.rc'
 
 gem 'rails', '>= 3.0.1'
 
@@ -12,7 +11,6 @@ gem 'rails', '>= 3.0.1'
 
 # To use debugger
 # gem 'ruby-debug'
-
 
   gem 'authlogic'
   gem 'will_paginate', '>= 3.0.pre'
@@ -26,6 +24,7 @@ gem 'rails', '>= 3.0.1'
   gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "master"
   gem 'simple_form'
   gem 'jquery-rails'
+  gem "nested_form", :git => "git://github.com/madebydna/nested_form.git"
 
 #  gem 'hassle'
   

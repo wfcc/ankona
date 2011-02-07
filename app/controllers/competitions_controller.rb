@@ -69,7 +69,15 @@ class CompetitionsController < ApplicationController
 
     respond_to do |format|
 
-      params[:competition][:existing_section_attributes] ||= {}
+      params[:competition][:sections_attributes].each_value do |v|
+        #v['name'] = v['name'].upcase
+        v['_destroy'] = 1 if v['name'].blank?
+      end
+      
+logger.info '**********************'
+logger.info params
+logger.info '**********************'
+        
       if @competition.update_attributes(params[:competition])
         flash[:notice] = 'Competition was successfully updated.'
         format.html { redirect_to(@competition) }

@@ -9,6 +9,9 @@ ActionController::Routing::Routes.draw do |map|
 
   match 'collections/data' => 'collections#data'
   match 'collections/dbaction' => 'collections#dbaction'
+
+  match 'diagrams/mine' => 'diagrams#mine'  
+  match 'diagrams/section' => 'diagrams#section'  
   
   map.resources :statuses
 
@@ -21,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'competitions/judge', :controller => 'competitions', :action => 'judge'
 
-  map.resources :competitions
+  map.resources :competitions, has_many: :sections
 
   map.resources :roles
   map.resources :collections
@@ -43,8 +46,6 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
 
   map.resources :imports
-
-#  map.root :controller => 'faqs', :action => 'show', :id => 1
 
 
 end

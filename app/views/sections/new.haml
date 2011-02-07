@@ -1,0 +1,3 @@
+- fields_for 'competition[sections_attributes][]', @section do |child_form|
+  = render partial: '/sections/form', locals: {f: child_form, child: @section }
+

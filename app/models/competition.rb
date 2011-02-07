@@ -1,7 +1,9 @@
 class Competition < ActiveRecord::Base
   belongs_to :user
-  has_many :sections, :dependent => :destroy
-  after_update :save_sections
+  has_many :sections, dependent: :destroy
+  #after_update :save_sections
+  accepts_nested_attributes_for :sections, allow_destroy: true,
+    reject_if: proc { |a| a['name'].blank? }
   validates_presence_of :name
 
   def save_sections
