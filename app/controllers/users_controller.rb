@@ -17,12 +17,18 @@ class UsersController < ApplicationController
       if author.present?
         @user.author = author[0] if author.present?
         @user.name = author[0].name
+      else
+        @user.build_author name: name
+        @user.name = name
       end
-    end
-    if @user.save
-      flash[:notice] = "Account registered!"
-      redirect_back_or_default account_url
+      if @user.save
+        flash[:notice] = "Account registered!"
+        redirect_back_or_default account_url
+      else
+        render action: :new
+      end
     else
+      flash[:error] = "Name is required"
       render action: :new
     end
   end

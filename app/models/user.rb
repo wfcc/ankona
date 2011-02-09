@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :sections
-  belongs_to :author
+  belongs_to :author, autosave: true
 
   has_many :collections
   validates_uniqueness_of :login

@@ -1,8 +1,8 @@
 = form_for @user, url: signup_path do |form|
   = form.error_messages
   .container.clearboth
+    %h1 Register            
     .span-10
-      %h1 Register            
       %p
         = form.label :login, 'Your email, it will be used as login'
         = form.text_field :login
@@ -15,34 +15,28 @@
         = form.label :password_confirmation
         = form.password_field :password_confirmation, :size => 10
 
-      = form.submit "Register", class: 'button'
-    .span-13 
-      #accordion
-        %h3.accord I am listed in WFCC database.
-        %div
-          %p
-            To be listed as author, you need a "handle".
-            We may already have your name on the list.
-            If you find yourself, you will be able to enter your own problems.
-            Try typing your name here:
+    .span-13
+      .usa
+        To be listed as author, you need a "handle".
+        We may already have your name on the list.
+        If you find yourself, you will be able to enter your own problems.
+      .usa
+        Please be aware that we may change the spelling of your name to
+        adapt it to the unified romaization, especially if your name is
+        originally spelled in Cyrillic.
+      .usa
+        Try typing your name here:
 
-          = form.label :name, 'Name'
-          = text_field_tag :name_handle, '', style: 'width:10em'
+      = form.label :name, 'Name'
+      = text_field_tag :name_handle, '', style: 'width:20em'
 
-          %p.hideable#details(style = 'visibility:hide;margin:10px 0 200px')
-            %p.hideable
-              Handle:
-              %span.hideable.x#handle
-            %p.hideable
-              Name:
-              %span.hideable.x#name
-        %h3.accord I am not listed, just register me as a user.
-        %div
-          I am not in the WFCC database, or am not willing to link
-          this account to author at this time.  Just register me.
-          
-          = form.label :name, 'Name'
-          = form.text_field :name #, style: 'width:20em'
-        
+      %p.hideable#details(style = 'visibility:hide;margin:10px 0 100px')
+        %p.hideable
+          Handle:
+          %span.hideable.x#handle
+        %p.hideable
+          Name:
+          %span.hideable.x#name
+    %br(style = 'clear:both')
+    = form.submit 'Register', class: :button
 
-          

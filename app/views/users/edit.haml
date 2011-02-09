@@ -10,6 +10,6 @@
       { :selected => @user.role_ids },                   |
       { :multiple => true, :name => 'user[role_ids][]' } |
   %p
-    = f.submit "Update"
+    = f.submit "Update", class: :button
 %br/
 = link_to "My Profile", account_path

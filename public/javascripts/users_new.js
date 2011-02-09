@@ -1,12 +1,14 @@
 $(document).ready(function()
   {        
-  $('#accordion').accordion({fillSpace: true})   
+  //$('#accordion').accordion({fillSpace: true})   
   $('.hideable').hide()
   $('#name_handle').tokenInput('/authors/json?handle=1',
-    { hintText: "Start typing your LAST NAME"
+    { hintText: "Start typing your name"
     , minChars: 3
     , prePopulate: []
     , tokenLimit: 1
+    , allowNewValues: true
+    , noResultsText: "Not found, new name will be created"
     , onSelect: function (selected){
         $('#handle').html(selected.id)
         $('#name').html(selected.name)
