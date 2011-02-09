@@ -10,7 +10,7 @@ require 'open3'
 #--------------------------------------------------------
   # GET /diagrams
   # GET /diagrams.xml
-  def index
+  def former_index
 
     searcher = Diagram.order(:created_at.asc)
     if params[:search].present?

@@ -1,4 +1,7 @@
-%h1 Edit Account
+%h1= @user.name
+
+Edit account.  Your name may not be changed.
+
 - form_for @user, :url => account_url do |f|
   = f.error_messages
   = render :partial => "form", :object => f
@@ -11,5 +14,4 @@
       { :multiple => true, :name => 'user[role_ids][]' } |
   %p
     = f.submit "Update", class: :button
-%br/
-= link_to "My Profile", account_path
+-# = link_to "My profile", account_path, class: :button

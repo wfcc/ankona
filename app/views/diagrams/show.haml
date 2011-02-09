@@ -45,7 +45,7 @@
     .cgreen= @diagram.collections.collect(&:name).join(', ')
     
 %ul.menu
-  %li= link_to 'Back', diagrams_path, class: :button
+  %li= link_to 'Back', '/diagrams/mine', class: :button
   - if may_edit? @diagram and @diagram.sections.count < 1
     %li= link_to 'Edit', edit_diagram_path(@diagram), class: :button
     %li= link_to 'Destroy', @diagram, :confirm => 'Are you sure?', method: :delete, class: :button

@@ -1,8 +1,9 @@
 %p
   = form.label :login, 'Your email, it will be used as login'
   = form.text_field :login
-  %span.fine It will also be used for password reminders and other functions
-%p
+  %br
+  %span.fine It may also be used for password reminders
+-#%p
   = form.label :name, 'Your name'
   = form.text_field :name,  :size => 40
   %span.fine Real name, please
@@ -15,5 +16,4 @@
 %p
   = form.label :password_confirmation
   = form.password_field :password_confirmation, :size => 10
-  %p
-    You will be automatically logged in after submitting this form.
+

@@ -7,8 +7,8 @@ class AuthorsController < ApplicationController
   def index
     @@pagination_options = {inner_window: 10, outer_window: 10}
     search = "%#{params[:search_name]}%"
+    #  .where(:source.eq => 'h')
     @authors = Author
-      .where(:source.eq => 'h')
       .where((:name =~ search) | (:code =~ search) |
         (:original =~ search) | (:traditional =~ search))
       .order(:code)
@@ -24,8 +24,8 @@ class AuthorsController < ApplicationController
   def json
     search = "%#{params[:q]}%"
     handle = params[:handle].present? # return either IDs or handles
+    #  .where(:source.eq => 'h')
     @authors = Author
-      .where(:source.eq => 'h')
       .where((:name =~ search) | (:code =~ search) |
         (:original =~ search) | (:traditional =~ search))
       .map{|a| {name: a.name, id: (handle ? a.code: a.id)}}

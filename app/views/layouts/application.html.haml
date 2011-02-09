@@ -18,7 +18,8 @@
       = image_tag 'dia-x-logo.png'
     = render 'layouts/logged_in'
     %ul.menu
-      %li= link_to 'Competitions', :controller => 'competitions'
+      - if is_admin?
+        %li= link_to 'Competitions', :controller => 'competitions'
       -# %li= link_to 'Problems', :controller => 'diagrams'
       %li= link_to 'My problems', controller: :diagrams, action: :mine
       %li= link_to 'Authors', controller: :authors
