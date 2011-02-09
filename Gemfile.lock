@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/madebydna/nested_form.git
-  revision: bce54d4741ef698de7bcdc97cb86010812dbf81f
-  specs:
-    nested_form (0.0.0)
-
-GIT
   remote: http://github.com/justinfrench/formtastic.git
   revision: f53e74a85587e035bac51a640c987b60911dc514
   branch: master
@@ -112,7 +106,6 @@ DEPENDENCIES
   meta_where
   mysql (>= 2.8.1)
   mysql2
-  nested_form!
   rails (>= 3.0.1)
   rmagick
   simple_form

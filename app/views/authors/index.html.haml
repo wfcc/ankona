@@ -1,12 +1,13 @@
 %h2 Listing authors
 
-- form_tag :authors, :method => :get do
+- form_tag :authors, method: :get do
   Filter by name:
-  = text_field_tag 'search_name', '', :size => 20
+  = text_field_tag 'search_name', '', size: 20
   = submit_tag 'Apply'
 
 %p.clearboth
-  = link_to 'New author', new_author_path, class: :button
+  - if is_admin?
+    = link_to 'New author', new_author_path, class: :button
 
 = will_paginate @authors
 .pagestat= page_entries_info @authors
@@ -39,5 +40,6 @@
 .pagestat= page_entries_info @authors
 
 %p.clearboth
-  = link_to 'New author', new_author_path, class: :button
+  - if is_admin?
+    = link_to 'New author', new_author_path, class: :button
 
