@@ -1,6 +1,6 @@
 -# coding: utf-8
 
-- if @diagrams.empty?
+- if @diagrams.blank?
   %h4 You have no problems.  Let's create some!
   = link_to 'New problem', new_diagram_path, class: :button
 - else  
@@ -48,4 +48,4 @@
   %br/
   = will_paginate @diagrams
   .pagestat= page_entries_info @diagrams
-  = link_to 'New problem', new_diagram_path, class: :button
+  /= link_to 'New problem', new_diagram_path, class: :button
