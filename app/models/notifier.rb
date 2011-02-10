@@ -2,7 +2,7 @@ class Notifier < ActionMailer::Base
   smtp_settings = { :enable_starttls_auto => false }
   delivery_method = :smtp
   
-  default from: email_from
+  default from: Status.where(table: 'GLOBAL', name: 'email_from').first.h_display
 
   def password_reset_instructions(user)
     subject       "Password reset instructions"
