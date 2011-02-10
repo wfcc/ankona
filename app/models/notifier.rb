@@ -42,6 +42,6 @@ class Notifier < ActionMailer::Base
   private
   
   def email_from
-    Status.where(table: 'GLOBAL', name: 'email_from').first.display
+    Status.where(table: 'GLOBAL', name: 'email_from').first.h_display
   end
 end
