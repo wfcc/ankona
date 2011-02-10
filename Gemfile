@@ -36,4 +36,6 @@ gem 'rails', '>= 3.0.1'
 group :development, :test do
    gem 'wirble'
    gem 'hirb'
+   gem 'nifty-generators'
 end
+gem "mocha", :group => :test

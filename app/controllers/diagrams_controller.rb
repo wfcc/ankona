@@ -25,10 +25,6 @@ require 'open3'
 
     @diagrams = searcher.paginate :page => params[:page]
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @diagrams }
-    end
   end
 # ===========================================================================
   def mine
@@ -39,26 +35,18 @@ require 'open3'
       
     render :index
   end
-  
+
 #----- GET /diagrams/1 ------------------------------------------------------
   def show
     @diagram = Diagram.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @diagram }
-    end
   end
 
 #----- GET /diagrams/new ----------------------------------------------------
   def new
     @diagram = Diagram.new
     render :edit
-#    respond_to do |format|
-#      format.html # new.html.erb
-#      format.xml  { render :xml => @diagram }
-#    end
   end
+
 #----- GET /diagrams/1/edit ----------------------------------------------
   def edit
     @diagram = Diagram.find(params[:id])
@@ -80,17 +68,21 @@ require 'open3'
 #----- PUT /diagrams/1 -----------------------------------------------------
   def update
     @diagram = Diagram.find(params[:id])
-    save_diagram false
+    @diagram.authors = Author.find params[:authors_ids].split(',')
+    if @diagram.update_attributes(params[:diagram])
+      flash[:notice] = "Successfully updated problem."
+      render :show
+    else
+      flash[:error] = "Errors saving problem."
+      render :edit
+    end
   end
 #----- DELETE /diagrams/1 --------------------------------------------------
   def destroy
     @diagram = Diagram.find(params[:id])
     @diagram.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(diagrams_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(diagrams_url)
   end
   #--------------------------------------------------
   def section
@@ -99,9 +91,7 @@ require 'open3'
     @diagram.sections << Section.find(params[:diagram][:section_ids])
 
     flash[:notice] = "Diagram was submitted to this competition."
-  
     render :show
-
   end
   #--------------------------------------------------
   def solve
@@ -152,16 +142,10 @@ require 'open3'
       @diagram.authors = Author.find params[:authors_ids].split(',')
       if @diagram.save
         flash[:notice] = 'Problem was successfully saved.'
-        format.html { redirect_to(@diagram) }
-        if(is_create)
-          format.xml  { render :xml => @diagram, :status => :created, :location => @diagram }
-        else
-          format.xml  { head :ok }
-        end
+        redirect_to(@diagram)
       else
         flash[:error] = 'Problem was not saved due to errors.'
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @diagram.errors, :status => :unprocessable_entity }
+        render :edit
       end
     end
   end

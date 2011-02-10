@@ -61,8 +61,11 @@ GEM
       activesupport (~> 3.0.2)
       arel (~> 2.0.2)
     mime-types (1.16)
+    mocha (0.9.11)
+      rake
     mysql (2.8.1)
     mysql2 (0.2.6)
+    nifty-generators (0.4.2)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -104,8 +107,10 @@ DEPENDENCIES
   hirb
   jquery-rails
   meta_where
+  mocha
   mysql (>= 2.8.1)
   mysql2
+  nifty-generators
   rails (>= 3.0.1)
   rmagick
   simple_form
