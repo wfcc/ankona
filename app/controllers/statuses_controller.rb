@@ -1,6 +1,9 @@
 class StatusesController < ApplicationController
   # GET /statuses
   # GET /statuses.xml
+  
+  before_filter :require_admin
+  
   def index
     @statuses = Status.all
 
