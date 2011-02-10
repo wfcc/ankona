@@ -1,5 +1,4 @@
 class Notifier < ActionMailer::Base
-  default_url_options[:host] = "localhost"
   smtp_settings = { :enable_starttls_auto => false }
   delivery_method = :smtp
 
