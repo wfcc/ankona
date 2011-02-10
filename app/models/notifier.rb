@@ -5,6 +5,7 @@ class Notifier < ActionMailer::Base
   default from: Status.where(table: 'GLOBAL', name: 'email_from').first.h_display
 
   def password_reset_instructions(user)
+    from          email_from
     subject       "Password reset instructions"
     recipients    user.email
     body          :edit_password_reset_url => edit_password_reset_url(user.perishable_token)
