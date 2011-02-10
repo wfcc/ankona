@@ -1,18 +1,19 @@
 %h1 Current competitions
 %table.diagrams
   - @competitions.each do |competition|
-    %tr.clickable{:onclick => "window.location.href = '#{url_for competition}'"}
+    %tr.clickable(onclick = "window.location.href = '#{url_for competition}'")
       %td
         %span{:style => "font:normal x-large Arial;clear:right"}= h competition.name
-        %br/
-        - logger.info competition.status.inspect
+        %br
         Status: 
         != Status.find(:first, conditions: {table: 'competitions', value:(competition.status or 0)}).h_display
         = succeed "Submission" do
-          %br/
-        deadline: #{h competition.deadline.to_s :long}
-        %br/
-        Director: #{h competition.user.name}
+          %br
+        deadline: 
+        = competition.deadline.to_s :long
+        %br
+        Director:
+        = competition.user.name
         %div{:style => "white-space:pre-wrap;margin-left:5em;clear:left;width:60%"}= h competition.announce
         - @i=0; competition.sections.each do |section|
           %h4{:style => "margin-left:10em"}= h section.name
@@ -22,6 +23,6 @@
         - if may_edit? competition
           = link_to 'Edit', edit_competition_path(competition), class: :button
       / %= link_to 'Destroy', competition, :confirm => 'Are you sure?', :method => :delete %
-    %br{:style => "clear:left;margin:3em"}/
-%br/
+    %br{:style => "clear:left;margin:3em"}
+%br
 = link_to 'New competition', new_competition_path, class: :button

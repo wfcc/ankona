@@ -1,14 +1,13 @@
 class Notifier < ActionMailer::Base
   smtp_settings = { :enable_starttls_auto => false }
   delivery_method = :smtp
+  
+  default from: email_from
 
   def password_reset_instructions(user)
-    subject       "Password Reset Instructions"
-    from          email_from
+    subject       "Password reset instructions"
     recipients    user.email
-    sent_on       Time.now
     body          :edit_password_reset_url => edit_password_reset_url(user.perishable_token)
-    headers       'Precedence' => 'bulk'
   end
 
   def invitation_to_judge(u, s, i)
