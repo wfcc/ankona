@@ -30,50 +30,6 @@ class StartOver < ActiveRecord::Migration
     t.integer "diagram_id"
   end
 
-  create_table "l_collections", :force => true do |t|
-    t.integer "user_id"
-    t.string  "name"
-    t.boolean "public"
-  end
-
-  create_table "l_diagrams", :force => true do |t|
-    t.integer "user_id"
-    t.string  "label"
-    t.string  "author"
-    t.string  "source"
-    t.date    "date"
-    t.string  "position"
-    t.text    "comment"
-    t.string  "stipulation"
-    t.string  "twin"
-    t.string  "fc"
-    t.string  "fp"
-    t.text    "solution"
-    t.boolean "tested"
-    t.string  "award"
-  end
-
-  create_table "l_diagrams_collections", :id => false, :force => true do |t|
-    t.integer "diagram_id"
-    t.integer "collection_id"
-  end
-
-  create_table "l_posts", :force => true do |t|
-    t.integer  "user_id"
-    t.datetime "time"
-    t.string   "subject"
-    t.text     "body"
-  end
-
-  create_table "l_users", :force => true do |t|
-    t.string "email"
-    t.string "name"
-    t.string "password"
-    t.string "country"
-    t.text   "address"
-    t.text   "comment"
-  end
-
   create_table "users", :force => true do |t|
     t.string   "login"
     t.string   "crypted_password"
@@ -91,8 +47,6 @@ class StartOver < ActiveRecord::Migration
     t.string   "country"
     t.text     "address"
     t.text     "comment"
-
-  end
   end
 
   def self.down

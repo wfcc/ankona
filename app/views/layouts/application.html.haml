@@ -2,7 +2,7 @@
 !!! 5
 %html
   %head
-    %meta{ charset: 'utf-8' }
+    %meta(charset = 'utf-8')
     %title
       dia-x:
       = controller.controller_name.humanize
@@ -19,10 +19,10 @@
     = render 'layouts/logged_in'
     %ul.menu
       - if is_admin?
-        %li= link_to 'Competitions', :controller => 'competitions'
+        %li= link_to 'Competitions', competitions_path
       -# %li= link_to 'Problems', :controller => 'diagrams'
       %li= link_to 'My problems', controller: :diagrams, action: :mine
-      %li= link_to 'Authors', controller: :authors
+      %li= link_to 'Authors', authors_path
     %div{ style: "height:50px; clear:both; margin:4px auto; text-align:center" }
       - if flash[:notice]
         %p.notice= flash[:notice]

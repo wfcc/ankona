@@ -1,4 +1,4 @@
-ActionController::Routing::Routes.draw do |map|
+DiaX::Application.routes.draw do
 
   match "/stylesheets/:package.css" => AssetsApp.action(:stylesheets), as: 'stylesheets'
 
@@ -13,39 +13,38 @@ ActionController::Routing::Routes.draw do |map|
   match 'diagrams/mine' => 'diagrams#mine'  
   match 'diagrams/section' => 'diagrams#section'  
   
-  map.resources :statuses
+  resources :statuses
 
-  map.resources :faqs
+  resources :faqs
 
-  map.resources :invites
-  map.connect 'invites/accept/:code', controller: 'invites', action: 'react', accepted: true
-  map.connect 'invites/decline/:code', :controller => 'invites', :action => 'react', :accepted => false
+  resources :invites
+  match 'invites/accept/:code', controller: 'invites', action: 'react', accepted: true
+  match 'invites/decline/:code', :controller => 'invites', :action => 'react', :accepted => false
 
 
-  map.connect 'competitions/judge', :controller => 'competitions', :action => 'judge'
+  match 'competitions/judge', :controller => 'competitions', :action => 'judge'
 
-  map.resources :competitions, has_many: :sections
+  resources :competitions, has_many: :sections
 
-  map.resources :roles
-  map.resources :collections
-  map.resources :authors
-  map.resources :posts
-  map.resources :diagrams #, :active_scaffold => true
-  map.connect 'diagrams/solve/:id', :controller => 'diagrams', :action => 'solve'
-  map.connect 'diagrams/section/:id', :controller => 'diagrams', :action => 'section'
+  resources :roles
+  resources :collections
+  resources :authors
+  resources :posts
+  resources :diagrams #, :active_scaffold => true
+  match 'diagrams/solve/:id', :controller => 'diagrams', :action => 'solve'
+  match 'diagrams/section/:id', :controller => 'diagrams', :action => 'section'
 
-  #map.connect 'fen/*id', :controller => 'fen'
+  #connect 'fen/*id', :controller => 'fen'
 
-  map.signup '/signup', :controller => 'users', :action => 'create', :conditions => { :method => :post}
-  map.signup '/signup', :controller => 'users', :action => 'new', :conditions => { :method => :get}
-  map.resource :account, :controller => 'users'
-  map.resources :password_resets
+  match 'signup', to: 'users#create', via: :post
+  match 'signup', to: 'users#new', via: :get
+  resource :account, :controller => 'users'
+  resources :password_resets
 
-  map.login '/login', :controller => 'user_sessions', :action => 'create', :conditions => { :method => :post}
-  map.login '/login', :controller => 'user_sessions', :action => 'new', :conditions => { :method => :get}
-  map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
-
-  map.resources :imports
-
+  match 'login', to: 'user_sessions#create', via: :post
+  match 'login', to: 'user_sessions#new', via: :get
+  match 'logout', to: 'user_sessions#destroy'
+  
+  resources :imports
 
 end
