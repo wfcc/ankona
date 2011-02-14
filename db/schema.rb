@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 29) do
+ActiveRecord::Schema.define(:version => 30) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -62,7 +62,6 @@ ActiveRecord::Schema.define(:version => 29) do
     t.string   "stipulation"
     t.string   "twin"
     t.text     "solution"
-    t.integer  "tested"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -73,6 +72,7 @@ ActiveRecord::Schema.define(:version => 29) do
     t.integer  "author_id"
     t.string   "source"
     t.string   "fairy"
+    t.integer  "tested"
   end
 
   create_table "diagrams_collections", :id => false, :force => true do |t|
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(:version => 29) do
     t.string   "country"
     t.text     "address"
     t.text     "comment"
-    t.string   "perishable_token",  :default => "", :null => false
+    t.string   "perishable_token",  :null => false
     t.integer  "author_id"
   end
 
