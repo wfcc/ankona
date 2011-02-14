@@ -27,10 +27,12 @@
 
     = f.input :stipulation, :input_html => {:class => 'c30p'}, :hint => '#2 | s#3 | h#2.5 | win | …'
     = f.input :twin, :hint => 'b) Se5->e6 | b) +Th3, c) Sh8<->La2 | 2.1;1.1 | …'
-    = link_to_function 'Add fairy condition', "addFairyCondition()", :style => @hideIfFairy, :id => 'showfairy'
-    #fairy(style = "#{@showIfFairy}")
-      = f.input :fairy, :input_html => {:size => 20}, :hint => 'e.g. Circe, Andernach, Sentinels, …', :label => 'Fairy conditions'
-    = f.check_box :tested, :label => 'C+'
+    /
+      = link_to_function 'Add fairy condition', "addFairyCondition()", :style => @hideIfFairy, :id => 'showfairy'
+      #fairy(style = "#{@showIfFairy}")
+        = f.input :fairy, :input_html => {:size => 20}, :hint => 'e.g. Circe, Andernach, Sentinels, …', :label => 'Fairy conditions'
+    = f.label 'Computer tested'
+    = f.select :tested, Status.where(:table.eq => :diagrams).collect {|i| [i.name, i.value] }
   #second.span-12.last
     .label Authors
     #authors
@@ -44,13 +46,11 @@
     = f.input :solution, input_html: {rows: 25, cols: 5}, hint: 'Please adhere to FIDE piece notation: KDTLS.'
     /
       %ul.menu
-        %li
-          = link_to "Don't save", @diagram
-        %li
-          = link_to 'Back to list', diagrams_path
+        %li= link_to "Don't save", @diagram
+        %li= link_to 'Back to list', diagrams_path
 
   .clear.em1
-  = f.submit 'Save'
+  = f.submit 'Save', class: :button
   %fieldset
     %legend
       -#= submit_to_remote 'solve', ' Solve with popeye ', |

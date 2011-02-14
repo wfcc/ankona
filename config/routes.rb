@@ -22,7 +22,7 @@ DiaX::Application.routes.draw do
   match 'invites/decline/:code', :controller => 'invites', :action => 'react', :accepted => false
 
 
-  match 'competitions/judge', :controller => 'competitions', :action => 'judge'
+  match 'competitions/judge' => 'competitions#judge'
 
   resources :competitions, has_many: :sections
 
@@ -31,8 +31,8 @@ DiaX::Application.routes.draw do
   resources :authors
   resources :posts
   resources :diagrams #, :active_scaffold => true
-  match 'diagrams/solve/:id', :controller => 'diagrams', :action => 'solve'
-  match 'diagrams/section/:id', :controller => 'diagrams', :action => 'section'
+  match 'diagrams/solve/:id' => 'diagrams#solve'
+  match 'diagrams/section/:id' => 'diagrams#section'
 
   #connect 'fen/*id', :controller => 'fen'
 

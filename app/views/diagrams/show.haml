@@ -8,7 +8,7 @@
     %p= @diagram.published
   #divBlank
     - @diagram.position = '' if @diagram.position.blank?
-    = image_tag '/fen/' + @diagram.position, :id => 'blank'
+    = image_tag '/fen/' + @diagram.position, id: 'blank'
   %div{ :style => "text-align:right;padding-right:70px;font-size:x-small" }
     = @diagram.position.scan(/[A-Z]/).size
     +
@@ -16,7 +16,7 @@
   .d= @diagram.stipulation
   .xs= @diagram.twin
   .xs= @diagram.fairy
-  .xs= @diagram.tested ? 'C+' : 'C-'
+  .xs!= Status.where(:table.eq => 'diagrams', :value.eq => @diagram.tested)[0].h_display
 .span-8
   %pre.solution= @diagram.solution
 .span-7.last
