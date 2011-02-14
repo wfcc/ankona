@@ -15,7 +15,8 @@
     = @diagram.position.scan(/[a-z]/).size
   .d= @diagram.stipulation
   .xs= @diagram.twin
-  .xs= @diagram.fairy
+  .xs= @diagram.fairy                                                         
+  - @diagram.tested = 0 if @diagram.tested.blank?
   .xs!= Status.where(:table.eq => 'diagrams', :value.eq => @diagram.tested)[0].h_display
 .span-8
   %pre.solution= @diagram.solution
