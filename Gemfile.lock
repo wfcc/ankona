@@ -43,6 +43,7 @@ GEM
     authlogic (2.1.6)
       activesupport
     builder (2.1.2)
+    dalli (1.0.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     haml (3.0.25)
@@ -102,6 +103,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth (= 4.2.5)
   authlogic
+  dalli
   formtastic!
   haml
   hirb

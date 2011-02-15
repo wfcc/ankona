@@ -11,7 +11,8 @@ gem 'rails', '>= 3.0.1'
 
 # To use debugger
 # gem 'ruby-debug'
-
+                    
+  gem 'dalli'
   gem 'authlogic'
   gem 'will_paginate', '>= 3.0.pre'
   gem 'meta_where'
