@@ -40,7 +40,11 @@ class UsersController < ApplicationController
 # --------------------------------------------------------------------------
   def edit
     @user = @current_user
-    @author_json = [@user.author].map{|a| {id: a.id, name: a.name}}.to_json
+    if @user.author.present?
+      @author_json = [@user.author].map{|a| {id: a.id, name: a.name}}.to_json
+    else
+      @author_json = ''
+    end
   end
 # --------------------------------------------------------------------------
   def update

@@ -5,7 +5,7 @@
 // Iļja Ketris (c) 2008
 //
 
-$(document).ready(function() {
+$(function() {
   $('#authors_ids').tokenInput('/authors/json',
     { hintText: "Start typing author's name or handle"
     , minChars: 3
@@ -33,28 +33,27 @@ $(document).ready(function() {
   nEngl = 'kqrbsp'
   nFide = 'kdtlsp'
 
-  String.prototype.times = function(num)
-      {return new Array( num + 1 ).join( this )}
+  String.prototype.times = function(num) {return new Array( num + 1 ).join( this )}
 
   $('#diagram_white').bind('keyup', updateFen)
   $('#diagram_black').bind('keyup', updateFen)
   $('#diagram_position').bind('keyup', updateFromFen)
 
-  initVars()
+  initVars()                             
+  
   if (! $('#diagram_position').val()) {
     updateFen({keyCode: 50}) 
     } else {
     updateFromFen()
-  }
+    }
 
-  //   $('blank').src = '/fen/' + $('#diagram_fen').value;
   $('#diagram_white').focus()
 
   $('.todrag').draggable(
     { revertDuration: 0
     , revert: 'valid'
     , cursor: 'crosshair'
-    , containment: $('#blank')
+    //, containment: $('#blank')
     , zIndex: 5
     })
   $('#blank').droppable(
@@ -70,7 +69,7 @@ $(document).ready(function() {
   $('.moveboard').button()
   $('.moveboard').click(function() { // move position left/up/down/up
     // ◁ ▽ △ ▷
-    console.log(this)
+    // console.log(this)
     switch (this.getAttribute('data-name')) {
     case '▷' :
         $.each(aBoard, function(i,row) {
@@ -149,7 +148,7 @@ $(document).ready(function() {
           row += '1'.times(8 - row.length)
           aBoard[i++] = row.split('')
           })
-      } else {
+    } else {
       fen = fen.replace(/\d/g, function(x){return '1'.times(Number(x))})
       fen = fen.replace(/[^kqrbspn\/1]/ig, '1') // strip wrong FEN characters
       fen += '1'.times(64 - fen.length)
@@ -297,7 +296,7 @@ $(document).ready(function() {
     internalToDiagram()
     internalToNotation()
     internalToFen()
-  }
-})
+    }
+  })
 
 

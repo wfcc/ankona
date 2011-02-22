@@ -1,34 +1,33 @@
-%h1= @user.name
-
-Edit account.
-
-- form_for @user, :url => account_url do |f|
+= form_for @user, :url => account_url do |f|
   = f.error_messages
+  .container.clearboth
+    %h2 Edit your account data
+    .span-10
+      = f.label :name, 'Your name'
+      = hidden_field_tag :author_json, @author_json
+      = text_field_tag :name_handle, '', style: 'width:20em'
+      Find it in the list, or create new.
+    .span-10
+      %p
+        = f.label :login, 'Your email, it will be used as login'
+        = f.text_field :login
+        %br
+        %span.fine It may also be used for password reminders
+      %p
+        = f.label :password, "Change password"
+        = f.password_field :password, :size => 10
+        %br
+        %span.fine Be reasonable, use hard passwords
+      %p
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, :size => 10
 
-  = f.label :name, 'Your name'
-  = hidden_field_tag :author_json, @author_json
-  = text_field_tag :name_handle, '', style: 'width:20em'
-  Find it in the list, or create new.
-  %p
-    = f.label :login, 'Your email, it will be used as login'
-    = f.text_field :login
-    %br
-    %span.fine It may also be used for password reminders
-  %p
-    = f.label :password, "Change password"
-    = f.password_field :password, :size => 10
-    %br
-    %span.fine Be reasonable, use hard passwords
-  %p
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation, :size => 10
 
-  
-  - if is_admin?
-    = collection_select :user, :role_ids,                |
-      Role.all(:order => 'name ASC'), :id, :name,        |
-      { :selected => @user.role_ids },                   |
-      { :multiple => true, :name => 'user[role_ids][]' } |
-  %p
-    = f.submit "Update", class: :button
--# = link_to "My profile", account_path, class: :button
+      - if is_admin?
+        = f.label 'Groups'
+        = collection_select :user, :role_ids,                |
+          Role.all(:order => 'name ASC'), :id, :name,        |
+          { :selected => @user.role_ids },                   |
+          { :multiple => true, :name => 'user[role_ids][]' } |
+      %p
+        = f.submit "Update", class: :button
