@@ -1,11 +1,49 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  table: MyString
-  name: MyString
+--- 
+statuses_001: 
+  id: 1
+  table: competitions
+  name: Not started
+  value: 0
+  h_display: <span style="color:grey">Not started</span>
+statuses_002: 
+  id: 2
+  table: competitions
+  name: Open, submissions accepted
   value: 1
-
-two:
-  table: MyString
-  name: MyString
+  h_display: <span style="color:green">Started</span>
+statuses_003: 
+  id: 3
+  table: competitions
+  name: Closed, no submissions
+  value: 2
+  h_display: <span style="color:red">Closed</span>
+statuses_004: 
+  id: 4
+  table: competitions
+  name: Finished, results available
+  value: 3
+  h_display: <span style="color:#aa0">Completed</span>
+statuses_005: 
+  id: 5
+  table: GLOBAL
+  name: email_from
+  value: 0
+  h_display: info@dia-x.info
+statuses_006: 
+  id: 6
+  table: diagrams
+  name: untested
+  value: 0
+  h_display: C-
+statuses_007: 
+  id: 7
+  table: diagrams
+  name: tested
   value: 1
+  h_display: C+
+statuses_008: 
+  id: 8
+  table: diagrams
+  name: cooked
+  value: 2
+  h_display: <font color="red">cooked</font>

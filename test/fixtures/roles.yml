@@ -1,7 +1,11 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  name: MyString
-
-two:
-  name: MyString
+--- 
+roles_001: 
+  id: 1
+  name: admin
+  created_at: 2009-06-20 12:18:30 Z
+  updated_at: 2009-06-20 12:18:30 Z
+roles_002: 
+  id: 2
+  name: nobody
+  created_at: 2009-11-14 11:54:29 Z
+  updated_at: 2009-11-14 11:54:29 Z

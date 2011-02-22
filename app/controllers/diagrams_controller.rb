@@ -14,9 +14,6 @@ require 'open3'
 
     searcher = Diagram.order(:created_at.asc)
     if params[:search].present?
-      #searcher.where
-      #searcher.collections_id_equals params[:search][:collections].to_i if params[:search][:collections] != ''
-      #searcher.stipulation_like params[:search][:stipulation] if params[:search][:stipulation] != ''
       searcher = searcher.where(:stipulation[params[:search][:stipulation]])
    end
 

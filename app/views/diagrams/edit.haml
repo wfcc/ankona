@@ -37,7 +37,7 @@
     .label Authors
     #authors
       = hidden_field_tag :authors_json, @authors_json
-      = text_field_tag :authors_ids
+      = text_field_tag :authors_ids, '', style: 'width:20em'
     = f.input :source
     %table.zero
       %tr

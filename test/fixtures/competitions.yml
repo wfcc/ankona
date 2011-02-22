@@ -1,19 +1,14 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  user: 
-  name: MyString
-  announce: MyText
-  open: false
-  deadline: 2009-10-27 21:36:05
-  complete: false
-  results: MyText
-
-two:
-  user: 
-  name: MyString
-  announce: MyText
-  open: false
-  deadline: 2009-10-27 21:36:05
-  complete: false
-  results: MyText
+--- 
+competitions_001: 
+  id: 10
+  user_id: 1
+  name: FIDE Album 2007-2009
+  announce: ""
+  open: 
+  deadline: 2011-04-09
+  complete: 
+  results: ""
+  created_at: 2011-02-09 19:02:06 Z
+  updated_at: 2011-02-09 19:02:06 Z
+  formal: 0
+  status: 1

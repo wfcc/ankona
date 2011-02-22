@@ -1,6 +1,1941 @@
-klark:
-  login: klark
-  password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("superman1000" + salt) %>
-  persistence_token: 6cde0674657a8a313ce952df979de2830309aa4c11ca65805dd00bfdc65dbcc2f5e36718660a1d2e68c1a08c276d996763985d2f06fd3d076eb7bc4d97b1e317
+--- 
+users_001: 
+  id: 1
+  login: ike@ipro.lv
+  crypted_password: e9faf6c2e2b026ee6c03126a684e90bb334c9685bc5b5a935ce4a516a1ebfc463e41f6377c7926d5f11bfb2d74926489f59401f96060f851ebb09af19a343611
+  password_salt: 9W9pQYqC8qDA0rPjpZCt
+  persistence_token: 700a0d941e75585028adc4505185298eeff3d562dfba32aec6a72de02092ae07580e62dffbdd291abdeb5cac83501fdb00d9f71a9bb66a5a3114686baaee337b
+  login_count: 127
+  last_request_at: 2011-02-15 01:31:11 Z
+  last_login_at: 2011-02-11 21:11:19 Z
+  current_login_at: 2011-02-14 08:54:43 Z
+  last_login_ip: 84.245.215.125
+  current_login_ip: 87.99.79.1
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2011-02-15 01:31:11 Z
+  name: "I\xC4\xBCja Ketris"
+  country: LV
+  address: ""
+  comment: "I\xC4\xBCja Ketris<br/>Viestura prospekts 95-84<br/>R\xC4\xABga, LV-1005, LETTONIE<br/><br/>tel.+371 29 420 816; email &lt;ike@vo.id.lv&gt"
+  perishable_token: oFwXFseWTk8kAwQAPWp
+  author_id: 
+users_002: 
+  id: 2
+  login: mary@jane.xx
+  crypted_password: ejFiz8AkxAmhI
+  password_salt: w8dowizF1iQ6F2Ak2vXX
+  persistence_token: aa442491f83297e808e113777411cff89d45885874f4b53f547f93e300b901b7fe93617ff5293deaadd27864e6dfec7ee82cf85fe80b2b2df197f3bd46c6c625
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Mary Jane
+  country: XX
+  address: ""
+  comment: 
+  perishable_token: PWRlmSgasY2elWWpEKlY
+  author_id: 
+users_003: 
+  id: 3
+  login: janis@kudra.lv
+  crypted_password: iN5BKHac4HInc
+  password_salt: _mm8y8SMxIsZkHPhXq8T
+  persistence_token: 51e515335ec04f6a795501c65996e1274e0fdb1fcf8a64ed6451d08401693a0d85cce46001eadc8704e40c7cf5d7d1029511ce028964a7a23b0b9830034cc5af
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: "J\xC4\x81nis K\xC5\xABdra"
+  country: LV
+  address: ""
+  comment: 
+  perishable_token: bocapsWCaGA_GlOl9dFm
+  author_id: 
+users_004: 
+  id: 4
+  login: ion_murarasu@hotmail.com
+  crypted_password: LVdvBgtG.VIpQ
+  password_salt: 4gRAQ3iCHu9FqsbkEtfe
+  persistence_token: 229e6901711bc047217bbb3a83db2aae415dac8bfc38e91699e1c6e1c5614ff1567f8c078cf656a4c317bb768fd6cb873d2a24ff48cf4a455fbd5ef94479151b
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Ion Murarasu
+  country: RO
+  address: ""
+  comment: 
+  perishable_token: nxgS0nHZFhTXNVLeCbFu
+  author_id: 
+users_005: 
+  id: 5
+  login: joaquimchessproblem@gmail.com
+  crypted_password: 8fEyDXLE2o.qc
+  password_salt: MaefWQciqQaKiJFzNEgW
+  persistence_token: 8f23d6cd512f084bd4c8977ef96153ee99c08babdfcf345ac1a6b36fb7f95f9770fa0eddc5edcdc0dce45c70943dca2376454733efdc9fa540b61747ec5e4566
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Joaquim Crusats
+  country: ??
+  address: ""
+  comment: 
+  perishable_token: ucBTZhVQq8jsXYUOipOP
+  author_id: 
+users_006: 
+  id: 6
+  login: hubereric@yahoo.fr
+  crypted_password: VqwyquDD1tnHM
+  password_salt: DxKhbd5YjNPHFSP-rRj7
+  persistence_token: 26d021f1198acfa5bc4b0a70640c2889c66609ce7ba3b8f818c1c648f2cae1f3d8e1c0ceb7262df20da3cd99cdf3054b1fd5b3edf4221a23f4b2edcdff4a1f70
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Eric Huber
+  country: RO
+  address: ""
+  comment: 
+  perishable_token: D4F0gsME8mo4f2awEOHx
+  author_id: 
+users_007: 
+  id: 7
+  login: d@v.lv
+  crypted_password: LwEdcgX8X0Qu6
+  password_salt: vYJL1RRk1v5WDgSRh4ON
+  persistence_token: 64e6402bb98e4f37a41bc7c818d15aae715045524161ca7105bfc73a69b1441d7f826dc5a9b9c9250ff40e3c8552dd6a818ed758776788c5b04e01603bdbea17
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: AA
+  country: LV
+  address: ""
+  comment: 
+  perishable_token: hg96JKBHo5EjvsZDirfu
+  author_id: 
+users_008: 
+  id: 8
+  login: imurarasu@galati.astral.ro
+  crypted_password: DbN7BmHm9BMaM
+  password_salt: hDb9F_8-V_FiIMOoG661
+  persistence_token: 8af425c22a2a1d47df848d6c384f432a04df53f9eb5b9a3d60e446db7b7f57b49137a0f7ad6e493300fa7d50076d8f4ddbdc7e8e4026e5ff608e6b61ca751480
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Ion Murarasu
+  country: RO
+  address: ""
+  comment: 
+  perishable_token: kjLiv3KXR2OiA-MVF03n
+  author_id: 
+users_009: 
+  id: 9
+  login: egor@gde.to
+  crypted_password: 651vu2Tvqt55c
+  password_salt: d-LeIxcHlHP62Hp1C4Qv
+  persistence_token: 993881e26be9cbc380b79a5e309be9d20c06403115f65f787cddf764e690d9a2095246bbf84adb3bcbab472dd37b4d22134aa2540fa92075619406754d3c3402
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Andrejs Jegorovs
+  country: LV
+  address: ""
+  comment: 
+  perishable_token: 5id3YcFnLOAPhjW9OoT_
+  author_id: 
+users_010: 
+  id: 10
+  login: nikola.predrag@zg.t-com.hr
+  crypted_password: 6VYBLc7sNz11o
+  password_salt: LLHRwzS2QnL1ILd4rP-z
+  persistence_token: 3447e434ad500410d22627aca58dc2a5c8a716ccc78744d557c191e1198843f1df1ded951630d1a47cb12d00886b3a23a55edad3002bcef85605ba4a12441978
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Nikola Prerag
+  country: HR
+  address: ""
+  comment: 
+  perishable_token: UwBKg5dfktbMgWSowu7e
+  author_id: 
+users_011: 
+  id: 11
+  login: vtyapkin@chess-problemist.com
+  crypted_password: 7TK2DXq1CuT42
+  password_salt: -gcw5kUcZfcLh_SveYVM
+  persistence_token: 3aab3263673e52b694005d08cac57ef56c8e0929a77c0e5cabaed5c394b1fd116958f9114b9cd0a005c94295566576e713d3bee3b2b36ccbac3c22f56e106ce1
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Vladimir Tyapkin
+  country: US
+  address: ""
+  comment: 
+  perishable_token: Ab7OhLrNveDOSAHgsu4I
+  author_id: 
+users_012: 
+  id: 12
+  login: goja@goja.sk
+  crypted_password: oq1synnPZ70tg
+  password_salt: 5TnD2DsBEUkIs9kFj3on
+  persistence_token: 4231fa9d92bcaa71e86a8e3f6823bde81c31e73668686af3433afc74cdfe5e03dab25c555e7612eaf19de0dd3c996db4ff84ca4f948e835c5736a2cf179d152d
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2010-12-28 16:40:10 Z
+  name: "J\xC3\xA1n Golha"
+  country: SK
+  address: ""
+  comment: 
+  perishable_token: c9QAp6eOEUm1yGRJV6xQ
+  author_id: 
+users_013: 
+  id: 13
+  login: szachista@verizon.net
+  crypted_password: WxYpbKbIwZYrU
+  password_salt: Gb4ThcMr_FRPtLMrdMcq
+  persistence_token: 79999622e6d51560d68e94ceac1ad57973361aa43a540593ccfa2a04675ac703d33fb2be38054d9347c7e2c0a3921a5323fdde178b802fc4c840fae48059fd0c
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Henryk Kalafut
+  country: us
+  address: ""
+  comment: 
+  perishable_token: y8X8cAzYS0sG70CcxEn1
+  author_id: 
+users_014: 
+  id: 14
+  login: kovzs@chello.hu
+  crypted_password: ALek75eJgiYcU
+  password_salt: UyFrgILSz9IGioP5RGbG
+  persistence_token: a5f97b060dbf5aaf94cc1129fc353b67d141712631ee08c0072337f87b84c4d3fc171361d09d2e2c8aa3abd8ebc4d23bef3efceba2b0bccbf6037473a57a1788
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Zsolt Kovacs
+  country: HU
+  address: ""
+  comment: 
+  perishable_token: ERqAIkT56N3dM0kV8zp6
+  author_id: 
+users_015: 
+  id: 15
+  login: pogo5@free.fr
+  crypted_password: MkyoZvYpQHUso
+  password_salt: cUmQK3vhgbW_REXl_fYx
+  persistence_token: 787f08b52afd4986c3c7f070b5d1b149bb34e0733a36537547e691b4cb71becf152dc8ac850ea3f835ab00cd9cdf014dd24fdeecee8452dc5483a4e63af0e1bc
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Christophe Prechac
+  country: fr
+  address: ""
+  comment: 
+  perishable_token: y-_MfHQCrDx3f9yRXphs
+  author_id: 
+users_016: 
+  id: 16
+  login: cornelpacurar@gmail.com
+  crypted_password: Z7vyPaxZbxMng
+  password_salt: nMqIyzgSAmGNcavVpiaB
+  persistence_token: 8bbf95be443011d490190de2e4097f8a1c9cdc9a0212e8c42c5f40bbd26a6b50aaea6b148656d7ef40c1abc56fad9fc8534773a16a1c5666d1a4bbb097be335b
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Cornel Pacurar
+  country: CA
+  address: ""
+  comment: 
+  perishable_token: JV3i9AHp4mYOQfWOFXlO
+  author_id: 
+users_017: 
+  id: 17
+  login: bdjurasevic@sbb.co.yu
+  crypted_password: 1jR/PS9PeGZxc
+  password_salt: 8qzI0I9OnuMKqEzUI-Ci
+  persistence_token: 953098a1a7234e4ea8efad9aaaa44f17c7f4b1a9eb4877b665ac84b8a456ecb7d746b5e8dcaa583ac9c44018148df9e9baf4bbc92ad7d45f3a4ec12703977fd8
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:21 Z
+  updated_at: 2009-06-13 11:36:21 Z
+  name: Branislav Djurasevic
+  country: yu
+  address: ""
+  comment: 
+  perishable_token: rm98Dc41fEeh3jp-OZTV
+  author_id: 
+users_018: 
+  id: 18
+  login: ralf.kraetschmer@t-online.de
+  crypted_password: 3mNImFIiSUV9g
+  password_salt: pyBPyVpGkJ4F7MKqkLx_
+  persistence_token: 4f96da2148b65d88ec6339932d0286637ebd507ac1c17d28dd4731b41f89857ad47e0c333ec0a9c6b5b384a1acd5e565ac77526827676bf3a79dc66c59e73c56
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: "Ralf Kr\xC3\xA4tschmer"
+  country: de
+  address: ""
+  comment: 
+  perishable_token: qaV5ht5S6bRo5PvegJQa
+  author_id: 
+users_019: 
+  id: 19
+  login: harryfou@ath.forthnet.gr
+  crypted_password: 9ec4797087f6eefa105046213bbbb77b7c8fa424281f154f72a692689472dfc259ecd96892d80cb1bc087dd029a35510b94659ddc6850d2a405e612357f8816e
+  password_salt: OWtK3XakHJiwqAUf9595
+  persistence_token: 8e22f547ce7613b42e543dd81e8618d62fed948f93d519c4d08b45615d2715b7880e8c5ccd28a6548298daf59757cd80f7bdc49d962d8a9123dfc9443dc7a0aa
+  login_count: 2
+  last_request_at: 2011-02-12 20:04:59 Z
+  last_login_at: 2011-02-10 06:40:20 Z
+  current_login_at: 2011-02-10 08:31:22 Z
+  last_login_ip: 178.128.182.96
+  current_login_ip: 212.205.83.18
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2011-02-12 20:04:59 Z
+  name: Harry Fougiaxis
+  country: GR
+  address: ""
+  comment: 
+  perishable_token: 04F78qHQTh4YhcKE0MV3
+  author_id: 
+users_020: 
+  id: 20
+  login: rudolf.larin@mail.ru
+  crypted_password: 4efBMHR6lv8Js
+  password_salt: p98RcxqWVpxizi_dIQk8
+  persistence_token: 6bdd521d374f284636be3c24922a8f9726c00cfd1566159144c3283025ff652bcd7e2c47337e214e6b9127a21a71f21155e2fec9ee8bf05fdd4ae7127abe708b
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: 
+  country: 
+  address: ""
+  comment: 
+  perishable_token: j6qWPCHwiQTiFOQdj_zj
+  author_id: 
+users_021: 
+  id: 21
+  login: wolper@xs4all.nl
+  crypted_password: VsisDyddg8Zn6
+  password_salt: gmOsbbTIksRNB-7K1WB9
+  persistence_token: 4b4bfa7208f542b4b026e551cab61511ebc1fee6fa71a1a5281b2c40ef4c5def3bf4f08c9212316baac80bea4509f56806f57023f7c298fb7e5e258486236cda
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: wolper
+  country: NL
+  address: 
+  comment: 
+  perishable_token: VCieOIwBgQuED3pBXWgn
+  author_id: 
+users_022: 
+  id: 22
+  login: true.ishma@gmail.com
+  crypted_password: cpaxBObgMWMAI
+  password_salt: XLrdGV0_yz7t_-aw9gU7
+  persistence_token: 5399f04e985195e3cb9649a9e1978d3a0e485909f9f96c594451b04eec228bdfc2969ffa0bbc5b5e84cbc3caa34cafc13a9c177d049c7e2fb610c9d3a3db127c
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: Maria
+  country: LV
+  address: 
+  comment: 
+  perishable_token: 7DtVVlezRP-4ouhXwfQu
+  author_id: 
+users_023: 
+  id: 23
+  login: ooo-berd@mail.ru
+  crypted_password: PSHtsSi3SylvI
+  password_salt: 3fqvAxJrbKQ2Xh89JFIR
+  persistence_token: 99091f91bf476591d8e52a9a52cd8f9e090311e07523469ed537e65509f00724687dccd11cfac59fc1f91c4d1e1288237783490e6c1a3bb89cc4878c1c3e5884
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: moda
+  country: ru
+  address: 
+  comment: 
+  perishable_token: y6Q_m6EdDCimGQuFknnm
+  author_id: 
+users_024: 
+  id: 24
+  login: tmsarg@hotmail.com
+  crypted_password: dPETu/C3ocEO6
+  password_salt: br55_atZJEsuwiLyh-vX
+  persistence_token: d42cd90ed863d8ea4690ceb5da61ff98ce136a87c76bd0684f266828acd2d67b07086bbea2315195e70eac05412ee894fbb660ee16d4633fb15f5c54eaf15cf9
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: Themis
+  country: GR
+  address: 
+  comment: 
+  perishable_token: d2e5PMTVrnJjY6usmWvH
+  author_id: 
+users_025: 
+  id: 25
+  login: felchen@bluewin.ch
+  crypted_password: zRJLJ7aAPq/XU
+  password_salt: blzhzuSMkrKoNqRVGDWh
+  persistence_token: 039e6e705c879d13041a6468ab82535e31cff16aa2a07f3661e856322f86cbe0fe8375a80f926361579b258c4adc22412eb7e54ec0fc91d4bf28de27c7f3a4e4
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: felchen
+  country: CH
+  address: 
+  comment: 
+  perishable_token: tkoua20e8nFASRjcTfFa
+  author_id: 
+users_026: 
+  id: 26
+  login: rallovito@tin.it
+  crypted_password: KDwVr8Yr3Tqd2
+  password_salt: 5T_5djUeeVq-Cs8axAqZ
+  persistence_token: bce527e883bf06102fd41a98d984be4510bf7ccb11a7bfb960bdea8863a9a59db147dbd6dd23ce2dcf92938dd416ab999f8b7fa68192804cd37b5fe7a4bc04bd
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: LyNMtsDnyZJWaJSwyHIE
+  author_id: 
+users_027: 
+  id: 27
+  login: marcel.fischer@gmx.ch
+  crypted_password: c.TtmYVOuCdDU
+  password_salt: Dc3OLQN-zstnGVJS64fB
+  persistence_token: c49df47d464f9d3fbc3d2b52efead27ce102e69bdcfd713700531152e5272e87ee63c3d3522f11311655a97681f993258bb95eb0d0aedb16e44ef2c6c5aa113d
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: Marcel Fischer
+  country: CH
+  address: 
+  comment: 
+  perishable_token: CCKstBxfaGE6nxr1obV_
+  author_id: 
+users_028: 
+  id: 28
+  login: prepress@printingtechnology.lv
+  crypted_password: F2O7vNpsOPNkA
+  password_salt: 5JVIgGV1S89lKGc6schI
+  persistence_token: 153c17f7d05b40e836c612479e61ecf1da5b8e0c27ce50d16c8875e848d19a9dd1fc026c25121cf63fdc9c426b1d230940108d1452d139fc1aa620abffa3797a
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: Alexander Rudenko
+  country: LV
+  address: 
+  comment: 
+  perishable_token: gEb3VguHJCNdkh65YNsy
+  author_id: 
+users_029: 
+  id: 29
+  login: sz.orlinski@wp.pl
+  crypted_password: Eo2yRDqDr4Igg
+  password_salt: j6xAvch8LYXmTJ-iRrJe
+  persistence_token: 1486dea2d2e919202293575f38b1c0619257520b84d5ffb5cb780c6ff3fbaddefdf4ac48638a4ffdb9412daa34238344dd5aae45f4e4598297ada91ca706a520
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: j7Fk_bFuXFMdtuxMR79I
+  author_id: 
+users_030: 
+  id: 30
+  login: frank.richter.nbk@t-online.de
+  crypted_password: 4BVKsnJIpNNrA
+  password_salt: kplfVA__rCTEjpM9U0Mg
+  persistence_token: fa28891685b7d07e574870677ea96994d821b21f7c466b25878a5b1e8b7cd5dbc5389e8faa46827e86fb32d84ebb0cb0829c98bce44b6019ce510d18d5eb7d67
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: Frank Richter
+  country: DE
+  address: 
+  comment: 
+  perishable_token: BLetB3TkMMaKtqydO6KG
+  author_id: 
+users_031: 
+  id: 31
+  login: ur@daveg.com
+  crypted_password: jAeG058CjAJ9Q
+  password_salt: FU3VUOHv8cDYGxr2gzcd
+  persistence_token: d044540d69a00d5bb81f0151409a1e8d3225146b5350b2b8b099e7b0a9f03b6d0b613f3ce4c341bb1483a6504cb49bb182d5f23fa4262acf6f946b77a9e6e39f
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: ULRICH RING
+  country: de
+  address: 
+  comment: 
+  perishable_token: xKVXLytf8uLEdBDwnC4H
+  author_id: 
+users_032: 
+  id: 32
+  login: shardul.golwalkar@gmail.com
+  crypted_password: exmurM3zTLvnw
+  password_salt: i2vbv3Rf3tJAZNC46t85
+  persistence_token: 7d355bc22e3640d2812b56cf541edb85a39724448ebb46d92ed45910f178f6a38c6dbda7fa6158b07fc14c0108e09554608f21b5755dfc76ffc42cf66486d7f7
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: terminator007
+  country: US
+  address: 
+  comment: 
+  perishable_token: _1Zswvin5974_1uhpEBP
+  author_id: 
+users_033: 
+  id: 33
+  login: h.le.grand@orange.nl
+  crypted_password: 8nKegdvyVtNIw
+  password_salt: onaRycKSHO66q-r-C-fk
+  persistence_token: c3d93d30b81b5ac0b71377e811be8cdea83cce2ed667a37a0f48c70d3258b17ba72bd0f266f1903eabb7305d49928ebb8b567e38b02b0f4ec0fe0b52d14a6f87
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: H. le Grand
+  country: NL
+  address: 
+  comment: 
+  perishable_token: RCn2ViYb35g4DsE5xDxY
+  author_id: 
+users_034: 
+  id: 34
+  login: quarpaz1@yahoo.fr
+  crypted_password: vd3wjMI96B7aY
+  password_salt: zz_hGX-E7RlWakZqBr73
+  persistence_token: b152cef1d02cf29e37b53ade77ff43c61437dd5f8ba915c66cc1baf426c5baabdfa2f340396f13ca283f3de5b303f8d837d2cdd2893205b6cd68c315496c0ed3
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: raican
+  country: ro
+  address: 
+  comment: 
+  perishable_token: TMys9Y19oEqsIS4fKNsC
+  author_id: 
+users_035: 
+  id: 35
+  login: yross@mail.ru
+  crypted_password: Z85WJ4EnDb1sw
+  password_salt: k7M5zBmVlrvWsEja2QNp
+  persistence_token: 86d3002c0c4ceddf3a0c617df2344983fe0ed08b1379f12b30b3b7181ca101cb13771a50626440708ac4bfa87c9c1000cea586da587329c838952418a5be16ba
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: Rossomakho Yakov
+  country: ru
+  address: 
+  comment: 
+  perishable_token: btBXo_MlBHUeds6zL3dF
+  author_id: 
+users_036: 
+  id: 36
+  login: karste.wagner1@freenet.de
+  crypted_password: OccC0u0wyRg1I
+  password_salt: y5S1zfzzZVXSv-Qj_0cy
+  persistence_token: 63b58914bfe3b7d268e825ab0719d493431093b765c1b8e11684031da0c000152e760826c65c6a3b2f7ecdef525b7ac9b072d0b8a13d93ae8e19f615d54761a5
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: Karl Wagner
+  country: DE
+  address: 
+  comment: 
+  perishable_token: FLEzup-w2ISxcYj5SDVF
+  author_id: 
+users_037: 
+  id: 37
+  login: joddy@ringrate.com
+  crypted_password: ATu65mmQxLtd2
+  password_salt: Av6gHT36ZkVrZEtb2u-i
+  persistence_token: 26db40248ddbfa91c3811fd3e0a85fd85d8ed36218ce76fdbb8e3c8a2427aea397ffafdc3a428841dda6a55a5f068a408b09bcb377650c0c97798d3c95d8dd22
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: PhG1H7k3ulgF0lGNw-xc
+  author_id: 
+users_038: 
+  id: 38
+  login: borislav.gadjanski@gmail.com
+  crypted_password: 7NWKd7xMnkZfo
+  password_salt: twWPMQ7J1zkyack14W5v
+  persistence_token: 3a5703f1a9ee21f989970897f4ee4fdff303fd55009be7d3bb5c851dd54706c72f6bf316a30e3773b5c3b56b8bfc14f78d5511e9640d96dfb58e03782e5505cc
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: vRhbvybdNfKwcpTsO5WP
+  author_id: 
+users_039: 
+  id: 39
+  login: izsib@hotmail.es
+  crypted_password: A1K/mSzoXA//w
+  password_salt: buG4k9ne-rXqhzhFbiom
+  persistence_token: e8974364888368e885c2185f2c388f458bdcce8c441a9aeec82a524bd8227c2f956356db271894c845aa686e5b912c3709f55590f3038594db6b6a7fd720a746
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: Imanol Zurutuza
+  country: es
+  address: 
+  comment: 
+  perishable_token: 8PRTN1Cf2mWdPM4jpLbs
+  author_id: 
+users_040: 
+  id: 40
+  login: kuzmisev@atknet.ru
+  crypted_password: 0/qz9hKbgz0kQ
+  password_salt: QiCWTEtWusPVDaKmDCWz
+  persistence_token: 0a04d9ed62995b91ed8d210e3d9cee20836009e6a055b9ee2b3e7911249025ee6ff77c1c325f4a76488911a0c3969fc074c64dcdc7db0c351718147383aea550
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:22 Z
+  updated_at: 2009-06-13 11:36:22 Z
+  name: vladimir
+  country: ru
+  address: 
+  comment: 
+  perishable_token: 1vKmmn1waqBXtQvP0C1p
+  author_id: 
+users_041: 
+  id: 41
+  login: smommaplete@gawab.com
+  crypted_password: GpchTTugZ6sTg
+  password_salt: Ifgd7NG577XU6X6068j4
+  persistence_token: bf8ee74ac6da80254fb6b3ddb3f2b0a80f28dc753f667121ef1c6d2114cc8b4d971da74095ac6b45932c5764a6b98acc18817ca66a2b75bc782341b3d539a097
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: xFs8BTB-wttbuxRkma0g
+  author_id: 
+users_042: 
+  id: 42
+  login: dmitri.turevski@gmail.com
+  crypted_password: sNPTLR52owA/I
+  password_salt: NEpSkqPgehjOaAsWrnoL
+  persistence_token: aa77a1c3ddd3555fabd74af023e7dade676a84379c8f85717b20cbaab9783d30f33e9fddd1a3c3b6dff679d12a91a81cabd28b4f3780c11965e9ff9141a0bed8
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2010-03-29 12:20:12 Z
+  name: Dmitri Turevski
+  country: ru
+  address: 
+  comment: 
+  perishable_token: uZVW7xPkR3JLMhbizQmL
+  author_id: 
+users_043: 
+  id: 43
+  login: gluismi@gmail.com
+  crypted_password: KBACjimHYc5l.
+  password_salt: 6YS5N0QkwoYeGP3ivZw3
+  persistence_token: e85a555fdfb7ec665eadf9f3c1c2ecbc56d1bc08d98428add9456ff34d5835495e95d08bd4107af4342fa5db965168f4faa79793e40cc25131baa097af46ff69
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: "Luis Miguel Mart\xC3\xADn"
+  country: es
+  address: 
+  comment: 
+  perishable_token: 2RDgzMQAPJxpv-1WRe0a
+  author_id: 
+users_044: 
+  id: 44
+  login: bds@bstephen.me.uk
+  crypted_password: iRbV/QTdeOFHY
+  password_salt: 57IpJM993qR0zki7ZwAi
+  persistence_token: ce142909bb7d90e2bfe1cb781c355e7d871be7466b1ff063ca02b9fdee050cc113ad328fd041bd3590a2f9d1e8346339d2f905ab7e913434dc848d4e63984692
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: Brian Stephenson
+  country: UK
+  address: 
+  comment: 
+  perishable_token: IPu0jvxBiH4-vR43duAE
+  author_id: 
+users_045: 
+  id: 45
+  login: rsc@informatik.tu-chemnitz.de
+  crypted_password: g4o.zXD.diTzY
+  password_salt: JabD-3rLjokC-ujo0lys
+  persistence_token: 0604857d72f2cddf5c49fb92ff867a7133a7874cc78bffb930956b25561a432c7a70fa8b62c1167894a2ca26392ce37d4956de7c38b372fff63adbff62208225
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: kmzuJsCdo3gFK9uuQBk5
+  author_id: 
+users_046: 
+  id: 46
+  login: rftghfdghfew@lexs.name
+  crypted_password: HfE0QG5LZohU.
+  password_salt: bdKNxYJa9LjTI9zq8d1R
+  persistence_token: dda213c072fec5e4bde3d0d2ce8c4a54b6d29a900efaea517e8aea48c1ed3bb353af5b0df44ab7a2cdce73015509b0bde83f8c477d4c7313db7c0bef4b298223
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: 8dYWFnrCDFJIxuPXGc3Z
+  author_id: 
+users_047: 
+  id: 47
+  login: enzymnelono@mail.ru
+  crypted_password: S7bXiXsCtmqBA
+  password_salt: eZg57utTICCthUrmn2-z
+  persistence_token: 9fd73a34b925d7803ad5ce105cef7b832343dd68850e6144cabd36e67854e626b52d6b0377ec09170e618232e1d1c299cbc28a9ad8b6ce6d47c2b6f300c27f1f
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: 5ZDF39D9gCUAlh1o3OI2
+  author_id: 
+users_048: 
+  id: 48
+  login: liceactioft@gawab.com
+  crypted_password: 9lZg6w6pxFpA2
+  password_salt: tnbKLNnHIQKlYWA5xdgi
+  persistence_token: bca4a84994ac8ca1ff75a79fb4dda999ecadf046bd5613b67470a343ce6dc4a7f1a3d70004e59aae3a25338b437ac1038485fad1b5399abcbdf6f9aa0423b964
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: azWonbHSwOwC-9bI_D4u
+  author_id: 
+users_049: 
+  id: 49
+  login: lenipaype@gmail.com
+  crypted_password: xldj9lgjDhvcA
+  password_salt: oAfwpSl-160McXBDI4pG
+  persistence_token: bc0801a9fbb5e877fe20e4be02bdcc85912e17d5e8511450d835cd9363da2bc47fe931eee7ec8d4cce02205b331df956538548e6c26f6904c998d06c05e205fa
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: S1HwLDZHLnSnYLuKvm_5
+  author_id: 
+users_050: 
+  id: 50
+  login: salgado.ronny96@gmail.com
+  crypted_password: a2Qd1ErLXLjPE
+  password_salt: LOEBy2p_n-qkd23LCaY5
+  persistence_token: 514fdac016eba142977868259b88b2e382727a338cd31d8d55323dcbeed84e33498f291b1c2689d53efc7c2c6e747924ed5ebe741748f8dadd7b09e5a4eb706c
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: FtHXRDIQEXzsJMa6uhyb
+  author_id: 
+users_051: 
+  id: 51
+  login: haprog@web.de
+  crypted_password: fCfW9cMsZq/ko
+  password_salt: oL3A5ELDAPq1ehdmvThT
+  persistence_token: 2075b4e399ef95ccf9236081ea7ad11cb51a95c1117858bc994323920d9a4d8c9bc2bc49ab0162d0736412e78d204dc9e091686866659aa774a7baa81ff4f703
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: Hans Peter
+  country: DE
+  address: 
+  comment: 
+  perishable_token: vUHjHJYmD-uInqAKjHwU
+  author_id: 
+users_052: 
+  id: 52
+  login: rulacrusbal@gmail.com
+  crypted_password: rp37c9zJQ010g
+  password_salt: uy2j-doRPkyMvHeRRCxC
+  persistence_token: 3308874a3cfb6d198d4dccfa9a8c6fcae7bac15af362a15bb9b9e50cb425c71fd1145cfd8344f2b2106cab3618a308a07cf8cb5cd5e3508689efe06ad27a75f0
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: iK_5X_w9nyONUauypDbR
+  author_id: 
+users_053: 
+  id: 53
+  login: audumberumbare@gmail.com
+  crypted_password: b1DNRFJJPkdjY
+  password_salt: Sx_jAcgk06r0dMIu37M0
+  persistence_token: 8401a3f9d7cbfb3c943dcf0b4cf2fb1ff1527912f041ec45982f53b46a8019d7ea63056f96e94945a64541fd7543d24c9ac490ea0a691c455055e362dfe43504
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: audu
+  country: "91"
+  address: 
+  comment: 
+  perishable_token: MLqmBk73QYN6MIYzn1kC
+  author_id: 
+users_054: 
+  id: 54
+  login: alurldeelslom@gmail.com
+  crypted_password: qJjzZUJ7gXJEg
+  password_salt: ws8y4SJfLj24aVQ7wKUz
+  persistence_token: 0fcc0cc979b51b4de8a710d536822a2a249681e2085f87efa1e858c0f6d28105e5735b4825775c5b155f783b4a494de8fce1128ee57966868092ef247cac1cb9
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: _PrIoKK6TdKm4C2Na36R
+  author_id: 
+users_055: 
+  id: 55
+  login: mcroitor@gmail.com
+  crypted_password: ZTVUVNZmtlud.
+  password_salt: wZc6u_Uo4kQlUKC-gIG2
+  persistence_token: 365fba48014eb506d59eef88e737a2edd38c0e938cfb1709dfa87c812c9d3aaf6c4285d0fce47409595bb33da4b96d3961a3b0249bdb547ac04adab6077f841a
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: Mihail
+  country: MD
+  address: 
+  comment: 
+  perishable_token: 88odTA-uZVfHEnghy8mw
+  author_id: 
+users_056: 
+  id: 56
+  login: preofsrecremo@gmail.com
+  crypted_password: FBPLKPxTO2fG2
+  password_salt: 2ZT63qDXrHjEBE12QMYm
+  persistence_token: abbe7d7d4c5599286ec16eb7f3492483fd77434db773a56a02b07d62796c24e9151e5675a4bf79fd36846302cfe3a52993d03a951f38209733679fa35d1a029f
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: iDPgoyhWuqZtU0tvc3Ef
+  author_id: 
+users_057: 
+  id: 57
+  login: bitaalild@gmail.com
+  crypted_password: CF6Alpgvoueqk
+  password_salt: W3oHLgB8ytv9GSxl4CgX
+  persistence_token: e3b1f07bc210bbd12ca1926b0b1030ceb79341c457a24a3c3bebdaf8593e409ef180823b5c302dbe867265f0ac064f32860fad3f16bddc7770afd44445254ba3
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: Y_i7ESrUtgr9FS01qf2K
+  author_id: 
+users_058: 
+  id: 58
+  login: info@chessstar.com
+  crypted_password: h3n9unIYglOMU
+  password_salt: Pmz2uM6leCEG548rWfPG
+  persistence_token: 994dc342afd0ade2d3e61849b62a591f6f84c4a1274331c2fda9cc76690f684b9d141ecf364b5b4db13d2b11b709f5ce1a3bed1c643aca5f54a39b7f7eaa7f55
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: 64oKIqwwrtsIcS3rmz2g
+  author_id: 
+users_059: 
+  id: 59
+  login: help@chessstar.com
+  crypted_password: 1U8gqoV3ESiKc
+  password_salt: ltCiVEqFsthi0BX98HIz
+  persistence_token: d4487ad4620842936244c239248c6202eb0055bc358ee45a56b63fad0865d33038f8f003485657a22bca0109e82f28018652bf243cfa47d3e30d53eb21781aba
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:23 Z
+  updated_at: 2009-06-13 11:36:23 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: k6-SE1sCMDLoUQyPXStX
+  author_id: 
+users_060: 
+  id: 60
+  login: mostaris22@gmail.com
+  crypted_password: QRYChHbqHiD8o
+  password_salt: FIM8JUgdpREOYJa1SsXO
+  persistence_token: c27702c37544bc1ac5bab1d6fed597d2671e2d2653a8d9f949342920529102d21a67d78b2fd7957f6c173d1af5dd0783e2e72e7b15623d17dd39927a3d12c023
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: J9GJz_z1ehWu2-TkYiMi
+  author_id: 
+users_061: 
+  id: 61
+  login: betapidelta@gmail.com
+  crypted_password: KhiNtQ4h03.cg
+  password_salt: QoVho-sDHXJLfdmDnNye
+  persistence_token: 13623a2b3a1dd05112b5ccee141e6d2932d72c47b1c69cfa1b1ab22a9d1fd248c6546ad7d457129b25f3f7062a1b6b738e73d5940da081428273dc910cc462ef
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: demos
+  country: gr
+  address: 
+  comment: 
+  perishable_token: 9Vd-ogYMpfnsHL326-ZB
+  author_id: 
+users_062: 
+  id: 62
+  login: areedbivins@gmail.com
+  crypted_password: 4LkA2VPc9Nh32
+  password_salt: Jvm1JtCGYiB0XJj4tYFe
+  persistence_token: 4bf59849ed708443046ea4a52e0eb2f61919f0dd2d0cc0798b98940608c1a608243d52b51b957c3a61faaeeeff0dc7edf0483836287eb9139110369a3dd191db
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: 4-XO2TMq75FIGxhN2-Zd
+  author_id: 
+users_063: 
+  id: 63
+  login: gladyskerr0863@gmail.com
+  crypted_password: 7YEluTPS75EzE
+  password_salt: 3fsG9BnnzGQsXpysgCAw
+  persistence_token: 50d590786e494045ee865d2aae82312142d104db6890a225f01eb936d85750d429de7dc244c33f8e9aac3c3dbf1915ce29738f140f47df44456591a96bcc077d
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: eNpkgiy8LjzTlO_TDzZD
+  author_id: 
+users_064: 
+  id: 64
+  login: avittore1968@gmail.com
+  crypted_password: 7KigOCwwWntpM
+  password_salt: E6XigiDi517mi1L0qswv
+  persistence_token: c3f80126b1de08d571c80bb546d81a14b774fd03dddeadf26b5d85c0dab4433a2c075f470c6469dafd1c0bb67b97732141a21212fea44845610086fbd771f50c
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: 4o3f9sl73uUYJsqe0-SN
+  author_id: 
+users_065: 
+  id: 65
+  login: alterrelp@gmail.com
+  crypted_password: q/9fWUGqyvYpA
+  password_salt: 3F6HbVPqfvtiGMqBwdsT
+  persistence_token: efbc91dd1b0951c029826f98d47f4f79cafe31c4d28435b7ce3d09af93490f52bda361e75220b41103b51411f5081a896276cc82c433c626654097cae4a682b2
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: AMxSV51smTdbopYXH_oh
+  author_id: 
+users_066: 
+  id: 66
+  login: gesicennysi@gmail.com
+  crypted_password: g/BvM6o0mv/nM
+  password_salt: uIJsFebzvdStHXza74eQ
+  persistence_token: cd5707de01bd476e8100a5dfa85c6ec52400b2b1a61cdca76e7c68f55cd307b3f5586bfee121fc29f93b30412ffaa291f69c49a7d95b2f627f4704b156cb5d9d
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: qXucX8MtD4xGgEviTzzr
+  author_id: 
+users_067: 
+  id: 67
+  login: cinkentendall@mail.ru
+  crypted_password: Q00Q0WysBOYKY
+  password_salt: A4s5hYNSXB-5sze2katq
+  persistence_token: 8fcb91330c1bd11452d2dcd18935d56ef24dc9400e7eff842c5dd7499db0545d95c265c7b8e2c7e1be79cda6b040173e331a2151945f32868f7c6494b0a7ba2f
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: QwQXIKLgv_ufKR48BbJv
+  author_id: 
+users_068: 
+  id: 68
+  login: iclicki@hotmmail.com
+  crypted_password: hweL05A4fLGSQ
+  password_salt: 7MzqPyYNNZ9wjKVRi8DU
+  persistence_token: c259bf5a82502a3bfc4066fd66c9c8eef4c4284eb79b19e28724c3c40fa85a4fd603ce21336c7848d7db280b597b97deb1038d5c7281664fbd73e41faa193401
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: iclicki
+  country: BE
+  address: 
+  comment: 
+  perishable_token: 07m18RT_ZEd-rDC0yEej
+  author_id: 
+users_069: 
+  id: 69
+  login: iclicki@hotmail.com
+  crypted_password: /BvEZRIqpcQ6A
+  password_salt: lkFNYwXQaCDm9OnQCv51
+  persistence_token: 36463c94693b9e7b5a96e636abda6966e308b80c740b5d271e85dc0b2295384a25dd723a384d30429053118f3c5acad32833ec0edd21438b14771872aa4bfc72
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: iclicki
+  country: be
+  address: 
+  comment: 
+  perishable_token: sTcQl-kxJqubiEScaPxr
+  author_id: 
+users_070: 
+  id: 70
+  login: wineebiam@gmail.com
+  crypted_password: 4ET0HhArCipEo
+  password_salt: 9NFT08s54B2vhEjxH1us
+  persistence_token: c07a0f9251b8f6160df3402ea45815f1dee9988391ac8b55d84c90427341843721c9f4b3332ef232731beac254de458f5de4a7674ba73eeca9a27ed6a384eef5
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: w69jSgKK-St7lJRfwyjo
+  author_id: 
+users_071: 
+  id: 71
+  login: reginataitedeerriver@gmail.com
+  crypted_password: nmOo0CPBFuAcw
+  password_salt: _0YMK9zqpqXkjM2fhG31
+  persistence_token: 160cdb08a66db445dc32fcfc42188bdc93b934a9fe776baabc29844dd40ba56d4736e430e952c2d604e0ff0fc5f2bdd8716067f47fcefe228f28f2bd9429efc3
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: exYRQoKO6dG_8IW91po8
+  author_id: 
+users_072: 
+  id: 72
+  login: masseyturiddyke@gmail.com
+  crypted_password: Q8ELd9RJEPKuw
+  password_salt: V6Jr4nXAXWcZvHZeMbVE
+  persistence_token: a30bd2fa55fb4e4d0d1c20ecac58af57260909de41c25f0f466d939d0585d510d3ade8d88cab84d819bc3489e8e6e03b688eac2c0aff44dcf546302fa15902e7
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: dcG8FkhQcnaSKdWY9HQH
+  author_id: 
+users_073: 
+  id: 73
+  login: lianeaskew4388@gmail.com
+  crypted_password: 94iI60CAVXQdM
+  password_salt: JZAFs6ZFSeluF6Qve4YD
+  persistence_token: c68d4ee53e5f121419e74ef8a56b98306ebfbc76cd608adf0203854d912cabecddaaa3dd8e6fbd49bb66d50a3829af3a99c329a98a86abb2b21bedae39e59a46
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: OxA3fI1avl9Fza8Opcb1
+  author_id: 
+users_074: 
+  id: 74
+  login: nggsnlnsttrnggsnlnsttr4pt@gmail.com
+  crypted_password: ruCLklzcrxFz6
+  password_salt: JtgATNSSYPn1y0zKfqTh
+  persistence_token: 3e716c11ff969c27868053ce9762b5bc621f78fea127127d3cffff0c0d6ebff5cf4170ed1600e61a3794fa207b4de23ae460dabfe04f9d772a87838db2da4d2b
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: CUSKcn36QBG4guqG0nVu
+  author_id: 
+users_075: 
+  id: 75
+  login: nggsnlnsttrnggsnlnsttr4ptti@gmail.com
+  crypted_password: xUREyCWceofbk
+  password_salt: reT1hmvFL8L5jQ4vreoW
+  persistence_token: fe04c9910d541ff2f5317fca2fa08db99473ed37773863dc96477f036079aff0b138bc5112a97d774e7729bba5c47ccdb51fb22e3a3322e555b7bf9ec55ba717
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: xm6HWkAoBriXMAlL7Wrf
+  author_id: 
+users_076: 
+  id: 76
+  login: ewfxwefwef@gmail.com
+  crypted_password: poxqJ65Cl723Q
+  password_salt: X1u10H1MzFud3lS_9zfD
+  persistence_token: 62ef9547116660acc4466cfe5a161068a9063c8de427dffda7b130ea0bc4e0e2ecdd47dfe47296cbaa207b43de104ae1f02cd94ffca06f35e2ef848eef9acc21
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: UZb92se5cW0iocQAO1Uz
+  author_id: 
+users_077: 
+  id: 77
+  login: soannaroumn@gmail.com
+  crypted_password: RbqTwFtPOvHAo
+  password_salt: 9MuZKvDTS4ycpSV19ObT
+  persistence_token: 3f88f78d0b8ce6f8e60b18ea7e6ea7338790e43aa6b884dd05c019e667240bf719fb3920a2f3fa71937558367ce11f5b33d3c4a2bf97a231f034a3d761f25c9f
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: HtpW6YtMGW8QnpvAJA7i
+  author_id: 
+users_078: 
+  id: 78
+  login: falklandp1978@gmail.com
+  crypted_password: 4c0rM72MSseIc
+  password_salt: 6HbvG-8RYLzuDzZ3taX1
+  persistence_token: e1d8f882d13f568c6ab84ed35d480497722f5f77fdde49a141088faef5dd6ecf945df3d9b846cf84e799cb02e02dbb573eadc57b0bffd75f1562cdb5d7913bfa
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: G-B5JUKDhFdjw6DVQNa-
+  author_id: 
+users_079: 
+  id: 79
+  login: resther1963@gmail.com
+  crypted_password: zj/fRJbSHrK4k
+  password_salt: 8rd4WsHT7oJxWzO0rtXb
+  persistence_token: fa196465108880daad29b302228fef54f59535d0ecf3da2cd567637b7947529460dbef0af5fd2f0d22eb0d274e29e6479f808c8643428b367af6511a564c2665
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: cnjusO7W89t0coFCjpT7
+  author_id: 
+users_080: 
+  id: 80
+  login: shaea1989@gmail.com
+  crypted_password: MOjvqzvCE5t.k
+  password_salt: uq1_6uV5_PZ2SbqWj1_d
+  persistence_token: f838e23becc1a4eb205ee0f0f7d5469321be172c484e138b60ef556aa02de6b21939060494b99a746c1ef321b79f7e21252b8775a7ece037d005b72c55841c5a
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: Fa5D6L29BrJ4txHU8Taq
+  author_id: 
+users_081: 
+  id: 81
+  login: xxxbester@gmail.com
+  crypted_password: BMXOWzq2HWFO6
+  password_salt: 1GErW5aLhiBQRKsbxk7G
+  persistence_token: 119f6dbcc1e0b33b8444c868c29d0f7a48b78e60e08176dc36d175ea129aae629d8ad9e106bc3c0eda7199680212976659e085006afec250bbc19c6d09c9c9a5
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:24 Z
+  updated_at: 2009-06-13 11:36:24 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: lLrsdKvJxmejwy0X6PWr
+  author_id: 
+users_082: 
+  id: 82
+  login: dyndnsreg@gmail.com
+  crypted_password: gZGMEieWFDa6w
+  password_salt: No4-k6SctwVTk_SOnHTE
+  persistence_token: d0b5bc500f972c75d5805a9b1b6412591dd85826d93e3813d28e5e910736c008f098b07c1f310d2641fb467490147776ee04334b61e3a9aaa1dc275ecf2f07e0
+  login_count: 
+  last_request_at: 
+  last_login_at: 
+  current_login_at: 
+  last_login_ip: 
+  current_login_ip: 
+  created_at: 2009-06-13 11:36:25 Z
+  updated_at: 2009-06-13 11:36:25 Z
+  name: 
+  country: 
+  address: 
+  comment: 
+  perishable_token: 6IQYbdJkeRfjRxHL3kOk
+  author_id: 
+users_083: 
+  id: 83
+  login: bot@vo.id.lv
+  crypted_password: a2684e13990d4939650c2b6c969aafb3a6f754c327cd0fa4a1aa015d84cbcc9bc6187de86917fde439fca7a4c58276277480984d1186b53a7b3f24d4174adda7
+  password_salt: Ua8zVMWCrtm1XYb-HCh0
+  persistence_token: 0d2194bcc53b0aea1496980084ca00e24c10bb20659516b4c64a872bff479f1fee61112e460b06b2764104777b8d07fe88823a42d749373dc9bc2f0ce1b24a37
+  login_count: 5
+  last_request_at: 2009-12-03 09:01:28 Z
+  last_login_at: 2009-11-28 10:45:22 Z
+  current_login_at: 2009-12-03 08:56:34 Z
+  last_login_ip: 127.0.0.1
+  current_login_ip: 127.0.0.1
+  created_at: 2009-11-14 11:45:08 Z
+  updated_at: 2011-02-10 00:37:36 Z
+  name: Testing Testing
+  country: 
+  address: 
+  comment: 
+  perishable_token: X4hpEegKSMyw4eyCLnb
+  author_id: 
+users_084: 
+  id: 84
+  login: maeder@glue.ch
+  crypted_password: c8fd68dc154f96b0bf9ce2c335de9f014b9a231c31abb53dab6f0bd4c3499ddd1af03dbbd29e6061745d19e85213f1dfc75a1141d5b83359e8cdeb33e3dae438
+  password_salt: Ej4LvpHeug3g-PQ1Tqts
+  persistence_token: 6796d1006627c8f745da6c869509dba0cee81282d00d0fae5b5d64d53835d15834d377ad6c1a70f81949ea394bd0cc662af03085a7bcb6a5c4273b9ccb181839
   login_count: 1
+  last_request_at: 2010-02-07 07:22:31 Z
+  last_login_at: 
+  current_login_at: 2010-02-07 06:55:25 Z
+  last_login_ip: 
+  current_login_ip: 84.73.129.85
+  created_at: 2010-02-07 06:55:25 Z
+  updated_at: 2010-02-07 07:22:31 Z
+  name: Thomas Maeder
+  country: 
+  address: 
+  comment: 
+  perishable_token: CU5C2F3njM4rgglOIQCN
+  author_id: 
+users_085: 
+  id: 85
+  login: imurarasu@gmail.com
+  crypted_password: 9908e5b277f4e7268d1928bda5a30f828393e22a93b88a8cbfb621959d5c43ced111b90f932aeb63733a893ade51098c6c18b3960aea782624d9c55e4af4537e
+  password_salt: FLQq3A1rYG5I3t1qiukR
+  persistence_token: b895f46faf8c5eb12a8c066ac94b0aec83a40781768073d30f28155339b8e851d3f04e3228572ba199ad6ec91f4fa889e3c40acf4502f8cad400bf50b7b80838
+  login_count: 1
+  last_request_at: 2010-03-26 17:24:15 Z
+  last_login_at: 
+  current_login_at: 2010-03-26 17:22:25 Z
+  last_login_ip: 
+  current_login_ip: 89.137.137.203
+  created_at: 2010-03-26 17:22:25 Z
+  updated_at: 2010-03-26 17:24:15 Z
+  name: Ion Murarasu
+  country: 
+  address: 
+  comment: 
+  perishable_token: K8hJYmc4M1kDFRAIDwJT
+  author_id: 
+users_086: 
+  id: 86
+  login: loyaldragon@gmail.com
+  crypted_password: 602b2504e9954f799d49634485cf2b9e637a89b77a075750ebe30a90f84e348f0cf47f3f4b6f85274762c9ffba3c1aa1d65424071ac53362c6488408cd9f9181
+  password_salt: htHatQNEiDjw3dpsTE1L
+  persistence_token: e274a2eddd64f9c36851bb4609b7ddbfe902ac2d163ee7dce867c2a3222d42c2d3e729016dff7f61b025a069035c602e33f60873d03389159e05797e87d20909
+  login_count: 1
+  last_request_at: 2010-03-30 09:39:59 Z
+  last_login_at: 
+  current_login_at: 2010-03-30 09:38:03 Z
+  last_login_ip: 
+  current_login_ip: 212.205.83.18
+  created_at: 2010-03-30 09:38:03 Z
+  updated_at: 2011-02-09 23:02:54 Z
+  name: Harry Fougiaxis
+  country: 
+  address: 
+  comment: 
+  perishable_token: 5cGzTE0Cx2UYw2gQUAJ4
+  author_id: 
+users_087: 
+  id: 87
+  login: m_diosi@hotmail.com
+  crypted_password: b61f086245e4f52936ec2ea6331632b158a0be3cd7b5d7c540d1979226fc8c8d359f6701ce56d65377d0b458a7d3f3663f14e039cfacadb3e11468cad089c539
+  password_salt: ffkgeAYXFt1PRXIZyr9z
+  persistence_token: b0db175d949f6e5f6aba580f759c1f04efba9c4e9b601f8925e9d67caa77ff5698ad2e4543e80f1b7c3cda7ee2924d32f5b9b605a549a7a03c5753083eafe94f
+  login_count: 2
+  last_request_at: 2010-04-09 18:18:24 Z
+  last_login_at: 2010-04-01 17:43:21 Z
+  current_login_at: 2010-04-09 18:13:34 Z
+  last_login_ip: 81.173.188.126
+  current_login_ip: 81.173.142.42
+  created_at: 2010-04-01 17:43:21 Z
+  updated_at: 2010-04-09 18:18:24 Z
+  name: Michael Diosi
+  country: 
+  address: 
+  comment: 
+  perishable_token: nQ4RyAxr9yvaJojmTLPi
+  author_id: 
+users_088: 
+  id: 88
+  login: rainer.staudte@svm-jugendschach.de
+  crypted_password: 3b171784c679c8efacfeb80b90ffff281564e5ba6028653d807096ddc5d98d104d311959cce1623c26915978f0d8e58f57e5b33c620db70e50a66f07fd0ee323
+  password_salt: Q3QydFhf5XZxkyHARl0Y
+  persistence_token: d85a92ce1374abe6b4da997e199a2fb1ff1c47f14ce59cdd522b15eafe4c0024817d0c30410fb28e89c38145d0b6b63a524b0f58dc1b877c4b3aa0cac79facae
+  login_count: 1
+  last_request_at: 2010-04-21 20:49:09 Z
+  last_login_at: 
+  current_login_at: 2010-04-21 20:41:45 Z
+  last_login_ip: 
+  current_login_ip: 88.72.49.196
+  created_at: 2010-04-21 20:41:45 Z
+  updated_at: 2010-04-21 20:49:09 Z
+  name: Rainer Staudte
+  country: 
+  address: 
+  comment: 
+  perishable_token: jhgf10WsVkk9h5FtqpPl
+  author_id: 
+users_089: 
+  id: 89
+  login: seetharamankalyan@yahoo.com
+  crypted_password: b74388eb053313e9e54848d07c40bcd14d0b28db751a621e5b0432c202099530f475fd12173cbc8632f596251b805118e53238c751342860633a592523880a2b
+  password_salt: KMrAtWXZE3k7Z2g8H-rw
+  persistence_token: 725afa561ba1066fed93c4c62f1694f5aa683c995f2bb0c79a1eaf5af63f1cda32eff425625e0fe2c641981812a4de095f59b43aa579a3e970669ddad3d840fe
+  login_count: 1
+  last_request_at: 2010-05-03 13:41:14 Z
+  last_login_at: 
+  current_login_at: 2010-05-03 10:05:49 Z
+  last_login_ip: 
+  current_login_ip: 121.247.11.202
+  created_at: 2010-05-03 10:05:50 Z
+  updated_at: 2010-05-03 13:41:14 Z
+  name: seetharaman
+  country: 
+  address: 
+  comment: 
+  perishable_token: msOF3Vw5Okhzr4S-XCh3
+  author_id: 
+users_090: 
+  id: 90
+  login: seetharamankalyan@gmail.com
+  crypted_password: 6189b4d46a30a300f2b1913b3949d5d8fb27a0923ee2f4136cc528d1bb4d65420633e86ad8887b28e97835b1f94e10e14517025b26c20f84b29b75bb80747e96
+  password_salt: lsoKzJnqbLZwkpgFs7yo
+  persistence_token: 2c34c3df3fa5ef82c3964af248371a4721ef7dde76c219f2f205715c7159c816b9f5935b65ca22a484df1cf2c7d1540b9b5b24d459bc5f41e47eff862a91dc7b
+  login_count: 1
+  last_request_at: 2010-05-15 06:20:54 Z
+  last_login_at: 
+  current_login_at: 2010-05-15 06:19:03 Z
+  last_login_ip: 
+  current_login_ip: 121.247.254.140
+  created_at: 2010-05-15 06:19:03 Z
+  updated_at: 2010-05-15 06:20:54 Z
+  name: seetharaman
+  country: 
+  address: 
+  comment: 
+  perishable_token: cV-a5mgtZl9PdMEytYk8
+  author_id: 
+users_091: 
+  id: 91
+  login: gireesansk@gmail.com
+  crypted_password: 4b831b07aa0ad678345c913c75ad136956a915474213af294cf24aedb12c90e162f08f47cb18eeab496636f38e314764c33c13ac1d50ba24561ff31cdbcf9bb1
+  password_salt: YGy5V17IeUkUBtTUrMQL
+  persistence_token: 0ef2b231f997c5a2ceb418b8239852dd0ee363955099b5a8252a7014fb69f75585ff90cde2629d31ba8e3e1ac1b8e1f148edafdc7aaf666c1d8c32725afdf247
+  login_count: 2
+  last_request_at: 2010-06-20 11:17:14 Z
+  last_login_at: 2010-06-20 11:12:05 Z
+  current_login_at: 2010-06-20 11:15:32 Z
+  last_login_ip: 117.254.148.89
+  current_login_ip: 117.254.148.89
+  created_at: 2010-06-20 11:12:05 Z
+  updated_at: 2010-06-20 11:17:14 Z
+  name: gireesanpullat
+  country: 
+  address: 
+  comment: 
+  perishable_token: DUTL_xeY3n1CWS2WgKnV
+  author_id: 
+users_092: 
+  id: 92
+  login: permyakov63@mail.ru
+  crypted_password: 5599d673c5cdad36e2e89bbe0184380ab179562971b074ce2cc336fac2b6e2eb5eadfd3892040a628de2cbe06068a42daf6bcad606fe30c4e38a29871cf3d4d4
+  password_salt: X3lKOACkTnxLuUuqEVnQ
+  persistence_token: a5c2de18438acd58118a70db228f3e272976e471b8ee79002f2bd1a3fedb3e42f1cd3a9586c86ce964ca0ce326d224d5ff979ef8eaa72142493cd5512166090d
+  login_count: 1
+  last_request_at: 2010-06-29 12:24:09 Z
+  last_login_at: 
+  current_login_at: 2010-06-29 12:20:08 Z
+  last_login_ip: 
+  current_login_ip: 77.34.95.73
+  created_at: 2010-06-29 12:20:08 Z
+  updated_at: 2010-06-29 12:24:09 Z
+  name: Permyakov Evgenii
+  country: 
+  address: 
+  comment: 
+  perishable_token: gE-gujo3cWa2_TQlbx3u
+  author_id: 
+users_093: 
+  id: 93
+  login: bubuqua@gmail.com
+  crypted_password: 8ae8bbbe082def66757b1a4cd5dd822cd656c78fb3d80b03144dfc4979cc33160a45c49fe852bc52ae0f189d9c9b5bfdab083e3bedc9b7c1752c6cf094339e2d
+  password_salt: UvoSFRzHmZGA0lDcNlPU
+  persistence_token: d03224a9c6b812b9be152731ca38180e047c07f852a4248ed77b1b0ee7aa8e7bc4788b80b04b7f9281c0c9fa6abaacbb3259d656ad18dd9b4c51ed0f19577419
+  login_count: 1
+  last_request_at: 2010-11-13 13:21:26 Z
+  last_login_at: 
+  current_login_at: 2010-11-13 12:30:28 Z
+  last_login_ip: 
+  current_login_ip: 127.0.0.1
+  created_at: 2010-11-13 12:30:28 Z
+  updated_at: 2010-11-13 13:21:26 Z
+  name: bubu bubu
+  country: 
+  address: 
+  comment: 
+  perishable_token: G4RjrN5Q0jxv8fbnm3V
+  author_id: 
+users_094: 
+  id: 94
+  login: julia.vysotska@gmail.com
+  crypted_password: 092988439cf002b2928d34dab517ab1e16ef23defc3e5880bdff5643e045d73a7081be3bd9ac10b331dd68b6e4f882b5f3cc04928732ab89be05fc932b61263c
+  password_salt: GF7BompDo1wCYSX61ps4
+  persistence_token: 7b680d1164668f0c440f1404f48a20bab3f213c005c9c8295b1e3b220895ba61938fe584919d3921323590db1ab42e9cca824f1dfb0431f41bd97289d592bee6
+  login_count: 4
+  last_request_at: 2011-02-08 11:21:17 Z
+  last_login_at: 2011-01-17 11:55:26 Z
+  current_login_at: 2011-02-08 11:14:45 Z
+  last_login_ip: 80.81.33.179
+  current_login_ip: 80.81.33.179
+  created_at: 2010-12-28 15:03:02 Z
+  updated_at: 2011-02-08 11:21:17 Z
+  name: Julia Vysotska
+  country: 
+  address: 
+  comment: 
+  perishable_token: OumOad0Pnt64tLmzmj
+  author_id: 
+users_095: 
+  id: 95
+  login: b.bubanja@yahoo.com
+  crypted_password: 15efc79098b4425b72af27c8fce8bd7597b4cd574353feeac42b95ae503ba290a53402aba9f4dc05567d9547aaeee04f0e6c3485b0783b1d7dd7f0a23ba5b827
+  password_salt: vzDvIV9PCSfRah1lzj1n
+  persistence_token: 199a8bb2be77860279da7b057aa4fbdfa76fb76d0e8af42067c697e3ddf5b467c6f9b6679978d9e1ccf38e2306aceffa06309353ceec3055927f458fd1f96d74
+  login_count: 1
+  last_request_at: 2011-02-08 11:46:39 Z
+  last_login_at: 
+  current_login_at: 2011-02-08 11:46:04 Z
+  last_login_ip: 
+  current_login_ip: 94.189.253.31
+  created_at: 2011-02-08 11:46:04 Z
+  updated_at: 2011-02-08 11:46:39 Z
+  name: ""
+  country: 
+  address: 
+  comment: 
+  perishable_token: YsDIZkcK0zsgs54gY1E
+  author_id: 
+users_096: 
+  id: 96
+  login: bot+a2@ipro.lv
+  crypted_password: 7aaa2ac7e8f3049b3dcf50bd1ae7324abf1bdd675a83bf3b10f02b4fd6f39907af3f162eb2f57cdab61a4c1ebb3253eda70cc08e42d92dd57fb286bf17668de8
+  password_salt: FiEkiy8CVsD5O9hZAch
+  persistence_token: 1abe93506cc720deb70c93355b98224b02ddce3e863a01d045369825c332065d02977f6991e089f76ebf74d5db7c9d3ae64e95f1e279a1f2869bcc8207d039df
+  login_count: 1
+  last_request_at: 2011-02-09 18:45:44 Z
+  last_login_at: 
+  current_login_at: 2011-02-09 18:45:29 Z
+  last_login_ip: 
+  current_login_ip: 84.245.215.125
+  created_at: 2011-02-09 18:45:29 Z
+  updated_at: 2011-02-09 18:45:44 Z
+  name: "Ivan Pu\xC5\xA1nojDarth Vader"
+  country: 
+  address: 
+  comment: 
+  perishable_token: 7b8s8mv3Gw4YOvhAWQ
+  author_id: 
+users_097: 
+  id: 97
+  login: bot+dd@vo.id.lv
+  crypted_password: f1af759a4e2ee35d6f4fcedc95bb04c035c18ae63a669d761ef91f783b280b2f1449e3cecf0ab77dc4cda211623f99b6a72fb863a0fe191dfacf3153375a6234
+  password_salt: xGyyVjcfaOXUme5hGU
+  persistence_token: 159ee374f46cc0543b1696da109b9cf928cb7ffcb7a955e33de35e5aada1814ba2478507bfa1282049da59e6c0b16864c661b85378c3fed587b27d913ea8683c
+  login_count: 5
+  last_request_at: 2011-02-10 12:18:29 Z
+  last_login_at: 2011-02-10 01:01:37 Z
+  current_login_at: 2011-02-10 12:15:04 Z
+  last_login_ip: 84.245.215.125
+  current_login_ip: 84.245.215.125
+  created_at: 2011-02-09 18:47:08 Z
+  updated_at: 2011-02-10 12:18:29 Z
+  name: Darrth Vader
+  country: 
+  address: 
+  comment: 
+  perishable_token: 9eIcWm5shJJ2b7N5zUTY
+  author_id: 

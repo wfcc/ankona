@@ -96,6 +96,7 @@ GEM
     validatable (1.6.7)
     will_paginate (3.0.pre2)
     wirble (0.1.3)
+    ya2yaml (0.30)
 
 PLATFORMS
   ruby
@@ -119,3 +120,4 @@ DEPENDENCIES
   validatable
   will_paginate (>= 3.0.pre)
   wirble
+  ya2yaml

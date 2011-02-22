@@ -1,7 +1,32 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
+--- 
+posts_001: 
+  id: 1
+  subject: 
+  body: "I have decided to offer this small site to the public and invite you to comment on it.  You can leave your comments here, or write me e-mails to ike[\xD0\x90\xD0\xA2]vo.id.lv."
+  user_id: 1
+  created_at: 2007-07-21 13:35:15 Z
+  updated_at: 2009-10-25 14:25:26 Z
+posts_002: 
+  id: 2
+  subject: 
+  body: |-
+    Dear Ilja, 
+    I've found this site 2 month ago, and I  think is  very useful for my work. I have almost 100,000 problems in 2 colections.  Thank you  very much for you gift!
+    Ion
+  user_id: 4
+  created_at: 2007-09-08 04:31:15 Z
+  updated_at: 2009-10-25 14:25:26 Z
+posts_003: 
+  id: 3
+  subject: xx
+  body: xx
+  user_id: 
+  created_at: 2009-12-16 13:40:43 Z
+  updated_at: 2009-12-16 13:40:43 Z
+posts_004: 
+  id: 4
+  subject: ""
+  body: ""
+  user_id: 
+  created_at: 2010-05-12 07:34:38 Z
+  updated_at: 2010-05-12 07:34:38 Z

@@ -1,12 +1,29 @@
 %h1= @user.name
 
-Edit account.  Your name may not be changed.
+Edit account.
 
 - form_for @user, :url => account_url do |f|
   = f.error_messages
-  = render :partial => "form", :object => f
-  /- if not @user.roles.name_is('admin').empty?
-  /- if Role.includes(:users).where(name: 'admin').where('users.id' => @user.id).exists?
+
+  = f.label :name, 'Your name'
+  = hidden_field_tag :author_json, @author_json
+  = text_field_tag :name_handle, '', style: 'width:20em'
+  Find it in the list, or create new.
+  %p
+    = f.label :login, 'Your email, it will be used as login'
+    = f.text_field :login
+    %br
+    %span.fine It may also be used for password reminders
+  %p
+    = f.label :password, "Change password"
+    = f.password_field :password, :size => 10
+    %br
+    %span.fine Be reasonable, use hard passwords
+  %p
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation, :size => 10
+
+  
   - if is_admin?
     = collection_select :user, :role_ids,                |
       Role.all(:order => 'name ASC'), :id, :name,        |

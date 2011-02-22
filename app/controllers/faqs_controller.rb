@@ -2,39 +2,21 @@
 class FaqsController < ApplicationController
 
   before_filter :require_admin, :except => :show
-#  before_filter :require_user, :except => :show
+  caches_page :show
 
   # GET /faqs
-  # GET /faqs.xml
   def index
     @faqs = Faq.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @faqs }
-    end
   end
 
   # GET /faqs/1
-  # GET /faqs/1.xml
   def show
     @faq = Faq.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @faq }
-    end
   end
 
   # GET /faqs/new
-  # GET /faqs/new.xml
   def new
     @faq = Faq.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @faq }
-    end
   end
 
   # GET /faqs/1/edit
@@ -43,7 +25,6 @@ class FaqsController < ApplicationController
   end
 
   # POST /faqs
-  # POST /faqs.xml
   def create
     @faq = Faq.new(params[:faq])
 

@@ -1,7 +1,111 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
+--- 
+collections_001: 
+  id: 1
+  user_id: 1
+  name: Seneca
+  public: 0
+collections_002: 
+  id: 3
+  user_id: 1
+  name: Published
+  public: 0
+collections_003: 
+  id: 5
+  user_id: 3
+  name: My Collection
+  public: 0
+collections_004: 
+  id: 7
+  user_id: 4
+  name: My Collection
+  public: 0
+collections_005: 
+  id: 8
+  user_id: 4
+  name: Murarasu
+  public: 0
+collections_006: 
+  id: 11
+  user_id: 1
+  name: "\xD0\x9F\xD1\x80\xD0\xBE\xD1\x87\xD0\xB5\xD0\xB5"
+  public: 0
+collections_007: 
+  id: 15
+  user_id: 1
+  name: "Suomen Teht\xC3\xA4v\xC3\xA4niekat"
+  public: 0
+collections_008: 
+  id: 16
+  user_id: 1
+  name: ProblemOnline, h#
+  public: 0
+collections_009: 
+  id: 19
+  user_id: 1
+  name: WCSC 2000
+  public: 0
+collections_010: 
+  id: 22
+  user_id: 1
+  name: Assorted
+  public: 0
+collections_011: 
+  id: 24
+  user_id: 1
+  name: WCCC-2007
+  public: 0
+collections_012: 
+  id: 26
+  user_id: 1
+  name: Album 2004-6 submissions
+  public: 0
+collections_013: 
+  id: 29
+  user_id: 18
+  name: My Collection
+  public: 0
+collections_014: 
+  id: 33
+  user_id: 22
+  name: Latvian
+  public: 1
+collections_015: 
+  id: 35
+  user_id: 1
+  name: Selected ST
+  public: 1
+collections_016: 
+  id: 38
+  user_id: 26
+  name: Rallo Vito
+  public: 1
+collections_017: 
+  id: 43
+  user_id: 1
+  name: Workk
+  public: 0
+collections_018: 
+  id: 54
+  user_id: 51
+  name: My Collection
+  public: 0
+collections_019: 
+  id: 55
+  user_id: 1
+  name: diagrammes 2007 h#2
+  public: 0
+collections_020: 
+  id: 61
+  user_id: 1
+  name: "\xD0\xA2\xD0\xB5\xD1\x81\xD1\x82 \xD0\xB8\xD0\xBC\xD0\xBF\xD0\xBE\xD1\x80\xD1\x82\xD0\xB0"
+  public: 
+collections_021: 
+  id: 62
+  user_id: 
+  name: Another
+  public: 0
+collections_022: 
+  id: 63
+  user_id: 
+  name: "\xD0\x9C\xD0\xBE\xD1\x91"
+  public: 1
