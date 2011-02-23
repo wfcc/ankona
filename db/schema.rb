@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 30) do
+ActiveRecord::Schema.define(:version => 31) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 30) do
     t.datetime "updated_at"
     t.boolean  "formal"
     t.integer  "status"
+    t.boolean  "private"
   end
 
   create_table "diagrams", :force => true do |t|
@@ -170,7 +171,7 @@ ActiveRecord::Schema.define(:version => 30) do
     t.string   "country"
     t.text     "address"
     t.text     "comment"
-    t.string   "perishable_token",  :null => false
+    t.string   "perishable_token",  :default => "", :null => false
     t.integer  "author_id"
   end
 

@@ -18,6 +18,10 @@
       = f.check_box :formal
       %span.fine Authors' names will not be revealed to judges if checked.
     %p
+      = f.label 'Competition is private'
+      = f.check_box :private
+      %span.fine 'Competition will be visible only to you.'
+    %p
       = f.label 'Submissions deadline'
       = f.date_select :deadline
     %p= f.submit 'Save, invite judges'

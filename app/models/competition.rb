@@ -5,6 +5,10 @@ class Competition < ActiveRecord::Base
   accepts_nested_attributes_for :sections, allow_destroy: true,
     reject_if: proc { |a| a['name'].blank? }
   validates_presence_of :name
+  
+  scope :public, lambda {
+    where('private is not true')
+    }
 
   def save_sections
     sections.each do |section|

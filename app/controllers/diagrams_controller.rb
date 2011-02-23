@@ -12,22 +12,19 @@ require 'open3'
   # GET /diagrams.xml
   def former_index
 
-    searcher = Diagram.order(:created_at.asc)
-    if params[:search].present?
-      searcher = searcher.where(:stipulation[params[:search][:stipulation]])
-   end
-
-    #searcher.collections_public_equals true unless current_user
-    #searcher.user_id_equals current_user.id if current_user
-
-    @diagrams = searcher.paginate :page => params[:page]
+    redirect_to :mine
 
   end
 # ===========================================================================
   def mine
+
+    if params[:search].present?
+      searcher = where(:stipulation[params[:search][:stipulation]])
+    end
     
     @diagrams = Diagram
       .where(:user_id.eq => current_user.id)
+      .order(:created_at.asc)
       .paginate(page: params[:page])
       
     render :index
