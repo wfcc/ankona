@@ -53,15 +53,9 @@ class UsersController < ApplicationController
     if handle.present?
       name = handle.split(',')[0]
       author = Author.where(code: name)    
-      logger.info '*********************'
-      logger.info author.inspect
-      logger.info '*********************'
       if author.present?
         @user.author = author[0] if author.present?
         @user.name = author[0].name
-        logger.info '* - ********************'
-        logger.info @user.inspect
-        logger.info '* - ********************'
       else
         @user.build_author name: name
         @user.name = name
@@ -71,6 +65,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Account updated!"
       redirect_to account_url
     else
+      flash[:error] = "Error occurred"
       render :action => :edit
     end
   end

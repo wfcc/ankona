@@ -109,7 +109,7 @@ require 'open3'
       logger.info "<<< #{res.body} >>>"
       render :text => res.body
   end
-###################################################
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   private
   def nrm(s)
     return s.split(/[, ]+/).collect do |a|
