@@ -26,7 +26,8 @@
       You may submit this diagram to an open competition:
       - form_for @diagram, url: {action: 'section'} do |f|
         = hidden_field_tag :id, @diagram.id
-        = collection_select :diagram, :section_ids, (Section.includes(:competition) & Competition.public), |
+        = collection_select :diagram, :section_ids, |
+        (Section.includes(:competition) & Competition.public(current_user)), |
         :id, :name_cs, {selected: nil, include_blank: true }, |
         {name: 'diagram[section_ids][]', style: 'width:24em' } |
         = f.submit 'Submit to competition', class: :button

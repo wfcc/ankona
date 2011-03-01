@@ -18,13 +18,10 @@ require 'open3'
 # ===========================================================================
   def mine
 
-    if params[:search].present?
-      searcher = where(:stipulation[params[:search][:stipulation]])
-    end
-    
-    @diagrams = Diagram
+    @diagrams = Diagram.search(params[:search])
       .where(:user_id.eq => current_user.id)
       .order(:created_at.asc)
+      .all
       .paginate(page: params[:page])
       
     render :index

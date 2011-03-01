@@ -6,11 +6,11 @@
 - else  
   %h1 Listing diagrams
   = link_to 'New problem', new_diagram_path, class: :button
-  - form_tag :diagrams, :method => :get do
+  = form_tag '/diagrams/mine', method: :get do
     Filter search by author:
-    = text_field_tag 'search[authors]', '', :size => 10
+    = text_field_tag 'search[authors_name_like]', '', size: 10
     stipulation:
-    = text_field_tag 'search[stipulation]', '', :size => 5
+    = text_field_tag 'search[stipulation_equals]', '', size: 5
     /
       collection:
       = collection_select :search, :collections, (current_user ? |

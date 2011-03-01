@@ -25,6 +25,7 @@ gem 'rails', '>= 3.0.1'
   gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "master"
   gem 'simple_form'
   gem 'jquery-rails'
+  gem 'meta_search'
 #  gem "nested_form", :git => "git://github.com/madebydna/nested_form.git"
 
 #  gem 'hassle'

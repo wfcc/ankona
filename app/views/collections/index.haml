@@ -3,21 +3,6 @@
     %h1 You have no collections.
   - else
     %h1 Editing collections
-    /%table
-    /  %tr
-    /  - @collections.each do |collection|
-    /    %tr
-    /      %td
-    /        = h collection.id
-    /      %td
-    /        = h collection.name
-    /      %td
-    /        = h collection.user.name if collection.user
-    /      %td
-    /        = h collection.public ? 'public' : ''
-    /      %td= h collection.diagrams.count
-    /      %td= link_to 'Edit', edit_collection_path(collection)
-    /      %td= link_to '☒', collection, :confirm => 'Are you sure?', :method => :delete
     %p.inline-hints Doubleclick or F2 to edit
     #grid_here(style = "width:400px; height:600px;")
     :javascript

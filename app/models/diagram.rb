@@ -12,6 +12,7 @@ class Diagram < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 20
   #-------------------------------
+  
   def save_authors
     authors.each do |author|
       author.save false
