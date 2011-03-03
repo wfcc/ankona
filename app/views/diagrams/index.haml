@@ -4,7 +4,7 @@
   %h4 You have no problems.  Let's create some!
   = link_to 'New problem', new_diagram_path, class: :button
 - else  
-  %h1 Listing diagrams
+  %h2 Listing problems
   = link_to 'New problem', new_diagram_path, class: :button
   = form_tag '/diagrams/mine', method: :get do
     Filter search by author:

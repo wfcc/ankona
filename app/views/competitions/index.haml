@@ -1,4 +1,4 @@
-%h1 Current competitions
+%h2 Current competitions
 %table.competitions
   - @competitions.each do |competition|
     %tr.clickable(onclick = "window.location.href = '#{url_for competition}'")

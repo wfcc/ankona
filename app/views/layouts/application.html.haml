@@ -15,7 +15,8 @@
     = render partial: 'layouts/google_analytics'
   %body
     %a.plain(href = '/')
-      = image_tag 'dia-x-logo.png'
+      /= image_tag 'dia-x-logo.png'
+      %h1(style = "padding:10px") diagram exchange
     = render 'layouts/logged_in'
     %ul.menu
       - if is_admin?

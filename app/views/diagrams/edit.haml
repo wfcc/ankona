@@ -2,7 +2,7 @@
   /= javascript_include_tag 'jquery.tokeninput'
   /= javascript_include_tag 'diagram'
 
-%h1 Editing problem
+%h2 Editing problem #{@diagram.id}
 = simple_form_for @diagram do |f|
   /= f.error_messages
   #first.span-12
