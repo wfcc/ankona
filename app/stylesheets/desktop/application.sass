@@ -117,7 +117,7 @@ a
     color: #330066
   &:hover
     color: white
-    background-color: #666666
+    background-color: #666
 
 ul.menu
   padding: 0
@@ -264,14 +264,9 @@ img.blank
   z-index: -1
 
 .login
-  text-align: center
-  border: dashed grey 1px
-  font-size: larger
   position: fixed
   top: 5px
   right: 5px
-  padding: 1ex
-  +rounded(3px)
 
 .loggedin
   background-color: #d8e8d0
@@ -346,3 +341,19 @@ input.author_name
   
 div.usa  
   margin-bottom: 1em
+
+#lg_submenu ul
+  +rounded(4px)
+  border: 1px solid #AAA
+  list-style: none
+  padding: 5px
+  font-size: small  
+  background-color: #DDD
+  Wwidth: 7em
+  right: 0
+  white-space: nowrap
+  a
+    color: #666
+  a:hover
+    background-color: inherit
+    color: black
