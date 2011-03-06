@@ -51,7 +51,7 @@ $(function() {
 
   $('.todrag').draggable(
     { revertDuration: 0
-    , revert: 'valid'
+    , revert: true
     , cursor: 'crosshair'
     //, containment: $('#blank')
     , zIndex: 5
@@ -60,7 +60,10 @@ $(function() {
     { drop: function(event, ui) {
       board = $('#blank').offset()
       aBoard[Math.floor((ui.offset.top - board.top + 12) / 25)]
-        [Math.floor((ui.offset.left - board.left + 12) / 25)] = ui.helper.attr('data-id')
+        [Math.floor((ui.offset.left - board.left + 12) / 25)] = ui.helper.data('id')
+      if (ui.helper.data('inner')) { // remove
+        aBoard[ui.helper.data('x')][ui.helper.data('y')] = '1'
+        }
       fromInternal()
       }
     })
@@ -198,11 +201,19 @@ $(function() {
           .css('left', left)
           .attr('data-x', i)
           .attr('data-y', j)
-          .addClass('pieceOnBoard')
-          .mousedown(function(e) {
+          .attr('data-id', p)
+          .attr('data-inner', 1)
+          .addClass('pieceOnBoard ui-draggable')
+          .dblclick(function(e) {
             var fig = $(this)
             aBoard[fig.data('x')][fig.data('y')] = '1'
             fromInternal()
+            })
+          .draggable(
+          { revert: false
+          //, cursor: 'crosshair'
+          , containment: $('#blank')
+          , zIndex: 5
           })
         $('#divBlank').append(im)
         }
