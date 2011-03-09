@@ -9,8 +9,7 @@
   - if is_admin?
     = link_to 'New author', new_author_path, class: :button
 
-= will_paginate @authors
-.pagestat= page_entries_info @authors
+= paginate @authors
 
 %table.authors
   %tr
@@ -36,8 +35,7 @@
 
 %p/
 
-= will_paginate @authors
-.pagestat= page_entries_info @authors
+= paginate @authors
 
 %p.clearboth
   - if is_admin?

@@ -12,10 +12,7 @@ class AuthorsController < ApplicationController
       .where((:name =~ search) | (:code =~ search) |
         (:original =~ search) | (:traditional =~ search))
       .order(:code)
-      .paginate(
-        page: params[:page],
-        per_page: 99 
-        )
+      .page(params[:page]).per(100)
 
     store_location
     logger.info '*** ' + request.request_uri + ' ***'

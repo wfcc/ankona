@@ -72,7 +72,6 @@ $(function() {
   $('.moveboard').button()
   $('.moveboard').click(function() { // move position left/up/down/up
     // ◁ ▽ △ ▷
-    // console.log(this)
     switch (this.getAttribute('data-name')) {
     case '▷' :
         $.each(aBoard, function(i,row) {
@@ -123,17 +122,19 @@ $(function() {
   }) //*************************************
   function clearBoard() {
 
-    $('.pieceOnBoard').remove()
+    //$('.pieceOnBoard').remove()
     aBoard = [];
     for(i=0;i<8;++i) {aBoard.push(arrayOfOnes.slice(0))}
   } //*************************************
   function initVars(){
 
     allPieces = ['wk','wq','wr','wb','ws','wp','bk','bq','br','bb','bs','bp']
-    aPieces = {}
-    $.each(allPieces, function(i,p)
-        { aPieces[p] = '/images/fig/' + p + '.gif'
-        })
+    aPieces = {}                                       
+    imgPieces = {}
+    $.each(allPieces, function(i,p) {
+      aPieces[p] = '/images/fig/' + p + '.gif'
+      imgPieces[p] = $('<img>').attr('src', aPieces[p])
+      })
   } //*************************************
   function fenToInternal(){
 
@@ -186,36 +187,43 @@ $(function() {
   function internalToDiagram(){
 
     var p, im, top, left, color
-    $('.pieceOnBoard').remove()
+//    $('.pieceOnBoard').remove()
     for (var i=0; i<8; ++i) {
       for (var j=0; j<8; ++j) {
         p = aBoard[i][j]
-        if (p=='1') {continue}
-        color = p>'a'?'b':'w'
-        left = j * 25 + 1
-        top = i * 25 + 1 
-        im = $('<img>')
-        im.attr('src', aPieces[color + p.toLowerCase()])
-          .css('position','absolute')
-          .css('top', top)
-          .css('left', left)
-          .attr('data-x', i)
-          .attr('data-y', j)
-          .attr('data-id', p)
-          .attr('data-inner', 1)
-          .addClass('pieceOnBoard ui-draggable')
-          .dblclick(function(e) {
-            var fig = $(this)
-            aBoard[fig.data('x')][fig.data('y')] = '1'
-            fromInternal()
+        if (p == '1') {
+          $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]').remove()
+          continue
+          }
+        else {
+          color = p>'a'?'b':'w'
+          left = j * 25 + 1
+          top = i * 25 + 1 
+          im = imgPieces[color + p.toLowerCase()].clone()
+          $('#divBlank').append(im)
+          $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]').remove()
+          im.css(
+              { 'position': 'absolute'
+              , 'top': top + 'px'
+              , 'left': left + 'px'
             })
-          .draggable(
-          { revert: false
-          //, cursor: 'crosshair'
-          , containment: $('#blank')
-          , zIndex: 5
-          })
-        $('#divBlank').append(im)
+            .attr('data-x', i)
+            .attr('data-y', j)
+            .attr('data-id', p)
+            .attr('data-inner', 1)
+            .addClass('pieceOnBoard ui-draggable')
+            .draggable(
+              { revert: false
+              , zIndex: 5
+              , stop: function(e,ui) {
+                var fig = $(this)
+                aBoard[fig.data('x')][fig.data('y')] = '1'
+                internalToNotation()
+                internalToFen()
+                fig.remove()
+                }
+              })
+           }
         }
       }  
 
