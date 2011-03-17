@@ -1,6 +1,6 @@
 /*
  * jQuery Plugin: Tokenizing Autocomplete Text Entry
- * Version 1.1
+ * Version 1.2
  *
  * Copyright (c) 2009 James Smith (http://loopj.com)
  * Licensed jointly under the GPL and MIT licenses,
@@ -16,6 +16,7 @@ $.fn.tokenInput = function (url, options) {
         hintText: "Type in a search term",
         noResultsText: "No results",
         searchingText: "Searching...",
+        deleteText: "&times;",
         searchDelay: 300,
         minChars: 1,
         tokenLimit: null,
@@ -23,9 +24,15 @@ $.fn.tokenInput = function (url, options) {
         method: "GET",
         contentType: "json",
         queryParam: "q",
+        tokenDelimiter: ",",
+        preventDuplicates: false,
+        prePopulate: null,
+        animateDropdown: true,
         onResult: null,
-        onSelect: null
-    }, options);
+        onAdd: null,
+        onDelete: null,
+        crossDomain: false
+    }, options || {});
 
     settings.classes = $.extend({
         tokenList: "token-input-list",
@@ -38,7 +45,7 @@ $.fn.tokenInput = function (url, options) {
         dropdownItem2: "token-input-dropdown-item2",
         selectedDropdownItem: "token-input-selected-dropdown-item",
         inputToken: "token-input-input-token"
-    }, options.classes);
+    }, options.classes || {});
 
     return this.each(function () {
         var list = new $.TokenList(this, settings);
@@ -72,7 +79,7 @@ $.TokenList = function (input, settings) {
 
     // Save the tokens
     var saved_tokens = [];
-    
+
     // Keep track of the number of tokens in the list
     var token_count = 0;
 
@@ -83,12 +90,12 @@ $.TokenList = function (input, settings) {
     var timeout;
 
     // Create a new text input an attach keyup events
-    var input_box = $("<input type=\"text\">")
+    var input_box = $("<input type=\"text\"  autocomplete=\"off\">")
         .css({
             outline: "none"
         })
         .focus(function () {
-            if (settings.tokenLimit == null || settings.tokenLimit != token_count) {
+            if (settings.tokenLimit === null || settings.tokenLimit !== token_count) {
                 show_dropdown_hint();
             }
         })
@@ -110,22 +117,22 @@ $.TokenList = function (input, settings) {
 
                         if((previous_token.length && previous_token.get(0) === selected_token) || (next_token.length && next_token.get(0) === selected_token)) {
                             // Check if there is a previous/next token and it is selected
-                            if(event.keyCode == KEY.LEFT || event.keyCode == KEY.UP) {
+                            if(event.keyCode === KEY.LEFT || event.keyCode === KEY.UP) {
                                 deselect_token($(selected_token), POSITION.BEFORE);
                             } else {
                                 deselect_token($(selected_token), POSITION.AFTER);
                             }
-                        } else if((event.keyCode == KEY.LEFT || event.keyCode == KEY.UP) && previous_token.length) {
+                        } else if((event.keyCode === KEY.LEFT || event.keyCode === KEY.UP) && previous_token.length) {
                             // We are moving left, select the previous token if it exists
                             select_token($(previous_token.get(0)));
-                        } else if((event.keyCode == KEY.RIGHT || event.keyCode == KEY.DOWN) && next_token.length) {
+                        } else if((event.keyCode === KEY.RIGHT || event.keyCode === KEY.DOWN) && next_token.length) {
                             // We are moving right, select the next token if it exists
                             select_token($(next_token.get(0)));
                         }
                     } else {
                         var dropdown_item = null;
 
-                        if(event.keyCode == KEY.DOWN || event.keyCode == KEY.RIGHT) {
+                        if(event.keyCode === KEY.DOWN || event.keyCode === KEY.RIGHT) {
                             dropdown_item = $(selected_dropdown_item).next();
                         } else {
                             dropdown_item = $(selected_dropdown_item).prev();
@@ -149,7 +156,7 @@ $.TokenList = function (input, settings) {
                         }
 
                         return false;
-                    } else if($(this).val().length == 1) {
+                    } else if($(this).val().length === 1) {
                         hide_dropdown();
                     } else {
                         // set a timeout just long enough to let this function finish.
@@ -196,10 +203,10 @@ $.TokenList = function (input, settings) {
     // The list to store the token items in
     var token_list = $("<ul />")
         .addClass(settings.classes.tokenList)
-        .insertAfter(hidden_input)
+        .insertBefore(hidden_input)
         .click(function (event) {
             var li = get_element_from_event(event, "li");
-            if(li && li.get(0) != input_token.get(0)) {
+            if(li && li.get(0) !== input_token.get(0)) {
                 toggle_select_token(li);
                 return false;
             } else {
@@ -252,88 +259,43 @@ $.TokenList = function (input, settings) {
 
     // Pre-populate list if items exist
     function init_list () {
+        hidden_input.val("");
         li_data = settings.prePopulate;
         if(li_data && li_data.length) {
-            for(var i in li_data) {
-                var this_token = $("<li><p>"+li_data[i].name+"</p> </li>")
-                    .addClass(settings.classes.token)
-                    .insertBefore(input_token);
-
-                $("<span>×</span>")
-                    .addClass(settings.classes.tokenDelete)
-                    .appendTo(this_token)
-                    .click(function () {
-                        delete_token($(this).parent());
-                        return false;
-                    });
-
-                $.data(this_token.get(0), "tokeninput", {"id": li_data[i].id, "name": li_data[i].name});
-
-                // Clear input box and make sure it keeps focus
-                input_box
-                    .val("")
-                    .focus();
-
-                // Don't show the help dropdown, they've got the idea
-                hide_dropdown();
-
-                // Save this token id
-                var id_string = li_data[i].id + ","
-                hidden_input.val(hidden_input.val() + id_string);
-            }
+            $.each(li_data, function (index, value) {
+                insert_token(value.id, value.name);
+            });
         }
     }
 
     function is_printable_character(keycode) {
-        if((keycode >= 48 && keycode <= 90) ||      // 0-1a-z
-           (keycode >= 96 && keycode <= 111) ||     // numpad 0-9 + - / * .
-           (keycode >= 186 && keycode <= 192) ||    // ; = , - . / ^
-           (keycode >= 219 && keycode <= 222)       // ( \ ) '
-          ) {
-              return true;
-          } else {
-              return false;
-          }
+        return ((keycode >= 48 && keycode <= 90) ||     // 0-1a-z
+                (keycode >= 96 && keycode <= 111) ||    // numpad 0-9 + - / * .
+                (keycode >= 186 && keycode <= 192) ||   // ; = , - . / ^
+                (keycode >= 219 && keycode <= 222));    // ( \ ) '
     }
 
     // Get an element of a particular type from an event (click/mouseover etc)
     function get_element_from_event (event, element_type) {
-        var target = $(event.target);
-        var element = null;
-
-        if(target.is(element_type)) {
-            element = target;
-        } else if(target.parent(element_type).length) {
-            element = target.parent(element_type+":first");
-        }
-
-        return element;
+        return $(event.target).closest(element_type);
     }
 
     // Inner function to a token to the list
     function insert_token(id, value) {
-      var this_token = $("<li><p>"+ value +"</p> </li>")
-      .addClass(settings.classes.token)
-      .insertBefore(input_token);
+        var this_token = $("<li><p>"+ value +"</p> </li>")
+          .addClass(settings.classes.token)
+          .insertBefore(input_token);
 
-      // The 'delete token' button
-      $("<span>×</span>")
-          .addClass(settings.classes.tokenDelete)
-          .appendTo(this_token)
-          .click(function () {
-              delete_token($(this).parent());
-              return false;
-          });
+        // The 'delete token' button
+        $("<span>" + settings.deleteText + "</span>")
+            .addClass(settings.classes.tokenDelete)
+            .appendTo(this_token)
+            .click(function () {
+                delete_token($(this).parent());
+                return false;
+            });
 
-      $.data(this_token.get(0), "tokeninput", {"id": id, "name": value});
-
-      return this_token;
-    }
-
-    // Add a token to the token list based on user input
-    function add_token (item) {
-        var li_data = $.data(item.get(0), "tokeninput");
-        var this_token = insert_token(li_data.id, li_data.name);
+        $.data(this_token.get(0), "tokeninput", {"id": id, "name": value});
 
         // Clear input box and make sure it keeps focus
         input_box
@@ -344,19 +306,60 @@ $.TokenList = function (input, settings) {
         hide_dropdown();
 
         // Save this token id
-        var id_string = li_data.id + ","
+        var id_string = id + settings.tokenDelimiter;
         hidden_input.val(hidden_input.val() + id_string);
-        
+
+        // Save this token for duplicate checking
+        saved_tokens.push(this_token);
+
         token_count++;
-        
-        if(settings.tokenLimit != null && settings.tokenLimit >= token_count) {
+
+        return this_token;
+    }
+
+    // Add a token to the token list based on user input
+    function add_token (item) {
+        var li_data = $.data(item.get(0), "tokeninput");
+        var callback = settings.onAdd;
+
+        // See if the token already exists and select it if we don't want duplicates
+        if(token_count > 0 && settings.preventDuplicates) {
+            var idx = find_saved_token(li_data.id);
+            if(idx > -1) {
+                // Don't insert the token, because it already exists
+                select_token(saved_tokens[idx]);
+                input_token.insertAfter(saved_tokens[idx]);
+                input_box.focus();
+                return;
+            }
+        }
+
+        // Check the token limit
+        if(settings.tokenLimit !== null && token_count >= settings.tokenLimit) {
             input_box.hide();
             hide_dropdown();
+            return;
         }
-// I.K.
-			  if($.isFunction(settings.onSelect)) {
-			    settings.onSelect(li_data)
-  	    }
+
+        // Insert the new tokens
+        insert_token(li_data.id, li_data.name);
+
+        // Execute the onAdd callback if defined
+        if($.isFunction(callback)) {
+            callback(li_data.id);
+        }
+    }
+
+    // Find the index of a saved token
+    function find_saved_token (id) {
+        var idx = -1;
+        for(var i=0; i<saved_tokens.length; i++) {
+            if($.data($(saved_tokens[i]).get(0), "tokeninput").id == id) {
+                idx = i;
+                break;
+            }
+        }
+        return idx;
     }
 
     // Select a token in the token list
@@ -376,9 +379,9 @@ $.TokenList = function (input, settings) {
         token.removeClass(settings.classes.selectedToken);
         selected_token = null;
 
-        if(position == POSITION.BEFORE) {
+        if(position === POSITION.BEFORE) {
             input_token.insertBefore(token);
-        } else if(position == POSITION.AFTER) {
+        } else if(position === POSITION.AFTER) {
             input_token.insertAfter(token);
         } else {
             input_token.appendTo(token_list);
@@ -390,7 +393,7 @@ $.TokenList = function (input, settings) {
 
     // Toggle selection of a token in the token list
     function toggle_select_token (token) {
-        if(selected_token == token.get(0)) {
+        if(selected_token === token.get(0)) {
             deselect_token(token, POSITION.END);
         } else {
             if(selected_token) {
@@ -404,6 +407,7 @@ $.TokenList = function (input, settings) {
     function delete_token (token) {
         // Remove the id from the saved list
         var token_data = $.data(token.get(0), "tokeninput");
+        var callback = settings.onDelete;
 
         // Delete the token
         token.remove();
@@ -413,52 +417,63 @@ $.TokenList = function (input, settings) {
         input_box.focus();
 
         // Delete this token's id from hidden input
-        var str = hidden_input.val()
-        var start = str.indexOf(token_data.id+",");
-        var end = str.indexOf(",", start) + 1;
+        var str = hidden_input.val();
+        var start = str.indexOf(token_data.id + settings.tokenDelimiter);
+        var end = str.indexOf(settings.tokenDelimiter, start) + 1;
 
         if(end >= str.length) {
             hidden_input.val(str.slice(0, start));
         } else {
             hidden_input.val(str.slice(0, start) + str.slice(end, str.length));
         }
-        
+
         token_count--;
-        
-        if (settings.tokenLimit != null) {
+
+        if(settings.tokenLimit !== null) {
             input_box
                 .show()
                 .val("")
                 .focus();
         }
+
+        // Execute the onDelete callback if defined
+        if($.isFunction(callback)) {
+          callback(token_data.id);
+        }
     }
 
     // Hide and clear the results dropdown
     function hide_dropdown () {
-        dropdown.hide().empty();
-        selected_dropdown_item = null;
+        setTimeout(function() {
+            dropdown.hide().empty();
+            selected_dropdown_item = null;
+        }, 300);
     }
 
     function show_dropdown_searching () {
-        dropdown
-            .html("<p>"+settings.searchingText+"</p>")
-            .show();
+        if(settings.searchingText) {
+            dropdown
+                .html("<p>"+settings.searchingText+"</p>")
+                .show();
+        }
     }
 
     function show_dropdown_hint () {
-        dropdown
-            .html("<p>"+settings.hintText+"</p>")
-            .show();
+        if(settings.hintText) {
+            dropdown
+                .html("<p>"+settings.hintText+"</p>")
+                .show();
+        }
     }
 
     // Highlight the query part of the search term
-	function highlight_term(value, term) {
-		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<b>$1</b>");
-	}
+    function highlight_term(value, term) {
+        return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<b>$1</b>");
+    }
 
     // Populate the results dropdown with some results
     function populate_dropdown (query, results) {
-        if(results.length) {
+        if(results && results.length) {
             dropdown.empty();
             var dropdown_ul = $("<ul>")
                 .appendTo(dropdown)
@@ -471,32 +486,36 @@ $.TokenList = function (input, settings) {
                 })
                 .hide();
 
-            for(var i in results) {
-                if (results.hasOwnProperty(i)) {
-                    var this_li = $("<li>"+highlight_term(results[i].name, query)+"</li>")
-                                      .appendTo(dropdown_ul);
+            $.each(results, function(index, value) {
+                var this_li = $("<li>" + highlight_term(value.name, query) + "</li>")
+                                  .appendTo(dropdown_ul);
 
-                    if(i%2) {
-                        this_li.addClass(settings.classes.dropdownItem);
-                    } else {
-                        this_li.addClass(settings.classes.dropdownItem2);
-                    }
-
-                    if(i == 0) {
-                        select_dropdown_item(this_li);
-                    }
-
-                    $.data(this_li.get(0), "tokeninput", {"id": results[i].id, "name": results[i].name});
+                if(index % 2) {
+                    this_li.addClass(settings.classes.dropdownItem);
+                } else {
+                    this_li.addClass(settings.classes.dropdownItem2);
                 }
-            }
+
+                if(index === 0) {
+                    select_dropdown_item(this_li);
+                }
+
+                $.data(this_li.get(0), "tokeninput", {"id": value.id, "name": value.name});
+            });
 
             dropdown.show();
-            dropdown_ul.slideDown("fast");
 
+            if(settings.animateDropdown) {
+                dropdown_ul.slideDown("fast");
+            } else {
+                dropdown_ul.show();
+            }
         } else {
-            dropdown
-                .html("<p>"+settings.noResultsText+"</p>")
-                .show();
+            if(settings.noResultsText) {
+                dropdown
+                    .html("<p>"+settings.noResultsText+"</p>")
+                    .show();
+            }
         }
     }
 
@@ -523,7 +542,7 @@ $.TokenList = function (input, settings) {
     function do_search(immediate) {
         var query = input_box.val().toLowerCase();
 
-        if (query && query.length) {
+        if(query && query.length) {
             if(selected_token) {
                 deselect_token($(selected_token), POSITION.AFTER);
             }
@@ -547,20 +566,44 @@ $.TokenList = function (input, settings) {
         if(cached_results) {
             populate_dropdown(query, cached_results);
         } else {
-			var queryStringDelimiter = settings.url.indexOf("?") < 0 ? "?" : "&";
-			var callback = function(results) {
-			  if($.isFunction(settings.onResult)) {
-			      results = settings.onResult.call(this, results);
-			  }
+            var callback = function(results) {
+              if($.isFunction(settings.onResult)) {
+                  results = settings.onResult.call(this, results);
+              }
               cache.add(query, settings.jsonContainer ? results[settings.jsonContainer] : results);
-              populate_dropdown(query, settings.jsonContainer ? results[settings.jsonContainer] : results);
+
+              // only populate the dropdown if the results are associated with the active search query
+              if(input_box.val().toLowerCase() == query) {
+                  populate_dropdown(query, settings.jsonContainer ? results[settings.jsonContainer] : results);
+              }
             };
-            
-            if(settings.method == "POST") {
-			    $.post(settings.url + queryStringDelimiter + settings.queryParam + "=" + query, {}, callback, settings.contentType);
-		    } else {
-		        $.get(settings.url + queryStringDelimiter + settings.queryParam + "=" + query, {}, callback, settings.contentType);
-		    }
+
+            // Extract exisiting get params
+            var ajax_params = {};
+            ajax_params.data = {};
+            if(settings.url.indexOf("?") > -1) {
+                var parts = settings.url.split("?");
+                ajax_params.url = parts[0];
+
+                var param_array = parts[1].split("&");
+                for(var j=0; j<param_array.length; j++) {
+                  var kv = param_array[j].split("=");
+                  ajax_params.data[kv[0]] = kv[1];
+                }
+            } else {
+                ajax_params.url = settings.url;
+            }
+
+            // Prepare the request
+            ajax_params.data[settings.queryParam] = query;
+            ajax_params.type = settings.method;
+            ajax_params.success = callback;
+            ajax_params.dataType = settings.contentType;
+            if(settings.crossDomain) {
+                ajax_params.dataType = "jsonp";
+            }
+
+            $.ajax(ajax_params);
         }
     }
 };
