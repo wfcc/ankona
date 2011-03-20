@@ -6,7 +6,7 @@ $(function()  {
     , minChars: 3
     , prePopulate: $.parseJSON($('#author_json').val())
     , tokenLimit: 1
-    , allowNewValues: true
+    , inputBoxName: 'newname'
     , noResultsText: "Not found, new name will be created"
     , onSelect: function (selected){
         $('#handle').html(selected.id)

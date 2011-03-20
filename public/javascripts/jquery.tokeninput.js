@@ -31,7 +31,8 @@ $.fn.tokenInput = function (url, options) {
         onResult: null,
         onAdd: null,
         onDelete: null,
-        crossDomain: false
+        crossDomain: false,
+        inputBoxName: null
     }, options || {});
 
     settings.classes = $.extend({
@@ -89,8 +90,10 @@ $.TokenList = function (input, settings) {
     // Keep track of the timeout
     var timeout;
 
+
     // Create a new text input an attach keyup events
-    var input_box = $("<input type=\"text\"  autocomplete=\"off\">")
+    var input_box = $('<input type="text" autocomplete="off">')
+        .attr(settings.inputBoxName ? {name: settings.inputBoxName} : null)
         .css({
             outline: "none"
         })
