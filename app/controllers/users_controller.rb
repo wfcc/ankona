@@ -9,26 +9,27 @@ class UsersController < ApplicationController
   end
 # --------------------------------------------------------------------------
   def create
-    @user = User.new(params[:user]) 
-    handle = params[:name_handle]
-    if handle.present?
-      name = handle.split(',')[0]
+    @user = User.new(params[:user])
+    case 
+    when params[:name_handle].present? && params[:newname].blank?
+      name = params[:name_handle].split(',')[0]
       author = Author.where(code: name)
-      if author.present?
-        @user.author = author[0] if author.present?
-        @user.name = author[0].name
-      else
-        @user.build_author name: name
-        @user.name = name
-      end
-      if @user.save
-        flash[:notice] = "Account registered!"
-        redirect_back_or_default account_url
-      else
-        render action: :new
-      end
+      @user.author = author[0] if author.present?
+      @user.name = author[0].name
+      flash[:notice] = "Account registered."
+    when params[:name_handle].blank? && params[:newname].present?
+      @user.build_author name: params[:newname]
+      @user.name = params[:newname]
+      flash[:notice] = "Account registered, new name recorded."
+    else  
+      flash[:error] = "Name is required."
+      render action: :new
+      return
+    end
+    if @user.save
+      redirect_back_or_default account_url
     else
-      flash[:error] = "Name is required"
+      flash[:error] = "Error registering new account."
       render action: :new
     end
   end

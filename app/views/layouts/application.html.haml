@@ -14,6 +14,7 @@
     = csrf_meta_tag
     = render partial: 'layouts/google_analytics'
   %body
+    = render partial: 'layouts/ie6' 
     %a.plain(href = '/')
       /= image_tag 'dia-x-logo.png'
       %h1(style = "padding:10px") diagram exchange
