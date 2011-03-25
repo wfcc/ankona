@@ -1,6 +1,6 @@
 %h2 Listing authors
 
-- form_tag :authors, method: :get do
+= form_tag :authors, method: :get do
   Filter by name:
   = text_field_tag 'search_name', '', size: 20
   = submit_tag 'Apply'

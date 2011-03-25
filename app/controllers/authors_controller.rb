@@ -15,7 +15,6 @@ class AuthorsController < ApplicationController
       .page(params[:page]).per(100)
 
     store_location
-    logger.info '*** ' + request.request_uri + ' ***'
   end
 #----------------------------------------------------------------------
   def json

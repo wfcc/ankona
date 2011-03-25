@@ -12,24 +12,21 @@ gem 'rails', '>= 3.0.1'
 # To use debugger
 # gem 'ruby-debug'
 
-  gem 'kaminari'
+  gem "authlogic", :git => 'http://github.com/vpereira/authlogic.git'
   gem 'dalli'
-  gem 'authlogic'
-  gem 'will_paginate', '>= 3.0.pre'
+  gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "master"
+  gem 'haml'
+  gem 'jquery-rails'
+  gem 'kaminari'
+  gem 'meta_search'
   gem 'meta_where'
+  gem 'mysql2'
+  gem 'mysql', '>= 2.8.1'
   gem "RedCloth", '= 4.2.5', require: 'redcloth'
   gem 'rmagick', :require => 'RMagick'
-  gem 'validatable'  
-  gem 'mysql', '>= 2.8.1'
-  gem 'haml'
-  gem 'mysql2'
-  gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "master"
   gem 'simple_form'
-  gem 'jquery-rails'
-  gem 'meta_search'
-#  gem "nested_form", :git => "git://github.com/madebydna/nested_form.git"
-
-#  gem 'hassle'
+  gem 'validatable'  
+  gem 'will_paginate', '>= 3.0.pre'
   
 
 # Bundle gems for the local environment. Make sure to
@@ -41,5 +38,10 @@ group :development, :test do
    gem 'hirb'
    gem 'nifty-generators'   
    gem 'ya2yaml'
+   gem 'rspec-rails'
+   gem 'autotest'
+   gem 'capybara'
+   gem 'launchy'
 end
+
 gem "mocha", :group => :test
