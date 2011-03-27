@@ -6,8 +6,9 @@ class Diagram < ActiveRecord::Base
   has_many :publications
 
   validates_presence_of :stipulation
+  #validates_presence_of :authors
   validates_associated :authors
-  after_update :save_authors
+#  after_update :save_authors
 
   cattr_reader :per_page
   @@per_page = 20

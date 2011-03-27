@@ -128,16 +128,28 @@ require 'open3'
   end
 ###################################################
   def save_diagram(is_create)
-    respond_to do |format|
-      @diagram.user = current_user
-      @diagram.authors = Author.find params[:authors_ids].split(',')
-      if @diagram.save
-        flash[:notice] = 'Problem was successfully saved.'
-        redirect_to(@diagram)
-      else
-        flash[:error] = 'Problem was not saved due to errors.'
-        render :edit
-      end
+    @diagram.user = current_user
+    authors = []
+
+    if params[:authors_ids].present?
+      authors.push Author.find params[:authors_ids].split(',')
+    end
+    if params[:newname].present?
+      authors.push Author.create name: params[:newname]
+    end
+    if authors.blank?
+      flash[:error] = 'Author(s) required.'
+      render :edit
+      return
+    end
+    @diagram.authors << authors
+    
+    if @diagram.save
+      flash[:notice] = 'Problem was successfully saved.'
+      redirect_to(@diagram)
+    else
+      flash[:error] = 'Problem was not saved due to errors.'
+      render :edit
     end
   end
 ###################################################

@@ -9,6 +9,7 @@ $(function() {
   $('#authors_ids').tokenInput('/authors/json',
     { hintText: "Start typing author's name or handle"
     , minChars: 3
+    , inputBoxName: 'newname'
     , prePopulate: $.parseJSON($('#authors_json').val())
     , classes:
       { tokenList: "token-input-list-facebook"

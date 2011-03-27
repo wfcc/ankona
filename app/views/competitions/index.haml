@@ -2,7 +2,8 @@
 %table.competitions
   - @competitions.each do |competition|
     %tr.clickable(onclick = "window.location.href = '#{url_for competition}'")
-      %td
+      /%tr.clickable(onclick = "window.location.href = '#{url_for competition}'")
+      %td.clickable(onclick = "window.location.href = '#{url_for competition}'")
         %span(style = "font-size:x-large;clear:right")= h competition.name
         %br
         - if competition.private

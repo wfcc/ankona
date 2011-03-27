@@ -2,6 +2,7 @@
   -moz-border-radius: $radius
   -webkit-border-radius: $radius
   border-radius: $radius
+  behaviour: url(/stylesheets/PIE.htc)
 
 =message
   clear: both
@@ -132,7 +133,8 @@ ul.menu
   li
     display: inline
     a
-      padding: 0.2em 1em
+      box-shadow: 3px 3px 3px #888
+      padding: 0.4em 1em
       margin-right: 2em
       background: #dddddd
       color: #333333
@@ -200,12 +202,12 @@ img.board
   height: 202px
 
 .clickable
-  border-top: 1px dashed gray
   margin-bottom: 1em
+  border: 1px solid #AAA
   &:hover
-    background-color: #dddddd
+    -background-color: #dddddd
     cursor: pointer
-    border: 1px solid red
+    border: 1px double black
     margin-bottom: 1em
 
 pre.solution

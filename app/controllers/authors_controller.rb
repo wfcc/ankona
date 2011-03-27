@@ -20,9 +20,7 @@ class AuthorsController < ApplicationController
   def json
 
     search = "%#{params[:q]}%"
-    #logger.info '*** 1 ************************* ' + search
     handle = params[:handle].present? # return either IDs or handles
-    #  .where(:source.eq => 'h')
     @authors = Author
       .where((:name =~ search) | (:code =~ search) |
         (:original =~ search) | (:traditional =~ search))
@@ -48,15 +46,11 @@ class AuthorsController < ApplicationController
   def create
     @author = Author.new(params[:author])
 
-    respond_to do |format|
-      if @author.save
-        flash[:notice] = 'Author was successfully created.'
-        format.html { redirect_to(@author) }
-        format.xml  { render :xml => @author, :status => :created, :location => @author }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @author.errors, :status => :unprocessable_entity }
-      end
+    if @author.save
+      flash[:notice] = 'Author was successfully created.'
+      redirect_to @author
+    else
+      render action: "new"
     end
   end
 
@@ -64,19 +58,15 @@ class AuthorsController < ApplicationController
   def update
     @author = Author.find(params[:id])
 
-    respond_to do |format|
-      if is_admin? and @author.update_attributes(params[:author])
-        if params[:code]['regenerate'] == '1'
-          @author.code = ''
-          @author.save
-        end
-        flash[:notice] = 'Author was successfully updated.'
-        format.html { redirect_to(@author) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @author.errors, :status => :unprocessable_entity }
+    if is_admin? and @author.update_attributes(params[:author])
+      if params[:code]['regenerate'] == '1'
+        @author.code = ''
+        @author.save
       end
+      flash[:notice] = 'Author was successfully updated.'
+      redirect_to @author
+    else
+      render :action => "edit"
     end
   end
 
