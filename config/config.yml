@@ -1,0 +1,15 @@
+defaults: &defaults
+  geoipdat: config/Geoip.dat
+  only_latvia: false
+  
+development:
+  <<: *defaults
+  only_latvia: false
+
+test:
+  <<: *defaults
+  only_latvia: false
+
+production:
+  <<: *defaults
+  

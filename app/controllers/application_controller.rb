@@ -13,7 +13,15 @@ class ApplicationController < ActionController::Base
   # Filters added to this controller apply to all controllers in the application.
   # Likewise, all the methods added will be available for all controllers.
 
-  helper_method :current_user_session, :current_user, :is_admin?, :may_edit?
+  helper_method :current_user_session, :current_user, :is_admin?, :may_edit?    
+  before_filter :check_geo
+  
+  def check_geo
+    if session[:geo].blank?   
+      c = GeoIP.new(Config['geoipdat']).country(request.remote_ip)[3]
+      session[:geo] = {value: c, expires: Time.now + 36000}
+    end
+  end
 
 
   def may_edit?(o)

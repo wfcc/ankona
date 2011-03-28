@@ -26,7 +26,8 @@ gem 'rails', '>= 3.0.1'
   gem 'rmagick', :require => 'RMagick'
   gem 'simple_form'
   gem 'validatable'  
-  gem 'will_paginate', '>= 3.0.pre'
+  gem 'will_paginate', '>= 3.0.pre'     
+  gem 'geoip'
   
 
 # Bundle gems for the local environment. Make sure to

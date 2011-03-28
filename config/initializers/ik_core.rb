@@ -10,3 +10,4 @@ end
 
 MetaWhere.operator_overload!
 
+Config = YAML.load_file(Rails.root.join("config/config.yml"))[RAILS_ENV]
