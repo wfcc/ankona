@@ -5,7 +5,6 @@
     %p{ :style => "font:bold larger Arial" }= @diagram.authors.collect(&:name).join(', ')
     %p= @diagram.label
     %p= @diagram.source
-    %p= @diagram.published
   #divBlank
     - @diagram.position = '' if @diagram.position.blank?
     = image_tag '/fen/' + @diagram.position, id: 'blank'
