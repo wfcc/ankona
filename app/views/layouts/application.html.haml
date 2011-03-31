@@ -14,7 +14,7 @@
     = csrf_meta_tag
     = render partial: 'layouts/google_analytics'
   %body
-    - if session[:geo][:value] != 'LV' and Config['only_lativa']
+    - if session[:geo][:value] != 'LV' and Ya['only_lativa']
       %h2 The site is under maintenance.
       Check back soon.
     - else
@@ -26,8 +26,7 @@
       %ul.menu
         - if is_admin?
           %li= link_to 'Competitions', competitions_path
-        -# %li= link_to 'Problems', :controller => 'diagrams'
-        %li= link_to 'My problems', controller: :diagrams, action: :mine
+        %li= link_to 'My problems', diagrams_path
         %li= link_to 'Authors', authors_path
       %div{ style: "height:50px; clear:both; margin:4px auto; text-align:center" }
         - if flash[:notice]

@@ -9,22 +9,14 @@ require 'open3'
 
 #--------------------------------------------------------
   # GET /diagrams
-  # GET /diagrams.xml
-  def former_index
-
-    redirect_to :mine
-
-  end
 # ===========================================================================
-  def mine
+  def index
 
     @diagrams = Diagram.search(params[:search])
       .where(:user_id.eq => current_user.id)
       .order(:created_at.asc)
       .all
       .paginate(page: params[:page])
-      
-    render :index
   end
 
 #----- GET /diagrams/1 ------------------------------------------------------
