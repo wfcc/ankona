@@ -51,14 +51,7 @@ require 'open3'
 #----- PUT /diagrams/1 -----------------------------------------------------
   def update
     @diagram = Diagram.find(params[:id])
-    @diagram.authors = Author.find params[:authors_ids].split(',')
-    if @diagram.update_attributes(params[:diagram])
-      flash[:notice] = "Successfully updated problem."
-      render :show
-    else
-      flash[:error] = "Errors saving problem."
-      render :edit
-    end
+    save_diagram false
   end
 #----- DELETE /diagrams/1 --------------------------------------------------
   def destroy
@@ -121,20 +114,18 @@ require 'open3'
 ###################################################
   def save_diagram(is_create)
     @diagram.user = current_user
-    authors = []
-
-    if params[:authors_ids].present?
-      authors.push Author.find params[:authors_ids].split(',')
+    @diagram.authors = params[:authors_ids].split(',').map do |x|
+      if x =~ /^CREATE_(.+)$/
+        Author.create name: $1
+      else
+        Author.find x
+      end
     end
-    if params[:newname].present?
-      authors.push Author.create name: params[:newname]
-    end
-    if authors.blank?
+    if @diagram.authors.blank?
       flash[:error] = 'Author(s) required.'
       render :edit
       return
     end
-    @diagram.authors << authors
     
     if @diagram.save
       flash[:notice] = 'Problem was successfully saved.'

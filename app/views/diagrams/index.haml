@@ -6,7 +6,7 @@
 - else  
   %h2 Listing problems
   = link_to 'New problem', new_diagram_path, class: :button
-  = form_tag '/diagrams/mine', method: :get do
+  = form_tag diagrams_path, method: :get do
     Filter search by author:
     = text_field_tag 'search[authors_name_like]', '', size: 10
     stipulation:
