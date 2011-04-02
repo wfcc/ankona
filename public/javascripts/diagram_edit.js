@@ -9,13 +9,12 @@ $(function() {
   $('#authors_ids').tokenInput('/authors/json',
     { hintText: "Start typing author's name or handle"
     , minChars: 3
-    , inputBoxName: 'newname'
     , prePopulate: $.parseJSON($('#authors_json').val())
     , theme: 'facebook'
     , onBeforeAdd: function(item){
-      var matches;
+      var matches
       if ( (isNaN(item.id)) && (matches = item.id.match(/^CREATE_(.+?)$/)) ) {
-        item.name = matches[1];
+        item.name = matches[1]
         }
       }    
     })  

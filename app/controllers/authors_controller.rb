@@ -23,7 +23,7 @@ class AuthorsController < ApplicationController
     search = "%#{q}%"
     handle = params[:handle].present? # return either IDs or handles
     authors = q =~ /.. ../ ? 
-      [name: "not found «#{q}», create", id: "CREATE_#{q}"] : []
+      [name: "#{q} <span style='font-size:smaller'>(will be created)</span>", id: "CREATE_#{q}"] : []
     authors += Author
       .where((:name =~ search) | (:code =~ search) |
         (:original =~ search) | (:traditional =~ search))

@@ -10,17 +10,16 @@ class UsersController < ApplicationController
 # --------------------------------------------------------------------------
   def create
     @user = User.new(params[:user])
-    case 
-    when params[:name_handle].present? && params[:newname].blank?
-      name = params[:name_handle].split(',')[0]
-      author = Author.where(code: name)
-      @user.author = author[0] if author.present?
-      @user.name = author[0].name
-      flash[:notice] = "Account registered."
-    when params[:name_handle].blank? && params[:newname].present?
-      @user.build_author name: params[:newname]
-      @user.name = params[:newname]
+    name = params[:name_handle].split(',')[0]
+    case
+    when name =~ /^CREATE_(.+)$/
+      @user.build_author name: $1
+      @user.name = $1
       flash[:notice] = "Account registered, new name recorded."
+    when name.to_i > 0 && author = Author.where(code: name).first
+      @user.author = author
+      @user.name = author
+      flash[:notice] = "Account registered."
     else  
       flash[:error] = "Name is required."
       render action: :new
