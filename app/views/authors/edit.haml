@@ -29,10 +29,7 @@
   %p
     Has #{pluralize(@author.diagrams.size, 'problem')}.
   %p
-    = f.submit 'Update'
-= link_to 'Show', @author
-|
-= link_to 'Back', session[:return_to]
+    = f.submit 'Update', class: :button
 
 %script
   $('#author_original').bind('keyup', updateName);

@@ -67,7 +67,7 @@ class AuthorsController < ApplicationController
       flash[:notice] = 'Author was successfully updated.'
       redirect_to @author
     else
-      render :action => "edit"
+      render action: :edit
     end
   end
 

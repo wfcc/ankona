@@ -27,7 +27,5 @@
 %br.clearboth
 
 - if is_admin?
-  = link_to 'Edit', edit_author_path(@author)
-  = ' | '
-= link_to 'Back', session[:return_to]
+  = link_to 'Edit', edit_author_path(@author), class: :button
 

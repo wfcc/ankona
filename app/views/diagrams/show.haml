@@ -38,7 +38,7 @@
       %b= @diagram.sections[0].name_cs
 
   /
-    - form_for @diagram do |f|
+    = form_for @diagram do |f|
       = f.label 'Collections'
       = collection_select :diagram, :collection_ids, Collection.all(:conditions => {:public => true }) | [] | (current_user ? current_user.collections : []), :id, :name, { :selected => @diagram.collection_ids }, { :multiple => true, :name => 'diagram[collection_ids][]', :style => 'width:24em' }
       .fine multiple select: Ctrl-click / ⌘-click

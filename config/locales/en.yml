@@ -6,3 +6,5 @@ en:
   views:  
     pagination:  
       truncate: "&hellip;"
+      previous: "← Previous "
+      next: "Next →"

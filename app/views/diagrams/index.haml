@@ -23,13 +23,13 @@
     %p.fine Only “public” collections will be shown, as you are not logged in.
   = will_paginate @diagrams
   .pagestat= page_entries_info @diagrams
-  %br{:style => "clear:both"}/
+  %br.clearboth
   %table.diagrams
     - @diagrams.each do |diagram|
       %tr.clickable{:onclick => "window.location.href = '#{url_for diagram}'"}
         %td{:style => "vertical-align:top;color:#46D"}= h diagram.id
         %td
-          %h3= h diagram.authors.collect(&:name).to_sentence
+          %h3= h diagram.authors.collect(&:name).commatize
           = h [ diagram.source, diagram.label ].join(' ')
           %div= h diagram.published
           .em1
@@ -44,7 +44,7 @@
         /%td{:style => "color:#281"}
         /  = h diagram.collections.collect(&:name).join(', ')
         %td{:style => "color:#281"}
-          = h diagram.sections.collect(&:name).join(', ')
+          = h diagram.sections.collect(&:name).commatize
   %br/
   = will_paginate @diagrams
   .pagestat= page_entries_info @diagrams
