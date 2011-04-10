@@ -1,4 +1,4 @@
-class SectionController < ApplicationController
+class SectionsController < ApplicationController
   def new
     competition = Competition.find(params[:competition_id])
     @section = competition.sections.create
@@ -19,6 +19,28 @@ class SectionController < ApplicationController
     else
       render text: { success: false, msg: 'something unexpected happened.' }.to_json
     end
+  end
+  
+  def index
+    @sections = Section.joins(:users).where(users: {id: current_user.id})
+  end
+  
+  def judge
+    @section = Section.find params[:id]
+  end
+
+  def mark
+    if params[:mid].present?
+      mark = Mark.find params[:mid]
+      mark[:nummark] = params[:nummark]
+    else
+      mark = Mark.new(diagram_id: params[:diagram_id], 
+        section_id: params[:section_id],
+        nummark: params[:nummark])
+    end
+    mark.save
+      
+    render text: mark.id
   end
 
 end

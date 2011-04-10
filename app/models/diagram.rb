@@ -4,6 +4,7 @@ class Diagram < ActiveRecord::Base
   has_and_belongs_to_many :collections
   has_and_belongs_to_many :sections
   has_many :publications
+  has_many :marks
 
   validates_presence_of :stipulation
   #validates_presence_of :authors

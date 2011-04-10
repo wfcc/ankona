@@ -1,6 +1,7 @@
 defaults: &defaults
   geoipdat: config/GeoIP.dat
   only_latvia: false
+  google_api: ABQIAAAAxRbqCxIbOGgElhIu7KGMFBTJQa0g3IQ9GZqIMmInSLzwtGDKaBQQ-ZTjZJ-tYo0txuieHFrSPCX2gQ
   
 development:
   <<: *defaults
@@ -12,4 +13,5 @@ test:
 
 production:
   <<: *defaults
+  google_api: ABQIAAAAxRbqCxIbOGgElhIu7KGMFBTj6X94sHzLUlcIj4CjtmwhSlzA9RSg47_WXwfUkVtW3Ig7xuhE0lrsYQ
   

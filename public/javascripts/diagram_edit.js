@@ -5,7 +5,8 @@
 // Iļja Ketris (c) 2008
 //
 
-$(function() {
+google.setOnLoadCallback(function() {
+//$(function($) {
   $('#authors_ids').tokenInput('/authors/json',
     { hintText: "Start typing author's name or handle"
     , minChars: 3
@@ -311,6 +312,7 @@ $(function() {
     internalToNotation()
     internalToFen()
     }
+  //***************************************
   })
 
 

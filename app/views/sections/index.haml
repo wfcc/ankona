@@ -1,0 +1,13 @@
+- @sections.each do |section|
+  %hr
+  %h2= section.competition.name
+  %div<>!= Status.where(table: 'competitions', value: (section.competition.status or 0)).first.name.bold
+  
+  %h3
+    = section.name
+    - if section.competition.status == 2
+      = link_to 'Go judge', judge_section_path(section), class: :button
+  
+  %p= section.theme
+  
+

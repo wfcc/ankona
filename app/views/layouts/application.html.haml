@@ -8,7 +8,9 @@
       = controller.controller_name.humanize
       = controller.action_name
     = stylesheet_link_tag stylesheets_path(package: :desktop)
-    = javascript_include_tag :defaults, 'jquery-ui-1.8.6.custom.min', 'jquery.tokeninput', 'nested_form'
+    = javascript_include_tag 'http://www.google.com/jsapi?key=' + Ya['google_api']
+    = javascript_include_tag 'application', 'rails'
+    = javascript_include_tag 'jquery.tokeninput', 'nested_form'
     = javascript_include_tag javascripts_custom
     = yield :scripts
     = csrf_meta_tag
@@ -26,8 +28,10 @@
       %ul.menu
         - if is_admin?
           %li= link_to 'Competitions', competitions_path
+        %li= link_to 'People', authors_path
         %li= link_to 'My problems', diagrams_path
-        %li= link_to 'Authors', authors_path
+        - if current_user_session and current_user.sections.present?
+          %li= link_to 'My judgements', sections_path
       %div{ style: "height:50px; clear:both; margin:4px auto; text-align:center" }
         - if flash[:notice]
           %p.notice= flash[:notice]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 31) do
+ActiveRecord::Schema.define(:version => 32) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -105,6 +105,16 @@ ActiveRecord::Schema.define(:version => 31) do
     t.integer  "item"
     t.boolean  "accepted"
     t.string   "email"
+  end
+
+  create_table "marks", :force => true do |t|
+    t.integer  "diagram_id"
+    t.integer  "section_id"
+    t.float    "nummark"
+    t.string   "textmark"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "posts", :force => true do |t|

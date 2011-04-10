@@ -105,10 +105,10 @@ logger.info '**********************'
     redirect_to competitions_url
     if current_user
       i = Invite.new(
-        :item => params[:competition][:section_ids],
-        :email => params[:judge_email],
-        :code => Random.alphanumeric(8),
-        :accepted => false
+        item: params[:competition][:section_ids],
+        email: params[:judge_email],
+        code: SecureRandom.hex(8),
+        accepted: false
       )
       i.save
       section = Section.find i.item

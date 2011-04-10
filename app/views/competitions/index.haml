@@ -21,12 +21,11 @@
         - @i=0; competition.sections.each do |section|
           %h4{:style => "margin-left:10em"}= h section.name
           %span{:style => "margin-left:10em"}= h section.theme
-        = h competition.complete ? '[complete]' : ''
-        = h competition.results
+        = competition.complete ? '[complete]' : ''
+        = competition.results
         /
           - if may_edit? competition
             = link_to 'Edit', edit_competition_path(competition), class: :button
       / %= link_to 'Destroy', competition, :confirm => 'Are you sure?', :method => :delete %
-    %br{:style => "clear:left;margin:3em"}
-%br
+%br.clearboth
 = link_to 'New competition', new_competition_path, class: :button

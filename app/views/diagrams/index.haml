@@ -29,14 +29,14 @@
       %tr.clickable{:onclick => "window.location.href = '#{url_for diagram}'"}
         %td{:style => "vertical-align:top;color:#46D"}= h diagram.id
         %td
-          %h3= h diagram.authors.collect(&:name).commatize
-          = h [ diagram.source, diagram.label ].join(' ')
-          %div= h diagram.published
+          %h3= diagram.authors.collect(&:name).commatize
+          = [ diagram.source, diagram.label ].join(' ')
+          %div= diagram.published
           .em1
-          %div= h diagram.stipulation
-          %div= h diagram.twin
+          %div= diagram.stipulation
+          %div= diagram.twin
           %div= diagram.tested ? 'C+' : ''
-        %td{:height => "202px", :width => "202px"}
+        %td.board
           %div{:style => "padding:0; position:relative"}
             = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
         %td{:style => "vertical-align:top"}
@@ -45,7 +45,7 @@
         /  = h diagram.collections.collect(&:name).join(', ')
         %td{:style => "color:#281"}
           = h diagram.sections.collect(&:name).commatize
-  %br/
+  %br
   = will_paginate @diagrams
   .pagestat= page_entries_info @diagrams
   /= link_to 'New problem', new_diagram_path, class: :button

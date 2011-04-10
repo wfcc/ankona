@@ -1,56 +1,55 @@
 - if may_edit? @competition
   %ul.menu
     %li
-      = link_to 'Back', competitions_path
-    %li
       = link_to 'Edit', edit_competition_path(@competition)
     %li
       = link_to 'Destroy', @competition, :confirm => 'Are you sure?', :method => :delete
-%p{:style => "clear:both"} &nbsp;
-%h2= h @competition.name
+.clearboth
+
+%h1= @competition.name
+%div
+  != Status.where(table: 'competitions', value: (@competition.status or 0)).first.h_display
+  %br
+  ! Director: #{@competition.user.name.bold}.
+  ! Competition is #{(@competition.formal ? 'formal' : 'informal').bold}.
+  ! Deadline: #{@competition.deadline.to_s.bold}
 %p
-  %b Status:
-  != Status.find(:first, :conditions =>                                          |
-    {:table => 'competitions', :value => (@competition.status or 0)}).h_display |
+  Announce:
+  = @competition.announce
 %p
-  %b Director:
-  = h @competition.user.name
-%p
-  %b Announce:
-  = h @competition.announce
-%p
-  %b Competition is
-  = h @competition.formal ? 'formal' : 'informal'
-  \.
-%p
-  %b Deadline:
-  = h @competition.deadline
-%p
-  %b Results:
-  = h @competition.results
+  Results:
+  = @competition.results
+  
+- if may_edit? @competition
+  - form_for @competition, url: {action: 'judge'}  do |f|
+    .lab Send invitation to judge section
+    - if @competition.sections.count > 1
+      = collection_select :competition, :section_ids, @competition.sections, |
+        :id, :name                                                           |
+    - else
+      = collection_select :competition, :section_ids, @competition.sections, |
+        :id, :name                                                           |
+    .lab to email:
+    = text_field_tag :judge_email, '', size: 30
+    = f.hidden_field :id
+    = f.submit 'Invite'
+  
+%p  
+  = @competition.sections.count
+  sections follow:
+%hr
 - @competition.sections.each do |section|
   %h2= section.name
+  %p= section.theme
+    
   %p
-    Judges confirmed: #{section.users.empty? ? 'none' : section.users.map(&:name)}
-  - if may_edit? @competition
-    - form_for @competition, :url => {:action => 'judge'}  do |f|
-      = f.label 'Send invitation to judge to e-mail'
-      = text_field_tag :judge_email, '', :size => 30
-      = f.hidden_field :id
-      - if @competition.sections.count > 1
-        = f.label 'Section'
-        = collection_select :competition, :section_ids, @competition.sections, |
-          :id, :name                                                           |
-      - else
-        = collection_select :competition, :section_ids, @competition.sections, |
-          :id, :name                                                           |
-      = f.submit 'Invite'
+    Judges confirmed: #{section.users.empty? ? 'none' : section.users.map(&:name).commatize}
   %table
     - section.diagrams.each do |diagram|
       %tr
         %td
           %h3= diagram.id
-          = @competition.formal ? '' : diagram.authors.map{|x|x.name}.join(', ')
+          = @competition.formal ? '' : diagram.authors.map(&:name).commatize
         %td
           %div{:style => "padding:0; position:relative"}
             = image_tag '/fen/' + diagram.position, :class => :board
@@ -58,4 +57,4 @@
           = diagram.stipulation
           %br/
           = diagram.solution
-= link_to 'Back', competitions_path
+

@@ -42,7 +42,7 @@ class InvitesController < ApplicationController
   end
   #------------------------------------------------
   def react
-    @invite = Invite.code_equals(params[:code]).accepted_equals(false).first
+    @invite = Invite.where(code: params[:code], accepted: false).first
     case
     when (not @invite)
       flash[:error] = 'This invitation code is not found.'

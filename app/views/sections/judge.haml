@@ -1,0 +1,39 @@
+
+%h3= @section.competition.name
+%h4= @section.name
+
+- marks = @section.marks
+.section(data-sid = "#{@section.id}")
+  - @section.diagrams.each do |diagram|
+    %br.clearboth
+    %p
+      .span-2(style = "vertical-align:top;color:#46D")= diagram.id
+      .span-5
+        %h4= diagram.authors.collect(&:name).commatize
+        = [ diagram.source, diagram.label ].join(' / ')
+        .em1
+        = diagram.stipulation
+        %br
+        = diagram.twin
+      .span-6
+        %div(style = "padding:0 0 20px 0; position:relative")
+          = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
+      .span-11.last
+        %pre.solution= diagram.solution
+    %p.clear
+      .prepend-2.span-1
+        - m = @section.marks & diagram.marks
+        - value = m.present? ? m[0].nummark : ''
+        - mid = m.present? ? m[0].id : ''
+        .mark(data-did = "#{diagram.id}" style="height: 1ex")
+          = value
+          &nbsp;
+      .prepend-3.span-13.last
+        .slider(data-did = "#{diagram.id}" data-value = "#{value}" data-mid = "#{mid}")
+        %table
+          %tr
+            - (0..5).step(0.5).each do |x|
+              %td(style = 'width:30px;margin:0 auto;text-align:center')
+                = x
+    %hr
+
