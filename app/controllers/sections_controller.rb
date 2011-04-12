@@ -27,16 +27,23 @@ class SectionsController < ApplicationController
   
   def judge
     @section = Section.find params[:id]
+    @marks = @section.marks.select{|x| x.user_id == current_user.id}
   end
 
   def mark
-    if params[:mid].present?
+    case
+    when current_user.blank?
+      render text: 'error'
+      return
+    when params[:mid].present?
       mark = Mark.find params[:mid]
-      mark[:nummark] = params[:nummark]
+      mark[:nummark] = params[:nummark] if mark.user == current_user
     else
-      mark = Mark.new(diagram_id: params[:diagram_id], 
+      mark = Mark.new \
+        diagram_id: params[:diagram_id], 
         section_id: params[:section_id],
-        nummark: params[:nummark])
+        user_id: current_user.id,
+        nummark: params[:nummark]
     end
     mark.save
       

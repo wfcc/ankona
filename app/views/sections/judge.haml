@@ -2,7 +2,6 @@
 %h3= @section.competition.name
 %h4= @section.name
 
-- marks = @section.marks
 .section(data-sid = "#{@section.id}")
   - @section.diagrams.each do |diagram|
     %br.clearboth
@@ -22,7 +21,7 @@
         %pre.solution= diagram.solution
     %p.clear
       .prepend-2.span-1
-        - m = @section.marks & diagram.marks
+        - m = @marks & diagram.marks
         - value = m.present? ? m[0].nummark : ''
         - mid = m.present? ? m[0].id : ''
         .mark(data-did = "#{diagram.id}" style="height: 1ex")
