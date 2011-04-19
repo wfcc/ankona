@@ -1,6 +1,7 @@
 class CompetitionsController < ApplicationController
 
-  before_filter :require_user, :only => [:destroy, :edit]
+  #before_filter :require_user, :only => [:destroy, :edit]
+  before_filter :require_director, :only => [:destroy, :edit]
 
   # GET /competitions
   # GET /competitions.xml
@@ -67,25 +68,21 @@ class CompetitionsController < ApplicationController
   def update
     @competition = Competition.find(params[:id])
 
-    respond_to do |format|
 
-      params[:competition][:sections_attributes].each_value do |v|
-        #v['name'] = v['name'].upcase
-        v['_destroy'] = 1 if v['name'].blank?
-      end
-      
+    params[:competition][:sections_attributes].each_value do |v|
+      #v['name'] = v['name'].upcase
+      v['_destroy'] = 1 if v['name'].blank?
+    end
+    
 logger.info '**********************'
 logger.info params
 logger.info '**********************'
-        
-      if @competition.update_attributes(params[:competition])
-        flash[:notice] = 'Competition was successfully updated.'
-        format.html { redirect_to(@competition) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @competition.errors, :status => :unprocessable_entity }
-      end
+      
+    if @competition.update_attributes(params[:competition])
+      flash[:notice] = 'Competition was successfully updated.'
+      render :show
+    else
+      render action: :new
     end
   end
 
@@ -95,10 +92,7 @@ logger.info '**********************'
     @competition = Competition.find(params[:id])
     @competition.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(competitions_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(competitions_url)
   end
 
   def judge

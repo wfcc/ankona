@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 33) do
+ActiveRecord::Schema.define(:version => 34) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 33) do
     t.boolean  "formal"
     t.integer  "status"
     t.boolean  "private"
+    t.integer  "ttype"
   end
 
   create_table "diagrams", :force => true do |t|

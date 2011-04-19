@@ -27,7 +27,7 @@ DiaX::Application.routes.draw do
   end
 
   resources :roles, :collections, :authors, :posts, :imports,
-    :diagrams, :statuses, :faqs, :invites, :password_resets
+    :diagrams, :statuses, :faqs, :invites, :password_resets, :users
     
   match 'diagrams/solve/:id' => 'diagrams#solve'
   match 'diagrams/section/:id' => 'diagrams#section'

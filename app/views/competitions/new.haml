@@ -4,6 +4,10 @@
   -# = f.inputs
   .span-10.append-1
     %p
+      = f.label 'Format'
+      = f.collection_select :ttype, Status.where(:table >> 'comp-type'), |
+        :value, :name                                                           |
+    %p
       = f.label 'Status'
       = f.collection_select :status, Status.where(:table.eq => 'competitions'), |
         :value, :name                                                           |
@@ -20,11 +24,11 @@
     %p
       = f.label 'Competition is private'
       = f.check_box :private
-      %span.fine 'Competition will be visible only to you.'
+      %span.fine Competition will be visible only to you.
     %p
       = f.label 'Submissions deadline'
       = f.date_select :deadline
-    %p= f.submit 'Save, invite judges'
+    /%p= f.submit 'Save, invite judges'
 
     -#= f.inputs for: :sections, name: 'Name #%i'
   .span-10
@@ -71,12 +75,9 @@
   .span-20.last{:style => "background-color:#EEE;padding:5px;border:1px solid #cdc"}
     %p
       = f.label 'Results text'
-      %br/
+      %br
       = f.text_area :results
-  %p{:style => "clear:both"}
-  %p= f.submit 'Save'
-  = link_to 'Back', competitions_path
-  = link_to 'Destroy', @competition, :confirm => 'Are you sure?', :method => :delete
+  .span-2.clear= f.submit 'Save', class: :button
   
 -# %script
   $(function() {

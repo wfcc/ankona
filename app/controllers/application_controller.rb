@@ -13,7 +13,8 @@ class ApplicationController < ActionController::Base
   # Filters added to this controller apply to all controllers in the application.
   # Likewise, all the methods added will be available for all controllers.
 
-  helper_method :current_user_session, :current_user, :is_admin?, :may_edit?    
+  helper_method :current_user_session, :current_user, 
+    :is_admin?, :may_edit?, :has_role?, :is_director?
   before_filter :check_geo
   
   def check_geo
@@ -29,9 +30,19 @@ class ApplicationController < ActionController::Base
     return is_admin? || (o.user.id == current_user.id)
   end
 
+  def has_role?(role)
+    return false unless current_user
+    return current_user.roles.where(name: role.to_s).exists?
+  end
+
   def is_admin?
     return false unless current_user
     return current_user.roles.where(:name => 'admin').exists?
+  end
+
+  def is_director?
+    return false unless current_user
+    return current_user.roles.where(:name => 'director').exists?
   end
 
   private
@@ -49,6 +60,14 @@ class ApplicationController < ActionController::Base
       unless is_admin?
         flash[:error] = "You may not do this."
         redirect_to '/login'
+        return false
+      end
+    end
+
+    def require_director
+      unless is_director?
+        flash[:error] = "You may not do this."
+        redirect_to '/'
         return false
       end
     end

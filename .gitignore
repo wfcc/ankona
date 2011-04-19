@@ -12,3 +12,5 @@ tmp/*
 *.SAV
 *.sql
 doc/plugins/*
+test/fixtures/
+

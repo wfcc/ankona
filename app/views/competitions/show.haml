@@ -8,35 +8,43 @@
 
 %h1= @competition.name
 %div
-  != Status.where(table: 'competitions', value: (@competition.status or 0)).first.h_display
+  - if @competition.ttype.present?
+    ! Format:
+    != Status.where(table: 'comp-type', value: (@competition.ttype)).first.name.bold
   %br
   ! Director: #{@competition.user.name.bold}.
-  ! Competition is #{(@competition.formal ? 'formal' : 'informal').bold}.
+  %br
+  ! Competition is #{(@competition.formal ? 'formal' : 'informal').bold}
+  %br
   ! Deadline: #{@competition.deadline.to_s.bold}
+%p
 %p
   Announce:
   = @competition.announce
-%p
-  Results:
-  = @competition.results
+- if @competition.results.present?
+  %p
+    Results:
+    = @competition.results
   
 - if may_edit? @competition
-  - form_for @competition, url: {action: 'judge'}  do |f|
-    .lab Send invitation to judge section
+  = form_for @competition, url: {action: 'judge'}  do |f|
     - if @competition.sections.count > 1
+      .lab Send invitation to judge section
       = collection_select :competition, :section_ids, @competition.sections, |
         :id, :name                                                           |
     - else
+      .lab Send invitation to judge this competition
       = collection_select :competition, :section_ids, @competition.sections, |
-        :id, :name                                                           |
+        :id, :name, {}, style: 'display:none'                                                           |
     .lab to email:
     = text_field_tag :judge_email, '', size: 30
     = f.hidden_field :id
-    = f.submit 'Invite'
+    = f.submit 'Send invitation'
   
-%p  
-  = @competition.sections.count
-  sections follow:
+  - if @competition.sections.count > 1
+    %p  
+      = @competition.sections.count
+      sections follow:
 %hr
 - @competition.sections.each do |section|
   %h2= section.name
@@ -44,17 +52,16 @@
     
   %p
     Judges confirmed: #{section.users.empty? ? 'none' : section.users.map(&:name).commatize}
-  %table
-    - section.diagrams.each do |diagram|
+    
+  %h4 Marks given
+  %table.judgestat
+    %tr
+      %th Judge
+      %th Problems judged
+      %th Total marks
+    - section.marks.select('user_id, sum(nummark) a, count(*) b').group('user_id').each do |judge|
       %tr
-        %td
-          %h3= diagram.id
-          = @competition.formal ? '' : diagram.authors.map(&:name).commatize
-        %td
-          %div{:style => "padding:0; position:relative"}
-            = image_tag '/fen/' + diagram.position, :class => :board
-        %td
-          = diagram.stipulation
-          %br/
-          = diagram.solution
+        %td= judge.user.name
+        %td= judge.b
+        %td= judge.a
 
