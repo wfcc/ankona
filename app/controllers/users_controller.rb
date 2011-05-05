@@ -2,7 +2,12 @@ class UsersController < ApplicationController
 
   before_filter :require_no_user, only: [:new, :create]
   before_filter :require_user, only: [:show, :edit, :update, :destroy]
+  before_filter :require_admin, only: [:index]
 
+# --------------------------------------------------------------------------
+  def index
+    @users = User.all
+  end
 # --------------------------------------------------------------------------
   def new
     @user = User.new
@@ -12,16 +17,18 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     name = params[:name_handle].split(',')[0]
     case
+    when name.blank?
+      flash[:error] = "Name is blank."
     when name =~ /^CREATE_(.+)$/
       @user.build_author name: $1
       @user.name = $1
       flash[:notice] = "Account registered, new name recorded."
-    when name.to_i > 0 && author = Author.where(code: name).first
+    when author = Author.where(code: name).first
       @user.author = author
-      @user.name = author
-      flash[:notice] = "Account registered."
+      @user.name = author.name
+      flash[:notice] = "Your account registered, #{author.name}."
     else  
-      flash[:error] = "Name is required."
+      flash[:error] = "Malformed name."
       render action: :new
       return
     end
@@ -35,24 +42,23 @@ class UsersController < ApplicationController
 
 # --------------------------------------------------------------------------
   def show
-    @user = @current_user
+    @user = is_admin? && params[:id].present? ? User.find(params[:id]) : @current_user
   end
 # --------------------------------------------------------------------------
   def edit
-    @user = @current_user
+    @user = is_admin? && params[:id].present? ? User.find(params[:id]) : @current_user
+    @author_json = ''
     if @user.author.present?
       @author_json = [@user.author].map{|a| {id: a.id, name: a.name}}.to_json
-    else
-      @author_json = ''
     end
   end
 # --------------------------------------------------------------------------
   def update
-    @user = @current_user   
+    @user = is_admin? && params[:id].present? ? User.find(params[:id]) : @current_user
     handle = params[:name_handle]
     if handle.present?
       name = handle.split(',')[0]
-      author = Author.where(code: name)    
+      author = Author.where(:code >> name | :id >> name)
       if author.present?
         @user.author = author[0] if author.present?
         @user.name = author[0].name
@@ -71,10 +77,14 @@ class UsersController < ApplicationController
   end
 # --------------------------------------------------------------------------
   def destroy
-    @user = @current_user
-    @user.destroy
-
-    flash[:notice] = "Account deleted!"
+    @user = is_admin? && params[:id].present? ? User.find(params[:id]) : @current_user
+    
+    unless is_admin?
+      @user.destroy
+      flash[:notice] = "Account deleted."
+    else
+      flash[:error] = "Cant delete admin user."
+    end
     redirect_to '/'
   end
 end

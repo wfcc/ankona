@@ -23,23 +23,18 @@
       = render partial: 'layouts/ie6' 
       %a.plain(href = '/')
         /= image_tag 'dia-x-logo.png'
-        %h1(style = "padding:10px") diagram exchange
+        %h1 diagram exchange
       = render 'layouts/logged_in'        
       %ul.menu
-        - if is_admin?
+        - if is_director?
           %li= link_to 'Competitions', competitions_path
         %li= link_to 'People', authors_path
         %li= link_to 'My problems', diagrams_path
         - if current_user_session and current_user.sections.present?
           %li= link_to 'My judgements', sections_path
-      %div{ style: "height:50px; clear:both; margin:4px auto; text-align:center" }
-        - if flash[:notice]
-          %p.notice= flash[:notice]
-        - elsif flash[:error]
-          %p.error= flash[:error]
-        - else
-          %p.nomessage
-      .container{ style: "clear:both;padding-top:2px" }
+      - flash.each do |key, message|
+        = content_tag :p, message, class: key
+      .container
         != yield
     %div{ :style => "text-align:right;padding-top:1em" }
       %span{ :style => "border-top:1px solid #bbb;font:normal smaller Arial" }

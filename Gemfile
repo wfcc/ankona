@@ -35,14 +35,15 @@ gem 'rails', '>= 3.0.1'
 # and rake tasks are available in development mode:
 
 group :development, :test do
-   gem 'wirble'
-   gem 'hirb'
-   gem 'nifty-generators'   
-   gem 'ya2yaml'
-   gem 'rspec-rails'
-   gem 'autotest'
-   gem 'capybara'
-   gem 'launchy'
+  gem 'wirble'
+  gem 'hirb'
+  gem 'nifty-generators'   
+  gem 'ya2yaml'
+  gem 'rspec-rails'
+  gem 'autotest'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'taps'
 end
 
 gem "mocha", :group => :test

@@ -1,0 +1,25 @@
+- title "Users"
+
+%table
+  %tr
+    %th Login
+    %th Login count
+    %th Last login at
+    %th Last login ip
+    %th Name
+    %th Country
+    %th Address
+    %th Comment
+    %th Author
+  - for user in @users
+    %tr
+      %td= link_to user.login, edit_user_path(user.id)
+      %td= user.login_count
+      %td= user.last_login_at
+      %td= user.last_login_ip
+      %td= user.name
+      %td= user.country
+      %td= user.address
+      %td= user.comment
+      %td= user.author_id
+

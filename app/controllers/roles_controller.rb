@@ -2,17 +2,11 @@ class RolesController < ApplicationController
 
   before_filter :require_admin
   
-  def index
-    @roles = Role.all
-  end
+  def index() @roles = Role.all end
 
-  def show
-    @role = Role.find(params[:id])
-  end
+  def show() @role = Role.find(params[:id]) end
 
-  def new
-    @role = Role.new
-  end
+  def new() @role = Role.new end
 
   def edit() @role = Role.find(params[:id]) end
 
@@ -38,8 +32,6 @@ class RolesController < ApplicationController
     end
   end
 
-  # DELETE /roles/1
-  # DELETE /roles/1.xml
   def destroy
     @role = Role.find(params[:id])
     @role.destroy
