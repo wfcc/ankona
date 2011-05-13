@@ -16,7 +16,7 @@ gem "rails", "3.0.7"
 # gem 'ruby-debug'
 
 #gem "authlogic", :git => 'http://github.com/vpereira/authlogic.git'
-#gem 'dalli'
+gem 'dalli'
 gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "master"
 gem 'haml'
 gem 'slim'
