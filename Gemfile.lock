@@ -129,6 +129,7 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.27)
+    validatable (1.6.7)
     vidibus-routing_error (0.2.1)
       rails (~> 3.0.0)
     warden (1.0.4)
@@ -162,6 +163,7 @@ DEPENDENCIES
   slim
   slim-rails
   taps
+  validatable
   vidibus-routing_error
   will_paginate (>= 3.0.pre)
   wirble
