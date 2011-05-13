@@ -1,4 +1,4 @@
-= form_for @user, :url => account_url do |f|
+= form_for @user, :url => user_path do |f|
   = f.error_messages
   .container.clearboth
     %h2 Edit your account data
@@ -10,8 +10,8 @@
     .span-10
       %p
         = f.hidden_field :id
-        = f.label :login, 'Your email, it will be used as login'
-        = f.text_field :login
+        = f.label :email, 'Your email, it will be used as login'
+        = f.text_field :email
         %br
         %span.fine It may also be used for password reminders
       %p

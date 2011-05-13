@@ -1,0 +1,35 @@
+h2 Sign up
+
+
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  = devise_error_messages!
+  .span-10
+    p
+      = f.label :email, 'Your email, it will be used as login'
+      = f.email_field :email
+      .fine It will also be used for password recovery and other functions
+    p
+      = f.label :password
+      /br/
+      = f.password_field :password
+      .fine Be reasonable, use hard passwords
+    p
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation
+  .span-11
+    .usa
+      ' We may already have your name in the system.
+    .usa
+      ' Please be aware that we may change the spelling of your name to
+        adapt it to the unified romaization, especially if your name is
+        originally spelled in Cyrillic.
+    .usa
+      ' Start typing your name here and choose it if you see a match:
+
+    = f.label :name, 'Name'
+    = text_field_tag :name_handle, '', style: 'width:20em'
+    p#ajax_error.bigred
+
+  .clear= f.submit "Sign up", id: :submit, class: :button
+
+= render :partial => "devise/shared/links"

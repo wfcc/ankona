@@ -1,8 +1,14 @@
 DiaX::Application.routes.draw do
 
-  resources :users
+ devise_for :users do
+    get 'login', to: 'devise/sessions#new'
+    post 'login', to: 'devise/sessions#create'
+    get 'logout', to: 'devise/sessions#destroy'
+    get 'signup', to: 'devise/registrations#new'
+    get 'account', to: 'devise/registrations#edit'
+  end
 
-  resources :marks
+  resources :users, path: '/people'
 
   match "/stylesheets/:package.css" => AssetsApp.action(:stylesheets), as: 'stylesheets'
 
@@ -14,8 +20,8 @@ DiaX::Application.routes.draw do
   match 'collections/data' => 'collections#data'
   match 'collections/dbaction' => 'collections#dbaction'
 
-  match 'diagrams/mine' => 'diagrams#mine'  
-  match 'diagrams/section' => 'diagrams#section'  
+  get 'diagrams/mine'  
+  get 'diagrams/section'  
   
   match 'invites/accept/:code', controller: 'invites', action: 'react', accepted: true
   match 'invites/decline/:code', :controller => 'invites', :action => 'react', :accepted => false
@@ -28,20 +34,10 @@ DiaX::Application.routes.draw do
     member {get :mark}
   end
 
-  resources :roles, :collections, :authors, :posts, :imports,
-    :diagrams, :statuses, :faqs, :invites, :password_resets, :users
+  resources :roles, :collections, :authors, :posts, :imports, :marks,
+    :diagrams, :statuses, :faqs, :invites, :password_resets
     
   match 'diagrams/solve/:id' => 'diagrams#solve'
   match 'diagrams/section/:id' => 'diagrams#section'
 
-  #connect 'fen/*id', :controller => 'fen'
-
-  match 'signup', to: 'users#create', via: :post
-  match 'signup', to: 'users#new', via: :get
-  resource :account, :controller => 'users'
-
-  match 'login', to: 'user_sessions#create', via: :post
-  match 'login', to: 'user_sessions#new', via: :get
-  match 'logout', to: 'user_sessions#destroy'
-  
 end

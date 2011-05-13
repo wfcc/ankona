@@ -26,11 +26,10 @@
         %h1 diagram exchange
       = render 'layouts/logged_in'        
       %ul.menu
-        - if is_director?
-          %li= link_to 'Competitions', competitions_path
+        %li= link_to 'Competitions', competitions_path
         %li= link_to 'People', authors_path
         %li= link_to 'My problems', diagrams_path
-        - if current_user_session and current_user.sections.present?
+        - if user_signed_in? and current_user.sections.present?
           %li= link_to 'My judgements', sections_path
       - flash.each do |key, message|
         = content_tag :p, message, class: key

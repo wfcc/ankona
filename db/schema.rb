@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 34) do
+ActiveRecord::Schema.define(:version => 38) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -119,6 +119,28 @@ ActiveRecord::Schema.define(:version => 34) do
     t.integer  "user_id"
   end
 
+  create_table "people", :force => true do |t|
+    t.string   "email",                                 :default => "", :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                         :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "password_salt"
+    t.string   "name"
+    t.string   "country",                :limit => 2
+    t.string   "comment"
+    t.string   "code"
+    t.string   "original"
+    t.string   "traditional"
+  end
+
   create_table "posts", :force => true do |t|
     t.string   "subject"
     t.text     "body"
@@ -167,8 +189,8 @@ ActiveRecord::Schema.define(:version => 34) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login"
-    t.string   "crypted_password"
+    t.string   "email"
+    t.string   "encrypted_password"
     t.string   "password_salt"
     t.string   "persistence_token"
     t.integer  "login_count"
@@ -183,10 +205,18 @@ ActiveRecord::Schema.define(:version => 34) do
     t.string   "country"
     t.text     "address"
     t.text     "comment"
-    t.string   "perishable_token",  :default => "", :null => false
     t.integer  "author_id"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
 
-  add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

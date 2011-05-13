@@ -1,17 +1,16 @@
 %h2 Listing authors
 
-- is_admin = is_admin?
 = form_tag :authors, method: :get do
   Filter by name:
   = text_field_tag 'search_name', '', size: 20
   = submit_tag 'Apply'
 
-%p.clearboth
-  - if is_admin
-    = link_to 'New author', new_author_path, class: :button
+.clearboth
+  = link_to 'New author', new_author_path, class: :button
 
-= paginate @authors
-= kaminari_page_entries_info(@authors)
+= will_paginate @authors
+/= kaminari_page_entries_info(@authors)
+.pagestat= page_entries_info @authors
 
 %table.authors
   %tr
@@ -20,26 +19,28 @@
     %th Name
     %th Original
     %th Traditional romanization
-    %th DEL
+    - if can? :delete, Author
+      %th DEL
     - @authors.each do |author|
-      - url = (is_admin ? edit_author_url(author) : url_for(author))
+      - url = (can?(:edit, author) ? edit_author_url(author) : url_for(author))
       %tr.clickable(onclick = "window.location.href = '#{url}'")
-        %td(style = 'font-size:xx-small') 
+        %td.fs-xx-small
           = author.source
-        %td.xs= author.code
-        %td(style = 'font-size:larger') 
+        %td.fs-small
+          = author.code
+        %td.fs-larger
           = author.name
         %td(style = 'color:brown') 
           = author.original
         %td= author.traditional
-        - if is_admin
+        - if can? :delete, author
           %td= link_to '☒', author, :confirm => 'Are you sure?', :method => :delete
 
-%p
 
-= paginate @authors
+/= paginate @authors
+= will_paginate @authors
 
 %p.clearboth
-  - if is_admin
+  - if can? :create, Author
     = link_to 'New author', new_author_path, class: :button
 

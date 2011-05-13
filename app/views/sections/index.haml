@@ -5,8 +5,13 @@
   
   %h3
     = section.name
-    - if section.competition.status == 2
-      = link_to 'Go judge', judge_section_path(section), class: :button
+    - case
+    - when section.competition.status == 2
+      = link_to ' Go judge it! ', judge_section_path(section), class: :button
+    - when section.competition.status < 2
+      %span.fine (can't be judged yet)
+    - when section.competition.status > 2
+      %span.fine (judging is closed)
   
   %p= section.theme
   

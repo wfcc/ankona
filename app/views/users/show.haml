@@ -1,9 +1,7 @@
 %p
   %b Login:
-  = h @user.login
+  = h @user.email
 %p
-  %b Name:
-  = h @user.name
 
 .fine
   %p
@@ -31,4 +29,4 @@
       = r.name
   
   
-= link_to 'Edit', edit_account_path, class: :button
+= link_to 'Edit', account_path, class: :button

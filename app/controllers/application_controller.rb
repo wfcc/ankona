@@ -2,7 +2,6 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  include AuthenticationHandling
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -17,6 +16,20 @@ class ApplicationController < ActionController::Base
     :is_admin?, :may_edit?, :has_role?, :is_director?
   before_filter :check_geo
   
+  rescue_from CanCan::AccessDenied do |exception|
+    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
+    redirect_to root_url, :alert => exception.message
+  end
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    Rails.logger.debug "RecordNotFound on #{exception.inspect}"
+    redirect_to root_url, alert: 'There is no such thing.'
+  end
+
+  rescue_from ActionController::RoutingError do |exception|
+    redirect_to root_url, alert: 'You have requested something that we don''t have.'
+  end
+
   def check_geo
     if session[:geo].blank?   
       c = GeoIP.new(Ya['geoipdat']).country(request.remote_ip)[3]
@@ -46,15 +59,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def current_user_session
-      return @current_user_session if defined?(@current_user_session)
-      @current_user_session = UserSession.find
-    end
-
-    def current_user
-      return @current_user if defined?(@current_user)
-      @current_user = current_user_session && current_user_session.record
-    end
 
     def require_admin
       unless is_admin?

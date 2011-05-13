@@ -1,47 +1,24 @@
-class StatusesController < ApplicationController
+class StatusesController < AuthorizedController
   # GET /statuses
   # GET /statuses.xml
   
-  before_filter :require_admin
-  
+ 
   def index
     @statuses = Status.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @statuses }
-    end
   end
 
-  # GET /statuses/1
-  # GET /statuses/1.xml
   def show
     @status = Status.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @status }
-    end
   end
 
-  # GET /statuses/new
-  # GET /statuses/new.xml
   def new
     @status = Status.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @status }
-    end
   end
 
-  # GET /statuses/1/edit
   def edit
     @status = Status.find(params[:id])
   end
 
-  # POST /statuses
-  # POST /statuses.xml
   def create
     @status = Status.new(params[:status])
 
@@ -57,8 +34,6 @@ class StatusesController < ApplicationController
     end
   end
 
-  # PUT /statuses/1
-  # PUT /statuses/1.xml
   def update
     @status = Status.find(params[:id])
 

@@ -10,6 +10,8 @@ class Author < ActiveRecord::Base
   
   before_save :generate_code
 
+  attr_accessible :name
+
 protected
 #########################################
 

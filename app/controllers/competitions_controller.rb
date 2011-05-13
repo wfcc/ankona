@@ -1,52 +1,27 @@
-class CompetitionsController < ApplicationController
+class CompetitionsController < AuthorizedController
 
   #before_filter :require_user, :only => [:destroy, :edit]
-  before_filter :require_director, :only => [:destroy, :edit]
+  #before_filter :require_director, :only => [:destroy, :edit]
 
-  # GET /competitions
-  # GET /competitions.xml
   def index
     @competitions = Competition.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @competitions }
-    end
   end
 
-  # GET /competitions/1
-  # GET /competitions/1.xml
   def show
     @competition = Competition.find(params[:id])
     @sections = @competition.sections
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @competition }
-    end
   end
 
-  # GET /competitions/new
-  # GET /competitions/new.xml
   def new
     @competition = Competition.new
-
     1.times { @competition.sections.build }
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @competition }
-    end
   end
 
-  # GET /competitions/1/edit
   def edit
     @competition = Competition.find(params[:id])
     render :action => 'new'
   end
 
-  # POST /competitions
-  # POST /competitions.xml
   def create
     @competition = Competition.new(params[:competition])
     @competition.user = current_user
@@ -74,9 +49,6 @@ class CompetitionsController < ApplicationController
       v['_destroy'] = 1 if v['name'].blank?
     end
     
-logger.info '**********************'
-logger.info params
-logger.info '**********************'
       
     if @competition.update_attributes(params[:competition])
       flash[:notice] = 'Competition was successfully updated.'
@@ -86,8 +58,6 @@ logger.info '**********************'
     end
   end
 
-  # DELETE /competitions/1
-  # DELETE /competitions/1.xml
   def destroy
     @competition = Competition.find(params[:id])
     @competition.destroy

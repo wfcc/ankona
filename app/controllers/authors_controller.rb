@@ -1,9 +1,6 @@
 # coding: utf-8
-class AuthorsController < ApplicationController
+class AuthorsController < NonauthorizedController
 
-  before_filter :require_admin, except: [:index, :show, :json]
-
-  # GET /authors
   def index
     @@pagination_options = {inner_window: 10, outer_window: 10}
     search = "%#{params[:search_name]}%"
@@ -12,9 +9,11 @@ class AuthorsController < ApplicationController
       .where((:name =~ search) | (:code =~ search) |
         (:original =~ search) | (:traditional =~ search))
       .order(:code)
-      .page(params[:page]).per(100)
+      .paginate page: params[:page], per_page: 99
+#      .page(params[:page]).per(100)
 
-    store_location
+    #store_location
+
   end
 #----------------------------------------------------------------------
   def json
@@ -59,7 +58,7 @@ class AuthorsController < ApplicationController
   def update
     @author = Author.find(params[:id])
 
-    if is_admin? and @author.update_attributes(params[:author])
+    if @author.update_attributes(params[:author])
       if params[:code]['regenerate'] == '1'
         @author.code = ''
         @author.save
@@ -76,9 +75,6 @@ class AuthorsController < ApplicationController
     @author = Author.find(params[:id])
     @author.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(authors_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(authors_url)
   end
 end

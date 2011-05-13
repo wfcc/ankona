@@ -1,13 +1,15 @@
-- name = current_user_session ? current_user.name + ' ▼' : 'log in ▼'
-
 .login
-  %button.button#lg_menu= name
-  #lg_submenu(style = "display:none")
-    %ul
-      - if current_user_session
-        %li= link_to 'My account', '/account'
-        %li= link_to 'Logout', '/logout'
-      - else
-        %li= link_to 'Log in', '/login'
-        %li= link_to 'Register', '/signup'
+  - if user_signed_in?
+    %button.button#lg_menu
+      = current_user.nick
+      ▼
+    #lg_submenu(style = "display:none")
+      %ul
+        %li= link_to 'My account', account_path
+        %li= link_to 'Logout', logout_path
+  - else
+    #lg_submenu
+      %ul
+        %li= link_to 'Log in', login_path
+        %li= link_to 'Register', signup_path
 

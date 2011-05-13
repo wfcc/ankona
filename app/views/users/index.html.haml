@@ -1,25 +1,21 @@
 - title "Users"
 
-%table
+%table.userlist
   %tr
     %th Login
-    %th Login count
-    %th Last login at
-    %th Last login ip
     %th Name
     %th Country
     %th Address
     %th Comment
     %th Author
+    %th Author name
   - for user in @users
     %tr
-      %td= link_to user.login, edit_user_path(user.id)
-      %td= user.login_count
-      %td= user.last_login_at
-      %td= user.last_login_ip
+      %td= link_to user.email, edit_user_path(user.id)
       %td= user.name
       %td= user.country
       %td= user.address
       %td= user.comment
       %td= user.author_id
+      %td= user.author.name if user.author.present?
 

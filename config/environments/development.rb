@@ -21,4 +21,18 @@ DiaX::Application.configure do
   }
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
+
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain => "gmail.com",
+    :user_name => "queuerun@gmail.com",
+    :password => "qr142857",
+    :authentication => :login,
+    :enable_starttls_auto => true #This line is must to ensure the tls for Gmail
+  }
+  config.action_mailer.default_content_type = "text/html"
+
 end

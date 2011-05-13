@@ -7,33 +7,18 @@ class InvitesController < ApplicationController
   # GET /invites.xml
   def index
     @invites = Invite.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @invites }
-    end
   end
 
   # GET /invites/1
   # GET /invites/1.xml
   def show
     @invite = Invite.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @invite }
-    end
   end
 
   # GET /invites/new
   # GET /invites/new.xml
   def new
     @invite = Invite.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @invite }
-    end
   end
 
   # GET /invites/1/edit
@@ -47,14 +32,16 @@ class InvitesController < ApplicationController
     when (not @invite)
       flash[:error] = 'This invitation code is not found.'
     when (params[:accepted] and not current_user)
-      flash[:error] = 'You need to be registered and logged in.'
+      flash[:error] = 'Please register and/or log in, then follow this link.'
       redirect_to url_for(:controller => :user_sessions, :action => :new)
     else
       sect = Section.find @invite.item
       @name =  sect.competition.name
       @name = "section “#{sect.name}” in #{@name}" if sect.name
 
-      if params[:accepted]
+      if sect.competition.user == current_user
+        flash[:error] = "You are director of “#{sect.competition.name}”, you can't be its judge!"
+      elsif params[:accepted]
         flash[:notice] = "You have accepted to jugde #{@name}."
         Notifier.deliver_acceptance_to_judge current_user, @name, sect.competition
         @invite.accepted = true
@@ -62,8 +49,10 @@ class InvitesController < ApplicationController
       else
         flash[:error] = "You have declined to jugde #{@name}."
         Notifier.deliver_refusal_to_judge @invite.email, @name, sect.competition
+        @invite.accepted = false
       end
       @invite.save
+      redirect_to competition_path sect.competition
     end
   end
   #------------------------------------------------
@@ -73,15 +62,12 @@ class InvitesController < ApplicationController
   def create
     @invite = Invite.new(params[:invite])
 
-    respond_to do |format|
-      if @invite.save
-        flash[:notice] = 'Invite was successfully created.'
-        format.html { redirect_to(@invite) }
-        format.xml  { render :xml => @invite, :status => :created, :location => @invite }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @invite.errors, :status => :unprocessable_entity }
-      end
+    if @invite.save
+      flash[:notice] = 'Invite was successfully created.'
+      redirect_to(@invite)
+    else
+      flash[:error] = 'Error creating invite.'
+      render :action => "new"
     end
   end
 

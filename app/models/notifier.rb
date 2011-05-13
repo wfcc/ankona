@@ -21,7 +21,7 @@ class Notifier < ActionMailer::Base
   end
 
   def acceptance_to_judge(u, name, competition)
-    subject       u.name + ' has accepted to judge ' + name
+    subject       (u.name or u.email) + ' has accepted to judge ' + name
     from          email_from
     recipients    competition.user.email
     sent_on       Time.now

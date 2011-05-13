@@ -1,5 +1,5 @@
 # coding: utf-8
-class DiagramsController < ApplicationController
+class DiagramsController < AuthorizedController
 
 require 'open3'
 
@@ -14,9 +14,8 @@ require 'open3'
 
     @diagrams = Diagram.search(params[:search])
       .where(:user_id.eq => current_user.id)
-      .order(:created_at.asc)
-      .all
-      .paginate(page: params[:page])
+      .order(:created_at.asc).all
+      .paginate page: params[:page], per_page: 7
   end
 
 #----- GET /diagrams/1 ------------------------------------------------------

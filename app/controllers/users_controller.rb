@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
 
-  before_filter :require_no_user, only: [:new, :create]
-  before_filter :require_user, only: [:show, :edit, :update, :destroy]
-  before_filter :require_admin, only: [:index]
+  #before_filter :require_no_user, only: [:new, :create]
+  #before_filter :require_user, only: [:show, :edit, :update, :destroy]
+  #before_filter :require_admin, only: [:index]
+
+  load_and_authorize_resource :only => [:index, :show]
+  before_filter :authenticate_user!
 
 # --------------------------------------------------------------------------
   def index
@@ -69,7 +72,7 @@ class UsersController < ApplicationController
     end
     if @user.update_attributes(params[:user])
       flash[:notice] = "Account updated!"
-      redirect_to account_url
+      redirect_to user_path @user
     else
       flash[:error] = "Error occurred"
       render :action => :edit

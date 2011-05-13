@@ -12,7 +12,7 @@
     ! Format:
     != Status.where(table: 'comp-type', value: (@competition.ttype)).first.name.bold
   %br
-  ! Director: #{@competition.user.name.bold}.
+  ! Director: #{(@competition.user.name or @competition.user.email).bold}.
   %br
   ! Competition is #{(@competition.formal ? 'formal' : 'informal').bold}
   %br
@@ -51,7 +51,8 @@
   %p= section.theme
     
   %p
-    Judges confirmed: #{section.users.empty? ? 'none' : section.users.map(&:name).commatize}
+    Judges confirmed:
+    %span.fs-larger= section.users.empty? ? 'none' : section.users.map(&:nick).commatize
     
   %h4 Marks given
   %table.judgestat
@@ -61,7 +62,7 @@
       %th Total marks
     - section.marks.select('user_id, sum(nummark) a, count(*) b').group('user_id').each do |judge|
       %tr
-        %td= judge.user.name
+        %td= judge.user.nick
         %td= judge.b
         %td= judge.a
 

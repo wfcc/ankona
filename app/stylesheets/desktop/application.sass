@@ -100,6 +100,9 @@ p
     color: #bbbbbb
     margin: 0
     padding: 0
+  &.bigred
+    font-size: larger
+    color: red
   &.notice
     border: 2px solid #55cc11
     color: #33aa11
@@ -109,6 +112,11 @@ p
     border: 2px solid #cc6600
     color: #aa4400
     background-color: #ffaaaa
+    +message
+  &.alert
+    border: 2px solid DarkOrange
+    color: darken(#FF8C00, 10%)
+    background-color: lighten(#FF8C00, 30%)
     +message
   &.nomessage
     +message
@@ -187,8 +195,10 @@ ul.menu
 div
   &.pagination
     float: left
+    clear: left
   &.pagestat
     float: right
+    clear: right
   &#solution
     white-space: pre-wrap
     font: 12px monospace courier
@@ -294,6 +304,9 @@ img.blank
 .xs
   font-size: smaller
 
+.fs-smaller
+  font-size: smaller
+
 .cgreen
   color: #228811
 
@@ -327,9 +340,12 @@ em
   clear: both
   position: relative
 
-.pagination em
-  font-style: normal
-  font-weight: bold
+.pagination
+  font-size: larger
+  em
+    font-style: normal
+    font-weight: bold
+    color: #188828
 
 a.standout
   background-color: #6B8E23 + #333
@@ -403,3 +419,29 @@ hr
 .judgestat
   border: 1px solid grey
   padding: 5px
+  
+.fs-larger
+  font-size: larger  
+  
+.fs-xx-small
+  font-size: xx-small
+    
+table.userlist    
+  td
+    border: 1px solid grey
+    
+.float-left
+  float: left
+  clear: left
+  
+form input[type="submit"].no-margin  
+  margin: 4px
+  
+.clearfix:after
+  visibility: hidden
+  display: block
+  font-size: 0
+  content: " "
+  clear: both
+  height: 0
+  

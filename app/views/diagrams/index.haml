@@ -2,29 +2,33 @@
 
 - if @diagrams.blank?
   %h4 You have no problems.  Let's create some!
-  = link_to 'New problem', new_diagram_path, class: :button
-- else  
-  %h2 Listing problems
-  = link_to 'New problem', new_diagram_path, class: :button
+- else
+  = link_to 'New problem', new_diagram_path, class: [:button, 'float-left']
+
   = form_tag diagrams_path, method: :get do
-    Filter search by author:
-    = text_field_tag 'search[authors_name_like]', '', size: 10
-    stipulation:
-    = text_field_tag 'search[stipulation_equals]', '', size: 5
+    /%h3.clearboth Listing problems
+    %p.clear
+      Filter search by author:
+      = text_field_tag 'search[authors_name_like]', '', size: 10
+      stipulation:
+      = text_field_tag 'search[stipulation_equals]', '', size: 5
+      = submit_tag 'Apply filter', class: 'no-margin'
+    %div(style = 'padding: 3px; background-color: #eee;' class = "clearfix")
+      = will_paginate @diagrams
+      .pagestat= page_entries_info @diagrams
     /
       collection:
       = collection_select :search, :collections, (current_user ? |
         Collection.where(:user_id.eq => current_user.id) : Collection.where(:public.eq => true)), |
         :id, :name, {:include_blank => true, :selected => @scoll} |
-    = submit_tag 'Apply filter'
   - if current_user
     -# %p.fine Other people's “Public” collections will not be shown, only those created by you.
   - else
     %p.fine Only “public” collections will be shown, as you are not logged in.
-  = will_paginate @diagrams
-  .pagestat= page_entries_info @diagrams
+  /= paginate @diagrams
+  /.pagestat= page_entries_info @diagrams
   %br.clearboth
-  %table.diagrams
+  %table.diagrams.clear
     - @diagrams.each do |diagram|
       %tr.clickable{:onclick => "window.location.href = '#{url_for diagram}'"}
         %td{:style => "vertical-align:top;color:#46D"}= h diagram.id
@@ -48,4 +52,5 @@
   %br
   = will_paginate @diagrams
   .pagestat= page_entries_info @diagrams
-  /= link_to 'New problem', new_diagram_path, class: :button
+  = link_to 'New problem', new_diagram_path, class: [:button, 'float-left']
+  

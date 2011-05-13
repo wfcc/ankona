@@ -1,9 +1,20 @@
 %h2 Current competitions
+
+%br.clearboth
+- if can? :create, Competition
+  = link_to 'New competition', new_competition_path, class: :button
+
 %table.competitions
   - @competitions.each do |competition|
-    %tr.clickable(onclick = "window.location.href = '#{url_for competition}'")
+    - tail = can?(:edit, competition) |
+    ? {:onclick => "location.href = '#{edit_competition_url(competition)}'"} |
+    : nil |
+    = content_tag :tr, tail do
       /%tr.clickable(onclick = "window.location.href = '#{url_for competition}'")
-      %td.clickable(onclick = "window.location.href = '#{url_for competition}'")
+      %td.clickable
+        /= content_tag :tr
+        - if can? :manage, competition
+          = link_to 'Edit', edit_competition_path(competition), class: [:button, :clearboth]
         %span(style = "font-size:x-large;clear:right")= h competition.name
         %br
         - if competition.private
@@ -24,8 +35,7 @@
         = competition.complete ? '[complete]' : ''
         = competition.results
         /
-          - if may_edit? competition
-            = link_to 'Edit', edit_competition_path(competition), class: :button
       / %= link_to 'Destroy', competition, :confirm => 'Are you sure?', :method => :delete %
 %br.clearboth
-= link_to 'New competition', new_competition_path, class: :button
+- if can? :create, Competition
+  = link_to 'New competition', new_competition_path, class: :button
