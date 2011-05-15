@@ -1,7 +1,7 @@
 
-class FaqsController < ApplicationController
+class FaqsController < NonauthorizedController
 
-  before_filter :require_admin, :except => :show
+  #before_filter :require_admin, :except => :show
   caches_page :show
 
   # GET /faqs
@@ -28,15 +28,10 @@ class FaqsController < ApplicationController
   def create
     @faq = Faq.new(params[:faq])
 
-    respond_to do |format|
-      if @faq.save
-        flash[:notice] = 'Faq was successfully created.'
-        format.html { redirect_to(@faq) }
-        format.xml  { render :xml => @faq, :status => :created, :location => @faq }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @faq.errors, :status => :unprocessable_entity }
-      end
+    if @faq.save
+      redirect_to @faq, notice: 'Faq was successfully created.'
+    else
+      render :action => "new", alert: 'Error creating FAQ.'
     end
   end
 

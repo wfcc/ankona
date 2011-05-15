@@ -1,4 +1,4 @@
-- if may_edit? @competition
+- if can? :manage, @competition
   %ul.menu
     %li
       = link_to 'Edit', edit_competition_path(@competition)
@@ -35,7 +35,7 @@
     - else
       .lab Send invitation to judge this competition
       = collection_select :competition, :section_ids, @competition.sections, |
-        :id, :name, {}, style: 'display:none'                                                           |
+        :id, :name, {}, style: 'display:none'                                |
     .lab to email:
     = text_field_tag :judge_email, '', size: 30
     = f.hidden_field :id
@@ -60,7 +60,7 @@
       %th Judge
       %th Problems judged
       %th Total marks
-    - section.marks.select('user_id, sum(nummark) a, count(*) b').group('user_id').each do |judge|
+    - section.marks.select('user_id, sum(nummark) As a, count(*) As b').group('user_id').each do |judge|
       %tr
         %td= judge.user.nick
         %td= judge.b

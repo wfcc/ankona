@@ -41,6 +41,7 @@ gem "vidibus-routing_error"
 # and rake tasks are available in development mode:
 
 group :development, :test do
+  gem 'pg'
   gem 'haml2slim'
 #  gem 'unicorn'
   gem 'wirble'

@@ -9,6 +9,7 @@ class Ability
     can [:read, :json], Author
     can :index, Competition
     can :manage, Diagram
+    can :read, Faq
 #    can :update, Diagram do |diagram|
 #      diagram.user == user
 #    end

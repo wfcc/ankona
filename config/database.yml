@@ -15,6 +15,14 @@
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
+  adapter: postgresql
+  encoding: unicode
+  database: shakodat_development
+  pool: 5
+  username: ike
+  password: 12not
+
+development-old:
   adapter: mysql2
   encoding: utf8
   reconnect: false
@@ -25,13 +33,13 @@ development:
 #  socket: /var/run/mysqld/mysqld.sock
 
 test:
-  adapter: mysql2
+  adapter: postgresql
   encoding: utf8
   reconnect: false
   database: shakodat_test
   pool: 5
-  username: root
-  password:
+  username: ike 
+  password: 12not
 #  socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
