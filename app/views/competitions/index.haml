@@ -28,12 +28,17 @@
         %br
         Director:
         = competition.user.name
-        %div{:style => "white-space:pre-wrap;margin-left:5em;clear:left;width:60%"}= h competition.announce
+        %p
+        - if competition.announce.present?
+          %h3 Announcement:
+          %p= competition.announce
         - @i=0; competition.sections.each do |section|
-          %h4{:style => "margin-left:10em"}= h section.name
-          %span{:style => "margin-left:10em"}= h section.theme
-        = competition.complete ? '[complete]' : ''
-        = competition.results
+          %h4= section.name
+          %p=  section.theme
+        %p= competition.complete ? '[complete]' : ''
+        - if competition.results.present?
+          %h3 Results:
+          %p= competition.results
         /
       / %= link_to 'Destroy', competition, :confirm => 'Are you sure?', :method => :delete %
 %br.clearboth

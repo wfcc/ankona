@@ -7,6 +7,8 @@
 .clearboth
 
 %h1= @competition.name
+%p.fs-larger
+  != Status.where(table: 'competitions', value: (@competition.status or 0)).first.h_display
 %div
   - if @competition.ttype.present?
     ! Format:
