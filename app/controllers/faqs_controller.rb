@@ -2,7 +2,7 @@
 class FaqsController < NonauthorizedController
 
   #before_filter :require_admin, :except => :show
-  caches_page :show
+  #caches_page :show
 
   # GET /faqs
   def index
