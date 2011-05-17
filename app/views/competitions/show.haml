@@ -30,13 +30,14 @@
   
 - if may_edit? @competition
   = form_for @competition, url: {action: 'judge'}  do |f|
-    - if @competition.sections.count > 1
+    - sections = @competition.sections.sort{|x|x.id}
+    - if sections.count > 1
       .lab Send invitation to judge section
-      = collection_select :competition, :section_ids, @competition.sections, |
+      = collection_select :competition, :section_ids, sections, |
         :id, :name                                                           |
     - else
       .lab Send invitation to judge this competition
-      = collection_select :competition, :section_ids, @competition.sections, |
+      = collection_select :competition, :section_ids, sections, |
         :id, :name, {}, style: 'display:none'                                |
     .lab to email:
     = text_field_tag :judge_email, '', size: 30

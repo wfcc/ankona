@@ -4,7 +4,7 @@ class StatusesController < AuthorizedController
   
  
   def index
-    @statuses = Status.all
+    @statuses = Status.order :table
   end
 
   def show

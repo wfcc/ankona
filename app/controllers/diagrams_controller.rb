@@ -130,8 +130,6 @@ require 'open3'
       end
     end
 
-logger.info '****************** ' + @diagram.position
-    
     if @diagram.save
       flash[:notice] = 'Problem was successfully saved.'
       redirect_to(@diagram)
