@@ -28,14 +28,17 @@ DiaX::Application.routes.draw do
 
   match 'competitions/judge' => 'competitions#judge'
 
+  resources :diagrams do
+    member {get :section}
+  end
   resources :competitions, has_many: :sections
   resources :sections do
     member {get :judge}
     member {get :mark}
   end
 
-  resources :roles, :collections, :authors, :posts, :imports, :marks,
-    :diagrams, :statuses, :faqs, :invites, :password_resets
+  resources :roles, :collections, :authors, :posts, :imports,
+    :statuses, :faqs, :invites, :password_resets
     
   match 'diagrams/solve/:id' => 'diagrams#solve'
   match 'diagrams/section/:id' => 'diagrams#section'

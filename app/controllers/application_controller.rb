@@ -21,10 +21,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end
 
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    Rails.logger.debug "RecordNotFound on #{exception.inspect}"
-    redirect_to root_url, alert: 'There is no such thing.'
-  end
+#  rescue_from ActiveRecord::RecordNotFound do |exception|
+#    Rails.logger.debug "RecordNotFound on #{exception.inspect}"
+#    redirect_to root_url, alert: 'There is no such thing.'
+#  end
 
   rescue_from ActionController::RoutingError do |exception|
     redirect_to root_url, alert: 'You have requested something that we don''t have.'

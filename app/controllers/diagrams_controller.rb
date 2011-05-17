@@ -114,18 +114,20 @@ require 'open3'
 ###################################################
   def save_diagram(is_create)
 
-    @diagram.user = current_user
-    @diagram.authors = params[:authors_ids].split(',').map do |x|
-      if x =~ /^CREATE_(.+)$/
-        Author.create name: $1
-      else
-        Author.find x
-      end
-    end
-    if @diagram.authors.blank?
+    if @diagram.authors.blank? and params[:authors_ids].blank?
       flash[:error] = 'Author(s) required.'
       render :edit
       return
+    end
+    @diagram.user = current_user
+    if params[:authors_ids].present?
+      @diagram.authors = params[:authors_ids].split(',').map do |x|
+        if x =~ /^CREATE_(.+)$/
+          Author.create name: $1
+        else
+          Author.find x
+        end
+      end
     end
 
 logger.info '****************** ' + @diagram.position

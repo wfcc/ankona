@@ -2,6 +2,7 @@
 
 - if @diagrams.blank?
   %h4 You have no problems.  Let's create some!
+  = link_to 'New problem', new_diagram_path, class: [:button, 'float-left']
 - else
   = link_to 'New problem', new_diagram_path, class: [:button, 'float-left']
 
