@@ -9,7 +9,7 @@
 <% @posts.each do |post| %>
   <tr>
     <td width="20%"><div style="color:DarkGreen;font:normal 16px Arial">
-      <%=h post.user ? post.user.name : '*** Anonymous ***' %></div>
+      <%= post.user.nick or '*** Anonymous ***' %></div>
       <br/><div style="font:normal 10px Arial"><%=h post.created_at.to_s(:post) %></div><br/></td>
     </td>
     <td style="vertical-align:top"><div style="font:normal 16px Arial"><%=h post.body %></div><br/></td>

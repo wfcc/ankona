@@ -22,6 +22,8 @@ class UsersController < ApplicationController
     case
     when name.blank?
       flash[:error] = "Name is blank."
+      render action: :new
+      return
     when name =~ /^CREATE_(.+)$/
       @user.build_author name: $1
       @user.name = $1

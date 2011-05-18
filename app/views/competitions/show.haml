@@ -14,7 +14,7 @@
     ! Format:
     != Status.where(table: 'comp-type', value: (@competition.ttype)).first.name.bold
   %br
-  ! Director: #{(@competition.user.name or @competition.user.email).bold}.
+  ! Director: #{(@competition.user.nick).bold}
   %br
   ! Competition is #{(@competition.formal ? 'formal' : 'informal').bold}
   %br

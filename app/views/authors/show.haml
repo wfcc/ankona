@@ -1,28 +1,27 @@
 
-.span-3
-  %b(style = 'font-size:x-large')
-    =@author.code
+%div(style = 'margin-top:5em')
+  .span-3
+    %b(style = 'font-size:x-large')
+      =@author.code
 
-.span-10(style = 'border-left:1px solid grey;padding-left:2em')
-  %p
-    %b(style = 'font-size:larger')
-      =@author.name
+  .span-10(style = 'border-left:1px solid grey;padding-left:2em')
+    %p
+      %b.fs-larger
+        =@author.name
 
-  - if @author.original.present?
-    %p
-      Original:
-      %br
-      %b
-        =h @author.original
-    %p
-      Traditional:
-      %br
+    - if @author.original.present?
+      %p
+        Original:
+        %br
+        %b= @author.original
+      %p
+        Traditional:
+        %br
+        %b= @author.traditional
+    /
+      Birth date:
       %b 
-        =h @author.traditional
-  /
-    Birth date:
-    %b 
-    =h @author.birth_date
+      =h @author.birth_date
 
 %br.clearboth
 
