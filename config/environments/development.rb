@@ -33,6 +33,6 @@ DiaX::Application.configure do
     :authentication => :login,
     :enable_starttls_auto => true #This line is must to ensure the tls for Gmail
   }
-  config.action_mailer.default_content_type = "text/html"
+  #config.action_mailer.default_content_type = "text/html"
 
 end
