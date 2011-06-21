@@ -131,8 +131,6 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (0.3.27)
     validatable (1.6.7)
-    vidibus-routing_error (0.2.1)
-      rails (~> 3.0.0)
     warden (1.0.4)
       rack (>= 1.0)
     will_paginate (3.0.pre2)
@@ -166,7 +164,6 @@ DEPENDENCIES
   slim-rails
   taps
   validatable
-  vidibus-routing_error
   will_paginate (>= 3.0.pre)
   wirble
   ya2yaml

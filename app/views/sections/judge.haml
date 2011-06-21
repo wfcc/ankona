@@ -2,7 +2,7 @@
 %h3= @section.competition.name
 %h4= @section.name
 
-.section(data-sid = "#{@section.id}")
+.section{'data-sid' => @section.id}
   - @section.diagrams.each do |diagram|
     %br.clearboth
     %p
@@ -20,19 +20,32 @@
       .span-11.last
         %pre.solution= diagram.solution
     %p.clear
-      .prepend-2.span-1
-        - m = @marks & diagram.marks
-        - value = m.present? ? m[0].nummark : ''
-        - mid = m.present? ? m[0].id : ''
-        .mark(data-did = "#{diagram.id}" style="height: 1ex")
-          = value
-          &nbsp;
-      .prepend-3.span-13.last
-        .slider(data-did = "#{diagram.id}" data-value = "#{value}" data-mid = "#{mid}")
-        %table
+      - marks = @marks & diagram.marks
+      - mark = marks.present? ? marks[0] : Mark.new(diagram_id: diagram.id, section_id: @section.id)
+      
+      - value = mark.nummark
+      - mid = mark.id
+      = form_for mark, remote: true, url: mark_section_path(@section), html: {method: :post} do |f|
+        %table.marks
           %tr
-            - (0..5).step(0.5).each do |x|
-              %td(style = 'width:30px;margin:0 auto;text-align:center')
-                = x
+            %td
+              .mark(data-did = "#{diagram.id}" style="height: 1ex")
+                = value
+            %td
+              .slider{'data-did' => diagram.id, 'data-value' => value, 'data-mid' => mid}
+              %table.slider
+                %tr
+                  - (0..4).step(0.5).each do |x|
+                    %td
+                      = x
+          %tr
+            %td
+              = f.submit 'Update comment'
+              = f.hidden_field :diagram_id
+              = f.hidden_field :section_id
+              = f.hidden_field :id
+              %p.updating
+            %td
+              = f.text_area :comment, cols: 80, rows: 5
     %hr
 

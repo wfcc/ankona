@@ -26,9 +26,9 @@ class ApplicationController < ActionController::Base
 #    redirect_to root_url, alert: 'There is no such thing.'
 #  end
 
-  rescue_from ActionController::RoutingError do |exception|
-    redirect_to root_url, alert: 'You have requested something that we don''t have.'
-  end
+#  rescue_from ActionController::RoutingError do |exception|
+#    redirect_to root_url, alert: 'You have requested something that we don''t have.'
+#  end
 
   def check_geo
     if session[:geo].blank?   

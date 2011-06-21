@@ -37,7 +37,7 @@ protected
       trycode = family + random_code + names
       unless @others.find {|i| i.code == trycode}
         self.code = trycode
-        logger.info "*** #{trycode} ***"
+        # logger.info "*** #{trycode} ***"
         break
       end
     end

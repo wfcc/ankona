@@ -1,3 +1,4 @@
+# coding: utf-8
 class Notifier < ActionMailer::Base
   smtp_settings = { :enable_starttls_auto => false }
   delivery_method = :smtp
@@ -13,7 +14,8 @@ class Notifier < ActionMailer::Base
 
   def invitation_to_judge(u, s, i)
     subject       "Invitation to judge"
-    from          email_from
+    #from          email_from
+    from          'Весь такой, из себя <noreply@dia-x.info>'
     recipients    i.email
     sent_on       Time.now
     headers       'Precedence' => 'bulk'
