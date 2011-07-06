@@ -38,11 +38,13 @@
     #authors
       = hidden_field_tag :authors_json, @authors_json
       = text_field_tag :authors_ids, '', style: 'width:20em'
-    = f.input :source
     %table.zero
       %tr
-        %td= f.input :label, hint: 'Diagram ID, label', input_html: {size: 10}
-        %td= f.input :published, as: :date, input_html: {class: 'c30p'}, hint: '-'
+        %td= f.input :source, input_html: {size: 40}
+        %td= f.input :issue, input_html: {size: 10}
+      %tr
+        %td= f.input :label, hint: 'Diagram ID, label', input_html: {size: 10}, label: 'Problem number'
+        %td= #f.input :published, as: :date, input_html: {class: 'c30p'}, hint: '-'
     = f.input :solution, input_html: {rows: 25, cols: 5}, hint: 'Please adhere to FIDE piece notation: KDTLS.'
     /
       %ul.menu

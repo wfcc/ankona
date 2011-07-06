@@ -1,7 +1,7 @@
 This is an automatically generated message.
 
 <%= @user %>, a user of dia-x.info site, has invited you to
-be a judge of the following competition:
+be a <%= @invite.role == 'j' ? 'judge' : 'director' %> of the following competition:
 
 Competition: <%= @section.competition.name %>
     Section: <%= @section.name %>

@@ -68,15 +68,17 @@ class CompetitionsController < AuthorizedController
   def judge
     redirect_to competitions_url
     if current_user
+    
       i = Invite.new(
-        item: params[:competition][:section_ids],
+        item: params[:competition][:section_ids] + ' ' + params[:role],
         email: params[:judge_email],
         code: SecureRandom.hex(8),
-        accepted: false
+        accepted: false,
+        role: params[:role][0]
       )
       i.save
       section = Section.find i.item
-      Notifier.deliver_invitation_to_judge current_user.name, section, i
+      Notifier.invitation_to_judge(current_user.name, section, i).deliver
       flash[:notice] = "Your invitation has been mailed to #{params[:judge_email]}."
     else
       flash[:error] = 'You have to be logged in to invite.'

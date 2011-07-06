@@ -118,7 +118,6 @@ google.setOnLoadCallback(function() {
   }) //*************************************
   function clearBoard() {
 
-    //$('.pieceOnBoard').remove()
     aBoard = [];
     for(i=0;i<8;++i) {aBoard.push(arrayOfOnes.slice(0))}
   } //*************************************
@@ -183,7 +182,6 @@ google.setOnLoadCallback(function() {
   function internalToDiagram(){
 
     var p, im, top, left, color
-//    $('.pieceOnBoard').remove()
     for (var i=0; i<8; ++i) {
       for (var j=0; j<8; ++j) {
         p = aBoard[i][j]
@@ -206,7 +204,6 @@ google.setOnLoadCallback(function() {
             .attr('data-x', i)
             .attr('data-y', j)
             .attr('data-id', p)
-            .attr('data-inner', 1)
             .addClass('pieceOnBoard ui-draggable')
             .draggable(
               { revert: false

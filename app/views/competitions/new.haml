@@ -28,49 +28,31 @@
     %p
       = f.label 'Submissions deadline'
       = f.date_select :deadline
-    /%p= f.submit 'Save, invite judges'
-
-    -#= f.inputs for: :sections, name: 'Name #%i'
   .span-10
 
     %h2 Sections:
     .fine at least one
     - 1.times {@competition.sections.build}
 
-    -#= @competition.sections
-
     - i = 0
-    = f.fields_for :sections do |ff|
+    - f.fields_for :sections do |ff|
       %fieldset
-        %legend #{i+=1}
-        = ff.label 'Section name'
+        %legend 
+          = " Section #{i+=1} "
+        = ff.label 'Name'
         = ff.text_field :name
         .fine clear name to delete section
-        = ff.label 'Section theme'
+        = ff.label 'Theme'
         = ff.text_area :theme, :style => 'height:9em'
-
-    -# = f.link_to_add 'Add section', :sections
-      
+        
+        - if ff.object.user
+          %p Director: #{ff.object.user.name}
           
-    -# .children{id: "parent-#{@competition.id}"}
-      %h2 Sections
-      = f.fields_for :sections do |child_form|
-        = render partial: '/sections/form', locals: {f: child_form, child: child_form.object }
-      #new-children
-      %p
-        %a(href='#' class='child-add')
-          add a child
-    
+        - if ff.object.users.present?
+          %p Judges: #{ff.object.users.map(&:nick).commatize}
 
-    -# #sections
-      - if @competition.sections.size == 1
-        - @num = 0
-        = render 'no_sections', :section => @competition.sections[0]
-      - else
-        %p/
-        - @num = 0
-        = render :partial => 'section', :collection => @competition.sections
-        %p= add_section_link 'Add section'
+          
+          
     %br{:style => "height:5px;color:black"}/
 
   .span-20.last{:style => "background-color:#EEE;padding:5px;border:1px solid #cdc"}

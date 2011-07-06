@@ -10,7 +10,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 38) do
+ActiveRecord::Schema.define(:version => 39) do
+
+  create_table "aaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d",                :null => false
+    t.integer "pay"
+  end
+
+  create_table "aaaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d_d",              :null => false
+    t.integer "pay"
+  end
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -28,6 +42,10 @@ ActiveRecord::Schema.define(:version => 38) do
   create_table "authors_diagrams", :id => false, :force => true do |t|
     t.integer "author_id"
     t.integer "diagram_id"
+  end
+
+  create_table "bubu", :id => false, :force => true do |t|
+    t.decimal "id", :precision => 10, :scale => 0
   end
 
   create_table "collections", :force => true do |t|
@@ -75,6 +93,7 @@ ActiveRecord::Schema.define(:version => 38) do
     t.string   "source"
     t.string   "fairy"
     t.integer  "tested"
+    t.string   "issue"
   end
 
   create_table "diagrams_collections", :id => false, :force => true do |t|
@@ -106,6 +125,7 @@ ActiveRecord::Schema.define(:version => 38) do
     t.integer  "item"
     t.boolean  "accepted"
     t.string   "email"
+    t.string   "role"
   end
 
   create_table "marks", :force => true do |t|
@@ -117,28 +137,6 @@ ActiveRecord::Schema.define(:version => 38) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
-  end
-
-  create_table "people", :force => true do |t|
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                         :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "password_salt"
-    t.string   "name"
-    t.string   "country",                :limit => 2
-    t.string   "comment"
-    t.string   "code"
-    t.string   "original"
-    t.string   "traditional"
   end
 
   create_table "posts", :force => true do |t|

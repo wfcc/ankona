@@ -3,25 +3,18 @@ class InvitesController < ApplicationController
 
   before_filter :require_user, :except => :decline
 
-  # GET /invites
-  # GET /invites.xml
   def index
     @invites = Invite.all
   end
 
-  # GET /invites/1
-  # GET /invites/1.xml
   def show
     @invite = Invite.find(params[:id])
   end
 
-  # GET /invites/new
-  # GET /invites/new.xml
   def new
     @invite = Invite.new
   end
 
-  # GET /invites/1/edit
   def edit
     @invite = Invite.find(params[:id])
   end
@@ -42,13 +35,19 @@ class InvitesController < ApplicationController
       if sect.competition.user == current_user
         flash[:error] = "You are director of “#{sect.competition.name}”, you can't be its judge!"
       elsif params[:accepted]
-        flash[:notice] = "You have accepted to jugde #{@name}."
-        Notifier.deliver_acceptance_to_judge current_user, @name, sect.competition
+        if @invite.role[0] == 'j'  # judge
+          flash[:notice] = "You have accepted to jugde #{@name}."
+          sect.users << current_user
+        else
+          flash[:notice] = "You have agreed to be director of #{@name}."
+          sect.user = current_user
+          sect.save
+        end
+        Notifier.acceptance_to_judge(current_user, @name, sect.competition).deliver
         @invite.accepted = true
-        sect.users << current_user
       else
-        flash[:error] = "You have declined to jugde #{@name}."
-        Notifier.deliver_refusal_to_judge @invite.email, @name, sect.competition
+        flash[:error] = "You have declined to be part of #{@name}."
+        Notifier.refusal_to_judge(@invite.email, @name, sect.competition).deliver
         @invite.accepted = false
       end
       @invite.save

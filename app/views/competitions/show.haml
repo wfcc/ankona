@@ -32,7 +32,9 @@
   = form_for @competition, url: {action: 'judge'}  do |f|
     - sections = @competition.sections.sort{|x|x.id}
     - if sections.count > 1
-      .lab Send invitation to judge section
+      .lab Send invitation to be a
+      = select_tag :role, '<option>director</option><option>jugde</option>'.html_safe
+      .lab for section
       = collection_select :competition, :section_ids, sections, |
         :id, :name                                                           |
     - else
@@ -40,8 +42,8 @@
       = collection_select :competition, :section_ids, sections, |
         :id, :name, {}, style: 'display:none'                                |
     .lab to email:
-    = text_field_tag :judge_email, '', size: 30
     = f.hidden_field :id
+    = text_field_tag :judge_email, '', size: 26
     = f.submit 'Send invitation'
   
   - if @competition.sections.count > 1

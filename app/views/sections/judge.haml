@@ -4,8 +4,12 @@
 
 .section{'data-sid' => @section.id}
   - @section.diagrams.each do |diagram|
-    %br.clearboth
-    %p
+    - marks = @marks & diagram.marks
+    - mark = marks.present? ? marks[0] : Mark.new(diagram_id: diagram.id, section_id: @section.id)
+    
+    - value = mark.nummark
+    - mid = mark.id
+    .clear
       .span-2(style = "vertical-align:top;color:#46D")= diagram.id
       .span-5
         %h4= diagram.authors.collect(&:name).commatize
@@ -19,33 +23,27 @@
           = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
       .span-11.last
         %pre.solution= diagram.solution
-    %p.clear
-      - marks = @marks & diagram.marks
-      - mark = marks.present? ? marks[0] : Mark.new(diagram_id: diagram.id, section_id: @section.id)
-      
-      - value = mark.nummark
-      - mid = mark.id
-      = form_for mark, remote: true, url: mark_section_path(@section), html: {method: :post} do |f|
-        %table.marks
-          %tr
-            %td
-              .mark(data-did = "#{diagram.id}" style="height: 1ex")
-                = value
-            %td
-              .slider{'data-did' => diagram.id, 'data-value' => value, 'data-mid' => mid}
-              %table.slider
-                %tr
-                  - (0..4).step(0.5).each do |x|
-                    %td
-                      = x
-          %tr
-            %td
-              = f.submit 'Update comment'
-              = f.hidden_field :diagram_id
-              = f.hidden_field :section_id
-              = f.hidden_field :id
-              %p.updating
-            %td
-              = f.text_area :comment, cols: 80, rows: 5
+    = form_for mark, remote: true, url: mark_section_path(@section), html: {method: :post} do |f|
+      %table.marks.clear
+        %tr
+          %td
+            .mark(data-did = "#{diagram.id}" style="height: 1ex")
+              = value
+          %td
+            .slider{'data-did' => diagram.id, 'data-value' => value, 'data-mid' => mid}
+            %table.slider
+              %tr
+                - (0..4).step(0.5).each do |x|
+                  %td
+                    = x
+        %tr
+          %td
+            = f.submit 'Update comment'
+            = f.hidden_field :diagram_id
+            = f.hidden_field :section_id
+            = f.hidden_field :id
+            %p.updating
+          %td
+            = f.text_area :comment, cols: 80, rows: 5
     %hr
 

@@ -25,7 +25,7 @@ gem 'jquery-rails'
 #gem 'kaminari'
 gem 'meta_search'
 gem 'meta_where'
-gem 'mysql2', '< 0.3'
+#gem 'mysql2', '< 0.3'
 gem "RedCloth", '= 4.2.5', require: 'redcloth'
 gem 'rmagick', :require => 'RMagick'
 gem 'simple_form'
@@ -34,11 +34,15 @@ gem 'will_paginate', '>= 3.0.pre'
 gem 'geoip'
 gem 'devise'
 gem 'cancan'
+gem 'wicked', :git => 'http://github.com/wideopenspaces/wicked.git'
 #gem "vidibus-routing_error"
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
+group :development do
+  gem 'rails-footnotes'
+end
 
 group :development, :test do
   gem 'pg'
@@ -54,6 +58,7 @@ group :development, :test do
 #  gem 'launchy'
   gem 'taps'
 #  gem 'hpricot'
+  gem 'itslog'
 end
 
 gem "mocha", :group => :test

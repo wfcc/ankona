@@ -16,4 +16,4 @@ end
 
 MetaWhere.operator_overload!
 
-Ya = YAML.load_file(Rails.root.join("config/config.yml"))[RAILS_ENV]
+Ya = YAML.load_file(Rails.root.join("config/config.yml"))[Rails.env]

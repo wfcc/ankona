@@ -6,7 +6,10 @@ class Section < ActiveRecord::Base
   has_many :marks
 
   def name_cs
-# 'xxx'
     (competition.nil? ? '' : competition.name.to_s) + (name.nil? ? '' : ' / ' + name)
+  end
+  def name_et
+    (competition.nil? ? '' : competition.name.to_s) + (name.nil? ? '' : ' / ' + name)
+    'xx'
   end
 end

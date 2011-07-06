@@ -23,7 +23,6 @@ class Competition < ActiveRecord::Base
   def existing_section_attributes=(section_attributes)
     sections.reject(&:new_record?).each do |section|
       attributes = section_attributes[section.id.to_s]
-      logger.info '>->> ' + attributes.inspect + ' <-<<'
       if attributes
         section.attributes = attributes
       else

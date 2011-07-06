@@ -1,3 +1,4 @@
+%p= link_to ' New problem ', new_diagram_path, class: :button
 - unless (may_edit? @diagram and @diagram.sections.count < 1)
   %h4 This problem has been submitted to competition.  You may not edit it.
 .span-7.append-1

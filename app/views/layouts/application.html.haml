@@ -15,6 +15,7 @@
     = yield :scripts
     = csrf_meta_tag
     = render partial: 'layouts/google_analytics'
+    %link(rel='shortcut icon' type='image/ico' href='/favicon.ico')
   %body
     - if session[:geo][:value] != 'LV' and Ya['only_lativa']
       %h2 The site is under maintenance.
@@ -29,7 +30,7 @@
         %li= link_to 'Competitions', competitions_path
         %li= link_to 'People', authors_path
         %li= link_to 'My problems', diagrams_path
-        - if user_signed_in? and current_user.sections.present?
+        - if current_user.et.sections.present?
           %li= link_to 'My judgements', sections_path
       - flash.each do |key, message|
         = content_tag :p, message, class: key

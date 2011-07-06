@@ -3,6 +3,9 @@ class Notifier < ActionMailer::Base
   smtp_settings = { :enable_starttls_auto => false }
   delivery_method = :smtp
   
+  default Precedence: 'bulk'
+  default from: 'dia-x automation <noreply@dia-x.info>'
+
   #default from: Status.where(table: 'GLOBAL', name: 'email_from').first.h_display
 
   def password_reset_instructions(user)
@@ -14,29 +17,21 @@ class Notifier < ActionMailer::Base
 
   def invitation_to_judge(u, s, i)
     subject       "Invitation to judge"
-    #from          email_from
-    from          'Весь такой, из себя <noreply@dia-x.info>'
-    recipients    i.email
-    sent_on       Time.now
-    headers       'Precedence' => 'bulk'
-    body          :user => u, :section => s, :invite => i
+    @user = u
+    @section = s
+    @invite = i
+    mail to: i.email
   end
 
   def acceptance_to_judge(u, name, competition)
     subject       u.nick + ' has accepted to judge ' + name
-    from          email_from
     recipients    competition.user.email
-    sent_on       Time.now
-    headers       'Precedence' => 'bulk'
     body          :name => name, :u => u
   end
 
   def refusal_to_judge(email, name, competition)
     subject       email + ' has refused to judge ' + name
-    from          email_from
     recipients    competition.user.email
-    sent_on       Time.now
-    headers       'Precedence' => 'bulk'
     body          :name => name, :email => email
   end
   
