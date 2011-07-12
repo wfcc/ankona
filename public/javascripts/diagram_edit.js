@@ -2,11 +2,11 @@
 // Expects input fields with IDs "diagram_white" and "diagram_black" with English notation
 // Depends upon jQuery
 //
-// Iļja Ketris (c) 2008
+// Iļja Ketris (c) 2008-2011
 //
 
 google.setOnLoadCallback(function() {
-//$(function($) {
+
   $('#authors_ids').tokenInput('/authors/json',
     { hintText: "Start typing author's name or handle"
     , minChars: 3
@@ -45,20 +45,24 @@ google.setOnLoadCallback(function() {
 
   $('#diagram_white').focus()
 
-  $('.todrag').draggable(
+  $('.todrag').draggable( // from cassettes, static pieces
     { revertDuration: 0
     , revert: true
     , cursor: 'crosshair'
     //, containment: $('#blank')
     , zIndex: 5
     })
+
   $('#blank').droppable(
     { drop: function(event, ui) {
-      board = $('#blank').offset()
+      var board = $('#blank').offset()
+      var piece = ui.draggable
       aBoard[Math.floor((ui.offset.top - board.top + 12) / 25)]
-        [Math.floor((ui.offset.left - board.left + 12) / 25)] = ui.helper.data('id')
-      if (ui.helper.data('inner')) { // remove
-        aBoard[ui.helper.data('x')][ui.helper.data('y')] = '1'
+        [Math.floor((ui.offset.left - board.left + 12) / 25)] = piece.data('id')
+console.log(piece)        
+      if (piece.data('inner')) { // remove
+        aBoard[piece.data('x')][piece.data('y')] = '1'
+        piece.remove()
         }
       fromInternal()
       }
@@ -68,7 +72,7 @@ google.setOnLoadCallback(function() {
   $('.moveboard').button()
   $('.moveboard').click(function() { // move position left/up/down/up
     // ◁ ▽ △ ▷
-    switch (this.getAttribute('data-name')) {
+    switch ($(this).data('name')) {
     case '▷' :
         $.each(aBoard, function(i,row) {
           row.unshift('1')
@@ -201,14 +205,15 @@ google.setOnLoadCallback(function() {
               , 'top': top + 'px'
               , 'left': left + 'px'
             })
-            .attr('data-x', i)
-            .attr('data-y', j)
-            .attr('data-id', p)
+            .data('x', i)
+            .data('y', j)
+            .data('id', p)
+            .data('inner', '1')
             .addClass('pieceOnBoard ui-draggable')
             .draggable(
               { revert: false
               , zIndex: 5
-              , stop: function(e,ui) {
+              , stop: function(e,ui) { // remove off board
                 var fig = $(this)
                 aBoard[fig.data('x')][fig.data('y')] = '1'
                 internalToNotation()
