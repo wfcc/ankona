@@ -57,10 +57,10 @@ google.setOnLoadCallback(function() {
     { drop: function(event, ui) {
       var board = $('#blank').offset()
       var piece = ui.draggable
-      aBoard[Math.floor((ui.offset.top - board.top + 12) / 25)]
+      aBoard
+        [Math.floor((ui.offset.top - board.top + 12) / 25)]
         [Math.floor((ui.offset.left - board.left + 12) / 25)] = piece.data('id')
-console.log(piece)        
-      if (piece.data('inner')) { // remove
+      if (piece.hasClass('pieceOnBoard')) { // remove
         aBoard[piece.data('x')][piece.data('y')] = '1'
         piece.remove()
         }
@@ -205,10 +205,9 @@ console.log(piece)
               , 'top': top + 'px'
               , 'left': left + 'px'
             })
-            .data('x', i)
-            .data('y', j)
+            .attr('data-x', i)
+            .attr('data-y', j)
             .data('id', p)
-            .data('inner', '1')
             .addClass('pieceOnBoard ui-draggable')
             .draggable(
               { revert: false
