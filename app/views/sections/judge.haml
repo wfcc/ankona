@@ -1,4 +1,3 @@
-
 %h3= @section.competition.name
 %h4= @section.name
 
@@ -9,41 +8,44 @@
     
     - value = mark.nummark
     - mid = mark.id
-    .clear
-      .span-2(style = "vertical-align:top;color:#46D")= diagram.id
-      .span-5
-        %h4= diagram.authors.collect(&:name).commatize
-        = [ diagram.source, diagram.label ].join(' / ')
-        .em1
-        = diagram.stipulation
-        %br
-        = diagram.twin
-      .span-6
-        %div(style = "padding:0 0 20px 0; position:relative")
-          = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
-      .span-11.last
-        %pre.solution= diagram.solution
     = form_for mark, remote: true, url: mark_section_path(@section), html: {method: :post} do |f|
-      %table.marks.clear
+      %table.judging
         %tr
+          %td.first
+            %div
+              .id= diagram.id
+              %h4= diagram.authors.collect(&:name).commatize
+              %p= [ diagram.source, diagram.label ].join(' / ')
+              .em1= diagram.stipulation
+              %p= diagram.twin
           %td
-            .mark(data-did = "#{diagram.id}" style="height: 1ex")
-              = value
+            %div(style = "padding:0 0 20px 0; position:relative")
+              = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
           %td
-            .slider{'data-did' => diagram.id, 'data-value' => value, 'data-mid' => mid}
-            %table.slider
-              %tr
-                - (0..4).step(0.5).each do |x|
-                  %td
-                    = x
-        %tr
-          %td
-            = f.submit 'Update comment'
-            = f.hidden_field :diagram_id
-            = f.hidden_field :section_id
-            = f.hidden_field :id
-            %p.updating
-          %td
-            = f.text_area :comment, cols: 80, rows: 5
-    %hr
+            %pre.solution= diagram.solution
+        - if (diagram.authors & [current_user.author]).present?
+          %tr
+            %td.hilite.clearboth
+              This problem will be judged by your colleagues.
+        - else
+          %tr
+            %td
+              .mark(data-did = "#{diagram.id}" style="height: 1ex")= value
+            %td
+              .slider{'data-did' => diagram.id, 'data-value' => value, 'data-mid' => mid}
+              %table.slider
+                %tr
+                  - (0..4).step(0.5).each do |x|
+                    %td
+                      = x
+          %tr
+            %td
+              = f.submit 'Update comment'
+              = f.hidden_field :diagram_id
+              = f.hidden_field :section_id
+              = f.hidden_field :id
+              %p.updating
+            %td
+              = f.text_area :comment, cols: 80, rows: 5
+      %hr
 

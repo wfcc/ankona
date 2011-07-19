@@ -5,6 +5,7 @@ class Notifier < ActionMailer::Base
   
   default Precedence: 'bulk'
   default from: 'dia-x automation <noreply@dia-x.info>'
+  default sender: 'dia-x automation <noreply@dia-x.info>'
 
   #default from: Status.where(table: 'GLOBAL', name: 'email_from').first.h_display
 
@@ -24,15 +25,17 @@ class Notifier < ActionMailer::Base
   end
 
   def acceptance_to_judge(u, name, competition)
-    subject       u.nick + ' has accepted to judge ' + name
-    recipients    competition.user.email
-    body          :name => name, :u => u
+    subject       u.nick + ' has accepted to be part of ' + name
+    @name = name
+    @u = u
+    mail to:      competition.user.email
   end
 
   def refusal_to_judge(email, name, competition)
-    subject       email + ' has refused to judge ' + name
-    recipients    competition.user.email
-    body          :name => name, :email => email
+    subject       email + ' has refused to be part of ' + name
+    @name = name
+    @u = u
+    mail to:      competition.user.email
   end
   
   private

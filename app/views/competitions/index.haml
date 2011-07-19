@@ -10,11 +10,9 @@
     ? {:onclick => "location.href = '#{competition_url(competition)}'"} |
     : nil |
     = content_tag :tr, tail do
-      /%tr.clickable(onclick = "window.location.href = '#{url_for competition}'")
       %td.clickable
-        /= content_tag :tr
         - if can? :manage, competition
-          = link_to ' Show ', edit_competition_path(competition), class: [:button, :clearboth]
+          = link_to ' Edit ', edit_competition_path(competition), class: [:button, :clearboth]
         %span(style = "font-size:x-large;clear:right")= h competition.name
         %br
         - if competition.private
@@ -30,11 +28,18 @@
         = competition.user.name
         %p
         - if competition.announce.present?
-          %h3 Announcement:
+          %h2 Announcement:
           %p= competition.announce
         - @i=0; competition.sections.each do |section|
-          %h4= section.name
+          %h3= section.name
           %p=  section.theme
+          - if section.user.present?
+            Section director:
+            %b= section.user.nick
+            %br
+          - if section.users.present?
+            Jugdes:
+            %b= section.users.map(&:nick).commatize
         %p= competition.complete ? '[complete]' : ''
         - if competition.results.present?
           %h3 Results:

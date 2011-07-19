@@ -42,6 +42,7 @@ gem 'wicked', :git => 'http://github.com/wideopenspaces/wicked.git'
 # and rake tasks are available in development mode:
 group :development do
   gem 'rails-footnotes'
+  gem 'passenger'
 end
 
 group :development, :test do

@@ -56,18 +56,25 @@
   %p= section.theme
     
   %p
+    - if section.user.present?
+      Section director:
+      %span.fs-larger= section.user.nick
+      - if section.user == current_user
+        = link_to "Director's report", section_url, class: :button
+      %br
     Judges confirmed:
-    %span.fs-larger= section.users.empty? ? 'none' : section.users.map(&:nick).commatize
-    
-  %h4 Marks given
-  %table.judgestat
-    %tr
-      %th Judge
-      %th Problems judged
-      %th Total marks
-    - section.marks.select('user_id, sum(nummark) As a, count(*) As b').group('user_id').each do |judge|
+    %span.fs-larger= section.users.present? ? section.users.map(&:nick).commatize : 'none'
+
+  /  
+    %h4 Marks given
+    %table.judgestat
       %tr
-        %td= judge.user.nick
-        %td= judge.b
-        %td= judge.a
+        %th Judge
+        %th Problems judged
+        %th Total marks
+      - section.marks.select('user_id, sum(nummark) As a, count(*) As b').group('user_id').each do |judge|
+        %tr
+          %td= judge.user.nick
+          %td= judge.b
+          %td= judge.a
 

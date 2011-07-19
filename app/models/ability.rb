@@ -7,7 +7,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
 
     can [:read, :json], Author
-    can :index, Competition
+    can [:index, :read], Competition
     can :manage, Diagram
     can :read, Faq
 #    can :update, Diagram do |diagram|

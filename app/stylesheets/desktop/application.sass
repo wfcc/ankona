@@ -109,8 +109,8 @@ p
     background-color: #aaffaa
     +message
   &.error
-    border: 2px solid #cc6600
-    color: #aa4400
+    border: 2px solid #cc2200
+    color: #aa2200
     background-color: #ffaaaa
     +message
   &.alert
@@ -153,7 +153,7 @@ ul.menu-small
 
 ul.menu
   padding: 0
-  margin-bottom: 10px
+  margin-bottom: 30px
   white-space: nowrap
   list-style-type: none
   line-height: 100%
@@ -166,8 +166,8 @@ ul.menu
       box-shadow: 3px 3px 3px #888
       padding: 0.4em 1em
       margin-right: 2em
-      background: #dddddd
-      color: #333333
+      background: #f9f8fa
+      color: #9390A0
       text-decoration: none
       float: left
       border: 1px solid #cccccc
@@ -258,6 +258,8 @@ table.competitions
     font-size: 11px
     +rounded(8px)
     padding: 1em
+  h3
+    margin-top: 1em    
 
 table
   &.authors
@@ -273,6 +275,11 @@ table
   &.zero td
     padding: 0
     
+.hilite
+  padding: 10px
+  color: IndianRed
+  font-size: larger
+
 .greeny-highlight
   background-color: #cceeaa
   border: 1px solid #bbccbb
@@ -466,3 +473,29 @@ table.marks
     //border: 1px dashed green
   input, textarea
     margin: 0  
+
+.slab
+  background-color: #eee
+  color: red
+  border: 1px solid #eee
+  visibility: visible
+  //background-color: DarkSalmon
+  //+rounded(4px)
+
+table.judging
+  tr td .id
+    vertical-align: top
+    color: #46D
+  tr td.first
+    width: 40%
+    > div
+      background-color: #FFF7F6
+      border: 1px solid LightPink
+      //float: left
+      maximum-width: 70%
+      width: 70%
+      padding: 1em
+      +rounded(4px)
+    
+  td
+    vertical-align: top
