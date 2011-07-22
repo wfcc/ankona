@@ -51,7 +51,7 @@
       = @competition.sections.count
       sections follow:
 %hr
-- @competition.sections.each do |section|
+- @competition.sections.sort{|x|x.id}.each do |section|
   %h2= section.name
   %p= section.theme
     
@@ -60,7 +60,8 @@
       Section director:
       %span.fs-larger= section.user.nick
       - if section.user == current_user
-        = link_to "Director's report", section_url, class: :button
+        (this is you)
+        = link_to " Section report ", section_url(section), class: :button
       %br
     Judges confirmed:
     %span.fs-larger= section.users.present? ? section.users.map(&:nick).commatize : 'none'

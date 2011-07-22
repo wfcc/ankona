@@ -62,11 +62,10 @@ class CompetitionsController < AuthorizedController
     @competition = Competition.find(params[:id])
     @competition.destroy
 
-    redirect_to(competitions_url)
+    redirect_to competitions_url
   end
 
   def judge
-    redirect_to competitions_url
     if current_user
     
       i = Invite.new(
@@ -83,5 +82,7 @@ class CompetitionsController < AuthorizedController
     else
       flash[:error] = 'You have to be logged in to invite.'
     end
+    @competition = Competition.find_by_id params[:competition][:id]
+    render :show
   end
 end

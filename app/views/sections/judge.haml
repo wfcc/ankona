@@ -1,5 +1,19 @@
-%h3= @section.competition.name
-%h4= @section.name
+- i_am_director  = @section.user == current_user
+- i_am_judge     = @section.users.index current_user
+
+.bluey
+  %h2= @section.competition.name
+  %h3= @section.name
+
+  %p
+    Section director:
+    %b= @section.user.et.nick
+    - if i_am_director
+      (this is you)
+      = link_to ' Section report ', section_path(@section), class: :button
+    %br
+    Section judges:
+    %b= @section.users.map(&:nick).commatize
 
 .section{'data-sid' => @section.id}
   - @section.diagrams.each do |diagram|
@@ -8,6 +22,10 @@
     
     - value = mark.nummark
     - mid = mark.id
+
+    - i_am_author       = diagram.authors.index current_user.author
+    - judge_author      = (diagram.authors & @section.users.map(&:author)).present?
+
     = form_for mark, remote: true, url: mark_section_path(@section), html: {method: :post} do |f|
       %table.judging
         %tr
@@ -23,11 +41,12 @@
               = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
           %td
             %pre.solution= diagram.solution
-        - if (diagram.authors & [current_user.author]).present?
+        - case
+        - when i_am_author
           %tr
             %td.hilite.clearboth
               This problem will be judged by your colleagues.
-        - else
+        - when i_am_judge || (i_am_director and judge_author)
           %tr
             %td
               .mark(data-did = "#{diagram.id}" style="height: 1ex")= value
@@ -40,12 +59,15 @@
                       = x
           %tr
             %td
-              = f.submit 'Update comment'
+              = f.submit 'Update comment', disable_with: ' Updating... '
               = f.hidden_field :diagram_id
               = f.hidden_field :section_id
               = f.hidden_field :id
               %p.updating
             %td
               = f.text_area :comment, cols: 80, rows: 5
+        - when i_am_director
+          %tr
+            %td.fine director's view
       %hr
 

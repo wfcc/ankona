@@ -22,20 +22,20 @@ h2
       = f.password_field :current_password
       .fine we need your current password to confirm your changes
 
-    - if @user.author.present?
-      - author_json = [@user.author].map{|a| {id: a.id, name: a.name}}.to_json
-    - else
-      - author_json = []
+    /
+      - if @user.author.present?
+        - author_json = [@user.author].map{|a| {id: a.id, name: a.name}}.to_json
+      - else
+        - author_json = []
 
-    = hidden_field_tag :author_json, author_json
+      = hidden_field_tag :author_json, author_json
 
-      
-    = f.label :name, 'Name'
-    = text_field_tag :name_handle, '', style: 'width:20em'
-    p#ajax_error.bigred
+        
+      = f.label :name, 'Name'
+      = text_field_tag :name_handle, '', style: 'width:20em'
+      p#ajax_error.bigred
 
-  br.clearboth
-  p= f.submit "Update", class: [:clearboth, :button]
+  p.clearboth= f.submit "Update", class: [:clearboth, :button]
 
 p
   | Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete}.

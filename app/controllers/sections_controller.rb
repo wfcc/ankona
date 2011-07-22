@@ -1,4 +1,6 @@
 class SectionsController < ApplicationController
+
+# ---------------
   def new
     competition = Competition.find(params[:competition_id])
     @section = competition.sections.create
@@ -8,6 +10,7 @@ class SectionsController < ApplicationController
   end
 
   # DELETE /parents/1/children/1 (AJAX)
+# ---------------
   def destroy
     competition = Competition.find(params[:competition_id])
     unless competition.sections.exists?(params[:id])
@@ -20,16 +23,21 @@ class SectionsController < ApplicationController
       render text: { success: false, msg: 'something unexpected happened.' }.to_json
     end
   end
-  
+# ---------------
   def index
-    @sections = Section.joins(:users).where(users: {id: current_user.id})
+    # select sections where a user is a judge or a director
+    @sections = Section \
+      .joins(:users)
+      .select('Distinct(SECTIONS.*)') \
+      .where({users: {id: current_user.id}} | {user_id: current_user.id})
   end
   
+# ---------------
   def judge
     @section = Section.find params[:id]
     @marks = @section.marks.select{|x| x.user_id == current_user.id}
   end
-
+# ---------------
   def mark
   
     case
@@ -54,7 +62,23 @@ class SectionsController < ApplicationController
     end
     mark.save
       
-    render text: mark.id
+    render nothing: true
   end
+# ---------------
+  def show
+  
+    @r = {}
+    marks = Mark.joins(:section).where(section: {id: params[:id]}).all
+    @k = marks.map{|x| x.user_id}.uniq
+
+    marks.each do |mark|
+      @r[mark.diagram_id] ||= [[], [], 0]
+      @r[mark.diagram_id][0][@k.index(mark.user_id)] = mark.nummark
+      @r[mark.diagram_id][1][@k.index(mark.user_id)] = mark.comment
+      @r[mark.diagram_id][2] = @r[mark.diagram_id][0].inject{|s,x| s.to_i + x.to_i}
+    end
+
+  end
+  
 
 end

@@ -14,6 +14,8 @@ class Ability
 #      diagram.user == user
 #    end
 
+    #can :judge, Section, user
+
     @user = user
     user.roles.each { |role| send(role.name) }
     

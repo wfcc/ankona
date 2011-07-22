@@ -1,0 +1,26 @@
+%h2 Section statistics goes here
+
+%table
+  %tr
+    %th ID
+    - @k.each do |judge|
+      %th
+        = User.find(judge).nick
+    %th total
+        
+        
+  - @r.each_key do |id|
+    %tr
+      %td
+        = id
+        %br
+        .fine= Diagram.find(id).authors.map(&:name).commatize
+      - @k.each_index do |judge|
+        - mark = @r[id][0].zip(@r[id][1])[judge]
+        %td
+          = mark.et.slice 0
+          %br
+          .fine= mark.et.slice 1
+      %td
+        = @r[id][2]
+    

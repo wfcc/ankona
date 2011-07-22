@@ -3,8 +3,12 @@
   %h2= section.competition.name
   %div<>!= Status.where(table: 'competitions', value: (section.competition.status or 0)).first.name.bold
   
-  %h3
-    = section.name
+  %div
+    %h3= section.name
+    - if section.user == current_user
+      %p
+        =link_to ' Section report ', section_path(section), class: :button
+        You are the director of this section.
     - case
     - when section.competition.status == 2
       = link_to ' Go judge it! ', judge_section_path(section), class: :button

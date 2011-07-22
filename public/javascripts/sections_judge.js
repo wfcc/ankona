@@ -22,19 +22,19 @@ google.setOnLoadCallback(function() {
           }
       })
     })
-    
+/*    
   $('form.edit_mark').each(function(i,edit_mark) {
     var updating = $(this).find('.updating')
     var button = $(this).find('input[name="commit"]')
     $(edit_mark).bind('ajax:beforeSend', function(evt, xhr, settings) {
-      updating.text('Updating...')
+      //updating.text('Updating...')
       button.attr('disabled', true)
       })
     $(edit_mark).bind('ajax:complete', function(evt, xhr, settings) {
-      updating.text('')
+      //updating.text('')
       button.attr('disabled', false)
       })
     })
-    
+*/    
   })
   
