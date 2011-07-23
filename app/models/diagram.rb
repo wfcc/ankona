@@ -37,10 +37,32 @@ class Diagram < ActiveRecord::Base
       authors.build(attributes)
     end
   end
+
   def fen
     position
   end
+
   def fen=(p)
     position = p
   end
+
+  def kings
+    cols = 8
+    return '' unless position.present?
+
+    flat = position.split('/').map do |rank|
+      # replace numbers with spaces
+      rank.gsub!(/\d+/) {' ' * $&.to_i}
+      rank.ljust(cols) # fill up
+    end.join
+    
+    %w[K k].map do |k|
+      return '?' unless index = flat.index(k)
+      octal = sprintf('%02o', index).split ''
+      (octal[1].to_i + 97).chr + # 0 -> 'a'
+      (8 - octal[0].to_i).to_s # increment 1
+    end
+      
+  end
+
 end

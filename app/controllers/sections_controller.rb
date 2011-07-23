@@ -68,6 +68,7 @@ class SectionsController < ApplicationController
   def show
   
     @r = {}
+    @section = Section.find params[:id]
     marks = Mark.joins(:section).where(section: {id: params[:id]}).all
     @k = marks.map{|x| x.user_id}.uniq
 

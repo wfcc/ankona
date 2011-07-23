@@ -1,8 +1,10 @@
-%h2 Section statistics goes here
+%h2= @section.competition.name
+%h3 Statistics for #{@section.name}
 
-%table
+%table.section-stats
   %tr
-    %th ID
+    %th problem ID and authors
+    %th.kings kings
     - @k.each do |judge|
       %th
         = User.find(judge).nick
@@ -10,17 +12,21 @@
         
         
   - @r.each_key do |id|
+    - diagram = Diagram.find_by_id id
     %tr
       %td
-        = id
+        = link_to id, diagram_path(id)
+        = diagram.stipulation
         %br
-        .fine= Diagram.find(id).authors.map(&:name).commatize
+        .fine= diagram.authors.map(&:name).commatize
+      %td.kings
+        = diagram.kings.join '-'
       - @k.each_index do |judge|
         - mark = @r[id][0].zip(@r[id][1])[judge]
         %td
           = mark.et.slice 0
           %br
           .fine= mark.et.slice 1
-      %td
+      %td.total
         = @r[id][2]
     
