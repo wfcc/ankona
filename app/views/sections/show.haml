@@ -8,7 +8,8 @@
     - @k.each do |judge|
       %th
         = User.find(judge).nick
-    %th total
+    %th.center total
+    %th.center standard deviation
         
         
   - @r.each_key do |id|
@@ -29,4 +30,8 @@
           .fine= mark.et.slice 1
       %td.total
         = @r[id][2]
+      %td.center
+        - dev = @r[id][0].reject(&:blank?).stdev.to_f
+        - unless dev.nan?
+          = sprintf '%.2f', dev
     

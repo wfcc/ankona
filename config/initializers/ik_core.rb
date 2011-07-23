@@ -6,6 +6,16 @@ class Array
       join ', '
     end
   end
+
+  def mean
+    inject(0) { |sum, x| sum += x } / size.to_f
+  end
+
+  def stdev
+    m = mean
+    variance = inject(0) { |variance, x| variance += (x - m) ** 2 }
+    return Math.sqrt(variance/(size-1))
+  end
 end
 
 class String
@@ -13,6 +23,7 @@ class String
     "<b>#{self}</b>"
   end
 end
+
 
 MetaWhere.operator_overload!
 
