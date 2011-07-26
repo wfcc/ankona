@@ -67,9 +67,12 @@ class CompetitionsController < AuthorizedController
 
   def judge
     if current_user
-    
+
+      competition = params[:competition][:section_ids].blank? ?
+        params[:competition] : params[:competition][:section_ids]
+
       i = Invite.new(
-        item: params[:competition][:section_ids] + ' ' + params[:role],
+        item: competition + ' ' + params[:role],
         email: params[:judge_email],
         code: SecureRandom.hex(8),
         accepted: false,

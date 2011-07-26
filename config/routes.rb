@@ -22,6 +22,7 @@ DiaX::Application.routes.draw do
 
   get 'diagrams/mine'  
   get 'diagrams/section'  
+  #post 'diagrams/solve'
   
   match 'invites/accept/:code', controller: 'invites', action: 'react', accepted: true
   match 'invites/decline/:code', controller: 'invites', action: 'react', accepted: false
@@ -30,6 +31,7 @@ DiaX::Application.routes.draw do
 
   resources :diagrams do
     member {get :section}
+    member {post :solve}
   end
   resources :competitions, has_many: :sections
   resources :sections do
@@ -40,7 +42,7 @@ DiaX::Application.routes.draw do
   resources :roles, :collections, :authors, :posts, :imports,
     :statuses, :faqs, :invites, :password_resets
     
-  match 'diagrams/solve/:id' => 'diagrams#solve'
+  #match 'diagrams/solve/:id' => 'diagrams#solve'
   match 'diagrams/section/:id' => 'diagrams#section'
 
 end

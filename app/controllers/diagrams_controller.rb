@@ -2,6 +2,8 @@
 class DiagramsController < AuthorizedController
 
 require 'open3'
+require "uri"
+require "net/http"
 
   #active_scaffold :diagram
 
@@ -71,25 +73,15 @@ require 'open3'
   end
   #--------------------------------------------------
   def solve
-      condition = params[:pyconds].blank? ? '' : "Condition #{params[:pyconds]}"
-       stdin = <<-EOD
-            BeginProblem
-            Option NoBoard #{params[:pyopts]}
-            Option MaxTime 120             
-            Stipulation #{params[:diagram][:stipulation]}
-            #{condition}
-            Pieces
-             White #{ nrm(params[:diagram][:white])}
-             Black #{ nrm(params[:diagram][:black])}
-            #{twin_to_py params[:diagram][:twin]}
-            EndProblem
-            EOD
-      logger.info "<<stdin<< #{stdin} >>stdin>>"
-      res = Net::HTTP.post_form(URI.parse('http://util.dia-x.info/popeye/solve'),
-           {:pyinput => stdin})
+    condition = params[:pyconds].blank? ? '' : "Condition #{params[:pyconds]}"
 
-      logger.info "<<< #{res.body} >>>"
-      render :text => res.body
+    res = Net::HTTP.post_form URI.parse(Ya['popeye_url']), 
+      stipulation: params[:stipulation], 
+      forsyth: params[:position],
+      popeye: Ya['popeye_location']
+
+    logger.warn "<<< #{res.body} >>>"
+    render :text => res.body
   end
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   private

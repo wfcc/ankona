@@ -35,6 +35,7 @@ gem 'geoip'
 gem 'devise'
 gem 'cancan'
 gem 'wicked', :git => 'http://github.com/wideopenspaces/wicked.git'
+#gem 'httparty'
 #gem "vidibus-routing_error"
 
 # Bundle gems for the local environment. Make sure to

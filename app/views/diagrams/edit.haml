@@ -4,6 +4,8 @@
 
 %h2 Editing problem #{@diagram.id}
 = simple_form_for @diagram do |f|
+
+  = f.hidden_field :id
   /= f.error_messages
   #first.span-12
     = f.input :position, label: 'FEN', |
@@ -52,18 +54,19 @@
         %li= link_to 'Back to list', diagrams_path
 
   .clear.em1
-  = f.submit 'Save', class: :button
+  = f.submit ' Save ', class: :button
+  = f.submit ' Solve with popeye ', id: :solve, class: [:button, :clearboth], |
+    disable_with: ' Solving...' |
   %fieldset
     %legend
       -#= submit_to_remote 'solve', ' Solve with popeye ', |
-    = submit 'solve', ' Solve with popeye ', |
-      :update => 'solution', :condition => 'validateForm()', |
+    /  :update => 'solution', :condition => 'validateForm()', |
       :before => "$('solution').update('Popeye solving in progres...')", |
       :method => 'post', :url => { :action => 'solve' }, :html => {:class => 'x'} |
     %label(for = "pyconds" class = "modest") Popeye “condition” line
     =text_field_tag :pyconds, @diagram.fairy, class: "c30p"
     %span.fine circe, andernach, madrasi, masand, koeko, …
-    %br
+    %p 
     %label(for = "pyopts" class = "modest") Popeye “options” line
     =text_field_tag :pyopts, "", :class => "c30p"
     %span.fine try, setplay, duplex, maxsolutions, intelligent, …   

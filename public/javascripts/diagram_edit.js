@@ -7,6 +7,20 @@
 
 google.setOnLoadCallback(function() {
 
+  $('#solve').click(function(e) {
+    var form = $('form')
+    $.post('/diagrams/' + $('#diagram_id').val() + '/solve', 
+      { stipulation: $('#diagram_stipulation').val()
+      , position: $('#diagram_position').val()
+      }, function(data) {
+        $('#solution').html(data)
+        }
+    )
+        
+    e.preventDefault()
+    
+  })
+
   $('#authors_ids').tokenInput('/authors/json',
     { hintText: "Start typing author's name or handle"
     , minChars: 3

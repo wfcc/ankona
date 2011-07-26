@@ -76,7 +76,7 @@ class SectionsController < ApplicationController
       @r[mark.diagram_id] ||= [[], [], 0]
       @r[mark.diagram_id][0][@k.index(mark.user_id)] = mark.nummark
       @r[mark.diagram_id][1][@k.index(mark.user_id)] = mark.comment
-      @r[mark.diagram_id][2] = @r[mark.diagram_id][0].inject{|s,x| s.to_i + x.to_i}
+      @r[mark.diagram_id][2] = @r[mark.diagram_id][0].inject{|s,x| s.to_f + x.to_f}
     end
 
   end

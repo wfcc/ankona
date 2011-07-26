@@ -35,12 +35,11 @@
       .lab Send invitation to be a
       = select_tag :role, '<option>director</option><option>jugde</option>'.html_safe
       .lab for section
-      = collection_select :competition, :section_ids, sections, |
-        :id, :name                                                           |
+      = collection_select :competition, :section_ids, sections, :id, :name                                                           |
     - else
       .lab Send invitation to judge this competition
-      = collection_select :competition, :section_ids, sections, |
-        :id, :name, {}, style: 'display:none'                                |
+      = hidden_field_tag :role, 'judge'
+      = f.hidden_field :section_ids
     .lab to email:
     = f.hidden_field :id
     = text_field_tag :judge_email, '', size: 26
@@ -59,23 +58,10 @@
     - if section.user.present?
       Section director:
       %span.fs-larger= section.user.nick
-      - if section.user == current_user
-        (this is you)
-        = link_to " Section report ", section_url(section), class: :button
+    - if ([section.user, section.competition.user] & [current_user]).size
+      = link_to " Section report ", section_url(section), class: :button
       %br
     Judges confirmed:
     %span.fs-larger= section.users.present? ? section.users.map(&:nick).commatize : 'none'
 
-  /  
-    %h4 Marks given
-    %table.judgestat
-      %tr
-        %th Judge
-        %th Problems judged
-        %th Total marks
-      - section.marks.select('user_id, sum(nummark) As a, count(*) As b').group('user_id').each do |judge|
-        %tr
-          %td= judge.user.nick
-          %td= judge.b
-          %td= judge.a
 

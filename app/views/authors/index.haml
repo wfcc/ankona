@@ -6,7 +6,8 @@
   = submit_tag 'Apply'
 
 .clearboth
-  = link_to 'New author', new_author_path, class: :button
+  - if can? :add, Author
+    = link_to ' New person ', new_author_path, class: :button
 
 = will_paginate @authors
 /= kaminari_page_entries_info(@authors)
@@ -40,7 +41,7 @@
 /= paginate @authors
 = will_paginate @authors
 
-%p.clearboth
-  - if can? :create, Author
-    = link_to 'New author', new_author_path, class: :button
+.clearboth
+  - if can? :add, Author
+    = link_to ' New person ', new_author_path, class: :button
 
