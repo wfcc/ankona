@@ -9,8 +9,9 @@ SUFFIX = '.gif'
 ###########################################################
   def index
     cols, rows = 8, 8
-    i, j = 0, 0
+    i, j = -25, 0
     @dia = $board
+    prefix = ''
 
     if params[:id].present?
       slashed = params[:id].split('/')
@@ -20,24 +21,32 @@ SUFFIX = '.gif'
          rank.ljust(cols) # fill up
       end
       
-      #logger.info slashed
-      slashed.join.each_byte do |c|
-         unless c == 32
-            c = c.chr
-            c < 'a' ? c.downcase! : c = 'b' + c
-            c.sub! /n/, 's'
-            putFigM c, i, j
-         end
-         (j+=25; i=0) if (i+=25) > 180
+      pieces = slashed.join.scan(/\[\w+\]|\(\w+\)|./)
+      pieces.each do |p|
+        (j+=25; i=0) if (i+=25) > 180
+        case p
+        when ' '
+          next
+        when /\[x(\w+)\]/
+          prefix = 'x'; fig = $~[1]
+        else
+          prefix = ''; fig = p
+        end
+        color = fig < 'a' ? 'w' : 'b'
+        fig.downcase!
+        fig = fig.s2n
+        putFigM prefix + color + fig, i, j
       end
     end
 
     send_data @dia.to_blob, type: 'image/png', disposition: 'inline'
   end
-###########################################################
+#--------------------------------------------
   private
-###########################################################
+#--------------------------------------------
+
   def putFigM(c, i, j)
+    logger.info (FIGDIR + c + SUFFIX)
     begin
       fig = Image.read(FIGDIR + c + SUFFIX)[0]
     rescue

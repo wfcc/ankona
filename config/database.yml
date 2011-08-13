@@ -20,7 +20,6 @@ development:
   database: shakodat_development
   pool: 5
   username: ike
-  password: 12not
 
 development-old:
   adapter: mysql2

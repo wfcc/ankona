@@ -32,17 +32,7 @@ parse_query() #@ USAGE: parse_query var ...
 echo Content-type: text/plain
 echo ""
 
-QUERY_STRING=`cat`
-unset REQUEST_METHOD  ## just in case
+parse_query input popeye
 
-parse_query stipulation forsyth popeye
-
-$popeye <<EOD 2>&1
-      BeginProblem
-      Option NoBoard
-      Option MaxTime 30             
-      Stipulation $stipulation
-      Forsyth $forsyth
-      EndProblem
-EOD
+$popeye <<<$input | head -200 2>&1
 

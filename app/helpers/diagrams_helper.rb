@@ -5,4 +5,9 @@ module DiagramsHelper
             partial: 'author', object: Author.new
       end
   end
+  
+  def fig_glyph(prefix, kind)
+    "/images/fig/#{prefix}#{kind}.gif"
+  end
+    
 end

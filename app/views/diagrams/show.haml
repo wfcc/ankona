@@ -1,23 +1,32 @@
-%p= link_to ' New problem ', new_diagram_path, class: :button
+%ul.menu-small
+  - if can? :manage, @diagram and @diagram.sections.count < 1
+    %li= link_to 'Edit', edit_diagram_path(@diagram), class: :button
+    %li= link_to 'Destroy', @diagram, confirm: 'Are you sure?', method: :delete, class: :button
+  %li= link_to 'New problem', new_diagram_path, class: [:button, "margin-left"]
+
 - unless (may_edit? @diagram and @diagram.sections.count < 1)
   %h4 This problem has been submitted to competition.  You may not edit it.
 .span-7.append-1
   %div{ :style => "text-align:left;margin-top:1em" }
-    %p{ :style => "font:bold larger Arial" }= @diagram.authors.collect(&:name).join(', ')
-    %p= @diagram.label
-    %p= @diagram.source
+    %div{ :style => "font:bold larger Arial" }= @diagram.authors.collect(&:name).join(', ')
+    %div= @diagram.label
+    %div= @diagram.source
   #divBlank
     - @diagram.position = '' if @diagram.position.blank?
     = image_tag '/fen/' + @diagram.position, id: 'blank'
-  %div{ :style => "text-align:right;padding-right:70px;font-size:x-small" }
-    = @diagram.position.scan(/[A-Z]/).size
-    +
-    = @diagram.position.scan(/[a-z]/).size
-  .d= @diagram.stipulation
-  .xs= @diagram.twin
-  .xs= @diagram.fairy                                                         
-  - @diagram.tested = 0 if @diagram.tested.blank?
-  .xs!= Status.where(:table.eq => 'diagrams', :value.eq => @diagram.tested)[0].h_display
+  - if @diagram.position =~ /\[|\(/
+    .fairy_synopsis= fairy_synopsis(fen2arr(@diagram.position))
+  - else
+    .piece_balance
+      = @diagram.position.scan(/[A-Z]/).size
+      +
+      = @diagram.position.scan(/[a-z]/).size
+    
+  .d
+    =@diagram.stipulation
+    %span= @diagram.twin
+  /- @diagram.tested = 0 if @diagram.tested.blank?
+  /.xs!= Status.where(:table.eq => 'diagrams', :value.eq => @diagram.tested)[0].h_display
 .span-8
   %pre.solution= @diagram.solution
 .span-7.last
@@ -46,12 +55,11 @@
       = f.submit 'Save changes to collections', class: :button
     .cgreen= @diagram.collections.collect(&:name).join(', ')
     
-%ul.menu-small
   /%li= link_to 'Back', diagrams_path, class: :button
-  - if can? :manage, @diagram and @diagram.sections.count < 1
-    %li= link_to 'Edit', edit_diagram_path(@diagram), class: :button
-    %li= link_to 'Destroy', @diagram, :confirm => 'Are you sure?', method: :delete, class: :button
-.xs
+%p.xs.clear.padding-top
+  FEN:
+  = @diagram.position
+  %br
   Entered by:
   = @diagram.user.nick || 'system'
 

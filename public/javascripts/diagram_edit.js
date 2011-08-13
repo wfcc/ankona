@@ -6,19 +6,28 @@
 //
 
 google.setOnLoadCallback(function() {
+  
+  $('#fen_button').click(function(e) {
+    $('#fen-block').toggle()
+    e.preventDefault()
+  })
+  $('#fairy_button').click(function(e) {
+    $('#fairy-block').toggle()
+    e.preventDefault()
+  })
 
   $('#solve').click(function(e) {
     var form = $('form')
-    $.post('/diagrams/' + $('#diagram_id').val() + '/solve', 
+    $('#solve').val(' Solving... ')
+    $.post('/diagrams/solve', 
       { stipulation: $('#diagram_stipulation').val()
       , position: $('#diagram_position').val()
       }, function(data) {
         $('#solution').html(data)
+        $('#solve').val('Finished.  Solve again.')
         }
     )
-        
     e.preventDefault()
-    
   })
 
   $('#authors_ids').tokenInput('/authors/json',
@@ -42,12 +51,12 @@ google.setOnLoadCallback(function() {
   notationFIDE    = 'KDTLSpKDTLSp'
   nEngl = 'kqrbsp'
   nFide = 'kdtlsp'
-
-  String.prototype.times = function(num) {return new Array( num + 1 ).join( this )}
-
+  
   $('#diagram_white').bind('keyup', updateFen)
   $('#diagram_black').bind('keyup', updateFen)
   $('#diagram_position').bind('keyup', updateFromFen)
+  $('#white_c').bind('keyup', updateFen)
+  $('#black_c').bind('keyup', updateFen)
 
   initVars()                             
   
@@ -70,7 +79,8 @@ google.setOnLoadCallback(function() {
   $('#blank').droppable(
     { drop: function(event, ui) {
       var board = $('#blank').offset()
-      var piece = ui.draggable
+      var piece = ui.draggable  
+      
       aBoard
         [Math.floor((ui.offset.top - board.top + 12) / 25)]
         [Math.floor((ui.offset.left - board.left + 12) / 25)] = piece.data('id')
@@ -141,7 +151,12 @@ google.setOnLoadCallback(function() {
   } //*************************************
   function initVars(){
 
-    allPieces = ['wk','wq','wr','wb','ws','wp','bk','bq','br','bb','bs','bp']
+    boobs = /^\[(.)(.+)\]/
+    allPieces =
+      [ 'wk','wq','wr','wb','ws','wp'
+      , 'bk','bq','br','bb','bs','bp'
+      , 'xwk','xwq','xwr','xwb','xws','xwp'
+      , 'xbk','xbq','xbr','xbb','xbs','xbp']
     aPieces = {}                                       
     imgPieces = {}
     $.each(allPieces, function(i,p) {
@@ -150,35 +165,52 @@ google.setOnLoadCallback(function() {
       })
   } //*************************************
   function fenToInternal(){
-
-    var i = 0
-    clearBoard()
+    
+    var gf = fp = 0, acc = '', res = []
     var fen = $('#diagram_position').val()
-      .replace(/n/g, 's')
-      .replace(/N/g, 'S') // no Nightriders in FEN, only Knights
-
-    if (fen.match('/')) {
-      fen = fen.replace(/\d+/g, function(x){return '1'.times(Number(x))})
-      fen = fen.replace(/[^kqrbspn\/1]/ig, '1') // strip wrong FEN characters
-      var a1 = fen.split('/')
-      $(a1).each (function(i, row) {
-          row += '1'.times(8 - row.length)
-          aBoard[i++] = row.split('')
-          })
-    } else {
-      fen = fen.replace(/\d/g, function(x){return '1'.times(Number(x))})
-      fen = fen.replace(/[^kqrbspn\/1]/ig, '1') // strip wrong FEN characters
-      fen += '1'.times(64 - fen.length)
-      for (var i=0; i<8; i++) {
-        aBoard[i] = fen.slice(i*8,i*8+8).split('')
-        }
-      }
-
+    fen = fen.replace(/\d+/g, function(x){return '1'.times(Number(x))})    
+    
+    $.each(fen.split(''), function(i,c) {
+       switch(c) {
+         case '[' :
+           acc = '['
+           gf = 1
+           break
+         case '(' : 
+           fp = 2
+           acc = '('
+           break 
+         case ']' :
+           res.push(acc + ']') ; acc = ''; gf = fp = 0
+           break
+         case ')' :
+           acc += ')' ;  fp = 0
+           break
+         case '/' :
+            res = res.concat('1'.times((8 - res.length % 8) % 8).split(''))
+            break
+         default :
+           switch (gf + fp) {
+           case 0 :
+             if (acc.length) { res.push(acc) ; acc = '' }
+             res.push(c)
+             break
+           default:
+             acc += c
+             }
+           }
+       })
+       eight.each(function(i,c) {
+         aBoard[i] = res.slice(i*8, i*8+8)
+         })
+    
   } //*************************************
   function notationToInternal(){
 
+    var prefix, postfix, iswhite
     clearBoard()
-    $(['#diagram_white', '#diagram_black']).each (function(i_color ,color) {
+    $(['#diagram_white', '#diagram_black', '#white_c', '#black_c'])
+      .each (function(i_color ,color) {
       $($(color).val().toLowerCase().split(/\W/)).each (function(j,p) {
          if (p.length == 2) p = 'p' + p
          if (p.length != 3) return
@@ -186,20 +218,29 @@ google.setOnLoadCallback(function() {
          piece = p.charAt(0)
          file = p.charCodeAt(1)
          rank = p.charAt(2)
-         //; alert(file)
          if (file< 97 || file>104) return; // a — h
          if (rank<'1' || rank>'8') return;
          if ('kdtlsp'.indexOf(piece) < 0) return;
+         switch (true) {
+         case i_color > 1 :
+            prefix = '[x'
+            postfix = ']'
+            break
+         default:
+            prefix = postfix = ''
+         }
+         iswhite = i_color % 2 == 0 ? function(x){return x.toUpperCase()} : idem
          aBoard[8 - rank][file - 97]
-            = i_color == 0
-            ? nEngl.charAt(nFide.indexOf(piece)).toUpperCase()
-            : nEngl.charAt(nFide.indexOf(piece))
+            = prefix
+            + iswhite( nEngl.charAt(nFide.indexOf(piece)) )
+            + postfix
         })
       })
   } //*************************************
   function internalToDiagram(){
 
-    var p, im, top, left, color
+    var p, im, top, left, color, pp
+    var gf_conf = ''
     for (var i=0; i<8; ++i) {
       for (var j=0; j<8; ++j) {
         p = aBoard[i][j]
@@ -207,11 +248,16 @@ google.setOnLoadCallback(function() {
           $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]').remove()
           continue
           }
-        else {
+        else {    
+          pp = p.match(boobs) // general fairy piece condition
+          if(pp) { p = pp[2] ;  gf_cond= 'x' }
+          else { gf_cond = '' }
           color = p>'a'?'b':'w'
           left = j * 25 + 1
-          top = i * 25 + 1 
-          im = imgPieces[color + p.toLowerCase()].clone()
+          top = i * 25 + 1
+          if(p=='n') {p='s'}
+          if(p=='N') {p='S'}
+          im = imgPieces[gf_cond + color + p.toLowerCase()].clone()
           $('#divBlank').append(im)
           $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]').remove()
           im.css(
@@ -248,23 +294,42 @@ google.setOnLoadCallback(function() {
       .val(aBoard
         .join('/')
         .replace(/,/g,'')
+        .replace(/s/g,'n')
+        .replace(/S/g,'N')
         .replace(/\d+/g,function(x){return x.length}))
 
   } //*************************************
   function internalToNotation(){
-    var aWhite=[], aBlack=[]
+    var piece, pp, ham, f
+    var fields = {diagram_white: [], diagram_black: [], white_c: [], black_c: []}
     for(var i=0;i<8;++i) {
       for(var j=0;j<8;++j) {
-        var piece = aBoard[i][j]
+        piece = aBoard[i][j]
+        pp = piece.match(boobs)
+        if(pp) { ham = true ; piece = pp[2] }
+        else { ham = false }
+        
         if (piece !== '1') {
-          (piece < 'a' ? aWhite : aBlack).push(
+          switch (true) {
+          case !ham && piece.isWhite() :
+            f = 'diagram_white'; break
+          case !ham && !piece.isWhite() :
+            f = 'diagram_black'; break
+          case ham && piece.isWhite() :
+            f = 'white_c'; break
+          case ham && !piece.isWhite() :
+            f = 'black_c'; break
+            }
+            
+          fields[f].push(
             notationFIDE.substr(notationEnglish.indexOf(piece),1) +
             String.fromCharCode(j+97) + (8-i).toString())
           }
         }
       }
-     $('#diagram_white').val(aWhite.sort(sortPieces).join(' '))
-     $('#diagram_black').val(aBlack.sort(sortPieces).join(' '))
+    for (x in fields) {
+      $('#' + x).val(fields[x].sort(sortPieces).join(' '))
+      }
   } //*************************************
   function validateForm(){
      ; if ($('diagram_stipulation').value.length < 2)
@@ -290,8 +355,11 @@ google.setOnLoadCallback(function() {
      return true
   } //*************************************
   function sortPieces(a,b) {
-     var pcs = 'KDTLSp'
-     return pcs.indexOf(a.substr(0,1)) -
+    var x
+    if (x = a.match(boobs)) { a = x[2] }
+    if (x = b.match(boobs)) { b = x[2] }
+    var pcs = 'KDTLSp'
+    return pcs.indexOf(a.substr(0,1)) -
         pcs.indexOf(b.substr(0,1)) 
   } //*************************************
   function addFairyCondition() {

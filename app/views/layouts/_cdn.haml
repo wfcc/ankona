@@ -1,0 +1,12 @@
+- if Rails.env.production?
+  = javascript_include_tag 'http://www.google.com/jsapi?key=' + Ya['google_api']
+- else
+  = javascript_include_tag %w[jquery.min jquery-ui-1.8.6.custom.min]
+  %script               
+    // hijack google object to load libraries locally
+    google =
+    { load: function(){}
+    , setOnLoadCallback: jQuery
+    }
+    
+    

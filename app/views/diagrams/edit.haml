@@ -6,23 +6,34 @@
 = simple_form_for @diagram do |f|
 
   = f.hidden_field :id
-  /= f.error_messages
   #first.span-12
-    = f.input :position, label: 'FEN', |
-      hint: 'English notation for FEN'
     .label Position (w/b)                                                          
     = f.input :white, label: false, |
       hint: '↕ FIDE piece notation'
     = f.input :black, label: false
+    %p.clear
+      %button{id: :fen_button}
+        FEN ▼
+      %button{id: :fairy_button}
+        Fairy stuff ▼
+      #fen-block(style = "display:none")
+        = f.input :position, label: :FEN,  hint: 'English notation for FEN'
+      #fairy-block(style = "display:none")
+        .label Chameleon pieces
+        white:
+        = text_field_tag :white_c, ''
+        black:
+        = text_field_tag :black_c, ''
 
     .cassete
       -%w{k q r b s p}.each do |figurine|
-        = image_tag "/images/fig/b#{figurine}.gif", 'data-id' =>  figurine, class: 'todrag'
+        = image_tag fig_glyph('b', figurine), 'data-id' =>  figurine, class: 'todrag'
     #divBlank= image_tag '/fen', id: 'blank'
     .cassete
       -%w{k q r b s p}.each do |figurine|
-        = image_tag "/images/fig/#{figurine}.gif", 'data-id' => figurine.upcase, class: 'todrag'
+        = image_tag fig_glyph('w', figurine), 'data-id' =>  figurine.upcase, class: 'todrag'
     #pcount
+
     - %w{◁ ▽ △ ▷ ↻ ↺ ↕}.each do |direction|
       %button{type: "button", class: "moveboard", 'data-name' => direction}
         = direction
@@ -39,13 +50,13 @@
     .label Authors
     #authors
       = hidden_field_tag :authors_json, @authors_json
-      = text_field_tag :authors_ids, '', style: 'width:20em'
+      = text_field_tag :authors_ids, '', style: 'width:30em'
     %table.zero
       %tr
         %td= f.input :source, input_html: {size: 40}
         %td= f.input :issue, input_html: {size: 10}
       %tr
-        %td= f.input :label, hint: 'Diagram ID, label', input_html: {size: 10}, label: 'Problem number'
+        %td= f.input :label, hint: 'Problem ID, or label, as given in the source', input_html: {size: 10}, label: 'Problem number'
         %td= #f.input :published, as: :date, input_html: {class: 'c30p'}, hint: '-'
     = f.input :solution, input_html: {rows: 25, cols: 5}, hint: 'Please adhere to FIDE piece notation: KDTLS.'
     /
@@ -54,21 +65,15 @@
         %li= link_to 'Back to list', diagrams_path
 
   .clear.em1
-  = f.submit ' Save ', class: :button
-  = f.submit ' Solve with popeye ', id: :solve, class: [:button, :clearboth], |
-    disable_with: ' Solving...' |
+  = f.submit ' Save and exit ', class: :button
+  = f.submit ' Solve with popeye ', id: :solve, class: [:button, :clearboth]
   %fieldset
     %legend
-      -#= submit_to_remote 'solve', ' Solve with popeye ', |
-    /  :update => 'solution', :condition => 'validateForm()', |
-      :before => "$('solution').update('Popeye solving in progres...')", |
-      :method => 'post', :url => { :action => 'solve' }, :html => {:class => 'x'} |
-    %label(for = "pyconds" class = "modest") Popeye “condition” line
-    =text_field_tag :pyconds, @diagram.fairy, class: "c30p"
-    %span.fine circe, andernach, madrasi, masand, koeko, …
-    %p 
+    /%label(for = "pyconds" class = "modest") Popeye “condition” line
+    /= text_field_tag :pyconds, @diagram.fairy, class: "c30p"
+    /%span.fine circe, andernach, madrasi, masand, koeko, …
     %label(for = "pyopts" class = "modest") Popeye “options” line
-    =text_field_tag :pyopts, "", :class => "c30p"
+    = text_field_tag :pyopts, "", :class => "c30p"
     %span.fine try, setplay, duplex, maxsolutions, intelligent, …   
     #solution<>
       %span.fine Popeye solution will go here (first run may be slow)

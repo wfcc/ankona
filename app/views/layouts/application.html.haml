@@ -8,7 +8,8 @@
       = controller.controller_name.humanize
       = controller.action_name
     = stylesheet_link_tag stylesheets_path(package: :desktop)
-    = javascript_include_tag 'http://www.google.com/jsapi?key=' + Ya['google_api']
+    /= javascript_include_tag 'http://www.google.com/jsapi?key=' + Ya['google_api']
+    = render partial: 'layouts/cdn'
     = javascript_include_tag 'application', 'rails'
     = javascript_include_tag 'jquery.tokeninput', 'nested_form'
     = javascript_include_tag javascripts_custom

@@ -1,3 +1,10 @@
+module Enumerable
+  def select_with_index
+    index = -1
+    (block_given? && self.class == Range || self.class == Array)  ?  select { |x| index += 1; yield(x, index) }  :  self
+  end
+end
+
 class Array
   def commatize
     if respond_to?(:empty?) && self.empty?
@@ -18,9 +25,42 @@ class Array
   end
 end
 
-class String
+class String   
+  def predifix(prefix, *other)
+    case
+    when self.blank?
+      ''
+    when other.blank?
+      prefix + self
+    else
+      prefix + self + other[0]  
+    end
+  end
+
   def bold
     "<b>#{self}</b>"
+  end        
+  
+  def s2n
+    case self
+    when 's'
+      'n'
+    when 'S'
+      'N'
+    else
+      self
+    end 
+  end
+        
+  def n2s
+    case self
+    when 'n'
+      's'
+    when 'N'
+      'S'
+    else
+      self
+    end      
   end
 end
 

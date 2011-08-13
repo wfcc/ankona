@@ -73,15 +73,21 @@ require "net/http"
   end
   #--------------------------------------------------
   def solve
-    condition = params[:pyconds].blank? ? '' : "Condition #{params[:pyconds]}"
+
+    input = <<-EOD
+    BeginProblem
+    Option NoBoard #{params[:pyopts]}
+    Option MaxTime 30             
+    Stipulation #{params[:stipulation]}
+    Pieces #{array_to_popeye(fen2arr(params[:position]))}
+    EndProblem
+    EOD
 
     res = Net::HTTP.post_form URI.parse(Ya['popeye_url']), 
-      stipulation: params[:stipulation], 
-      forsyth: params[:position],
+      input: input,
       popeye: Ya['popeye_location']
 
-    logger.warn "<<< #{res.body} >>>"
-    render :text => res.body
+    render text: res.body
   end
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   private

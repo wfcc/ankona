@@ -21,4 +21,54 @@ include Magick
     canvas.format = 'PNG'
     canvas.write('board.png')
   end
+              
+  def index2algebraic(x)
+    sprintf('%02o', x) =~ /(.)(.)/
+    ($~[2].ord + 49).chr + (8 - $~[1].to_i).to_s
+  end
 
+  def fen2arr(fen)                                        
+    b = []
+    a = fen.gsub(/\d+/){'1' * $&.to_i}.scan(/\[.\w+\]|\w/)
+    a.select_with_index do |x,i|
+      next if x == '1'
+      b.push x + index2algebraic(i)
+    end
+    return b
+  end
+
+  def array_to_popeye(a)
+    w = []; b = []; wc = []; bc = []
+    a.map do |x|                   
+      case x
+      when /\[x([A-Z]\w?)\](..)$/
+        wc.push $~[1].n2s + $~[2]
+      when /\[x([a-z]\w?)\](..)$/
+        bc.push $~[1].n2s + $~[2]
+      when /^[A-Z]..$/
+        w.push $&.n2s
+      when /^[a-z]..$/
+        b.push $&.n2s
+      end
+    end
+      
+      w.join(' ').predifix(' White ') +
+      b.join(' ').predifix(' Black ') +
+      wc.join(' ').predifix(' White Chameleon ') +
+      bc.join(' ').predifix(' Black Chameleon ')
+  end
+
+  def fairy_synopsis(a)
+    bc = []; wc = []
+    a.each do |piece|
+      case piece
+      when /\[x([a-z]+)\](..)/
+        bc.push $~[1].upcase + $~[2]
+      when /\[x([A-Z]+)\](..)/
+        wc.push $~[1] + $~[2]
+      end
+    end
+    return [wc.join(', ').predifix('White Chameleons: '),
+      bc.join(', ').predifix('Black Chameleons: ')].join '; '
+  end
+                     
