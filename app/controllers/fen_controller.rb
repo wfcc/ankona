@@ -34,7 +34,7 @@ SUFFIX = '.gif'
         end
         color = fig < 'a' ? 'w' : 'b'
         fig.downcase!
-        fig = fig.s2n
+        fig = fig.n2s
         putFigM prefix + color + fig, i, j
       end
     end
