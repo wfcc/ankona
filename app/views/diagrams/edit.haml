@@ -9,7 +9,7 @@
   #first.span-12
     .label Position (w/b)                                                          
     = f.input :white, label: false, |
-      hint: '↕ FIDE piece notation'
+      hint: '↕ FIDE piece notation (KDTLSP)'
     = f.input :black, label: false
     %p.clear
       %button{id: :fen_button}
@@ -17,7 +17,7 @@
       %button{id: :fairy_button}
         Fairy stuff ▼
       #fen-block(style = "display:none")
-        = f.input :position, label: :FEN,  hint: 'English notation for FEN'
+        = f.input :position, label: :FEN,  hint: 'KQRBNP notation for FEN'
       #fairy-block(style = "display:none")
         .label Chameleon pieces
         white:

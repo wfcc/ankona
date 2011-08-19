@@ -6,10 +6,17 @@ google.setOnLoadCallback(function() {
 
   String.prototype.times = function(num) {return new Array( num + 1 ).join( this )}
   Array.prototype.last = Array.prototype.last || function() {
-      var l = this.length;
-      return this[l-1];
-  }                          
+    var l = this.length;
+    return this[l-1];
+    }                          
   String.prototype.isWhite = function() {return this < 'a'}
+  
+  String.prototype.n2s = function() {
+    if (this == 'n') return 's'
+    if (this == 'N') return 'S'
+    return this + ''
+    }
+
   function arrays_equal(a,b) { return !(a<b || b<a) }
   
   

@@ -32,6 +32,7 @@ include Magick
     a = fen.gsub(/\d+/){'1' * $&.to_i}.scan(/\[.\w+\]|\w/)
     a.select_with_index do |x,i|
       next if x == '1'
+      x = x.n2s
       b.push x + index2algebraic(i)
     end
     return b
@@ -46,9 +47,9 @@ include Magick
       when /\[x([a-z]\w?)\](..)$/
         bc.push $~[1].n2s + $~[2]
       when /^[A-Z]..$/
-        w.push $&.n2s
+        w.push $&
       when /^[a-z]..$/
-        b.push $&.n2s
+        b.push $&
       end
     end
       

@@ -193,7 +193,7 @@ google.setOnLoadCallback(function() {
            switch (gf + fp) {
            case 0 :
              if (acc.length) { res.push(acc) ; acc = '' }
-             res.push(c)
+             res.push(c.n2s())
              break
            default:
              acc += c
@@ -255,8 +255,7 @@ google.setOnLoadCallback(function() {
           color = p>'a'?'b':'w'
           left = j * 25 + 1
           top = i * 25 + 1
-          if(p=='n') {p='s'}
-          if(p=='N') {p='S'}
+          p = p.n2s()
           im = imgPieces[gf_cond + color + p.toLowerCase()].clone()
           $('#divBlank').append(im)
           $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]').remove()
