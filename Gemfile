@@ -9,13 +9,8 @@ source 'http://rubygems.org'
 #gem 'rails', git: 'git://github.com/rails/rails.git', branch: '3-0-stable'
 gem "rails", "3.0.7"
 
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
 # gem 'ruby-debug'
 
-#gem "authlogic", :git => 'http://github.com/vpereira/authlogic.git'
 gem 'dalli'
 gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "master"
 gem 'haml'
@@ -34,22 +29,20 @@ gem 'will_paginate', '>= 3.0.pre'
 gem 'geoip'
 gem 'devise'
 gem 'cancan'
-gem 'wicked', :git => 'http://github.com/wideopenspaces/wicked.git'
+gem 'wicked', :git => 'https://github.com/wideopenspaces/wicked.git'
 #gem 'httparty'
 #gem "vidibus-routing_error"
 
-# Bundle gems for the local environment. Make sure to
-# put test-only gems in this group so their generators
-# and rake tasks are available in development mode:
 group :development do
   gem 'rails-footnotes'
   gem 'passenger'
+  gem 'thin'
+  gem 'heroku'
 end
 
 group :development, :test do
   gem 'pg'
   gem 'haml2slim'
-#  gem 'unicorn'
   gem 'wirble'
   gem 'hirb'
   gem 'nifty-generators'   
