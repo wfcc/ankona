@@ -6,8 +6,8 @@ class AuthorsController < NonauthorizedController
     search = "%#{params[:search_name]}%"
     #  .where(:source.eq => 'h')
     @authors = Author
-      .where((:name =~ search) | (:code =~ search) |
-        (:original =~ search) | (:traditional =~ search))
+      .where{(name =~ search) | (code =~ search) |
+        (original =~ search) | (traditional =~ search)}
       .order(:code)
       .paginate page: params[:page], per_page: 99
 #      .page(params[:page]).per(100)
@@ -24,8 +24,8 @@ class AuthorsController < NonauthorizedController
     authors = q =~ /.. ../ ? 
       [name: "#{q} <span style='font-size:smaller'>(will be created)</span>", id: "CREATE_#{q}"] : []
     authors += Author
-      .where((:name =~ search) | (:code =~ search) |
-        (:original =~ search) | (:traditional =~ search))
+      .where{(name =~ search) | (code =~ search) |
+        (original =~ search) | (traditional =~ search)}
       .map{|a| {name: a.name, id: (handle ? a.code: a.id)}}
     render json: authors
   end

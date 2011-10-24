@@ -45,7 +45,7 @@
       #fairy(style = "#{@showIfFairy}")
         = f.input :fairy, :input_html => {:size => 20}, :hint => 'e.g. Circe, Andernach, Sentinels, …', :label => 'Fairy conditions'
     = f.label 'Computer tested'
-    = f.select :tested, Status.where(:table.eq => :diagrams).collect {|i| [i.name, i.value] }
+    = f.select :tested, Status.where{table == :diagrams}.collect {|i| [i.name, i.value] }
   #second.span-12.last
     .label Authors
     #authors
@@ -53,11 +53,11 @@
       = text_field_tag :authors_ids, '', style: 'width:30em'
     %table.zero
       %tr
-        %td= f.input :source, input_html: {size: 40}
-        %td= f.input :issue, input_html: {size: 10}
+        %td= f.input :source, input_html: {size: 30}, hint: 'Printed or online publication, or tournament'
+        %td= f.input :issue, input_html: {size: 10}, hint: 'Month or number, if periodical'
       %tr
-        %td= f.input :label, hint: 'Problem ID, or label, as given in the source', input_html: {size: 10}, label: 'Problem number'
-        %td= #f.input :published, as: :date, input_html: {class: 'c30p'}, hint: '-'
+        %td= f.input :label, hint: 'Problem number, or label, as given in the source', input_html: {size: 10}, label: 'Problem ID'
+        %td= f.input :award, input_html: {size: 20}, hint: 'use "Prize", "HM", "Commendation"', label: 'Distinction'
     = f.input :solution, input_html: {rows: 25, cols: 5}, hint: 'Please adhere to FIDE piece notation: KDTLS.'
     /
       %ul.menu
@@ -66,7 +66,9 @@
 
   .clear.em1
   = f.submit ' Save and exit ', class: :button
-  = f.submit ' Solve with popeye ', id: :solve, class: [:button, :clearboth]
+  = f.submit ' Solve with popeye ', id: :solve, class: [:button]
+  - if @diagram.id.present?
+    = link_to  ' Revert ', edit_diagram_path(@diagram), class: [:button, :clearboth]
   %fieldset
     %legend
     /%label(for = "pyconds" class = "modest") Popeye “condition” line

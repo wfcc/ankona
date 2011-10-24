@@ -36,7 +36,7 @@ class InvitesController < ApplicationController
         flash[:error] = "You are director of “#{sect.competition.name}”, you can't be its judge!"
       elsif params[:accepted]
         if @invite.role[0] == 'j'  # judge
-          flash[:notice] = "You have accepted to jugde #{@name}."
+          flash[:notice] = "You have accepted to judge #{@name}."
           sect.users << current_user
         else
           flash[:notice] = "You have agreed to be director of #{@name}."

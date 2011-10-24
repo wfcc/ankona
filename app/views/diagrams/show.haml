@@ -8,9 +8,10 @@
   %h4 This problem has been submitted to competition.  You may not edit it.
 .span-7.append-1
   %div{ :style => "text-align:left;margin-top:1em" }
-    %div{ :style => "font:bold larger Arial" }= @diagram.authors.collect(&:name).join(', ')
+    %div{ style: "font-size:larger" }= @diagram.authors.collect(&:name).commatize
     %div= @diagram.label
-    %div= @diagram.source
+    %div= [ @diagram.source, @diagram.issue ].commatize
+    %div= @diagram.award
   #divBlank
     - @diagram.position = '' if @diagram.position.blank?
     = image_tag '/fen/' + @diagram.position, id: 'blank'
@@ -28,15 +29,15 @@
   /- @diagram.tested = 0 if @diagram.tested.blank?
   /.xs!= Status.where(:table.eq => 'diagrams', :value.eq => @diagram.tested)[0].h_display
 .span-8
-  %pre.solution= @diagram.solution
+  %pre.solution><=@diagram.solution
 .span-7.last
   - if may_edit? @diagram and @diagram.sections.count < 1
+    - sections =  Section.joins{competition}.where{(competition.private != true) & (competition.status == 1)}
     .d
       You may submit this diagram to an open competition:
-      - form_for @diagram, section_diagram_path(@diagram) do |f|
-        = hidden_field_tag :id, @diagram.id
+      = form_for @diagram, url: section_diagram_path(@diagram) do |f|
         = collection_select :diagram, :section_ids, |
-        (Section.includes(:competition) & Competition.public(current_user)), |
+        sections, |
         :id, :name_cs, {selected: nil, include_blank: true }, |
         {name: 'diagram[section_ids][]', style: 'width:24em' } |
         = f.submit 'Submit to competition', class: :button

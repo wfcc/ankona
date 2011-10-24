@@ -3,7 +3,7 @@ class FenController < ApplicationController
 
 include Magick
 
-FIGDIR = 'public/images/fig/'
+FIGDIR = 'app/assets/images/fig/'
 SUFFIX = '.gif'
 
 ###########################################################
@@ -50,7 +50,7 @@ SUFFIX = '.gif'
     begin
       fig = Image.read(FIGDIR + c + SUFFIX)[0]
     rescue
-      logger.info "bad symbol #{c}"
+      logger.warn "bad symbol #{c}"
       pen = Magick::Draw.new
       pen.annotate(@dia, 0,0,0,40, "bad symbol: #{c}") do
         self.font_family = 'Georgia'

@@ -4,29 +4,26 @@
   %head
     %meta(charset = 'utf-8')
     %title
-      dia-x:
+      Ankona:
       = controller.controller_name.humanize
       = controller.action_name
-    = stylesheet_link_tag stylesheets_path(package: :desktop)
-    /= javascript_include_tag 'http://www.google.com/jsapi?key=' + Ya['google_api']
-    = render partial: 'layouts/cdn'
-    = javascript_include_tag 'application', 'rails'
-    = javascript_include_tag 'jquery.tokeninput', 'nested_form'
-    = javascript_include_tag javascripts_custom
+    = stylesheet_link_tag :application
+    //= render partial: 'layouts/cdn'
+    = javascript_include_tag :application
     = yield :scripts
     = csrf_meta_tag
     = render partial: 'layouts/google_analytics'
     %link(rel='shortcut icon' type='image/ico' href='/favicon.ico')
+    %link(href='http://fonts.googleapis.com/css?family=Ubuntu:400,500|Open+Sans:400,600&subset=cyrillic-ext,latin-ext' rel='stylesheet' type='text/css')
   %body
     - if session[:geo][:value] != 'LV' and Ya['only_lativa']
       %h2 The site is under maintenance.
       Check back soon.
     - else
-      = render partial: 'layouts/ie6' 
+      = render 'common/ie6'
       %a.plain(href = '/')
-        /= image_tag 'dia-x-logo.png'
         %h1 diagram exchange
-      = render 'layouts/logged_in'        
+      = render 'common/logged_in'        
       %ul.menu
         %li= link_to 'Competitions', competitions_path
         %li= link_to 'People', authors_path
@@ -39,4 +36,4 @@
         != yield
     %div{ :style => "text-align:right;padding-top:1em" }
       %span{ :style => "border-top:1px solid #bbb;font:normal smaller Arial" }
-        2009 © WFCC
+        2009 — 2011 © WFCC

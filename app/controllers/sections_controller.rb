@@ -26,10 +26,11 @@ class SectionsController < ApplicationController
 # ---------------
   def index
     # select sections where a user is a judge or a director
+    current_user_id = current_user.id
     @sections = Section \
-      .joins(:users)
+      .joins{users} \
       .select('Distinct(SECTIONS.*)') \
-      .where({users: {id: current_user.id}} | {user_id: current_user.id})
+      .where{(users.id == current_user_id) | (user_id == current_user_id)}
   end
   
 # ---------------

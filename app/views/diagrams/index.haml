@@ -19,8 +19,7 @@
       .pagestat= page_entries_info @diagrams
     /
       collection:
-      = collection_select :search, :collections, (current_user ? |
-        Collection.where(:user_id.eq => current_user.id) : Collection.where(:public.eq => true)), |
+      = collection_select :search, :collections, @collection_source, |
         :id, :name, {:include_blank => true, :selected => @scoll} |
   - if current_user
     -# %p.fine Other people's “Public” collections will not be shown, only those created by you.

@@ -33,7 +33,7 @@
     - sections = @competition.sections.sort{|x|x.id}
     - if sections.count > 1
       .lab Send invitation to be a
-      = select_tag :role, '<option>director</option><option>jugde</option>'.html_safe
+      = select_tag :role, '<option>director</option><option>judge</option>'.html_safe
       .lab for section
       = collection_select :competition, :section_ids, sections, :id, :name                                                           |
     - else

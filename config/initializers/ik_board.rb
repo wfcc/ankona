@@ -1,6 +1,6 @@
 include Magick
 
-  $board = Image.read('public/images/fig/board.png')[0]
+  $board = Image.read('app/assets/images/fig/board.png')[0]
 
   def create_board # this is never called.  Use to recreate board.png
     cols, rows = 8, 8

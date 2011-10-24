@@ -13,4 +13,4 @@ tmp/*
 *.sql
 doc/plugins/*
 test/fixtures/
-
+.sass-cache/

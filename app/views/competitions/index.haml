@@ -38,7 +38,7 @@
             %b= section.user.nick
             %br
           - if section.users.present?
-            Jugdes:
+            Judges:
             %b= section.users.map(&:nick).commatize
         %p= competition.complete ? '[complete]' : ''
         - if competition.results.present?

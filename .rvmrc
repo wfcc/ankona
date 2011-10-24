@@ -1,4 +1,5 @@
-_RUBY=ruby-1.9.2-p290
+_RUBY=ruby-1.9.3-rc1
+#_RUBY=ruby-1.9.2-p290
 _PROJECT=dia-x
 
 export rvm_gem_options="--no-rdoc --no-ri"

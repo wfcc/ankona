@@ -1,0 +1,46 @@
+- content_for :scripts do
+  %script(src = '/assets/users.js')
+  XXX
+YYY  
+= form_for @user, url: signup_path do |form|
+  = form.error_messages
+  .container.clearboth
+    %h1 Register            
+    .span-10
+      %p
+        = form.label :login, 'Your email, it will be used as login'
+        = form.text_field :login
+      %p.fine It will also be used for password reminders and other functions
+      %p
+        = form.label :password, form.object.new_record? ? nil : "Change password"
+        = form.password_field :password, :size => 10
+        %p.fine Be reasonable, use hard passwords
+      %p
+        = form.label :password_confirmation
+        = form.password_field :password_confirmation, :size => 10
+
+    .span-13
+      .usa
+        To be listed as author, you need a "handle".
+        We may already have your name on the list.
+        If you find yourself, you will be able to enter your own problems.
+      .usa
+        Please be aware that we may change the spelling of your name to
+        adapt it to the unified romaization, especially if your name is
+        originally spelled in Cyrillic.
+      .usa
+        Try typing your name here:
+
+      = form.label :name, 'Name'
+      = text_field_tag :name_handle, '', style: 'width:20em'
+
+      %p.hideable#details(style = 'visibility:hide;margin:10px 0 100px')
+        %p.hideable
+          Handle:
+          %span.hideable.x#handle
+        %p.hideable
+          Name:
+          %span.hideable.x#name
+    %br(style = 'clear:both')
+    = form.submit 'Register', class: :button
+

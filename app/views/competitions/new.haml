@@ -5,11 +5,11 @@
   .span-10.append-1
     %p
       = f.label 'Format'
-      = f.collection_select :ttype, Status.where(:table >> 'comp-type'), |
+      = f.collection_select :ttype, Status.where(table: 'comp-type'), |
         :value, :name                                                           |
     %p
       = f.label 'Status'
-      = f.collection_select :status, Status.where(:table.eq => 'competitions'), |
+      = f.collection_select :status, Status.where(table: 'competitions'), |
         :value, :name                                                           |
     %p
       = f.label 'Name of this competition'
@@ -35,7 +35,7 @@
     - 1.times {@competition.sections.build}
 
     - i = 0
-    - f.fields_for :sections do |ff|
+    = f.semantic_fields_for :sections, :sections do |ff|
       %fieldset
         %legend 
           = " Section #{i+=1} "

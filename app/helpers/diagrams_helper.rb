@@ -7,7 +7,7 @@ module DiagramsHelper
   end
   
   def fig_glyph(prefix, kind)
-    "/images/fig/#{prefix}#{kind}.gif"
+    "/assets/fig/#{prefix}#{kind}.gif"
   end
     
 end

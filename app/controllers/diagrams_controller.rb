@@ -5,33 +5,29 @@ require 'open3'
 require "uri"
 require "net/http"
 
-  #active_scaffold :diagram
-
   before_filter :require_user, {:except => [:index, :show]}
 
-#--------------------------------------------------------
-  # GET /diagrams
-# ===========================================================================
   def index
 
+    current_user_id = current_user.id
     @diagrams = Diagram.search(params[:search])
-      .where(:user_id.eq => current_user.id)
-      .order(:created_at.asc).all
+      .where {user_id == current_user_id} 
+      .order {created_at.desc} 
       .paginate page: params[:page], per_page: 7
-  end
+    @collection_source = current_user \
+        ? Collection.where{user_id == current_user_id} \
+        : Collection.where{public == true}
+  end #--------------------------------------------------------
 
-#----- GET /diagrams/1 ------------------------------------------------------
   def show
     @diagram = Diagram.find(params[:id])
-  end
+  end #--------------------------------------------------------
 
-#----- GET /diagrams/new ----------------------------------------------------
   def new
     @diagram = Diagram.new
     render :edit
-  end
+  end #--------------------------------------------------------
 
-#----- GET /diagrams/1/edit ----------------------------------------------
   def edit
     @diagram = Diagram.find(params[:id])
     @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
@@ -43,26 +39,26 @@ require "net/http"
       flash[:error] = "You are unauthorized to edit this problem."
       render :show
     end
-  end
-#----- POST /diagrams -----------------------------------------------------
+  end #--------------------------------------------------------
+
   def create
     @diagram = Diagram.new(params[:diagram])
     save_diagram true
-  end
-#----- PUT /diagrams/1 -----------------------------------------------------
+  end #--------------------------------------------------------
+
   def update
     @diagram = Diagram.find(params[:id])
     @diagram.update_attributes(params[:diagram])
     save_diagram false
-  end
-#----- DELETE /diagrams/1 --------------------------------------------------
+  end #--------------------------------------------------------
+
   def destroy
     @diagram = Diagram.find(params[:id])
     @diagram.destroy
 
     redirect_to(diagrams_url)
-  end
-  #--------------------------------------------------
+  end #--------------------------------------------------------
+
   def section
     @diagram = Diagram.find(params[:id])
 
@@ -70,8 +66,8 @@ require "net/http"
 
     flash[:notice] = "Diagram was submitted to this competition."
     render :show
-  end
-  #--------------------------------------------------
+  end #--------------------------------------------------------
+
   def solve
 
     input = <<-EOD

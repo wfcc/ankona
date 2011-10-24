@@ -10,7 +10,7 @@ class Array
     if respond_to?(:empty?) && self.empty?
       ''
     else
-      join ', '
+      reject{|x| x.blank? }.join ', '
     end
   end
 
@@ -65,6 +65,7 @@ class String
 end
 
 
-MetaWhere.operator_overload!
+#MetaWhere.operator_overload!
 
 Ya = YAML.load_file(Rails.root.join("config/config.yml"))[Rails.env]
+

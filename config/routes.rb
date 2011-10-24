@@ -10,7 +10,7 @@ DiaX::Application.routes.draw do
 
   resources :users, path: '/people'
 
-  match "/stylesheets/:package.css" => AssetsApp.action(:stylesheets), as: 'stylesheets'
+  #match "/stylesheets/:package.css" => AssetsApp.action(:stylesheets), as: 'stylesheets'
 
   root to: 'faqs#show', id: 1
   match 'fen/(*id)' => 'fen#index'
@@ -30,7 +30,7 @@ DiaX::Application.routes.draw do
   match 'competitions/judge' => 'competitions#judge'
 
   resources :diagrams do
-    member {get :section}
+    member {put :section}
   end
   resources :competitions, has_many: :sections
   resources :sections do
