@@ -17,7 +17,7 @@ module DiaX
   class Application < Rails::Application
     # Enable the asset pipeline  
     config.assets.enabled = true  
-    config.assets.precompile += [ 'diagram_edit.js', 'hello.txt.haml' ]
+    config.assets.precompile += [ 'diagram_edit.js', 'user.js' ]
       
     # Version of your assets, change this if you want to expire all your assets  
     config.assets.version = '1.02'
