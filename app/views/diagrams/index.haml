@@ -34,12 +34,12 @@
         %td{:style => "vertical-align:top;color:#46D"}= h diagram.id
         %td
           %h3= diagram.authors.collect(&:name).commatize
-          = [ diagram.source, diagram.label ].join(' ')
-          %div= diagram.published
+          .p= [ diagram.source, diagram.issue, diagram.label ].commatize
+          .p= diagram.award
           .em1
           %div= diagram.stipulation
           %div= diagram.twin
-          %div= diagram.tested ? 'C+' : ''
+          -#%div= diagram.tested ? 'C+' : ''
         %td.board
           %div{:style => "padding:0; position:relative"}
             = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position

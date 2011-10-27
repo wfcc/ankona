@@ -1,6 +1,11 @@
 - content_for :scripts do
   = javascript_include_tag 'diagram_edit'
 
+- content_for :title do
+  = @diagram.stipulation
+  by
+  = @diagram.authors.map(&:name).commatize
+
 %h2 Editing problem #{@diagram.id}
 = simple_form_for @diagram do |f|
 

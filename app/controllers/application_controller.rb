@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  
+  before_filter :user_has_name, except: [:add_name, :destroy, :json, :add_name_save ]
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
@@ -30,6 +32,15 @@ class ApplicationController < ActionController::Base
 #    redirect_to root_url, alert: 'You have requested something that we don''t have.'
 #  end
 
+  def user_has_name
+    if current_user and current_user.author.blank?
+      flash[:notice] = "Provide your real name to complete your registration."
+      redirect_to '/users/add_name'
+      return false
+    end
+  end
+    
+    
   def check_geo
     if session[:geo].blank?   
       c = GeoIP.new(Ya['geoipdat']).country(request.remote_ip)[3]

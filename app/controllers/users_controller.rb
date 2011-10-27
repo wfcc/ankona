@@ -16,13 +16,13 @@ class UsersController < ApplicationController
     @user = User.new
   end
 # --------------------------------------------------------------------------
-  def create
-    @user = User.new(params[:user])
+  def add_name_save
+    @user = is_admin? && params[:id].present? ? User.find(params[:id]) : @current_user
     name = params[:name_handle].split(',')[0]
     case
     when name.blank?
       flash[:error] = "Name is blank."
-      render action: :new
+      render action: :add_name
       return
     when name =~ /^CREATE_(.+)$/
       @user.build_author name: $1
@@ -34,20 +34,30 @@ class UsersController < ApplicationController
       flash[:notice] = "Your account registered, #{author.name}."
     else  
       flash[:error] = "Malformed name."
-      render action: :new
+      render action: :add_name
       return
     end
+logger.warn @user.inspect    
     if @user.save
-      redirect_back_or_default account_url
+      flash[:notice] = "Your account registered, #{@user.author.name}.  Your handle is #{@user.author.code}."
+      redirect_to '/'
     else
       flash[:error] = "Error registering new account."
-      render action: :new
+      render action: :add_name
     end
   end
 
 # --------------------------------------------------------------------------
   def show
     @user = is_admin? && params[:id].present? ? User.find(params[:id]) : @current_user
+  end
+# --------------------------------------------------------------------------
+  def add_name
+    @user = is_admin? && params[:id].present? ? User.find(params[:id]) : @current_user
+    @author_json = ''
+    if @user.author.present?
+      @author_json = [@user.author].map{|a| {id: a.id, name: a.name}}.to_json
+    end
   end
 # --------------------------------------------------------------------------
   def edit

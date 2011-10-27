@@ -400,6 +400,11 @@ $.TokenList = function (input, url_or_data, settings) {
         // Insert the new tokens
         insert_token(li_data.id, li_data.name);
 
+        // Execute the onAdd callback if defined
+        if($.isFunction(callback)) {
+            callback(li_data);
+        }
+
         // Check the token limit
         if(settings.tokenLimit !== null && token_count >= settings.tokenLimit) {
             input_box.hide();
@@ -415,10 +420,6 @@ $.TokenList = function (input, url_or_data, settings) {
         // Don't show the help dropdown, they've got the idea
         hide_dropdown();
 
-        // Execute the onAdd callback if defined
-        if($.isFunction(callback)) {
-            callback(li_data);
-        }
     }
 
     // Select a token in the token list

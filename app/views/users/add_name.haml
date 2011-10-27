@@ -1,0 +1,64 @@
+- content_for :scripts do
+  -# %script(src = '/assets/users.js')
+  = javascript_include_tag 'users.js'
+
+
+= form_for @user, url: '/users/add_name_save' do |f|
+  .span-12.prepend-2
+    = f.error_messages
+    %h2 We need your real name.  Do it right.
+    .usa
+      We may already have your name in the system. Start typing your name in the box below and choose it if you see a match.
+      If you don't, please follow these simple guidelines.
+    .usa
+      %ul
+        %li Use unified romanization of your name.
+        %li Use format “<b>Firstname [other names or initials] Lastname</b>”.
+        %li Don't abbreviate your first name.
+        %li Don't CAPITALIZE.
+        %li Don't omit or replace any áccènts and other điacriţics.
+        %li
+          If you know that your name may coincide with others, provide second name,
+          or patronymic, or initials.  Although the system won't enforce uniqueness
+          of names, this may save us some trouble in the future.
+        %li Follow initials with period.
+    .usa
+      %table
+        %tr
+          %td Good examples
+          %td Bad examples
+        %tr
+          %td.good
+            Göran Jönsson<br>
+            Göran Å. Jönsson<br>
+            Göran Åke Jönsson
+          %td.bad
+            G. Jönsson<br>
+            Goeran A JONSSON<br>
+            Jönsson, Göran Åke
+
+    = f.label :name, 'Your full name, first name first'
+    = text_field_tag :name_handle, '', style: 'width:20em'
+    .usa
+    .usa
+      You are also generating a unique permanent “handle” for yourself now, which will
+      look like “two first letters of last name” + digits + “first initial”,
+      such as <b>JO8G</b> for the imaginary Göran above.
+      This will uniquely identify you for WFCC, this is why it's important
+      to have your name recorded right from the beginning.
+
+    = f.submit " Yes, this is my name, register me. ", id: :update, class: :button, disabled: :disabled
+    .usa
+    .usa.fine
+      Please be aware that we may change the spelling of your name to
+      adapt it to the unified romaization, especially if your name is
+      originally spelled in the Cyrillic script.  In this case we will
+      preserve the original spelling alongside.
+    - if is_admin?
+      = f.label 'Groups'
+      = collection_select :user, :role_ids,                |
+        Role.all(:order => 'name ASC'), :id, :name,        |
+        { :selected => @user.role_ids },                   |
+        { :multiple => true, :name => 'user[role_ids][]' } |
+      %p
+

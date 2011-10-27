@@ -1,40 +1,26 @@
 - content_for :scripts do
   script src='/assets/users.js'
   
-h2 Register
 
 
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
   = devise_error_messages!
-  .span-10
+  .span-12.prepend-2
+    h2 Register
     p
       = f.label :email, 'Your email, it will be used as login'
-      = f.email_field :email
-      .fine It will also be used for password recovery and other functions
+      = f.email_field :email, class: :short
+      .fine It may also be used for password recovery and other functions
     p
       = f.label :password
-      /br/
-      = f.password_field :password
+      = f.password_field :password, class: :short
       .fine Be reasonable, use hard passwords
     p
       = f.label :password_confirmation
-      = f.password_field :password_confirmation
-  .span-11
-    .usa
-      ' We may already have your name in the system.
-    .usa
-      ' Start typing your name here and choose it if you see a match.
-      ' Please use <b>Firstname (middle initials, if any) Lastname</b> format.
+      = f.password_field :password_confirmation, class: :short
+          
+      
 
-    = f.label :name, 'Your full name (first name first)'
-    = text_field_tag :name_handle, '', style: 'width:20em'
-    p#ajax_error.bigred
-    .usa
-    .usa
-      ' Please be aware that we may change the spelling of your name to
-        adapt it to the unified romaization, especially if your name is
-        originally spelled in the Cyrillic script.
+    = f.submit " Register ", id: :submit, class: :button
+    p You will enter your name on the next screen.
 
-  .clear= f.submit " Register ", id: :submit, class: :button
-
-= render :partial => "devise/shared/links"

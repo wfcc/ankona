@@ -1,3 +1,8 @@
+- content_for :title do
+  = @diagram.stipulation
+  by
+  = @diagram.authors.map(&:name).commatize
+
 %ul.menu-small
   - if can? :manage, @diagram and @diagram.sections.count < 1
     %li= link_to 'Edit', edit_diagram_path(@diagram), class: :button
@@ -8,10 +13,9 @@
   %h4 This problem has been submitted to competition.  You may not edit it.
 .span-7.append-1
   %div{ :style => "text-align:left;margin-top:1em" }
-    %div{ style: "font-size:larger" }= @diagram.authors.collect(&:name).commatize
-    %div= @diagram.label
-    %div= [ @diagram.source, @diagram.issue ].commatize
-    %div= @diagram.award
+    .p{ style: "font-size:larger" }= @diagram.authors.collect(&:name).commatize
+    .p= [ @diagram.source, @diagram.issue, @diagram.label ].commatize
+    .p= @diagram.award
   #divBlank
     - @diagram.position = '' if @diagram.position.blank?
     = image_tag '/fen/' + @diagram.position, id: 'blank'

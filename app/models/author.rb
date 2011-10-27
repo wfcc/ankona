@@ -29,9 +29,7 @@ protected
     names, family = $1[0,1], $2[0,2]
     
     @others = Author
-      .where('code Is Not Null')
-      .where(:code.matches => family + '%' + names)
-
+      .where{ (code != nil) & (code =~ "#{family}%#{names}") }
 
     while true
       trycode = family + random_code + names

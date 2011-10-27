@@ -9,7 +9,10 @@ DiaX::Application.routes.draw do
   end
 
   resources :users, path: '/people'
-
+  get 'users/add_name'
+  put 'users/add_name_save'
+  get 'users/show'
+  
   #match "/stylesheets/:package.css" => AssetsApp.action(:stylesheets), as: 'stylesheets'
 
   root to: 'faqs#show', id: 1

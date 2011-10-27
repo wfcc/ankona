@@ -1,6 +1,5 @@
 $(function()  {        
-  //$('#accordion').accordion({fillSpace: true})   
-  $('.hideable').hide()
+
   $('#name_handle').tokenInput('/authors/json?handle=1',
     { hintText: "Start typing your name"
     , minChars: 3
@@ -13,6 +12,8 @@ $(function()  {
         return true
         }
     , theme: 'facebook'
+    , onAdd: function(){ $('#update').button('enable') }
+    , onDelete: function(){ $('#update').button('disable') }
     , onBeforeAdd: function(item){
       var matches
       if ( (isNaN(item.id)) && (matches = item.id.match(/^CREATE_(.+?)$/)) ) {

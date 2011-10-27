@@ -3,12 +3,9 @@
 %html
   %head
     %meta(charset = 'utf-8')
-    %title
-      Ankona:
-      = controller.controller_name.humanize
-      = controller.action_name
+    %title= content_for?(:title) ? yield(:title) : 'ankona'
     = stylesheet_link_tag :application
-    //= render partial: 'layouts/cdn'
+    -#= render partial: 'layouts/cdn'
     = javascript_include_tag :application
     = yield :scripts
     = csrf_meta_tag
@@ -21,8 +18,11 @@
       Check back soon.
     - else
       = render 'common/ie6'
-      %a.plain(href = '/')
+      - if request.path == '/'
         %h1 ankona
+      - else
+        %a.plain(href = '/')
+          %h1 ankona
       = render 'common/logged_in'        
       %ul.menu
         %li= link_to 'Competitions', competitions_path
