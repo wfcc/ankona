@@ -12,4 +12,12 @@ class Section < ActiveRecord::Base
     (competition.nil? ? '' : competition.name.to_s) + (name.nil? ? '' : ' / ' + name)
     'xx'
   end
+  
+  def name_with_director
+    if user.present?
+      name + " (director #{self.user.nick})"
+    else
+      name
+    end
+  end
 end

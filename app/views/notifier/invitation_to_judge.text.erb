@@ -9,3 +9,5 @@ Competition: <%= @section.competition.name %>
 To ACCEPT invitation, please follow this link: <%= invites_url + '/accept/' + @invite.code %>.
 To DECLINE invitation, please go instead to <%= invites_url + '/decline/' + @invite.code %>.
 
+<%= invites_path %>
+

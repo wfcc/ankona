@@ -9,7 +9,7 @@
 %h1= @competition.name
 %p.fs-larger
   != Status.where(table: 'competitions', value: (@competition.status or 0)).first.h_display
-%div
+.bluey
   - if @competition.ttype.present?
     ! Format:
     != Status.where(table: 'comp-type', value: (@competition.ttype)).first.name.bold
@@ -19,15 +19,14 @@
   ! Competition is #{(@competition.formal ? 'formal' : 'informal').bold}
   %br
   ! Deadline: #{@competition.deadline.to_s.bold}
-%p
-%p
-  Announce:
-  = @competition.announce
-- if @competition.results.present?
   %p
-    Results:
-    = @competition.results
-  
+  %p
+    = @competition.announce
+  - if @competition.results.present?
+    %p
+      Results:
+      = @competition.results
+    
 - if may_edit? @competition
   = form_for @competition, url: {action: 'judge'}  do |f|
     - sections = @competition.sections.sort{|x|x.id}
@@ -35,7 +34,7 @@
       .lab Send invitation to be a
       = select_tag :role, '<option>director</option><option>judge</option>'.html_safe
       .lab for section
-      = collection_select :competition, :section_ids, sections, :id, :name                                                           |
+      = collection_select :competition, :section_ids, sections, :id, :name_with_director
     - else
       .lab Send invitation to judge this competition
       = hidden_field_tag :role, 'judge'
@@ -43,7 +42,12 @@
     .lab to email:
     = f.hidden_field :id
     = text_field_tag :judge_email, '', size: 26
-    = f.submit 'Send invitation'
+    %div
+      If you send an invitation to be a director for a section which
+      already has the director assigned, the director will be replaced
+      upon accepting of your invitation.
+
+    = f.submit ' Send invitation ', class: :button
   
   - if @competition.sections.count > 1
     %p  

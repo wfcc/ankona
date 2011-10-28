@@ -17,25 +17,25 @@ class Notifier < ActionMailer::Base
   end
 
   def invitation_to_judge(u, s, i)
-    subject       "Invitation to judge"
+    subject =      (i.role == 'j' ?
+      'Invitation to judge a competition' :
+      'Invitation to be director of a competition')
     @user = u
     @section = s
     @invite = i
-    mail to: i.email
+    mail to: i.email, subject: subject
   end
 
   def acceptance_to_judge(u, name, competition)
-    subject       u.nick + ' has accepted to be part of ' + name
     @name = name
     @u = u
-    mail to:      competition.user.email
+    mail to:      competition.user.email, subject: (u.nick + ' has accepted to be part of ' + name)
   end
 
   def refusal_to_judge(email, name, competition)
-    subject       email + ' has refused to be part of ' + name
     @name = name
     @u = u
-    mail to:      competition.user.email
+    mail to: competition.user.email, subject: (email + ' has refused to be part of ' + name)
   end
   
   private

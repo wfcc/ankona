@@ -5,6 +5,7 @@ h2
   = devise_error_messages!
   
   .span-10
+    p Your handle: #{resource.author.code}
     p
       = f.label :email
       = f.email_field :email
@@ -38,5 +39,5 @@ h2
   p.clearboth= f.submit "Update", class: [:clearboth, :button]
 
 p
-  | Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete}.
+  | Unhappy? #{link_to "Cancel my account", registration_path(resource_name), confirm: "Delete account?", method: :delete}.
 
