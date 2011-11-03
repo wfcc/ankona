@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   before_filter :user_has_name, except: [:add_name, :destroy, :json, :add_name_save ]
+  before_filter :c_user
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
@@ -31,6 +32,10 @@ class ApplicationController < ActionController::Base
 #  rescue_from ActionController::RoutingError do |exception|
 #    redirect_to root_url, alert: 'You have requested something that we don''t have.'
 #  end
+
+  def c_user
+    User.current_user = current_user
+  end
 
   def user_has_name
     if current_user and current_user.author.blank?

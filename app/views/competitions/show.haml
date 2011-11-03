@@ -30,18 +30,27 @@
 - if may_edit? @competition
   = form_for @competition, url: {action: 'judge'}  do |f|
     - sections = @competition.sections.sort{|x|x.id}
-    - if sections.count > 1
-      .lab Send invitation to be a
-      = select_tag :role, '<option>director</option><option>judge</option>'.html_safe
-      .lab for section
-      = collection_select :competition, :section_ids, sections, :id, :name_with_director
-    - else
-      .lab Send invitation to judge this competition
-      = hidden_field_tag :role, 'judge'
-      = f.hidden_field :section_ids
-    .lab to email:
-    = f.hidden_field :id
-    = text_field_tag :judge_email, '', size: 26
+    %table
+      - if sections.count > 1
+        %tr
+          %td.ra Send invitation to be a
+          %td
+            = select_tag :role, '<option>director</option><option>judge</option>'.html_safe
+            of this competition
+        %tr
+          %td.ra for section
+          %td= collection_select :competition, :section_ids, sections, :id, :name_with_director
+      - else
+        %tr
+          %td.ra Send invitation to judge this competition
+          %td
+            = hidden_field_tag :role, 'judge'
+            = f.hidden_field :section_ids
+      %tr
+        %td.ra to email
+        %td
+          = f.hidden_field :id
+          = text_field_tag :judge_email, '', size: 26
     %div
       If you send an invitation to be a director for a section which
       already has the director assigned, the director will be replaced
@@ -56,14 +65,13 @@
 %hr
 - @competition.sections.sort{|x|x.id}.each do |section|
   %h2= section.name
+  - if ([section.user, section.competition.user] & [current_user]).size > 0
+    = link_to " Section report ", section_url(section), class: :button
   %p= section.theme
-    
   %p
     - if section.user.present?
       Section director:
       %span.fs-larger= section.user.nick
-    - if ([section.user, section.competition.user] & [current_user]).size
-      = link_to " Section report ", section_url(section), class: :button
       %br
     Judges confirmed:
     %span.fs-larger= section.users.present? ? section.users.map(&:nick).commatize : 'none'

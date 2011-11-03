@@ -5,6 +5,8 @@ module Enumerable
   end
 end
 
+class NilClass; def to_hash; {} end end
+
 class Array
   def commatize
     if respond_to?(:empty?) && self.empty?

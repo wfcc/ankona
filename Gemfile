@@ -3,11 +3,10 @@ source 'http://rubygems.org'
 
 gem "rails", '3.1.0'
 
-# gem 'ruby-debug'
 
 gem 'rack', '1.3.3'
 gem 'dalli'
-gem 'formtastic', :git => "http://github.com/justinfrench/formtastic.git", :branch => "master"
+gem 'formtastic' #, :git => "http://github.com/justinfrench/formtastic.git", :branch => "master"
 gem 'haml'
 gem 'sass'
 gem 'slim'
@@ -42,6 +41,7 @@ group :development do
   gem 'passenger'
   gem 'thin'
   gem 'heroku'
+#  gem 'ruby-debug19', require: 'ruby-debug'
 end
 
 group :development, :test do

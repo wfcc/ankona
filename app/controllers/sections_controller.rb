@@ -1,4 +1,4 @@
-class SectionsController < ApplicationController
+class SectionsController < AuthorizedController
 
 # ---------------
   def new
@@ -27,10 +27,14 @@ class SectionsController < ApplicationController
   def index
     # select sections where a user is a judge or a director
     current_user_id = current_user.id
-    @sections = Section \
+    @sections =
+    Section \
       .joins{users} \
       .select('Distinct(SECTIONS.*)') \
-      .where{(users.id == current_user_id) | (user_id == current_user_id)}
+      .where{(users.id == current_user_id)} + \
+    Section \
+      .joins{user}.where{user.id == current_user_id}
+      
   end
   
 # ---------------
@@ -43,25 +47,18 @@ class SectionsController < ApplicationController
   
     case
     when current_user.blank?
-      render text: 'error: current user not found'
-      return
-    when params[:mark].present?
-      mark = Mark.find params[:mark][:id]
-      if mark.user != current_user
-        render text: 'error: not permitted'
-        return
+      logger.error "User required to mark"
+    when params[:mark][:id].present?
+      m = Mark.find_by_id params[:mark][:id]
+      if m.user != current_user
+        logger.error ">>>>> User #{current_user.id} not permitted to mark #{m.id}"
       end
-      mark[:nummark] = params[:nummark] if params[:nummark].present?
-      mark[:comment] = params[:mark][:comment] if params[:mark][:comment].present?
+      m.update_attributes params[:mark]
     else
-      mark = Mark.new \
-        diagram_id: params[:diagram_id], 
-        section_id: params[:section_id],
-        user_id: current_user.id,
-        nummark: params[:nummark],
-        comment: params[:comment]
+      m = Mark.new params[:mark]
+      m.user = current_user
+      m.save
     end
-    mark.save
       
     render nothing: true
   end

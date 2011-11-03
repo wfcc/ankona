@@ -13,8 +13,13 @@ google.setOnLoadCallback(function() {
           var sid = $('.section').data('sid')
           var mmark = my.slider('value').toString()
           $('.mark[data-did="' + did + '"]').text('...')
+          $('<input>').attr(
+            { type: 'hidden'
+            , name: 'mark[nummark]'
+            , value: mmark
+            }).appendTo('form')
           $.post('/sections/' + sid + '/mark'
-            , {diagram_id: did, nummark: mmark, section_id: sid, 'mark[id]': mid}
+            , $('form').serialize()
             , function(data) {
               my.data('mid', data)
               $('.mark[data-did="' + did + '"]').text(mmark)
@@ -22,19 +27,5 @@ google.setOnLoadCallback(function() {
           }
       })
     })
-/*    
-  $('form.edit_mark').each(function(i,edit_mark) {
-    var updating = $(this).find('.updating')
-    var button = $(this).find('input[name="commit"]')
-    $(edit_mark).bind('ajax:beforeSend', function(evt, xhr, settings) {
-      //updating.text('Updating...')
-      button.attr('disabled', true)
-      })
-    $(edit_mark).bind('ajax:complete', function(evt, xhr, settings) {
-      //updating.text('')
-      button.attr('disabled', false)
-      })
-    })
-*/    
   })
   

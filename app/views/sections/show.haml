@@ -3,11 +3,11 @@
 
 %table.section-stats
   %tr
-    %th problem ID and authors
-    %th.kings kings
+    %th problem ID, authors, kings
+    %th
     - @k.each do |judge|
       %th
-        = User.find(judge).nick
+        = User.find(judge).nick false
     %th.center total
     %th.center standard deviation
         
@@ -18,10 +18,11 @@
       %td
         = link_to id, diagram_path(id)
         = diagram.stipulation
+        = diagram.kings.join '-'
         %br
         .fine= diagram.authors.map(&:name).commatize
-      %td.kings
-        = diagram.kings.join '-'
+      %td
+        = image_tag '/fen/' + diagram.position
       - @k.each_index do |judge|
         - mark = @r[id][0].zip(@r[id][1])[judge]
         %td

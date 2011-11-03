@@ -2,12 +2,15 @@
   = javascript_include_tag 'diagram_edit'
 
 - content_for :title do
-  = @diagram.stipulation
-  by
-  = @diagram.authors.map(&:name).commatize
+  - if @diagram.stipulation.present?
+    = @diagram.stipulation
+    by
+    = @diagram.authors.map(&:name).commatize
+  - else
+    new problem
 
 %h2 Editing problem #{@diagram.id}
-= simple_form_for @diagram do |f|
+= semantic_form_for @diagram do |f|
 
   = f.hidden_field :id
   #first.span-12

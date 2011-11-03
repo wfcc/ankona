@@ -32,7 +32,8 @@ class InvitesController < ApplicationController
       @name =  sect.competition.name
       @name = "section “#{sect.name}” in #{@name}" if sect.name
 
-      if sect.competition.user == current_user
+      # if sect.competition.user == current_user
+      if false
         flash[:error] = "You are director of “#{sect.competition.name}”, you can't be its judge!"
       elsif params[:accepted]
         if @invite.role[0] == 'j'  # judge

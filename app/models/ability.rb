@@ -9,7 +9,10 @@ class Ability
     can [:read, :json], Author
     can [:index, :read, :create], Competition
     can :manage, Competition, user_id: user.id
-    can :manage, Diagram
+    can :manage, Section, user_id: user.id
+    can :manage, Section, competition: {user_id: user.id}
+    can [:mark, :judge], Section, users: {id: user.id}
+    can :manage, Diagram, user_id: user.id
     can :read, Faq
 #    can :update, Diagram do |diagram|
 #      diagram.user == user
