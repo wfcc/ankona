@@ -6,7 +6,11 @@
 //
 
 google.setOnLoadCallback(function() {
+
+  'use strict' // don't remove this line.  It's good for you.
   
+  initVars()                             
+
   $('#fen_button').click(function(e) {
     $('#fen-block').toggle()
     e.preventDefault()
@@ -43,23 +47,12 @@ google.setOnLoadCallback(function() {
       }    
     })  
 
-  aBoard = []
-  arrayOfOnes = ['1','1','1','1','1','1','1','1']
-  eight = $(arrayOfOnes)
-
-  notationEnglish = 'KQRBSPkqrbsp'
-  notationFIDE    = 'KDTLSpKDTLSp'
-  nEngl = 'kqrbsp'
-  nFide = 'kdtlsp'
-  
   $('#diagram_white').bind('keyup', updateFen)
   $('#diagram_black').bind('keyup', updateFen)
   $('#diagram_position').bind('keyup', updateFromFen)
   $('#white_c').bind('keyup', updateFen)
   $('#black_c').bind('keyup', updateFen)
 
-  initVars()                             
-  
   if (! $('#diagram_position').val()) {
     updateFen({keyCode: 50}) 
     } else {
@@ -79,13 +72,13 @@ google.setOnLoadCallback(function() {
   $('#blank').droppable(
     { drop: function(event, ui) {
       var board = $('#blank').offset()
-      var piece = ui.draggable  
+        , piece = ui.draggable  
       
-      aBoard
+      ik.board
         [Math.floor((ui.offset.top - board.top + 12) / 25)]
         [Math.floor((ui.offset.left - board.left + 12) / 25)] = piece.data('id')
       if (piece.hasClass('pieceOnBoard')) { // remove
-        aBoard[piece.data('x')][piece.data('y')] = '1'
+        ik.board[piece.data('x')][piece.data('y')] = '1'
         piece.remove()
         }
       fromInternal()
@@ -96,49 +89,50 @@ google.setOnLoadCallback(function() {
   $('.moveboard').button()
   $('.moveboard').click(function() { // move position left/up/down/up
     // ◁ ▽ △ ▷
+    var newBoard
     switch ($(this).data('name')) {
     case '▷' :
-        $.each(aBoard, function(i,row) {
+        $.each(ik.board, function(i,row) {
           row.unshift('1')
           row.pop()
         })
         break
     case '◁' :
-        $.each(aBoard, function(i,row)
+        $.each(ik.board, function(i,row)
           { row.shift()
           ; row.push('1')
         })
         ; break
     case '△' :
-        aBoard.shift()
-        aBoard.push(arrayOfOnes)
+        ik.board.shift()
+        ik.board.push(ik.arrayOfOnes)
         break
     case '▽' :
-        aBoard.pop()
-        aBoard.unshift(arrayOfOnes)
+        ik.board.pop()
+        ik.board.unshift(ik.arrayOfOnes)
         break
     case '↺' :
       newBoard = []
-      eight.each (function() {newBoard.push(arrayOfOnes.slice(0))})
-      eight.each (function(i, x) {
-        eight.each (function(j, y) {
-          newBoard[7-j][i] = aBoard[i][j]
+      ik.eight.each (function() {newBoard.push(ik.arrayOfOnes.slice(0))})
+      ik.eight.each (function(i, x) {
+        ik.eight.each (function(j, y) {
+          newBoard[7-j][i] = ik.board[i][j]
         })
       })
-      aBoard = newBoard
+      ik.board = newBoard
       break
     case '↻' :
       newBoard = []
-      eight.each (function() {newBoard.push(arrayOfOnes.slice(0))})
-      eight.each (function(i, x) {
-        eight.each (function(j, y) {
-          newBoard[j][7-i] = aBoard[i][j]
+      ik.eight.each (function() {newBoard.push(ik.arrayOfOnes.slice(0))})
+      ik.eight.each (function(i, x) {
+        ik.eight.each (function(j, y) {
+          newBoard[j][7-i] = ik.board[i][j]
         })
       })
-      aBoard = newBoard
+      ik.board = newBoard
       break
     case '↕' :
-        aBoard.reverse()
+        ik.board.reverse()
         break
     }
     fromInternal()
@@ -146,28 +140,37 @@ google.setOnLoadCallback(function() {
   }) //*************************************
   function clearBoard() {
 
-    aBoard = [];
-    for(i=0;i<8;++i) {aBoard.push(arrayOfOnes.slice(0))}
+    for(var i=0;i<8;++i) { ik.board[i] = ik.arrayOfOnes.slice(0) }
   } //*************************************
   function initVars(){
 
-    boobs = /^\[(.)(.+)\]/
-    allPieces =
+    ik.board = []
+    ik.arrayOfOnes = ['1','1','1','1','1','1','1','1']
+    ik.eight = $(ik.arrayOfOnes)
+
+    ik.notationFullEnglish = 'KQRBSPkqrbsp'
+    ik.notationFullFIDE    = 'KDTLSpKDTLSp'
+    ik.notationSmallEnglish = 'kqrbsp'
+    ik.notationSmallFIDE = 'kdtlsp'
+    ik.boobs = /^\[(.)(.+)\]/
+    var allPieces =
       [ 'wk','wq','wr','wb','ws','wp'
       , 'bk','bq','br','bb','bs','bp'
       , 'xwk','xwq','xwr','xwb','xws','xwp'
       , 'xbk','xbq','xbr','xbb','xbs','xbp']
-    aPieces = {}                                       
-    imgPieces = {}
+      , aPieces = {}                                       
+    ik.imgPieces = {}
     $.each(allPieces, function(i,p) {
       aPieces[p] = $.globals.fig_path + p + '.gif'
-      imgPieces[p] = $('<img>').attr('src', aPieces[p])
+      ik.imgPieces[p] = $('<img>').attr('src', aPieces[p])
       })
   } //*************************************
   function fenToInternal(){
     
-    var gf = fp = 0, acc = '', res = []
-    var fen = $('#diagram_position').val()
+    var gf = 0, fp = 0, res_row
+      , acc = '', res = []
+      , fen = $('#diagram_position').val()
+
     fen = fen.replace(/\d+/g, function(x){return '1'.times(Number(x))})    
     
     $.each(fen.split(''), function(i,c) {
@@ -200,14 +203,16 @@ google.setOnLoadCallback(function() {
              }
            }
        })
-       eight.each(function(i,c) {
-         aBoard[i] = res.slice(i*8, i*8+8)
-         })
+
+    ik.eight.each(function(i,c) {
+      res_row = res.slice(i*8, i*8+8)
+      ik.board[i] = res_row
+    })
     
   } //*************************************
   function notationToInternal(){
 
-    var prefix, postfix, iswhite
+    var prefix, postfix, iswhite, p, piece, file, rank
     clearBoard()
     $(['#diagram_white', '#diagram_black', '#white_c', '#black_c'])
       .each (function(i_color ,color) {
@@ -230,35 +235,38 @@ google.setOnLoadCallback(function() {
             prefix = postfix = ''
          }
          iswhite = i_color % 2 == 0 ? function(x){return x.toUpperCase()} : idem
-         aBoard[8 - rank][file - 97]
+         ik.board[8 - rank][file - 97]
             = prefix
-            + iswhite( nEngl.charAt(nFide.indexOf(piece)) )
+            + iswhite( ik.notationSmallEnglish.charAt(ik.notationSmallFIDE.indexOf(piece)) )
             + postfix
         })
       })
   } //*************************************
   function internalToDiagram(){
 
-    var p, im, top, left, color, pp
-    var gf_conf = ''
+    var p, im, oldPieces  =[]
+      , top, left, oldPiece
+      , color, pp, gf_cond = ''
     for (var i=0; i<8; ++i) {
       for (var j=0; j<8; ++j) {
-        p = aBoard[i][j]
+        p = ik.board[i][j]
         if (p == '1') {
           $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]').remove()
           continue
           }
         else {    
-          pp = p.match(boobs) // general fairy piece condition
+          pp = p.match(ik.boobs) // general fairy piece condition
           if(pp) { p = pp[2] ;  gf_cond= 'x' }
           else { gf_cond = '' }
           color = p>'a'?'b':'w'
           left = j * 25 + 1
           top = i * 25 + 1
           p = p.n2s()
-          im = imgPieces[gf_cond + color + p.toLowerCase()].clone()
+          oldPiece = $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]')
+          if (oldPiece.data('id') == p) { continue }
+          oldPiece.remove()
+          im = ik.imgPieces[gf_cond + color + p.toLowerCase()].clone()
           $('#divBlank').append(im)
-          $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]').remove()
           im.css(
               { 'position': 'absolute'
               , 'top': top + 'px'
@@ -273,24 +281,23 @@ google.setOnLoadCallback(function() {
               , zIndex: 5
               , stop: function(e,ui) { // remove off board
                 var fig = $(this)
-                aBoard[fig.data('x')][fig.data('y')] = '1'
+                ik.board[fig.data('x')][fig.data('y')] = '1'
                 internalToNotation()
                 internalToFen()
                 fig.remove()
                 }
               })
-           }
+          }
         }
       }  
-
-    var b = aBoard.join('').match(/[a-z]/g)
-    var w = aBoard.join('').match(/[A-Z]/g)
+    var b = ik.board.join('').match(/[a-z]/g)
+    var w = ik.board.join('').match(/[A-Z]/g)
     $('#pcount').html('(' + (w?w.length:'0') +' + '+ (b?b.length:'0')+')')
 
   } //*************************************
   function internalToFen(){
     $('#diagram_position')
-      .val(aBoard
+      .val(ik.board
         .join('/')
         .replace(/,/g,'')
         .replace(/s/g,'n')
@@ -300,11 +307,11 @@ google.setOnLoadCallback(function() {
   } //*************************************
   function internalToNotation(){
     var piece, pp, ham, f
-    var fields = {diagram_white: [], diagram_black: [], white_c: [], black_c: []}
+      , fields = {diagram_white: [], diagram_black: [], white_c: [], black_c: []}
     for(var i=0;i<8;++i) {
       for(var j=0;j<8;++j) {
-        piece = aBoard[i][j]
-        pp = piece.match(boobs)
+        piece = ik.board[i][j]
+        pp = piece.match(ik.boobs)
         if(pp) { ham = true ; piece = pp[2] }
         else { ham = false }
         
@@ -321,12 +328,12 @@ google.setOnLoadCallback(function() {
             }
             
           fields[f].push(
-            notationFIDE.substr(notationEnglish.indexOf(piece),1) +
+            ik.notationFullFIDE.substr(ik.notationFullEnglish.indexOf(piece),1) +
             String.fromCharCode(j+97) + (8-i).toString())
           }
         }
       }
-    for (x in fields) {
+    for (var x in fields) {
       $('#' + x).val(fields[x].sort(sortPieces).join(' '))
       }
   } //*************************************
@@ -355,8 +362,8 @@ google.setOnLoadCallback(function() {
   } //*************************************
   function sortPieces(a,b) {
     var x
-    if (x = a.match(boobs)) { a = x[2] }
-    if (x = b.match(boobs)) { b = x[2] }
+    if (x = a.match(ik.boobs)) { a = x[2] }
+    if (x = b.match(ik.boobs)) { b = x[2] }
     var pcs = 'KDTLSp'
     return pcs.indexOf(a.substr(0,1)) -
         pcs.indexOf(b.substr(0,1)) 

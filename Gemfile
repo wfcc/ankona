@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 
 
-gem "rails", '3.1.0'
+gem "rails", '3.1.1'
 
 
-gem 'rack', '1.3.3'
+#gem 'rack', '1.3.3'
 gem 'dalli'
 gem 'formtastic' #, :git => "http://github.com/justinfrench/formtastic.git", :branch => "master"
 gem 'haml'

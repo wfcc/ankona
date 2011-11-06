@@ -10,7 +10,7 @@ $.globals =
   }
 
 google =
-  { load: function(){}
+  { load: function(){} // dummy for now
   , setOnLoadCallback: jQuery
   }
 
@@ -47,6 +47,11 @@ google.setOnLoadCallback(function() {
   //$("input:visible:enabled:first").focus();
   $('input[type!="hidden"]:first:visible:enabled').focus();
   
+  ik = {}
+  ik.figurines = 
+    $('<img>').attr('src', '/assets/fig/figurines.gif')
+    .appendTo('body')
+    .hide()
   
   })
 // -------------------------------------------------------------------

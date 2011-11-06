@@ -1,4 +1,5 @@
 ---
+active_scaffold/DO_NOT_EDIT: active_scaffold/DO_NOT_EDIT
 active_scaffold/default/add.gif: active_scaffold/default/add-0f931dfcec05f53d7e432e566a8a5404.gif
 active_scaffold/default/arrow_down.gif: active_scaffold/default/arrow_down-c6eeb7e2f2292a28f7069291c924d2d0.gif
 active_scaffold/default/arrow_up.gif: active_scaffold/default/arrow_up-d6a4b0eb5fb18cc4ff8ff341ea182cec.gif
@@ -42,6 +43,7 @@ fig/bsw.gif: fig/bsw-cffa2cb1b0453e0dd082d6c35a5e4101.gif
 fig/bsz.gif: fig/bsz-8b90d5ae9306cac825dffc4bd98bcf21.gif
 fig/bw.gif: fig/bw-adf122bf8700476b49c80f8053ef6bd9.gif
 fig/bz.gif: fig/bz-107f2a98df37209e51cc7609bd049bff.gif
+fig/figurines.gif: fig/figurines-56d6ee8ed3870acf8153932f4afddf87.gif
 fig/hole.gif: fig/hole-ef50408eb3b480dd57de99ade4b514e0.gif
 fig/i.gif: fig/i-adfd39c157a08d25e3521d3f2373f9e4.gif
 fig/k.gif: fig/k-d83dce34ce519e12974e5cf883354592.gif
@@ -201,11 +203,8 @@ images/ui-icons_f08000_256x240.png: images/ui-icons_f08000_256x240-859e42396c18b
 images/ui-icons_f35f07_256x240.png: images/ui-icons_f35f07_256x240-4740a2349f00f7148fbb008bfde3189c.png
 images/ui-icons_ff7519_256x240.png: images/ui-icons_ff7519_256x240-216eba247960724c71b070e3a29bdd96.png
 images/ui-icons_ffffff_256x240.png: images/ui-icons_ffffff_256x240-14d5ba91d75476408742cc8f77e59b4a.png
-jquery-ui-1.8.16.custom.css: jquery-ui-1.8.16.custom-393b3ea6396f1e1d5d2851b2ffb7c031.css
-jquery-ui.min.js: jquery-ui.min-da67befaba45194a6af3d14978267c7d.js
-jquery.min.js: jquery.min-2b3032a85da47f182fb58d9df8e82e2e.js
-application.js: application-f7868b5ced3e75874ab1e3bcd58a8706.js
-application.css: application-9f25efce8d1c68bfbd8031e334c0a1af.css
-diagram_edit.js: diagram_edit-0597212129dcb15f1307ede555babcfc.js
-users.js: users-5d933a9eea9abf921a1aa5fe8dd176ca.js
+application.js: application-4a4eaa0bca57f40c5081a8f6159982bc.js
+diagram_edit.js: diagram_edit-c4712c80132080eab3e51b0da50489d9.js
 sections_judge.js: sections_judge-5f690bac98db6849d0e1e1706966e30e.js
+users.js: users-5d933a9eea9abf921a1aa5fe8dd176ca.js
+application.css: application-6f7fccd362b90b80923fa3b7e1c5be8e.css
