@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  b Code:
+  = @piece.code
+p
+  b Name:
+  = @piece.name
+p
+  b Glyph1:
+  = @piece.glyph1
+p
+  b Glyph2:
+  = @piece.glyph2
+
+= link_to 'Edit', edit_piece_path(@piece)
+'|
+= link_to 'Back', pieces_path

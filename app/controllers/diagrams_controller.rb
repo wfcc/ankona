@@ -78,7 +78,7 @@ require "net/http"
     Pieces #{array_to_popeye(fen2arr(params[:position]))}
     EndProblem
     EOD
-
+logger.warn input
     res = Net::HTTP.post_form URI.parse(Ya['popeye_url']), 
       input: input,
       popeye: Ya['popeye_location']

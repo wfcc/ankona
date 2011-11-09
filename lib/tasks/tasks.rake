@@ -27,6 +27,18 @@ task :au_codes => :environment do
   end
 end
 
+desc 'Fairy pieces to JSON'
+task pieces: :environment do
+  ActiveRecord::Base.include_root_in_json = false
+  pieces = Piece.all.to_json except: [:id, :created_at, :updated_at]
+  File.open Rails.root.join('app/assets/javascripts/fairy-pieces.js'), 'w' do |file|
+    file.write '(function() { ik.pieces = '
+    file.write pieces
+    file.write '})(jQuery)'
+  end
+end
+
+
 
 namespace :db do
   desc 'Create YAML test fixtures from data in an existing database.  

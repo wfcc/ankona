@@ -1,0 +1,25 @@
+h1 Known fairy pieces
+
+p New pieces may be added upon request.
+
+table
+  tr
+    th Code
+    th Name
+    th Figurine
+    th 
+    th
+    th
+
+  - @pieces.each do |piece|
+    tr
+      td= piece.code
+      td= piece.name
+      td= image_tag "fig/w#{piece.glyph1}.gif"
+      td= image_tag "fig/w#{piece.glyph2}.gif" if piece.glyph2.present?
+      td= link_to 'Edit', edit_piece_path(piece) if can? :edit, piece
+      td= link_to 'Destroy', piece, :confirm => 'Are you sure?', :method => :delete if can? :destroy, piece
+
+br
+
+= link_to 'New Piece', new_piece_path

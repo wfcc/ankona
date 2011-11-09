@@ -15,8 +15,8 @@
   = f.hidden_field :id
   #first.span-12
     .label Position (w/b)                                                          
-    = f.input :white, label: false, |
-      hint: '↕ FIDE piece notation (KDTLSP)'
+    = f.input :white, label: false
+    .fine  ↕ FIDE piece notation (KDTLSP), popeye notation for fairy pieces
     = f.input :black, label: false
     %p.clear
       %button{id: :fen_button}
@@ -29,15 +29,16 @@
         .label Chameleon pieces
         white:
         = text_field_tag :white_c, ''
+        %br
         black:
         = text_field_tag :black_c, ''
 
     .cassete
-      -%w{k q r b s p}.each do |figurine|
+      -%w{k q r b n p}.each do |figurine|
         = image_tag fig_glyph('b', figurine), 'data-id' =>  figurine, class: 'todrag'
     #divBlank= image_tag '/fen', id: 'blank'
     .cassete
-      -%w{k q r b s p}.each do |figurine|
+      -%w{k q r b n p}.each do |figurine|
         = image_tag fig_glyph('w', figurine), 'data-id' =>  figurine.upcase, class: 'todrag'
     #pcount
 

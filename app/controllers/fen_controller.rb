@@ -11,7 +11,6 @@ SUFFIX = '.gif'
     cols, rows = 8, 8
     i, j = -25, 0
     @dia = $board
-    prefix = ''
 
     if params[:id].present?
       slashed = params[:id].split('/')
@@ -23,19 +22,24 @@ SUFFIX = '.gif'
       
       pieces = slashed.join.scan(/\[\w+\]|\(\w+\)|./)
       pieces.each do |p|
+        prefix = ''
+        fig = p
         (j+=25; i=0) if (i+=25) > 180
         case p
         when ' '
           next
         when /\[x(\w+)\]/
           prefix = 'x'; fig = $~[1]
-        else
-          prefix = ''; fig = p
+        when /\((\w+)\)/
+          fig = $~[1]
+          fig = Piece.where{code == fig.upcase}.first.et.glyph1
         end
-        color = fig < 'a' ? 'w' : 'b'
-        fig.downcase!
-        fig = fig.n2s
-        putFigM prefix + color + fig, i, j
+        color = p.match(/^[\(|\[.]?[A-Z]/) ? 'w' : 'b'
+        if fig.present?
+          putFigM prefix + color + fig.downcase, i, j
+        else
+          putFigM 'magic', i, j
+        end
       end
     end
 
@@ -46,13 +50,13 @@ SUFFIX = '.gif'
 #--------------------------------------------
 
   def putFigM(c, i, j)
-    logger.info (FIGDIR + c + SUFFIX)
+    c = 'magic' unless File.readable?(FIGDIR + c + SUFFIX)
     begin
       fig = Image.read(FIGDIR + c + SUFFIX)[0]
     rescue
-      logger.warn "bad symbol #{c}"
+      logger.warn "bad: #{c}"
       pen = Magick::Draw.new
-      pen.annotate(@dia, 0,0,0,40, "bad symbol: #{c}") do
+      pen.annotate(@dia, 0,0,0,40, "bad: #{c}") do
         self.font_family = 'Georgia'
         self.fill = '#FF5353'
         self.stroke = 'transparent'

@@ -14,6 +14,7 @@ class Ability
     can [:mark, :judge], Section, users: {id: user.id}
     can :manage, Diagram, user_id: user.id
     can :read, Faq
+    can :index, Piece
 #    can :update, Diagram do |diagram|
 #      diagram.user == user
 #    end

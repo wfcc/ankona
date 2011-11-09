@@ -6,8 +6,10 @@ defaults: &defaults
 development:
   <<: *defaults
   only_latvia: false
-  popeye_url: http://popeye.local/cgi/popeye.sh
-  popeye_location: /usr/local/bin/py
+  #popeye_url: http://popeye.local/cgi/popeye.sh
+  #popeye_location: /usr/local/bin/py
+  popeye_url: http://util.dia-x.info/cgi/popeye.sh
+  popeye_location: /home/ike/cgi/py
 
 test:
   <<: *defaults

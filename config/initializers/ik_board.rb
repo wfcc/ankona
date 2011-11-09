@@ -29,10 +29,14 @@ include Magick
 
   def fen2arr(fen)                                        
     b = []
-    a = fen.gsub(/\d+/){'1' * $&.to_i}.scan(/\[.\w+\]|\w/)
+    a = fen
+      .gsub(/(?!\()n(?!\))/, 's') \
+      .gsub(/(?!\()N(?!\))/, 'S') \
+      .gsub(/\d+/){'1' * $&.to_i} \
+      .scan(/\(\w+\)|\[.\w+\]|\w/)
+
     a.select_with_index do |x,i|
       next if x == '1'
-      x = x.n2s
       b.push x + index2algebraic(i)
     end
     return b
@@ -43,14 +47,14 @@ include Magick
     a.map do |x|                   
       case x
       when /\[x([A-Z]\w?)\](..)$/
-        wc.push $~[1].n2s + $~[2]
+        wc
       when /\[x([a-z]\w?)\](..)$/
-        bc.push $~[1].n2s + $~[2]
-      when /^[A-Z]..$/
-        w.push $&
-      when /^[a-z]..$/
-        b.push $&
-      end
+        bc
+      when /^\(?([A-Z]+)\)?(..)$/
+        w
+      when /^\(?([a-z]+)\)?(..)$/
+        b
+      end.push $~[1] + $~[2]
     end
       
       w.join(' ').predifix(' White ') +
@@ -60,16 +64,21 @@ include Magick
   end
 
   def fairy_synopsis(a)
-    bc = []; wc = []
+    bc = []; wc = []; fp = {}
     a.each do |piece|
       case piece
       when /\[x([a-z]+)\](..)/
         bc.push $~[1].upcase + $~[2]
       when /\[x([A-Z]+)\](..)/
         wc.push $~[1] + $~[2]
+      when /\(([A-Z]+)\)(..)/i
+        name = Piece.where{code == $~[1].upcase}.first.et.name
+        name = 'unknown' if name.blank?
+        fp[name] ||= []
+        fp[name].push $~[2]
       end
     end
-    return [wc.join(', ').predifix('White Chameleons: '),
-      bc.join(', ').predifix('Black Chameleons: ')].join '; '
+    chameleons = (wc + bc).join(', ').predifix('Chameleon ')
+    fp.map{|k,v| k.capitalize + ' ' + v.join(',') }.push(chameleons).join('; ')
   end
                      

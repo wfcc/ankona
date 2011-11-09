@@ -148,84 +148,56 @@ google.setOnLoadCallback(function() {
     ik.arrayOfOnes = ['1','1','1','1','1','1','1','1']
     ik.eight = $(ik.arrayOfOnes)
 
-    ik.notationFullEnglish = 'KQRBSPkqrbsp'
-    ik.notationFullFIDE    = 'KDTLSpKDTLSp'
-    ik.notationSmallEnglish = 'kqrbsp'
-    ik.notationSmallFIDE = 'kdtlsp'
+    ik.e2f = {K:'K',Q:'D',R:'T',B:'L',N:'S',P:'p'}
+    ik.f2e = {k:'k',d:'q',t:'r',l:'b',s:'n',p:'p'}
     ik.boobs = /^\[(.)(.+)\]/
     var allPieces =
-      [ 'wk','wq','wr','wb','ws','wp'
-      , 'bk','bq','br','bb','bs','bp'
-      , 'xwk','xwq','xwr','xwb','xws','xwp'
-      , 'xbk','xbq','xbr','xbb','xbs','xbp']
+      [ 'wk','wq','wr','wb','wn','wp'
+      , 'bk','bq','br','bb','bn','bp'
+      , 'xwk','xwq','xwr','xwb','xwn','xwp'
+      , 'xbk','xbq','xbr','xbb','xbn','xbp']
       , aPieces = {}                                       
     ik.imgPieces = {}
     $.each(allPieces, function(i,p) {
-      aPieces[p] = $.globals.fig_path + p + '.gif'
+      aPieces[p] = ik.fig_path + p + '.gif'
       ik.imgPieces[p] = $('<img>').attr('src', aPieces[p])
       })
   } //*************************************
   function fenToInternal(){
     
-    var gf = 0, fp = 0, res_row
-      , acc = '', res = []
-      , fen = $('#diagram_position').val()
+    var fen = $('#diagram_position').val()
 
-    fen = fen.replace(/\d+/g, function(x){return '1'.times(Number(x))})    
-    
-    $.each(fen.split(''), function(i,c) {
-       switch(c) {
-         case '[' :
-           acc = '['
-           gf = 1
-           break
-         case '(' : 
-           fp = 2
-           acc = '('
-           break 
-         case ']' :
-           res.push(acc + ']') ; acc = ''; gf = fp = 0
-           break
-         case ')' :
-           acc += ')' ;  fp = 0
-           break
-         case '/' :
-            res = res.concat('1'.times((8 - res.length % 8) % 8).split(''))
-            break
-         default :
-           switch (gf + fp) {
-           case 0 :
-             if (acc.length) { res.push(acc) ; acc = '' }
-             res.push(c.n2s())
-             break
-           default:
-             acc += c
-             }
-           }
-       })
+    fen = fen
+      .replace(/\d+/g, function(x){return '1'.times(Number(x))})
+      .replace(/\/(?=\/)/g, '/8')
+      .replace(/[^\/]+/g, function(x){ return x.pad('1', 8) })
+    /* transformations:
+    ----------------------------
+    3      —> 111
+    ///    —> /8/8/
+    /bK/   —> /bK111111/
+    ----------------------------    */
+    _.each(fen.split('/'), function(row, i) {
+      ik.board[i] = row.split(/(?!\w*[\)|\]])/)
+      })
 
-    ik.eight.each(function(i,c) {
-      res_row = res.slice(i*8, i*8+8)
-      ik.board[i] = res_row
-    })
-    
   } //*************************************
   function notationToInternal(){
 
-    var prefix, postfix, iswhite, p, piece, file, rank
+    var prefix, postfix, ifwhite, p, piece, file, rank, m
     clearBoard()
     $(['#diagram_white', '#diagram_black', '#white_c', '#black_c'])
       .each (function(i_color ,color) {
       $($(color).val().toLowerCase().split(/\W/)).each (function(j,p) {
-         if (p.length == 2) p = 'p' + p
-         if (p.length != 3) return
+         if (p.length < 2) return
+         if (p.length == 2) p = 'p' + p // implicit pawn
          p = p.toLowerCase()
-         piece = p.charAt(0)
-         file = p.charCodeAt(1)
-         rank = p.charAt(2)
+         m = p.match(/(..?)(..)$/)
+         piece = m[1]
+         file = m[2].charCodeAt(0)
+         rank = m[2].charAt(1)
          if (file< 97 || file>104) return; // a — h
          if (rank<'1' || rank>'8') return;
-         if ('kdtlsp'.indexOf(piece) < 0) return;
          switch (true) {
          case i_color > 1 :
             prefix = '[x'
@@ -234,105 +206,107 @@ google.setOnLoadCallback(function() {
          default:
             prefix = postfix = ''
          }
-         iswhite = i_color % 2 == 0 ? function(x){return x.toUpperCase()} : idem
+         ifwhite = i_color % 2 == 0 ? function(x){return x.toUpperCase()} : idem
          ik.board[8 - rank][file - 97]
             = prefix
-            + iswhite( ik.notationSmallEnglish.charAt(ik.notationSmallFIDE.indexOf(piece)) )
+            + ifwhite( ik.f2e[piece] || '('+piece+')' )
             + postfix
         })
       })
   } //*************************************
   function internalToDiagram(){
-
-    var p, im, oldPieces  =[]
+    var p, im, x, dataid
       , top, left, oldPiece
       , color, pp, gf_cond = ''
-    for (var i=0; i<8; ++i) {
-      for (var j=0; j<8; ++j) {
-        p = ik.board[i][j]
-        if (p == '1') {
-          $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]').remove()
-          continue
+    _(ik.board).each(function(row, i) {
+      _(row).each(function(p, j) {
+        oldPiece = $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]')
+        if (oldPiece.data('id') == p) return 
+        if (p == '1') return oldPiece.remove()
+
+        dataid = p
+        pp = p.match(ik.boobs) // general fairy piece condition
+        if(pp) {p = pp[2] ;  gf_cond= 'x' }
+        else { gf_cond = '' }
+        oldPiece.remove()
+        if (pp = p.match(/\((.+)\)/)) {
+          x = _(ik.pieces).find(function(x){ return x.code == pp[1].toUpperCase() })
+          x = x ? wb(pp[1]) + x.glyph1 : 'magic'
+          im = $('<img>').attr('src', ik.fig_path + x + '.gif')
           }
-        else {    
-          pp = p.match(ik.boobs) // general fairy piece condition
-          if(pp) { p = pp[2] ;  gf_cond= 'x' }
-          else { gf_cond = '' }
-          color = p>'a'?'b':'w'
-          left = j * 25 + 1
-          top = i * 25 + 1
-          p = p.n2s()
-          oldPiece = $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]')
-          if (oldPiece.data('id') == p) { continue }
-          oldPiece.remove()
-          im = ik.imgPieces[gf_cond + color + p.toLowerCase()].clone()
-          $('#divBlank').append(im)
-          im.css(
-              { 'position': 'absolute'
-              , 'top': top + 'px'
-              , 'left': left + 'px'
+        else {
+          im = ik.imgPieces[ gf_cond + wb(p) + p.toLowerCase() ].clone()
+          }
+        $('#divBlank').append(im)
+        left = j * 25 + 1
+        top = i * 25 + 1
+        im.css(
+            { 'position': 'absolute'
+            , 'top': top + 'px'
+            , 'left': left + 'px'
             })
-            .attr('data-x', i)
-            .attr('data-y', j)
-            .data('id', p)
-            .addClass('pieceOnBoard ui-draggable')
-            .draggable(
-              { revert: false
-              , zIndex: 5
-              , stop: function(e,ui) { // remove off board
-                var fig = $(this)
-                ik.board[fig.data('x')][fig.data('y')] = '1'
-                internalToNotation()
-                internalToFen()
-                fig.remove()
-                }
-              })
-          }
-        }
-      }  
+          .attr('data-x', i)
+          .attr('data-y', j)
+          .data('id', dataid)
+          .addClass('pieceOnBoard ui-draggable')
+          .draggable(
+            { revert: false
+            , zIndex: 5
+            , stop: function(e,ui) { // remove off board
+              var fig = $(this)
+              ik.board[fig.data('x')][fig.data('y')] = '1'
+              internalToNotation()
+              internalToFen()
+              fig.remove()
+              }
+            })
+        })
+      })
     var b = ik.board.join('').match(/[a-z]/g)
     var w = ik.board.join('').match(/[A-Z]/g)
     $('#pcount').html('(' + (w?w.length:'0') +' + '+ (b?b.length:'0')+')')
 
   } //*************************************
   function internalToFen(){
-    $('#diagram_position')
-      .val(ik.board
+
+    var x
+    x = _(ik.board).map(function(row) { return row.join('') })
         .join('/')
-        .replace(/,/g,'')
-        .replace(/s/g,'n')
-        .replace(/S/g,'N')
-        .replace(/\d+/g,function(x){return x.length}))
+        .replace(/\d+/g,function(x){return x.length})
+
+    $('#diagram_position').val(x)
 
   } //*************************************
   function internalToNotation(){
-    var piece, pp, ham, f
+    var piece, pp, ham, f, fairy
       , fields = {diagram_white: [], diagram_black: [], white_c: [], black_c: []}
-    for(var i=0;i<8;++i) {
-      for(var j=0;j<8;++j) {
-        piece = ik.board[i][j]
+    _(ik.board).each(function(row, i) {
+      _(row).each(function(piece, j) {
         pp = piece.match(ik.boobs)
         if(pp) { ham = true ; piece = pp[2] }
         else { ham = false }
+
+        var white = function(x){ return x.match(/^\(?[A-Z]/) ? true : false }
         
         if (piece !== '1') {
           switch (true) {
-          case !ham && piece.isWhite() :
+          case !ham && white(piece) :
             f = 'diagram_white'; break
-          case !ham && !piece.isWhite() :
+          case !ham && !white(piece) :
             f = 'diagram_black'; break
-          case ham && piece.isWhite() :
+          case ham && white(piece) :
             f = 'white_c'; break
-          case ham && !piece.isWhite() :
+          case ham && !white(piece) :
             f = 'black_c'; break
             }
-            
+
+          piece = piece.toUpperCase()            
           fields[f].push(
-            ik.notationFullFIDE.substr(ik.notationFullEnglish.indexOf(piece),1) +
+            (ik.e2f[piece] || piece.replace(/\(|\)/g,'')) +
             String.fromCharCode(j+97) + (8-i).toString())
           }
-        }
-      }
+        })
+      })
     for (var x in fields) {
       $('#' + x).val(fields[x].sort(sortPieces).join(' '))
       }
@@ -400,8 +374,11 @@ google.setOnLoadCallback(function() {
     internalToDiagram()
     internalToNotation()
     internalToFen()
-    }
-  //***************************************
+    } //***************************************
+  function wb(p) {
+    return p < 'a' ? 'w' : 'b'
+    } //***************************************
   })
+
 
 

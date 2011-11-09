@@ -29,6 +29,7 @@ gem 'execjs'
 gem 'therubyracer'
 #gem 'httparty'
 #gem "vidibus-routing_error"
+gem 'underscore-rails'
 
 group :assets do
   gem 'sass-rails', '~> 3.1.0'

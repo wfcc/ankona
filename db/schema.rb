@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,8 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 39) do
+ActiveRecord::Schema.define(:version => 40) do
 
+  create_table "aaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d",                :null => false
+    t.integer "pay"
+  end
+
+  create_table "aaaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d_d",              :null => false
+    t.integer "pay"
+  end
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -29,6 +43,10 @@ ActiveRecord::Schema.define(:version => 39) do
   create_table "authors_diagrams", :id => false, :force => true do |t|
     t.integer "author_id"
     t.integer "diagram_id"
+  end
+
+  create_table "bubu", :id => false, :force => true do |t|
+    t.decimal "id", :precision => 10, :scale => 0
   end
 
   create_table "collections", :force => true do |t|
@@ -120,6 +138,15 @@ ActiveRecord::Schema.define(:version => 39) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "pieces", :force => true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "glyph1"
+    t.string   "glyph2"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "posts", :force => true do |t|
