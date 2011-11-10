@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 40) do
+ActiveRecord::Schema.define(:version => 41) do
 
   create_table "aaa", :id => false, :force => true do |t|
     t.integer "i",                :null => false
@@ -141,12 +141,10 @@ ActiveRecord::Schema.define(:version => 40) do
   end
 
   create_table "pieces", :force => true do |t|
-    t.string   "code"
-    t.string   "name"
-    t.string   "glyph1"
-    t.string   "glyph2"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "code"
+    t.string "name"
+    t.string "glyph1"
+    t.string "glyph2"
   end
 
   create_table "posts", :force => true do |t|

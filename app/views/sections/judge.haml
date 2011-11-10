@@ -39,13 +39,17 @@
             %div
               .id= diagram.id
               %h4= diagram.authors.collect(&:name).commatize
-              %p= [ diagram.source, diagram.label ].join(' / ')
-              .em1= diagram.stipulation
+              %p.xs
+                = [ diagram.source, diagram.issue, diagram.label ].commatize
+                %br
+                = diagram.award
+              %p &nbsp;
+              %p.fs-larger= diagram.stipulation
               %p= diagram.twin
           %td
             %div(style = "padding:0 0 20px 0; position:relative")
               = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
-          %td
+          %td.solution
             %pre.solution= diagram.solution
         - case
         - when @section.competition.status != 2

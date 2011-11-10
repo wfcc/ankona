@@ -34,7 +34,7 @@ SUFFIX = '.gif'
           fig = $~[1]
           fig = Piece.where{code == fig.upcase}.first.et.glyph1
         end
-        color = p.match(/^[\(|\[.]?[A-Z]/) ? 'w' : 'b'
+        color = p.match(/^(\(|\[.)?[A-Z]/) ? 'w' : 'b'
         if fig.present?
           putFigM prefix + color + fig.downcase, i, j
         else
@@ -50,9 +50,10 @@ SUFFIX = '.gif'
 #--------------------------------------------
 
   def putFigM(c, i, j)
-    c = 'magic' unless File.readable?(FIGDIR + c + SUFFIX)
+    #c = 'magic' unless File.readable?(FIGDIR + c + SUFFIX)
     begin
-      fig = Image.read(FIGDIR + c + SUFFIX)[0]
+      fig = $figurines[c] or $figurines['magic']
+      #fig = Image.read(FIGDIR + c + SUFFIX)[0]
     rescue
       logger.warn "bad: #{c}"
       pen = Magick::Draw.new

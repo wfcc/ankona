@@ -22,4 +22,4 @@ table
 
 br
 
-= link_to 'New Piece', new_piece_path
+= link_to 'New Piece', new_piece_path if can? :create, Piece

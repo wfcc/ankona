@@ -64,7 +64,7 @@ require "net/http"
 
     @diagram.sections << Section.find(params[:diagram][:section_ids])
 
-    flash[:notice] = "Diagram was submitted to this competition."
+    flash[:notice] = "The composition was submitted to this competition."
     render :show
   end #--------------------------------------------------------
 
@@ -78,7 +78,6 @@ require "net/http"
     Pieces #{array_to_popeye(fen2arr(params[:position]))}
     EndProblem
     EOD
-logger.warn input
     res = Net::HTTP.post_form URI.parse(Ya['popeye_url']), 
       input: input,
       popeye: Ya['popeye_location']
