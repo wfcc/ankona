@@ -90,11 +90,6 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    meta_search (1.1.1)
-      actionpack (~> 3.1.0)
-      activerecord (~> 3.1.0)
-      activesupport (~> 3.1.0)
-      polyamorous (~> 0.5.0)
     metaclass (0.0.1)
     mime-types (1.17.2)
     mocha (0.10.0)
@@ -139,6 +134,10 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.6)
     rake (0.9.2.2)
+    ransack (0.5.8)
+      actionpack (~> 3.0)
+      activerecord (~> 3.0)
+      polyamorous (~> 0.5.0)
     rdoc (3.11)
       json (~> 1.4)
     rest-client (1.6.7)
@@ -226,13 +225,13 @@ DEPENDENCIES
   hirb
   itslog
   jquery-rails
-  meta_search
   mocha
   nifty-generators
   passenger
   pg
   rails (= 3.1.1)
   rails-footnotes
+  ransack
   rmagick
   sass
   sass-rails (~> 3.1.0)

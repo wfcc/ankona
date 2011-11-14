@@ -13,7 +13,7 @@ gem 'slim'
 gem 'slim-rails'
 gem 'jquery-rails'
 #gem 'kaminari'
-gem 'meta_search'
+#gem 'meta_search'
 gem 'squeel'
 #gem 'mysql2', '< 0.3'
 gem "RedCloth", '>= 4.2.5', require: 'redcloth'
@@ -30,6 +30,7 @@ gem 'therubyracer'
 #gem 'httparty'
 #gem "vidibus-routing_error"
 gem 'underscore-rails'
+gem 'ransack'
 
 group :assets do
   gem 'sass-rails', '~> 3.1.0'

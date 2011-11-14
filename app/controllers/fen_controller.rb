@@ -51,23 +51,23 @@ SUFFIX = '.gif'
 
   def putFigM(c, i, j)
     #c = 'magic' unless File.readable?(FIGDIR + c + SUFFIX)
-    begin
-      fig = $figurines[c] or $figurines['magic']
-      #fig = Image.read(FIGDIR + c + SUFFIX)[0]
-    rescue
-      logger.warn "bad: #{c}"
-      pen = Magick::Draw.new
-      pen.annotate(@dia, 0,0,0,40, "bad: #{c}") do
-        self.font_family = 'Georgia'
-        self.fill = '#FF5353'
-        self.stroke = 'transparent'
-        self.pointsize = 24
-        self.font_weight = BoldWeight
-        self.gravity = SouthGravity
-      end
-    else
+#    begin
+        c.sub! /s/, 'n' # can't avoid it!
+        fig = $figurines[c] || $figurines['magic']
+#    rescue
+#      logger.warn "bad: #{c}"
+#      pen = Magick::Draw.new
+#      pen.annotate(@dia, 0,0,0,40, "bad: #{c}") do
+#        self.font_family = 'Georgia'
+#        self.fill = '#FF5353'
+#        self.stroke = 'transparent'
+#        self.pointsize = 24
+#        self.font_weight = BoldWeight
+#        self.gravity = SouthGravity
+#      end
+#    else
       @dia = @dia.composite(fig, i+1, j+1, Magick::OverCompositeOp)
-    end
+#    end
   end
 ###########################################################
 end

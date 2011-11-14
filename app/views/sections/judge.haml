@@ -21,8 +21,22 @@
       Competition status is:
       != Status.where(table: 'competitions', value: (@section.competition.status or 0)).first.name.bold
 
+.clear
+  = search_form_for @q, url: judge_section_path, html: {method: :get} do |q|
+    Filter search by author:
+    = q.text_field :authors_name_cont, size: 12
+    stipulation:
+    = q.text_field :stipulation_eq, size: 5
+    /= q.text_field :section_id_eq
+    = hidden_field_tag 'q[sections_id_eq]', @section.id
+    = q.submit 'Apply filter', class: 'no-margin'
+
+.page-bar.clearfix
+  = will_paginate @diagrams
+  .pagestat= page_entries_info @diagrams
+
 .section{'data-sid' => @section.id}
-  - @section.diagrams.each do |diagram|
+  - @diagrams.each do |diagram|
     - marks = @marks & diagram.marks
     - mark = marks.present? ? marks[0] : Mark.new(diagram_id: diagram.id, section_id: @section.id)
     
@@ -83,4 +97,9 @@
           %tr
             %td.fine director's view
       %hr
+
+/
+  .page-bar.clearfix
+  = will_paginate @diagrams
+  .pagestat= page_entries_info @diagrams
 

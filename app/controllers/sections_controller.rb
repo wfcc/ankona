@@ -39,7 +39,17 @@ class SectionsController < AuthorizedController
   
 # ---------------
   def judge
-    @section = Section.find params[:id]
+
+    if params[:q].blank?
+      params[:q] = {}
+      params[:q][:sections_id_eq] = params[:id]
+    end
+
+    @q = Diagram.search(params[:q])
+    @diagrams = @q.result.paginate page: params[:page], per_page: 10
+      
+    @section = Section.find params[:q][:sections_id_eq]
+    #@diagrams = @section.diagrams.paginate page: params[:page], per_page: 10
     @marks = @section.marks.select{|x| x.user_id == current_user.id}
   end
 # ---------------

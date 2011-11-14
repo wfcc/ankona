@@ -9,14 +9,16 @@ require "net/http"
 
   def index
 
-    current_user_id = current_user.id
-    @diagrams = Diagram.search(params[:search])
-      .where {user_id == current_user_id} 
+    params[:q] = {} unless params[:q].present?
+    params[:q][:user_id_eq] = current_user.id
+
+    @q = Diagram.search params[:q]
+    @diagrams = @q.result \
       .order {created_at.desc} 
       .paginate page: params[:page], per_page: 7
-    @collection_source = current_user \
-        ? Collection.where{user_id == current_user_id} \
-        : Collection.where{public == true}
+#    @collection_source = current_user \
+#        ? Collection.where{user_id == current_user_id} \
+#        : Collection.where{public == true}
   end #--------------------------------------------------------
 
   def show
