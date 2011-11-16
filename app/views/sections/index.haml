@@ -1,7 +1,9 @@
 - @sections.each do |section|
   %hr
   %h2= section.competition.name
-  %div<>!= Status.where(table: 'competitions', value: (section.competition.status or 0)).first.name.bold
+  %div<>
+    != Status.where(table: 'competitions', value: (section.competition.status or 0)).first.name.bold
+    = " (#{pluralize section.diagrams.count, 'problem'} )"
   
   %div
     %h3= section.name

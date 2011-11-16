@@ -19,5 +19,10 @@ module ApplicationHelper
       end
     end
   end  
+
+  def h1_header
+    '<h1>ankona <span class=fine>storing, solving, submitting chess problems</span></h1>'.html_safe
+  end
+
 end
     

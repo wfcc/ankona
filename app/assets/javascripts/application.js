@@ -40,11 +40,12 @@ google.load("jqueryui", "1.8.11")
   })(jQuery)
 // -------------------------------------------------------------------
 ; $(document).ready(function() {
+
   $('.button').button()
   $('#lg_menu').click(function() {
     $('#lg_submenu').toggle()
     })            
-  $('input[type!="hidden"]:first:visible:enabled').focus();
-
+  $('input[type="text"]:first:visible:enabled').focus();
+  
   })
 

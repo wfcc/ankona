@@ -30,7 +30,7 @@
     - @diagrams.each do |diagram|
       %tr.clickable{:onclick => "window.location.href = '#{url_for diagram}'"}
         %td{:style => "vertical-align:top;color:#46D"}= h diagram.id
-        %td
+        %td.second
           %h3= diagram.authors.collect(&:name).commatize
           .p= [ diagram.source, diagram.issue, diagram.label ].commatize
           .p= diagram.award

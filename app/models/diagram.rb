@@ -19,7 +19,7 @@ class Diagram < ActiveRecord::Base
     authors.each do |author|
       author.save false
     end
-  end
+  end #----------------------------------------------------------------
 
   def existing_author_attributes=(author_attributes)
     authors.reject(&:new_record?).each do |author|
@@ -30,21 +30,21 @@ class Diagram < ActiveRecord::Base
         authors.delete(author)
       end
     end
-  end
+  end #----------------------------------------------------------------
 
   def new_author_attributes=(author_attributes)
     author_attributes.each do |attributes|
       authors.build(attributes)
     end
-  end
+  end #----------------------------------------------------------------
 
   def fen
     position
-  end
+  end #----------------------------------------------------------------
 
   def fen=(p)
     position = p
-  end
+  end #----------------------------------------------------------------
 
   def kings
     cols = 8
@@ -63,6 +63,54 @@ class Diagram < ActiveRecord::Base
       (8 - octal[0].to_i).to_s # increment 1
     end
       
-  end
+  end #----------------------------------------------------------------
+
+  def fen2arr 
+    b = []
+    a = position
+      .gsub(/(?!\()n(?!\))/, 's') \
+      .gsub(/(?!\()N(?!\))/, 'S') \
+      .gsub(/\d+/){'1' * $&.to_i} \
+      .scan(/\(\w+\)|\[.\w+\]|\w/)
+
+    a.select_with_index do |x,i|
+      next if x == '1'
+      b.push x + index2algebraic(i)
+    end
+    return b
+  end #----------------------------------------------------------------
+
+  def piece_balance
+    w = b = n = 0
+    fen2arr.each do |piece|
+      case piece
+      when /^(\[.)?\(?[[:upper:]]/
+        w = w + 1
+      when /^(\[.)?\(?[[:lower:]]/
+        b = b + 1
+      end
+    end
+    "#{w} + #{b}"
+  end #----------------------------------------------------------------
+  
+  def fairy_synopsis
+    return '' unless position.match /\[|\(/
+    bc = []; wc = []; fp = {}
+    fen2arr.each do |piece|
+      case piece
+      when /\[x([a-z]+)\](..)/
+        bc.push $~[1].upcase + $~[2]
+      when /\[x([A-Z]+)\](..)/
+        wc.push $~[1] + $~[2]
+      when /\(([A-Z]+)\)(..)/i
+        name = Piece.where{code == $~[1].upcase}.first.et.name
+        name = 'unknown' if name.blank?
+        fp[name] ||= []
+        fp[name].push $~[2]
+      end
+    end
+    chameleons = (wc + bc).commatize.predifix('Chameleon ')
+    fp.map{|k,v| k.capitalize + ' ' + v.join(',') }.push(chameleons).semicolonize
+  end #----------------------------------------------------------------
 
 end

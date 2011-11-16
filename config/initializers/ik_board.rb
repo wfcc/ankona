@@ -45,21 +45,6 @@ include Magick
     ($~[2].ord + 49).chr + (8 - $~[1].to_i).to_s
   end
 
-  def fen2arr(fen)                                        
-    b = []
-    a = fen
-      .gsub(/(?!\()n(?!\))/, 's') \
-      .gsub(/(?!\()N(?!\))/, 'S') \
-      .gsub(/\d+/){'1' * $&.to_i} \
-      .scan(/\(\w+\)|\[.\w+\]|\w/)
-
-    a.select_with_index do |x,i|
-      next if x == '1'
-      b.push x + index2algebraic(i)
-    end
-    return b
-  end
-
   def array_to_popeye(a)
     w = []; b = []; wc = []; bc = []
     a.map do |x|                   
@@ -81,22 +66,3 @@ include Magick
       bc.join(' ').predifix(' Black Chameleon ')
   end
 
-  def fairy_synopsis(a)
-    bc = []; wc = []; fp = {}
-    a.each do |piece|
-      case piece
-      when /\[x([a-z]+)\](..)/
-        bc.push $~[1].upcase + $~[2]
-      when /\[x([A-Z]+)\](..)/
-        wc.push $~[1] + $~[2]
-      when /\(([A-Z]+)\)(..)/i
-        name = Piece.where{code == $~[1].upcase}.first.et.name
-        name = 'unknown' if name.blank?
-        fp[name] ||= []
-        fp[name].push $~[2]
-      end
-    end
-    chameleons = (wc + bc).join(', ').predifix('Chameleon ')
-    fp.map{|k,v| k.capitalize + ' ' + v.join(',') }.push(chameleons).join('; ')
-  end
-                     

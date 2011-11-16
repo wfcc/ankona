@@ -48,6 +48,7 @@
 
     = form_for mark, remote: true, url: mark_section_path(@section), html: {method: :post} do |f|
       %table.judging
+        %hr
         %tr
           %td.first
             %div
@@ -60,9 +61,11 @@
               %p &nbsp;
               %p.fs-larger= diagram.stipulation
               %p= diagram.twin
-          %td
+          %td.diagram
             %div(style = "padding:0 0 20px 0; position:relative")
               = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
+              .piece_balance= diagram.piece_balance
+              .fairy_synopsis= diagram.fairy_synopsis
           %td.solution
             %pre.solution= diagram.solution
         - case
@@ -77,7 +80,7 @@
           %tr
             %td
               .mark(data-did = "#{diagram.id}" style="height: 1ex")= value
-            %td
+            %td(colspan = 2)
               .slider{'data-did' => diagram.id, 'data-value' => value, 'data-mid' => mid}
               %table.slider
                 %tr
@@ -91,15 +94,9 @@
               = f.hidden_field :section_id
               = f.hidden_field :id
               %p.updating
-            %td
+            %td(colspan = 2)
               = f.text_area :comment, cols: 80, rows: 5
         - when i_am_director
           %tr
             %td.fine director's view
-      %hr
-
-/
-  .page-bar.clearfix
-  = will_paginate @diagrams
-  .pagestat= page_entries_info @diagrams
 

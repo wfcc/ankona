@@ -16,6 +16,14 @@ class Array
     end
   end
 
+  def semicolonize
+    if respond_to?(:empty?) && self.empty?
+      ''
+    else
+      reject{|x| x.blank? }.join '; '
+    end
+  end
+
   def mean
     inject(0) { |sum, x| sum += x } / size.to_f
   end

@@ -13,6 +13,8 @@
 
 h1
   padding: 10px
+  //display: inline
+  //border: 1px dashed green
 
 //     .flash%div{ style: "height:50px; clear:both; margin:4px auto; text-align:center" }
 .center
@@ -250,6 +252,10 @@ td.solution
   font-size: smaller
   color: #bbbbbb
 
+span.fine
+  font-size: x-small
+  color: #bbbbbb
+
 img.board
   width: 202px
   height: 202px
@@ -267,7 +273,6 @@ pre.solution
   white-space: pre-wrap
   overflow: auto
   text-indent: 0
-  font-size: smaller
 
 table.competitions
   border-collapse: separate
@@ -290,6 +295,8 @@ table
   &.diagrams td
     vertical-align: top
     font-size: 11px
+    &.second
+      width: 200px
   &.diagrams td.board
     height: 202px
     width: 202px
@@ -491,7 +498,6 @@ form input[type="submit"].no-margin
 table.marks
   td
     vertical-align: top
-    //border: 1px dashed green
   input, textarea
     margin: 0  
 
@@ -503,7 +509,6 @@ table.section-stats
   td
     vertical-align: top
     background-color: AliceBlue
-    //border: 1px dashed green
     +rounded(4px)
   td.kings
     padding: 0 2em
@@ -554,8 +559,8 @@ table.judging
 
 .piece_balance  
   text-align: right
-  padding-right: 70px
   font-size: x-small
+  color: Indigo
 
 .fairy_synopsis
   clear: both
@@ -596,3 +601,19 @@ table.judging
   bottom: 10px
   right: 5px
 
+div.footer
+  clear: both
+  color: #aaa
+  border-top: 1px solid #eee
+  text-align: center
+  font-size: x-small
+  margin-top: 3em
+  padding-top: 1em
+  position: relative
+  top: 2em
+  a
+    color: #cdc
+  
+td.diagram
+  width: 202px
+  
