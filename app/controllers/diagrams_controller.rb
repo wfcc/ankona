@@ -71,13 +71,14 @@ require "net/http"
   end #--------------------------------------------------------
 
   def solve
-
+logger.warn params.inspect
     input = <<-EOD
     BeginProblem
     Option NoBoard #{params[:pyopts]}
     Option MaxTime 30             
     Stipulation #{params[:stipulation]}
     Pieces #{array_to_popeye(fen2arr(params[:position]))}
+    #{ twin_to_py params[:twin] }
     EndProblem
     EOD
     res = Net::HTTP.post_form URI.parse(Ya['popeye_url']), 
@@ -85,24 +86,37 @@ require "net/http"
       popeye: Ya['popeye_location']
 
     render text: res.body
+logger.warn input    
   end
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   private
-  def nrm(s)
-    return s.split(/[, ]+/).collect do |a|
-      (a.size < 3 ? 'P' + a : a).capitalize.tr 'DTL', 'QRB' # FIDE -> English
-    end.join(' ')
-  end
-###################################################
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  def fen2arr(position)
+    b = []
+    a = position
+      .gsub(/(?!\()n(?!\))/, 's') \
+      .gsub(/(?!\()N(?!\))/, 'S') \
+      .gsub(/\d+/){'1' * $&.to_i} \
+      .scan(/\(\w+\)|\[.\w+\]|\w/)
+
+    a.select_with_index do |x,i|
+      next if x == '1'
+      b.push x + index2algebraic(i)
+    end
+    return b
+  end #----------------------------------------------------------------
+
   def twin_to_py(t)
     s = t
     logger.info "==<<== #{t} ==>>=="
     case t
     when nil, '', /^\d/ then s = ''
-    when /(\S+)\s*(↔|<.?.?>)\s*(\S+)/
-      s = "Twin Exchange #{$~[1][-2,2]} #{$~[3][-2,2]}"
-    when /(\S+)\s*(→|.?.?>)\s*(\S+)/
-      s = "Twin Move #{$~[1][-2,2]} #{$~[3][-2,2]}"
+    when /(\w\d).*(↔|<.?.?>).*(\w\d)/
+      s = "Twin Exchange #{$~[1]} #{$~[3]}"
+    when /\S*(\w\d)\s*(→|.?.?>).*(\w\d)/
+      s = "Twin Move #{$~[1]} #{$~[3]}"
+    when /-.*(\w\d)/
+      s = "Twin Remove #{$~[1]}"
     end
     return s
   end

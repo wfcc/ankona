@@ -9,6 +9,10 @@
   - else
     new problem
 
+.prepend-12
+  %button#change-view.button
+    Change to solving view
+    
 %h2 Editing problem #{@diagram.id}
 = semantic_form_for @diagram do |f|
 
@@ -43,48 +47,40 @@
     #pcount
 
     - %w{◁ ▽ △ ▷ ↻ ↺ ↕}.each do |direction|
-      %button{type: "button", class: "moveboard", 'data-name' => direction}
+      %button{type: "button", class: %w[moveboard button], 'data-name' => direction}
         = direction
 
     = f.input :stipulation, :input_html => {:class => 'c30p'}, :hint => '#2 | s#3 | h#2.5 | win | …'
-    = f.input :twin, :hint => 'b) Se5->e6 | b) +Th3, c) Sh8<->La2 | 2.1;1.1 | …'
-    /
-      = link_to_function 'Add fairy condition', "addFairyCondition()", :style => @hideIfFairy, :id => 'showfairy'
-      #fairy(style = "#{@showIfFairy}")
-        = f.input :fairy, :input_html => {:size => 20}, :hint => 'e.g. Circe, Andernach, Sentinels, …', :label => 'Fairy conditions'
-    = f.label 'Computer tested'
-    = f.select :tested, Status.where{table == :diagrams}.collect {|i| [i.name, i.value] }
-  #second.span-12.last
+    = f.input :twin, :hint => 'b) Se5->e6 | b) -Th3, c) Lh8<->La2 | 2.1;1.1 | …'
+    -#= f.label 'Computer tested'
+    -#= f.select :tested, Status.where{table == :diagrams}.collect {|i| [i.name, i.value] }
+
+    = f.submit ' Save and exit ', class: :button
+    - if @diagram.id.present?
+      = link_to  ' Revert ', edit_diagram_path(@diagram), class: [:button, :clearboth]
+  #catalog.span-12.last
     .label Authors
     #authors
       = hidden_field_tag :authors_json, @authors_json
       = text_field_tag :authors_ids, '', style: 'width:30em'
     %table.zero
       %tr
-        %td= f.input :source, input_html: {size: 30}, hint: 'Printed or online publication, or tournament'
+        %td= f.input :source, input_html: {size: 28}, hint: 'Printed or online publication, or tournament'
         %td= f.input :issue, input_html: {size: 10}, hint: 'Month or number, if periodical'
       %tr
         %td= f.input :label, hint: 'Problem number, or label, as given in the source', input_html: {size: 10}, label: 'Problem ID'
         %td= f.input :award, input_html: {size: 20}, hint: 'use "Prize", "HM", "Commendation"', label: 'Distinction'
-    = f.input :solution, input_html: {rows: 25, cols: 5}, hint: 'Please adhere to FIDE piece notation: KDTLS.'
-    /
-      %ul.menu
-        %li= link_to "Don't save", @diagram
-        %li= link_to 'Back to list', diagrams_path
+    = f.input :solution, input_html: {rows: 20, cols: 5}, hint: 'Please adhere to FIDE piece notation: KDTLS.'
+
+  #solving.span-12.last
+    = f.submit ' Solve with popeye ', id: :solve, class: [:button]
+    %fieldset
+      %legend
+      %label(for = "pyopts" class = "modest") Popeye “options” line
+      = text_field_tag :pyopts, "", :class => "c30p"
+      %span.fine try, setplay, duplex, maxsolutions, intelligent, …   
+      #solution<>
+        %span.fine Popeye solution will go here (first run may be slow)
 
   .clear.em1
-  = f.submit ' Save and exit ', class: :button
-  = f.submit ' Solve with popeye ', id: :solve, class: [:button]
-  - if @diagram.id.present?
-    = link_to  ' Revert ', edit_diagram_path(@diagram), class: [:button, :clearboth]
-  %fieldset
-    %legend
-    /%label(for = "pyconds" class = "modest") Popeye “condition” line
-    /= text_field_tag :pyconds, @diagram.fairy, class: "c30p"
-    /%span.fine circe, andernach, madrasi, masand, koeko, …
-    %label(for = "pyopts" class = "modest") Popeye “options” line
-    = text_field_tag :pyopts, "", :class => "c30p"
-    %span.fine try, setplay, duplex, maxsolutions, intelligent, …   
-    #solution<>
-      %span.fine Popeye solution will go here (first run may be slow)
 

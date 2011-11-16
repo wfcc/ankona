@@ -8,8 +8,25 @@
 google.setOnLoadCallback(function() {
 
   'use strict' // don't remove this line.  It's good for you.
-  
+
+  $('#solving').hide()  
+
   initVars()                             
+
+
+  $('#change-view').click(function(e) {
+    if(ik.solving_view = ! ik.solving_view) {
+      $('#change-view').button({label: ' Change to data entry view '})
+      $('#catalog').hide()
+      $('#solving').show()
+    } else {
+      $('#change-view').button({label: ' Change to solving view '})
+      $('#catalog').show()
+      $('#solving').hide()
+    }
+  })
+        
+
 
   $('#fen_button').click(function(e) {
     $('#fen-block').toggle()
@@ -26,6 +43,7 @@ google.setOnLoadCallback(function() {
     $.post('/diagrams/solve', 
       { stipulation: $('#diagram_stipulation').val()
       , position: $('#diagram_position').val()
+      , twin: $('#diagram_twin').val()
       }, function(data) {
         $('#solution').html(data)
         $('#solve').val('Finished.  Solve again.')
@@ -144,6 +162,7 @@ google.setOnLoadCallback(function() {
   } //*************************************
   function initVars(){
 
+    ik.solving_view = false
     ik.board = []
     ik.arrayOfOnes = ['1','1','1','1','1','1','1','1']
     ik.eight = $(ik.arrayOfOnes)
@@ -165,7 +184,7 @@ google.setOnLoadCallback(function() {
   } //*************************************
   function fenToInternal(){
     
-    var fen = $('#diagram_position').val()
+    var fen = $('#diagram_position').val().trim()
 
     fen = fen
       .replace(/\d+/g, function(x){return '1'.times(Number(x))})
@@ -223,6 +242,8 @@ google.setOnLoadCallback(function() {
         oldPiece = $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]')
         if (oldPiece.data('id') == p) return 
         if (p == '1') return oldPiece.remove()
+
+console.log(p, wb(p))        
 
         dataid = p
         pp = p.match(ik.boobs) // general fairy piece condition
