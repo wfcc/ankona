@@ -196,8 +196,8 @@ images/ui-icons_f08000_256x240.png: images/ui-icons_f08000_256x240-859e42396c18b
 images/ui-icons_f35f07_256x240.png: images/ui-icons_f35f07_256x240-4740a2349f00f7148fbb008bfde3189c.png
 images/ui-icons_ff7519_256x240.png: images/ui-icons_ff7519_256x240-216eba247960724c71b070e3a29bdd96.png
 images/ui-icons_ffffff_256x240.png: images/ui-icons_ffffff_256x240-14d5ba91d75476408742cc8f77e59b4a.png
-application.js: application-c2b4414126c520170f29b217ba1c3b6a.js
-diagram_edit.js: diagram_edit-b714a4b11cf95ea594f0f9de3103f5e6.js
+application.js: application-7a8618b08fef26446cf1b55a2d6c5c41.js
+diagram_edit.js: diagram_edit-4fbc165ec98acc3a7d8073da9946f54b.js
 sections_judge.js: sections_judge-5f690bac98db6849d0e1e1706966e30e.js
 users.js: users-5d933a9eea9abf921a1aa5fe8dd176ca.js
 application.css: application-1bfdb22821c7c8eeff76a23f8357fbcc.css

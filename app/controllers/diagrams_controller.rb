@@ -31,6 +31,8 @@ require "net/http"
   end #--------------------------------------------------------
 
   def edit
+    ActiveRecord::Base.include_root_in_json = false
+    @pieces = Piece.all.to_json except: [:id, :created_at, :updated_at]
     @diagram = Diagram.find(params[:id])
     @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
     @showIfFairy = @diagram.fairy.blank? ? 'display:none' : 'display:visible'

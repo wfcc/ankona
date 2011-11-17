@@ -1,6 +1,10 @@
 - content_for :scripts do
   = javascript_include_tag 'diagram_edit'
 
+  -# this loads codes for fairy pieces into a js object
+  %script
+    ! ik.pieces = #{@pieces}
+    
 - content_for :title do
   - if @diagram.stipulation.present?
     = @diagram.stipulation

@@ -243,8 +243,6 @@ google.setOnLoadCallback(function() {
         if (oldPiece.data('id') == p) return 
         if (p == '1') return oldPiece.remove()
 
-console.log(p, wb(p))        
-
         dataid = p
         pp = p.match(ik.boobs) // general fairy piece condition
         if(pp) {p = pp[2] ;  gf_cond= 'x' }

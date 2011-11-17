@@ -4,7 +4,7 @@
 //= require jquery-ui
 //= require underscore
 //= require_self
-//= require fairy-pieces
+// require fairy-pieces
 
 google =
   { load: function(){} // dummy for now
