@@ -90,7 +90,7 @@ class Diagram < ActiveRecord::Base
         b = b + 1
       end
     end
-    "#{w} + #{b}"
+    "#{w}+#{b}"
   end #----------------------------------------------------------------
   
   def fairy_synopsis
