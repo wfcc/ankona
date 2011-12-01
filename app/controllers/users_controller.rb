@@ -37,7 +37,6 @@ class UsersController < ApplicationController
       render action: :add_name
       return
     end
-logger.warn @user.inspect    
     if @user.save
       flash[:notice] = "Your account registered, #{@user.author.name}.  Your handle is #{@user.author.code}."
       redirect_to '/'

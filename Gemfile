@@ -29,6 +29,7 @@ gem 'therubyracer'
 #gem "vidibus-routing_error"
 gem 'underscore-rails'
 gem 'ransack'
+gem 'rolify'
 
 group :assets do
   gem 'sass-rails', '~> 3.1.0'

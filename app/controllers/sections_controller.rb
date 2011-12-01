@@ -46,7 +46,7 @@ class SectionsController < AuthorizedController
     end
 
     @q = Diagram.search(params[:q])
-    @diagrams = @q.result.paginate page: params[:page], per_page: 10
+    @diagrams = @q.result(distinct: true).paginate page: params[:page], per_page: 10
       
     @section = Section.find params[:q][:sections_id_eq]
     #@diagrams = @section.diagrams.paginate page: params[:page], per_page: 10

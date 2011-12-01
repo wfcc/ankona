@@ -48,11 +48,10 @@
     .cassete
       -%w{k q r b n p}.each do |figurine|
         = image_tag fig_glyph('w', figurine), 'data-id' =>  figurine.upcase, class: 'todrag'
-    #pcount
-
-    - %w{◁ ▽ △ ▷ ↻ ↺ ↕}.each do |direction|
-      %button{type: "button", class: %w[moveboard button], 'data-name' => direction}
-        = direction
+    .clear
+      - %w{◁ ▽ △ ▷ ↻ ↺ ↕}.each do |direction|
+        %button{type: "button", class: %w[moveboard button], 'data-name' => direction}
+          = direction
 
     = f.input :stipulation, :input_html => {:class => 'c30p'}, :hint => '#2 | s#3 | h#2.5 | win | …'
     = f.input :twin, :hint => 'b) Se5->e6 | b) -Th3, c) Lh8<->La2 | 2.1;1.1 | …'
@@ -86,5 +85,5 @@
       #solution<>
         %span.fine Popeye solution will go here (first run may be slow)
 
-  .clear.em1
-
+  -# EOF
+  

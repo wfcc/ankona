@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include Rolify::Roles
+  extend Rolify::Dynamic
+  has_and_belongs_to_many :roles #, :join_table => :users_roles
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   # :validatable
@@ -43,7 +46,7 @@ class User < ActiveRecord::Base
     Notifier.deliver_password_reset_instructions(self)
   end
 
-  def has_role?(role_sym)
-    roles.any? { |r| r.name.underscore.to_sym == role_sym }
-  end
+#  def has_role?(role_sym)
+#    roles.any? { |r| r.name.underscore.to_sym == role_sym }
+#  end
 end

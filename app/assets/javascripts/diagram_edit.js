@@ -283,7 +283,7 @@ google.setOnLoadCallback(function() {
       })
     var b = ik.board.join('').match(/[a-z]/g)
     var w = ik.board.join('').match(/[A-Z]/g)
-    $('#pcount').html('(' + (w?w.length:'0') +' + '+ (b?b.length:'0')+')')
+    // $('#pcount').html('(' + (w?w.length:'0') +' + '+ (b?b.length:'0')+')')
 
   } //*************************************
   function internalToFen(){

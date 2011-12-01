@@ -22,9 +22,9 @@ class Ability
     #can :judge, Section, user
 
     @user = user
-    user.roles.each { |role| send(role.name) }
+    user.roles.each { |role| send(role.name) if respond_to? role.name }
     
-    admin if user.has_role? :admin
+#    admin if user.has_role? 'admin'
 
   end
 

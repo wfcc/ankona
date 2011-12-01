@@ -59,10 +59,10 @@ class ApplicationController < ActionController::Base
     return is_admin? || (o.user.id == current_user.id)
   end
 
-  def has_role?(role)
-    return false unless current_user
-    return current_user.roles.where(name: role.to_s).exists?
-  end
+#  def has_role?(role)
+#    return false unless current_user
+#    return current_user.roles.where(name: role.to_s).exists?
+#  end
 
   def is_admin?
     return false unless current_user

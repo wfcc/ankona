@@ -27,6 +27,9 @@
     = q.text_field :authors_name_cont, size: 12
     stipulation:
     = q.text_field :stipulation_eq, size: 5
+    only unrated:
+    = q.check_box :marks_nummark_blank
+    /= q.text_field :marks_nummark_gt, size: 5
     /= q.text_field :section_id_eq
     = hidden_field_tag 'q[sections_id_eq]', @section.id
     = q.submit 'Apply filter', class: 'no-margin'

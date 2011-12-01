@@ -27,5 +27,6 @@ google.setOnLoadCallback(function() {
           }
       })
     })
+    
   })
   
