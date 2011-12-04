@@ -28,6 +28,13 @@
     
   /- @diagram.tested = 0 if @diagram.tested.blank?
   /.xs!= Status.where(:table.eq => 'diagrams', :value.eq => @diagram.tested)[0].h_display
+  %p.xs.clear.padding-top
+    FEN:
+    = @diagram.position
+    %br
+    Entered by:
+    = @diagram.user.nick || 'system'
+    .fine.id= @diagram.id
 .span-8
   %pre.solution><=@diagram.solution
 .span-7.last
@@ -40,13 +47,27 @@
         sections, |
         :id, :name_cs, {selected: nil, include_blank: true }, |
         {name: 'diagram[section_ids][]', style: 'width:24em' } |
-        = f.submit 'Submit to competition', class: :button
-    .fine You will not be able to edit this diagram after submission.
+        = f.submit ' Submit to competition ', class: :button
+        .fine You will not be able to edit this diagram after submission.
 
   - unless @diagram.sections.empty?
     .greeny-highlight
       .d Submitted to competitions:
       %b= @diagram.sections[0].name_cs
+
+  - if may_edit? @diagram
+    .d
+      = form_for @diagram, url: share_diagram_path(@diagram), method: :post, remote: true do |f|
+        %p Let other users view this diagram.
+        %p Enter handle (e.g. HA3H):
+        = text_field_tag :handle, '', style: 'text-transform:uppercase', size: 6
+        = submit_tag ' Share ', class: :button
+    #share_results
+    - if @shared_with.present?
+      .d
+        %strong
+          = @shared_with.map(&:nick).commatize
+        can view this problem.
 
   /
     = form_for @diagram do |f|
@@ -57,11 +78,5 @@
     .cgreen= @diagram.collections.collect(&:name).join(', ')
     
   /%li= link_to 'Back', diagrams_path, class: :button
-%p.xs.clear.padding-top
-  FEN:
-  = @diagram.position
-  %br
-  Entered by:
-  = @diagram.user.nick || 'system'
 
 

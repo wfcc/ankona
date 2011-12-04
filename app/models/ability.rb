@@ -13,6 +13,9 @@ class Ability
     can :manage, Section, competition: {user_id: user.id}
     can [:mark, :judge], Section, users: {id: user.id}
     can :manage, Diagram, user_id: user.id
+    can :read, Diagram do |diagram|
+      user.is_reader_of? diagram
+    end  
     can :read, Faq
     can :index, Piece
 #    can :update, Diagram do |diagram|

@@ -1,7 +1,7 @@
 %h2 Listing authors
 
 = form_tag :authors, method: :get do
-  Filter by name:
+  Filter by name, or by handle:
   = text_field_tag 'search_name', '', size: 20
   = submit_tag 'Apply'
 
@@ -9,17 +9,20 @@
   - if can? :add, Author
     = link_to ' New person ', new_author_path, class: :button
 
-= will_paginate @authors
-/= kaminari_page_entries_info(@authors)
+.page-bar.clearfix
+  = will_paginate @authors
+  .pagestat= page_entries_info @authors
+
+-#= will_paginate @authors
 .pagestat= page_entries_info @authors
 
 %table.authors
   %tr
     %th &nbsp;
-    %th Code
+    %th Handle
     %th Name
-    %th Original
-    %th Traditional romanization
+    %th Original spelling
+    %th Traditional spelling
     - if can? :delete, Author
       %th DEL
     - @authors.each do |author|
@@ -38,8 +41,7 @@
           %td= link_to '☒', author, :confirm => 'Are you sure?', :method => :delete
 
 
-/= paginate @authors
-= will_paginate @authors
+-#= will_paginate @authors
 
 .clearboth
   - if can? :add, Author

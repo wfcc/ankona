@@ -14,10 +14,10 @@
       = q.text_field :stipulation_eq, size: 5
       = q.submit 'Apply filter', class: 'no-margin'
 
-    %div(style = 'padding: 3px; background-color: #eee;' class = "clearfix")
-      = will_paginate @diagrams
-      .pagestat= page_entries_info @diagrams
-    /
+  .page-bar.clearfix
+    = will_paginate @diagrams
+    .pagestat= page_entries_info @diagrams
+
     /  collection:
     /  = collection_select :search, :collections, @collection_source, |
     /    :id, :name, {:include_blank => true, :selected => @scoll} |
@@ -48,7 +48,6 @@
         %td{:style => "color:#281"}
           = h diagram.sections.collect(&:name).commatize
   %br
-  = will_paginate @diagrams
-  .pagestat= page_entries_info @diagrams
+
   = link_to 'New problem', new_diagram_path, class: [:button, 'float-left']
   

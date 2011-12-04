@@ -35,7 +35,10 @@ DiaX::Application.routes.draw do
   match 'competitions/judge' => 'competitions#judge'
 
   resources :diagrams do
-    member {put :section}
+    member do
+      put :section
+      post :share
+    end
   end
   resources :competitions, has_many: :sections
   resources :sections do

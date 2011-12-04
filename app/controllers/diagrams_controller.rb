@@ -14,7 +14,7 @@ require "net/http"
 
     @q = Diagram.search params[:q]
     @diagrams = @q.result \
-      .order {created_at.desc} 
+      .order {created_at.desc}
       .paginate page: params[:page], per_page: 7
 #    @collection_source = current_user \
 #        ? Collection.where{user_id == current_user_id} \
@@ -23,6 +23,12 @@ require "net/http"
 
   def show
     @diagram = Diagram.find(params[:id])
+    @shared_with = User.joins{roles}.where{
+      (roles.name == 'reader') &
+      (roles.resource_id == my{params[:id]}) &
+      (roles.resource_type == 'Diagram')
+      }
+
   end #--------------------------------------------------------
 
   def new
@@ -36,9 +42,9 @@ require "net/http"
     @diagram = Diagram.find(params[:id])
     @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
     @showIfFairy = @diagram.fairy.blank? ? 'display:none' : 'display:visible'
-    
+
     @authors_json = @diagram.authors.map{|a| {id: a.id, name: a.name}}.to_json
-    
+
     if @diagram.user_id != current_user.id
       flash[:error] = "You are unauthorized to edit this problem."
       render :show
@@ -73,24 +79,30 @@ require "net/http"
   end #--------------------------------------------------------
 
   def solve
-logger.warn params.inspect
     input = <<-EOD
     BeginProblem
     Option NoBoard #{params[:pyopts]}
-    Option MaxTime 30             
+    Option MaxTime 30
     Stipulation #{params[:stipulation]}
     Pieces #{array_to_popeye(fen2arr(params[:position]))}
     #{ twin_to_py params[:twin] }
     EndProblem
     EOD
-    res = Net::HTTP.post_form URI.parse(Ya['popeye_url']), 
+    res = Net::HTTP.post_form URI.parse(Ya['popeye_url']),
       input: input,
       popeye: Ya['popeye_location']
 
     render text: res.body
-logger.warn input    
-  end
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  end #--------------------------------------------------------
+
+  def share
+    diagram = Diagram.find params[:id]
+    my = params[:handle].upcase
+    if @u = User.joins{author}.where{author.code == my}.first
+      @u.has_role 'reader', diagram
+    end
+  end #--------------------------------------------------------
+
   private
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   def fen2arr(position)
