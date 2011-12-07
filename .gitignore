@@ -14,3 +14,4 @@ tmp/*
 doc/plugins/*
 test/fixtures/
 .sass-cache/
+.DS_Store
