@@ -44,6 +44,7 @@ google.setOnLoadCallback(function() {
       { stipulation: $('#diagram_stipulation').val()
       , position: $('#diagram_position').val()
       , twin: $('#diagram_twin').val()
+      , pyopts: $('#pyopts').val()
       }, function(data) {
         $('#solution').html(data)
         $('#solve').val('Finished.  Solve again.')
