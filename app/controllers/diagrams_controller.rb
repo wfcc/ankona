@@ -45,10 +45,10 @@ require "net/http"
 
     @authors_json = @diagram.authors.map{|a| {id: a.id, name: a.name}}.to_json
 
-    if @diagram.user_id != current_user.id
-      flash[:error] = "You are unauthorized to edit this problem."
-      render :show
-    end
+#    if @diagram.user_id != current_user.id
+#      flash[:error] = "You are unauthorized to edit this problem."
+#      render :show
+#    end
   end #--------------------------------------------------------
 
   def create

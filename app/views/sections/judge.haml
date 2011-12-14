@@ -39,6 +39,7 @@
   .pagestat= page_entries_info @diagrams
 
 .section{'data-sid' => @section.id}
+  %hr
   - @diagrams.each do |diagram|
     - marks = @marks & diagram.marks
     - mark = marks.present? ? marks[0] : Mark.new(diagram_id: diagram.id, section_id: @section.id)
@@ -51,11 +52,10 @@
 
     = form_for mark, remote: true, url: mark_section_path(@section), html: {method: :post} do |f|
       %table.judging
-        %hr
         %tr
           %td.first
             %div
-              .id= diagram.id
+              .id= link_to diagram.id, diagram_path(diagram)
               %h4= diagram.authors.collect(&:name).commatize
               %p.xs
                 = [ diagram.source, diagram.issue, diagram.label ].commatize
