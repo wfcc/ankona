@@ -121,18 +121,32 @@ require "net/http"
   end #----------------------------------------------------------------
 
   def twin_to_py(t)
-    s = t
-    logger.info "==<<== #{t} ==>>=="
-    case t
-    when nil, '', /^\d/ then s = ''
-    when /(\w\d).*(↔|<.?.?>).*(\w\d)/
-      s = "Twin Exchange #{$~[1]} #{$~[3]}"
-    when /\S*(\w\d)\s*(→|.?.?>).*(\w\d)/
-      s = "Twin Move #{$~[1]} #{$~[3]}"
-    when /-.*(\w\d)/
-      s = "Twin Remove #{$~[1]}"
+    s = ''
+    logger.warn " #{t} "
+    word = t.match(/zero|nulinė/i) ? 'Zero' : 'Twin'
+    t.split(/\s?\;?\s?.\)/).each do |x|
+      case x
+      #when nil, '', /^\d/ then s = ''
+      when /(\w\d).*(↔|<.?.?>).*(\w\d)/
+        s += "#{word} Exchange #{$~[1]} #{$~[3]} "
+      when /\S*(\w\d)\s*(→|.?.?>).*(\w\d)/
+        s += "#{word} Move #{$~[1]} #{$~[3]} "
+      when /-.*(\w\d)/
+        s += "#{word} Remove #{$~[1]} "
+      when /([w|b])(\w\w\d)/i
+        s += "#{word} Add #{pieceColor($~[1])} #{$~[2]} "
+      else
+        next
+      end
+      word = 'Twin'
     end
+    logger.warn "==<<== #{s} ==>>=="
     return s
+  end
+###################################################
+  def pieceColor(color)
+    color = color.upcase.to_sym
+    {W: 'White', B: 'Black'}[color]
   end
 ###################################################
   def save_diagram(is_create)

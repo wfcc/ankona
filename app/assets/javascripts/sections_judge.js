@@ -9,17 +9,13 @@ google.setOnLoadCallback(function() {
       , change: function(event, ui) {
           var my = $(this)
           var did = my.data('did')
-          var mid = my.data('mid')
           var sid = $('.section').data('sid')
           var mmark = my.slider('value').toString()
+          var submission = my.parents('form').serialize()
+          submission += '&mark[nummark]=' + mmark
           $('.mark[data-did="' + did + '"]').text('...')
-          $('<input>').attr(
-            { type: 'hidden'
-            , name: 'mark[nummark]'
-            , value: mmark
-            }).appendTo('form')
           $.post('/sections/' + sid + '/mark'
-            , $('form').serialize()
+            , submission
             , function(data) {
               my.data('mid', data)
               $('.mark[data-did="' + did + '"]').text(mmark)
@@ -27,6 +23,7 @@ google.setOnLoadCallback(function() {
           }
       })
     })
-    
+
+   
   })
   

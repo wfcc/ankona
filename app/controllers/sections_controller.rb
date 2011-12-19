@@ -55,22 +55,32 @@ class SectionsController < AuthorizedController
 # ---------------
   def mark
   
+    render nothing: true
+
     case
     when current_user.blank?
       logger.error "User required to mark"
-    when params[:mark][:id].present?
-      m = Mark.find_by_id params[:mark][:id]
-      if m.user != current_user
-        logger.error ">>>>> User #{current_user.id} not permitted to mark #{m.id}"
-      end
+      return
+    when params[:id].blank?
+      logger.error "Blank mark id"
+      return
+    end
+
+    m = Mark.find_by_id params[:mark][:id]
+    case
+    when (m.present? and m.user != current_user)
+      logger.error "User #{current_user.id} not permitted to mark #{m.id}"
+      return
+    end
+
+    if m.present?
       m.update_attributes params[:mark]
     else
       m = Mark.new params[:mark]
       m.user = current_user
-      m.save
     end
+    m.save
       
-    render nothing: true
   end
 # ---------------
   def show
