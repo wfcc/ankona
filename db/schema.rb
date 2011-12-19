@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130125321) do
+ActiveRecord::Schema.define(:version => 20111130125322) do
+
+  create_table "aaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d",                :null => false
+    t.integer "pay"
+  end
+
+  create_table "aaaa", :id => false, :force => true do |t|
+    t.integer "i",                :null => false
+    t.string  "c",   :limit => 1, :null => false
+    t.date    "d_d",              :null => false
+    t.integer "pay"
+  end
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -125,6 +139,8 @@ ActiveRecord::Schema.define(:version => 20111130125321) do
     t.datetime "updated_at"
     t.integer  "user_id"
   end
+
+  add_index "marks", ["diagram_id", "section_id", "user_id"], :name => "index_marks_on_diagram_id_and_section_id_and_user_id", :unique => true
 
   create_table "pieces", :force => true do |t|
     t.string "code"

@@ -38,6 +38,24 @@ task pieces: :environment do
   end
 end
 
+desc 'Duplicate marks'
+task dupmarks: :environment do
+  Diagram.all.each do |d|
+    d.marks.group_by(&:user_id).each do |u, mm|
+      next unless mm.many?
+      puts "Diagram #{d.id}"
+      mm.each do |m|
+        puts "   -- #{m.id}: u- #{m.user_id} (#{m.nummark}) [#{m.comment}] "
+      end
+      max = mm.reduce do |memo, m|
+        memo.comment.size > m.comment.size ? memo : m
+      end
+      mmx = mm.reject{|m| m.id == max.id}
+      puts mmx.map(&:id).inspect
+      Mark.delete mmx
+    end
+  end
+end
 
 
 namespace :db do
