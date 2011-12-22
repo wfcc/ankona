@@ -123,20 +123,22 @@ require "net/http"
   def twin_to_py(t)
     s = ''
     logger.warn " #{t} "
-    word = t.match(/zero|nulinė/i) ? 'Zero' : 'Twin'
+    word = t.match(/nul|н.ль|zero|зеро/i) ? 'Zero' : 'Twin'
     t.split(/\s?\;?\s?.\)/).each do |x|
-      case x
-      #when nil, '', /^\d/ then s = ''
-      when /(\w\d).*(↔|<.?.?>).*(\w\d)/
-        s += "#{word} Exchange #{$~[1]} #{$~[3]} "
-      when /\S*(\w\d)\s*(→|.?.?>).*(\w\d)/
-        s += "#{word} Move #{$~[1]} #{$~[3]} "
-      when /-.*(\w\d)/
-        s += "#{word} Remove #{$~[1]} "
-      when /([w|b])(\w\w\d)/i
-        s += "#{word} Add #{pieceColor($~[1])} #{$~[2]} "
-      else
-        next
+      x.split(/,/).each do |y|
+        case y
+        when /(\w\d).*(↔|<.?.?>).*(\w\d)/
+          s += "#{word} Exchange #{$~[1]} #{$~[3]} "
+        when /\S*(\w\d)\s*(→|.?.?>).*(\w\d)/
+          s += "#{word} Move #{$~[1]} #{$~[3]} "
+        when /-.*(\w\d)/
+          s += "#{word} Remove #{$~[1]} "
+        when /([w|b])(\w\w\d)/i
+          s += "#{word} Add #{pieceColor($~[1])} #{$~[2]} "
+        else
+          next
+        end
+        word = ''
       end
       word = 'Twin'
     end

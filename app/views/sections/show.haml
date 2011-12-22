@@ -1,41 +1,49 @@
+- content_for :scripts do
+  = javascript_include_tag 'jquery.tablesorter.min'
+  :javascript
+    $(document).ready(function() 
+    {  $("table.section-stats").tablesorter()
+    })
+    
 %h2= @section.competition.name
 %h3 Statistics for #{@section.name}
 
 %table.section-stats
-  %tr
-    %th problem ID, authors, kings
-    %th
-    - @k.each do |judge|
-      %th
-        = User.find(judge).nick false
-    %th.center total
-    %th.center standard deviation
-        
-        
-  - @r.each_key do |id|
-    - diagram = Diagram.find_by_id id
+  %thead
     %tr
-      %td
-        = link_to id, diagram_path(id)
-        = diagram.stipulation
-        = diagram.twin
-        -#= diagram.kings.join '-'
-        %br
-        .d= diagram.authors.map(&:name).commatize
-        .fine= [ diagram.source, diagram.issue, diagram.label ].commatize
-        .fine= diagram.award
-      %td
-        = image_tag '/fen/' + diagram.position
-      - @k.each_index do |judge|
-        - mark = @r[id][0].zip(@r[id][1])[judge]
+      %th problem ID, authors, kings
+      %th
+      - @k.each do |judge|
+        %th
+          = User.find(judge).nick false
+      %th.center total
+      %th.center standard deviation
+        
+  %tbody
+    - @r.each_key do |id|
+      - diagram = Diagram.find_by_id id
+      %tr
         %td
-          = mark.et.slice 0
+          = link_to id, diagram_path(id)
+          = diagram.stipulation
+          = diagram.twin
+          -#= diagram.kings.join '-'
           %br
-          .fine= mark.et.slice 1
-      %td.total
-        = @r[id][2]
-      %td.center
-        - dev = @r[id][0].reject(&:blank?).stdev.to_f
-        - unless dev.nan?
-          = sprintf '%.2f', dev
-    
+          .d= diagram.authors.map(&:name).commatize
+          .fine= [ diagram.source, diagram.issue, diagram.label ].commatize
+          .fine= diagram.award
+        %td
+          = image_tag '/fen/' + diagram.position
+        - @k.each_index do |judge|
+          - mark = @r[id][0].zip(@r[id][1])[judge]
+          %td
+            = mark.et.slice 0
+            %br
+            .fine= mark.et.slice 1
+        %td.total
+          = @r[id][2]
+        %td.center
+          - dev = @r[id][0].reject(&:blank?).stdev.to_f
+          - unless dev.nan?
+            = sprintf '%.2f', dev
+      
