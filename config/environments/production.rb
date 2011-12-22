@@ -56,6 +56,7 @@ DiaX::Application.configure do
        
   # Don't fallback to assets pipeline  
   config.assets.compile = false  
+  config.assets.precompile << '*.js'
        
   # Generate digests for assets URLs  
   config.assets.digest = true  
