@@ -31,6 +31,7 @@ gem 'underscore-rails'
 gem 'ransack'
 gem 'rolify'
 gem 'pg'
+gem 'thin'
 
 group :assets do
   gem 'sass-rails', '~> 3.1.0'
@@ -40,8 +41,7 @@ end
 
 group :development do
   gem 'rails-footnotes'
-  gem 'passenger'
-  gem 'thin'
+#  gem 'passenger'
   gem 'heroku'
 #  gem 'ruby-debug19', require: 'ruby-debug'
 end
