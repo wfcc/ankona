@@ -30,6 +30,7 @@ gem 'therubyracer'
 gem 'underscore-rails'
 gem 'ransack'
 gem 'rolify'
+gem 'pg'
 
 group :assets do
   gem 'sass-rails', '~> 3.1.0'
@@ -46,7 +47,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'pg'
   gem 'haml2slim'
   gem 'wirble'
   gem 'hirb'
