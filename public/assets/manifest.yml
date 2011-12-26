@@ -191,5 +191,8 @@ tablesorter/asc.gif: tablesorter/asc-363e900635895f5e77f516b58cb55aba.gif
 tablesorter/bg.gif: tablesorter/bg-7f5afcf384cf9cb87b07802673c6a2c6.gif
 tablesorter/desc.gif: tablesorter/desc-c8d41fb88ee82df83df61cfbaa9ae22a.gif
 application.js: application-e57528912e3a9ddb4ff4cb7c59662c39.js
+uncommon/authors_edit.js: uncommon/authors_edit-53f46314a0794bab322f5d2341d5677b.js
 uncommon/diagram_edit.js: uncommon/diagram_edit-b189a22e49c2b775fd6cc1b12ccf8f90.js
+uncommon/sections_judge.js: uncommon/sections_judge-0621f465021b996ed9446b3c8b6df92c.js
+uncommon/users.js: uncommon/users-fed92c1bd965e9778d7848fa9e6e8f07.js
 application.css: application-fb6a446d719abb92d1812b5f04ae6782.css
