@@ -1,9 +1,4 @@
 - content_for :scripts do
-  -#= stylesheet_link_tag 'tablesorter/style'
-  = javascript_include_tag 'jquery.tablesorter'
-  - logger.warn 'javascript_include_tag'
-  - logger.warn javascript_include_tag 'diagram_edit'
-  - logger.warn javascript_include_tag 'jquery.tablesorter'
   :javascript
     $(document).ready(function() 
     { $("table.section-stats").tablesorter(

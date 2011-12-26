@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require jquery-tokeninput
 //= require jquery-ui
+//= require jquery_tablesorter
 //= require underscore
 //= require_self
 // require fairy-pieces
