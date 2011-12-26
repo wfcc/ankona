@@ -1,13 +1,4 @@
 ---
-active_scaffold/DO_NOT_EDIT: active_scaffold/DO_NOT_EDIT
-active_scaffold/default/add.gif: active_scaffold/default/add-9408098ea43ceceb01f5bdf2c0e758d1.gif
-active_scaffold/default/arrow_down.gif: active_scaffold/default/arrow_down-a29159da403f1f02a582ba8be82fa41c.gif
-active_scaffold/default/arrow_up.gif: active_scaffold/default/arrow_up-1d256966f4cf5e68f613a67b3ac59096.gif
-active_scaffold/default/close.gif: active_scaffold/default/close-4f15be8642ca5aeb6c7990ee48e2e615.gif
-active_scaffold/default/cross.png: active_scaffold/default/cross-11448f5dca02871c0a8cc0fb92e0d696.png
-active_scaffold/default/indicator-small.gif: active_scaffold/default/indicator-small-73c9e374e509d4a44cbee02ac470354d.gif
-active_scaffold/default/indicator.gif: active_scaffold/default/indicator-03299b83ac599311ff50a539c73121f9.gif
-active_scaffold/default/magnifier.png: active_scaffold/default/magnifier-5492b2cbb3d3253d7aa1407c4d34a13e.png
 dia-x-logo.png: dia-x-logo-f85767265286267e6c257c513e82bea2.png
 fig/45/bs135.gif: fig/45/bs135-2bde9522bc87b09cd3b5dc77db8cb745.gif
 fig/45/bs225.gif: fig/45/bs225-c6d76296254f524e66dbb568ff98a137.gif
@@ -207,22 +198,10 @@ jquery.tablesorter.js: jquery.tablesorter-a8345b8d29f2d3b26e1940e2657dfe91.js
 nested_form.js: nested_form-aa1a82d79afe18446e33a327d3d252ca.js
 sections_judge.js: sections_judge-0621f465021b996ed9446b3c8b6df92c.js
 users.js: users-fed92c1bd965e9778d7848fa9e6e8f07.js
-application.css: application-82485ee82291df6b4adedb01d5e6090d.css
-figurine-sprite.css: figurine-sprite-6438de4b233d7fd18ececa220faac950.css
-jquery-ui-1.8.16.custom.css: jquery-ui-1.8.16.custom-2a70d50403e5ae2f03477d8cf970c2c5.css
-pieces.css: pieces-750b0d8dc46eca5296a2cbabc3daf0a0.css
-print/print.css: print/print-704793bc48ef0daad808f972f91447ff.css
-scaffolds.css: scaffolds-8e341060197443db02d77e4d79722a24.css
-screen.css: screen-9415bc9678714d32be9cb794d1294fba.css
-tablesorter/style.css: tablesorter/style-e61021c141d791b057478b9370686e3c.css
-token-input-facebook.css: token-input-facebook-f7eb366d0d4c7cf5c409a3c8bcabfd88.css
-token-input.css: token-input-04afe8f12830e45f101b4941c51c1de3.css
+application.css: application-fb6a446d719abb92d1812b5f04ae6782.css
 underscore.js: underscore-1344e7eee64af3e71adbd008b75c1440.js
 jquery-ui.js: jquery-ui-3a2118d999832abcb7a57be59757345a.js
 jquery-ui.min.js: jquery-ui.min-ec6089465a18c229830456348fd2ae55.js
 jquery.js: jquery-230708256bb17bb60659d8acc3c6e73e.js
 jquery.min.js: jquery.min-16fc2f5c960663ae921da1a669c1053e.js
 jquery_ujs.js: jquery_ujs-5dbe2473dae55e714c2588fe9881e82e.js
-formtastic.css: formtastic-ec2d23a30583a447a08f62d045a19d7e.css
-formtastic_ie6.css: formtastic_ie6-ee97afb265ffa9560e702062fa36f076.css
-formtastic_ie7.css: formtastic_ie7-0afe0f4956245dbd37e5d2f4b9570994.css
