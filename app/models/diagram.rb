@@ -114,4 +114,22 @@ class Diagram < ActiveRecord::Base
     fp.map{|k,v| k.capitalize + ' ' + v.join(',') }.push(chameleons).semicolonize
   end #----------------------------------------------------------------
 
+  def stipulation_classified
+
+    return 'fairy' if fairy.present? && fairy.size
+
+    stipulation.gsub! /\*/, ''
+    case stipulation
+    when '#2' then '#2'
+    when '#3' then '#3'
+    when /^s#/ then 's#'
+    when 'h#2' then 'h#2'
+    when /^#..?/ then '#n'
+    when '+', '=' then 'study'
+    when /^h#[2.5|3]\*?/ then 'h#3'
+    when /^h/ then 'h#n'
+    else 'retro'
+    end
+  end #----------------------------------------------------------------
+
 end

@@ -1,14 +1,18 @@
 - content_for :scripts do
-  = javascript_include_tag 'jquery.tablesorter.min'
+  = stylesheet_link_tag 'tablesorter/style'
+  = javascript_include_tag 'jquery.tablesorter'
   :javascript
     $(document).ready(function() 
-    {  $("table.section-stats").tablesorter()
-    })
+    { $("table.section-stats").tablesorter(
+    { headers: {1: {sorter: false}} }
+    )})
     
 %h2= @section.competition.name
 %h3 Statistics for #{@section.name}
 
-%table.section-stats
+.d= "Total of #{@r.size} problems."
+
+%table.section-stats.tablesorter
   %thead
     %tr
       %th problem ID, authors, kings
@@ -46,4 +50,6 @@
           - dev = @r[id][0].reject(&:blank?).stdev.to_f
           - unless dev.nan?
             = sprintf '%.2f', dev
-      
+
+.d
+  = "Total of #{@r.size} problems."

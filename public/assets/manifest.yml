@@ -200,7 +200,7 @@ application.js: application-a6a763b91f84e01bd513f692988abbd4.js
 authors_edit.js: authors_edit-53f46314a0794bab322f5d2341d5677b.js
 diagram_edit.js: diagram_edit-b189a22e49c2b775fd6cc1b12ccf8f90.js
 jquery-tokeninput.js: jquery-tokeninput-f61e3e77c0b3000fe66a6376d7e5fed2.js
-jquery.tablesorter.min.js: jquery.tablesorter.min-a8345b8d29f2d3b26e1940e2657dfe91.js
+jquery.tablesorter.js: jquery.tablesorter-a8345b8d29f2d3b26e1940e2657dfe91.js
 nested_form.js: nested_form-aa1a82d79afe18446e33a327d3d252ca.js
 sections_judge.js: sections_judge-0621f465021b996ed9446b3c8b6df92c.js
 users.js: users-fed92c1bd965e9778d7848fa9e6e8f07.js

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130125322) do
+ActiveRecord::Schema.define(:version => 20111130125323) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20111130125322) do
     t.integer  "status"
     t.boolean  "private"
     t.integer  "ttype"
+    t.boolean  "automatic"
   end
 
   create_table "diagrams", :force => true do |t|

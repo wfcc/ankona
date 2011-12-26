@@ -6,7 +6,11 @@ class Section < ActiveRecord::Base
   has_many :marks
 
   def name_cs
-    (competition.nil? ? '' : competition.name.to_s) + (name.nil? ? '' : ' / ' + name)
+    if competition.automatic
+      competition.name.to_s
+    else
+      (competition.nil? ? '' : competition.name.to_s) + (name.nil? ? '' : ' / ' + name)
+    end
   end
   def name_et
     (competition.nil? ? '' : competition.name.to_s) + (name.nil? ? '' : ' / ' + name)

@@ -40,6 +40,8 @@
 .span-7.last
   - if may_edit? @diagram and @diagram.sections.count < 1
     - sections =  Section.joins{competition}.where{(competition.private != true) & (competition.status == 1)}
+    - if sections.first.competition.automatic
+      - sections = sections[0,1]
     .d
       You may submit this diagram to an open competition:
       = form_for @diagram, url: section_diagram_path(@diagram) do |f|

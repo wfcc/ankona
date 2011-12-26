@@ -31,6 +31,14 @@
   .span-10
 
     %h2 Sections:
+    = f.label 'Automatic sections'
+    = f.check_box :automatic
+    
+    .fine
+      When "automatic" is selected, problems will go to the right sections
+      according to their stipulations.  Sections correspond to nine sections
+      as currencly defined for
+      = link_to 'FIDE albums', 'http://www.sci.fi/~stniekat/pccc/fa.htm'
     .fine at least one
     - 1.times {@competition.sections.build}
 
@@ -41,6 +49,7 @@
           = " Section #{i+=1} "
         = ff.label 'Name'
         = ff.text_field :name
+        = ff.text_field :pattern, style: 'width:4em'
         .fine clear name to delete section
         = ff.label 'Theme'
         = ff.text_area :theme, :style => 'height:9em'

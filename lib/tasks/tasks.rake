@@ -18,6 +18,57 @@ task :txt2au => :environment do
   end
 end
 
+desc "Delete wrong marks"
+task wrong_marks: :environment do
+  competition = ENV['competition']
+  abort 'provide "competition={id}"' unless competition.present?
+  
+  c = Competition.find_by_id competition
+  abort "Competition id #{competition} not found" unless c
+  abort "Competition id #{competition} is not set to automatic sections." unless c.automatic?
+  c.sections.each do |s|
+    s.diagrams.each do |d|
+      puts "Section: #{s.pattern} Id: #{d.id} Stip: [#{d.stipulation}] (converted to #{d.stipulation_classified})"
+      d.marks.each do |m|
+        if m.section.id != s.id
+          puts "    ...delete mark #{m.id}"
+          m.delete
+        end
+      end
+    end
+  end
+
+  
+
+end
+desc "Automate competition"
+task :automate_sections => :environment do
+
+  competition = ENV['competition']
+  abort 'provide "competition={id}"' unless competition.present?
+  
+  c = Competition.find_by_id competition
+  abort "Competition id #{competition} not found" unless c
+  abort "Competition id #{competition} is not set to automatic sections." unless c.automatic?
+  
+  c.sections.each do |s|
+    s.diagrams.each do |d|
+      puts "Section: #{s.pattern} Id: #{d.id} Stip: [#{d.stipulation}] (converted to #{d.stipulation_classified})"
+      next if s.pattern == d.stipulation_classified
+      puts '   ...moving...'
+      r = c.sections.find{|ss| ss.pattern == d.stipulation_classified }
+      unless r
+        r = Section.new competition: c, pattern: d.stipulation_classified
+        r.save
+      end
+      r.diagrams << d
+      s.diagrams.delete d
+      d.marks.clear
+    end
+  end
+
+end
+
 desc "Assign codes"
 task :au_codes => :environment do
 

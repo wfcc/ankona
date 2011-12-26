@@ -144,13 +144,13 @@ require "net/http"
     end
     logger.warn "==<<== #{s} ==>>=="
     return s
-  end
-###################################################
+  end #----------------------------------------------------------------
+
   def pieceColor(color)
     color = color.upcase.to_sym
     {W: 'White', B: 'Black'}[color]
-  end
-###################################################
+  end #----------------------------------------------------------------
+
   def save_diagram(is_create)
 
     if @diagram.authors.blank? and params[:authors_ids].blank?
@@ -176,6 +176,6 @@ require "net/http"
       flash[:error] = 'Problem was not saved due to errors.'
       render :edit
     end
-  end
-###################################################
+  end #----------------------------------------------------------------
+
 end
