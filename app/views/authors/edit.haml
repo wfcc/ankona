@@ -1,3 +1,6 @@
+- content_for :scripts do
+  = javascript_include_tag 'uncommon/authors_edit'
+
 - @hideIfNonroman = @author.original.blank? ? 'display:visible' : 'display:none'
 - @showIfNonroman = @author.original.blank? ? 'display:none' : 'display:visible'
 

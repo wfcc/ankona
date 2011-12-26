@@ -1,5 +1,5 @@
 - content_for :scripts do
-  = javascript_include_tag :sections_judge
+  = javascript_include_tag 'uncommon/sections_judge'
   
 - i_am_director  = @section.user == current_user
 - i_am_judge     = @section.users.index current_user
