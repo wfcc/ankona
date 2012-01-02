@@ -40,7 +40,9 @@
           -#%div= diagram.tested ? 'C+' : ''
         %td.board
           %div{:style => "padding:0; position:relative"}
-            = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
+            -#= image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
+            - if diagram.position.present?
+              %img{src: diagram.embedded_diagram, class: :noBorder}
         %td{:style => "vertical-align:top"}
           %pre.solution= h diagram.solution
         /%td{:style => "color:#281"}

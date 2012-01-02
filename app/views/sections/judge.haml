@@ -66,7 +66,9 @@
               %p= diagram.twin
           %td.diagram
             %div(style = "padding:0 0 20px 0; position:relative")
-              = image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
+              -#= image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
+              - if diagram.position
+                %img{src: diagram.embedded_diagram, class: :noBorder}
               .piece_balance= diagram.piece_balance
               .fairy_synopsis= diagram.fairy_synopsis
           %td.solution

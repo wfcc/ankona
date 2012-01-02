@@ -132,4 +132,53 @@ class Diagram < ActiveRecord::Base
     end
   end #----------------------------------------------------------------
 
+  def embedded_diagram
+    cols, rows = 8, 8
+    i, j = -25, 0
+    @dia = $board
+
+    if position.present?
+      slashed = position.split('/')
+      slashed.collect! do |rank|
+         # replace numbers with spaces
+         rank.gsub!(/\d+/) {' ' * $&.to_i}
+         rank.ljust(cols) # fill up
+      end
+      
+      pieces = slashed.join.scan(/\[\w+\]|\(\w+\)|./)
+      pieces.each do |p|
+        prefix = ''
+        fig = p
+        (j+=25; i=0) if (i+=25) > 180
+        case p
+        when ' '
+          next
+        when /\[x(\w+)\]/
+          prefix = 'x'; fig = $~[1]
+        when /\((\w+)\)/
+          fig = $~[1]
+          fig = Piece.where{code == fig.upcase}.first.et.glyph1
+        end
+        color = p.match(/^(\(|\[.)?[A-Z]/) ? 'w' : 'b'
+        if fig.present?
+          putFigM prefix + color + fig.downcase, i, j
+        else
+          putFigM 'magic', i, j
+        end
+      end
+    end
+
+    #send_data @dia.to_blob, type: 'image/png', disposition: 'inline'
+    'data:image/png;base64,' + Base64.encode64(@dia.to_blob)
+    
+  end #----------------------------------------------------------------
+  private
+#--------------------------------------------
+
+  def putFigM(c, i, j)
+    c.sub! /s/, 'n' # can't avoid it!
+    fig = $figurines[c] || $figurines['magic']
+    @dia = @dia.composite(fig, i+1, j+1, Magick::OverCompositeOp)
+  end
+
 end

@@ -18,7 +18,8 @@
     .p= @diagram.award
   #divBlank
     - @diagram.position = '' if @diagram.position.blank?
-    = image_tag '/fen/' + @diagram.position, id: 'blank'
+    -#= image_tag '/fen/' + @diagram.position, id: 'blank'
+    %img{src: @diagram.embedded_diagram, id: :blank}
     .stipulation= @diagram.stipulation
     .piece_balance= @diagram.piece_balance
     .twins= @diagram.twin
