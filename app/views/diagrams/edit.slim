@@ -1,0 +1,98 @@
+- content_for :scripts do
+  = javascript_include_tag 'uncommon/diagram_edit', 'nested_form'
+
+  / this loads codes for fairy pieces into a js object
+  script
+    | ik.pieces =
+    == @pieces
+    
+- content_for :title do
+  - if @diagram.stipulation.present?
+    =' @diagram.stipulation
+    ' by
+    = @diagram.authors.map(&:name).commatize
+  - else
+    | new problem
+
+.prepend-12: button#change-view.button Change to solving view
+    
+h2 Editing problem #{@diagram.id}
+= simple_form_for @diagram do |f|
+
+  = f.hidden_field :id
+  #first.span-12
+    #pieceinputs
+      .label Position (w/b)
+      = text_field_tag 'diagram[pieces][a][w]', @diagram.pieces['a']['w']
+      /= f.input :white, label: false
+      .fine  ↕ FIDE piece notation (KDTLSP), our notation for fairy pieces
+      = text_field_tag 'diagram[pieces][a][b]', @diagram.pieces['a']['b']
+      /= f.input :black, label: false
+      p.clear
+        button#fen_button FEN ▼
+        button#fairy_button Fairy stuff ▼
+        #fen-block style="display:none"
+          = f.input :position, label: :FEN, hint: 'KQRBNP notation for FEN'
+        #fairy-block style="display:none"
+          .label Neutral pieces
+          = text_field_tag 'diagram[pieces][a][n]', @diagram.pieces['a']['n'], style: 'width:80%'
+          = f.input :fairy, label: 'Conditions', hint: 'circe, andernach, etc.'
+          .label Fairy behaviors
+          table#squared
+            - @diagram.pieces['NEW'] = {'a' => {w: '', b: '', n: ''}}
+            - @diagram.pieces.each_pair do |kind, colors|
+              - next if kind == 'a'
+              tr data-id=kind
+                td = select_tag :family, options_for_select(Settings.fairy_variant, kind)
+                td
+                  - %w[w b n].each do |color|
+                    p = color.upcase + ':'
+                td
+                  - %w[w b n].each do |color|
+                    = text_field_tag "diagram[pieces][#{kind}][#{color}]", colors[color], 'data-color' => color, disabled: kind == 'NEW'
+                    br
+
+    - %w{b w}.each do |color|
+      .cassete
+        - %w{k q r b n p}.each do |fig|
+          p.todrag class="sprite-#{color}#{fig}" data-id=fen2again(fig) data-color=color data-kind='a'
+      - if color == 'b'
+        #divBlank 
+         = image_tag '/fen', id: 'blank'
+    .clear
+      - %w{◁ ▽ △ ▷ ↻ ↺ ↕}.each do |direction|
+        button.moveboard.button type="button" = direction
+
+    = f.input :stipulation, :input_html => {:class => 'c30p'}, :hint => '#2 | s#3 | h#2.5 | win | …'
+    = f.input :twin, :hint => 'b) Se5->e6 | b) -Th3, c) Lh8<->La2 | 2.1;1.1 | …'
+    / = f.label 'Computer tested'
+    / = f.select :tested, Status.where{table == :diagrams}.collect {|i| [i.name, i.value] }
+
+    = f.submit ' Save and exit ', class: :button
+    - if @diagram.persisted?
+      = link_to " Don't save and exit ", diagram_path(@diagram), class: :button
+      = link_to ' Discard changes ', edit_diagram_path(@diagram), class: [:button, :clearboth]
+
+  #catalog.span-12.last
+    .label Authors
+    #authors
+      = hidden_field_tag :authors_json, @authors_json
+      = text_field_tag :authors_ids, '', style: 'width:30em'
+    table.zero
+      tr
+        td= f.input :source, input_html: {size: 28}
+        td= f.input :issue, input_html: {size: 10}
+      tr
+        td= f.input :label, hint: 'Problem number, or label, as given in the source', input_html:  {size: 10}
+        td= f.input :award, input_html: {size: 20}
+    / This is ugly.  FIXME some time.
+    == (f.input :solution, input_html: {rows: 20, cols: 5}, hint: 'Please adhere to FIDE piece notation: KDTLS.').gsub /\r\n/, '&#13;'
+
+  #solving.span-12.last
+    = f.submit ' Solve with popeye ', id: :solve, class: :button
+    = f.submit ' Show popeye input ', id: :showpopeye, class: :button
+    fieldset
+      p for="pyopts" class="modest" Popeye “options” line
+      = text_field_tag :pyopts, ''
+      p.fine = 'try, setplay, duplex, maxsolutions <n>, intelligent, …'
+      #solution: span.fine Popeye solution will go here (first run may be slow)

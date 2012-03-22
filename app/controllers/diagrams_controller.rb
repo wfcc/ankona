@@ -1,9 +1,9 @@
 # coding: utf-8
 class DiagramsController < AuthorizedController
 
-require 'open3'
-require "uri"
-require "net/http"
+  require 'open3'
+  require "uri"
+  require "net/http"
 
   before_filter :require_user, {:except => [:index, :show]}
 
@@ -33,12 +33,16 @@ require "net/http"
 
   def new
     @diagram = Diagram.new
+    @pieces = Piece.all.to_json except: [:id, :created_at, :updated_at, :glyph2, :orthodox]
+    if @diagram.pieces['a'].blank?
+      @diagram.pieces = Hash.new { |h,k| h[k] = Hash.new { |hh,kk| hh[kk] = '' } }
+    end
     render :edit
   end #--------------------------------------------------------
 
   def edit
     ActiveRecord::Base.include_root_in_json = false
-    @pieces = Piece.all.to_json except: [:id, :created_at, :updated_at]
+    @pieces = Piece.all.to_json except: [:id, :created_at, :updated_at, :glyph2, :orthodox]
     @diagram = Diagram.find(params[:id])
     @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
     @showIfFairy = @diagram.fairy.blank? ? 'display:none' : 'display:visible'
@@ -79,20 +83,36 @@ require "net/http"
   end #--------------------------------------------------------
 
   def solve
+    x = ''
+    params[:pieces].each do |kind,v|
+      v.each do |color, pcs|
+        next unless pcs.present?
+        x += {w: 'White', b: 'Black', n: 'Neutral'}[color.to_sym] + ' '
+        x += kind + ' ' unless kind == 'a'
+        x += to_english_py(pcs) + ' '
+      end
+    end
+    stip = params[:stipulation].split(' ').shift
+    cond = params[:conds].present? ? 'Condition ' + params[:conds] : ''
+
     input = <<-EOD
     BeginProblem
-    Option NoBoard #{params[:pyopts]}
-    Option MaxTime 30
+    Option MaxTime 30 NoBoard #{params[:pyopts]}
     Stipulation #{params[:stipulation]}
-    Pieces #{array_to_popeye(fen2arr(params[:position]))}
+    #{cond}
+    Pieces #{x}
     #{ twin_to_py params[:twin] }
     EndProblem
     EOD
-    res = Net::HTTP.post_form URI.parse(Ya['popeye_url']),
-      input: input,
-      popeye: Ya['popeye_location']
 
-    render text: res.body
+    unless params['solve'] == 'true'
+      render text: input
+    else
+      res = Net::HTTP.post_form URI.parse(Settings.popeye_url),
+        input: input,
+        popeye: Settings.popeye_location
+      render text: res.body
+    end
   end #--------------------------------------------------------
 
   def share
@@ -105,20 +125,15 @@ require "net/http"
 
   private
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  def fen2arr(position)
-    b = []
-    a = position
-      .gsub(/(?!\()n(?!\))/, 's') \
-      .gsub(/(?!\()N(?!\))/, 'S') \
-      .gsub(/\d+/){'1' * $&.to_i} \
-      .scan(/\(\w+\)|\[.\w+\]|\w/)
-
-    a.select_with_index do |x,i|
-      next if x == '1'
-      b.push x + index2algebraic(i)
-    end
-    return b
-  end #----------------------------------------------------------------
+  def to_english_py pieces
+    pieces.upcase.split(' ').map do |p|
+      p =~ /(..?)(..)/
+      (x = Piece.where(code: $~[1]).first) or next p
+      x = x.popeye.to_s
+      x.size > 0 or next p
+      x + $~[2].downcase
+    end.join(' ')
+  end #--------------------------------------------------------
 
   def twin_to_py(t)
     s = ''

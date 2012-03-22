@@ -11,16 +11,38 @@ class Diagram < ActiveRecord::Base
   #validates_presence_of :authors
   validates_associated :authors
 #  after_update :save_authors
+  before_save :build_pieces
+  after_find :build_pieces
+  serialize :pieces, Hash
+
 
   cattr_reader :per_page
   @@per_page = 20
-  #-------------------------------
+
+  def neutral; self.pieces[:a][:n] end
+  def neutral=(x); self.pieces[:a][:n] = x end
+
+  def self.serialized_attr_accessor(*args)
+    args.each do |method_name|
+      eval "
+        def #{method_name}
+          (self.pieces || {})[:#{method_name}]
+        end
+        def #{method_name}=(value)
+          self.pieces ||= {}
+          self.pieces[:#{method_name}] = value
+        end
+      "
+    end
+  end  #-------------------------------
+ 
+  serialized_attr_accessor :a, :chameleon
   
   def save_authors
     authors.each do |author|
       author.save false
     end
-  end #----------------------------------------------------------------
+  end  #-------------------------------
 
   def existing_author_attributes=(author_attributes)
     authors.reject(&:new_record?).each do |author|
@@ -31,21 +53,21 @@ class Diagram < ActiveRecord::Base
         authors.delete(author)
       end
     end
-  end #----------------------------------------------------------------
+  end  #-------------------------------
 
   def new_author_attributes=(author_attributes)
     author_attributes.each do |attributes|
       authors.build(attributes)
     end
-  end #----------------------------------------------------------------
+  end  #-------------------------------
 
   def fen
     position
-  end #----------------------------------------------------------------
+  end  #-------------------------------
 
   def fen=(p)
     position = p
-  end #----------------------------------------------------------------
+  end  #-------------------------------
 
   def kings
     cols = 8
@@ -63,55 +85,52 @@ class Diagram < ActiveRecord::Base
       (octal[1].to_i + 97).chr + # 0 -> 'a'
       (8 - octal[0].to_i).to_s # increment 1
     end
-      
-  end #----------------------------------------------------------------
+  end  #-------------------------------
 
-  def fen2arr 
-    b = []
-    a = position
-      .gsub(/(?!\()n(?!\))/, 's') \
-      .gsub(/(?!\()N(?!\))/, 'S') \
-      .gsub(/\d+/){'1' * $&.to_i} \
-      .scan(/\(\w+\)|\[.\w+\]|\w/)
-
-    a.select_with_index do |x,i|
-      next if x == '1'
-      b.push x + index2algebraic(i)
-    end
-    return b
-  end #----------------------------------------------------------------
 
   def piece_balance
-    w = b = n = 0
-    fen2arr.each do |piece|
-      case piece
-      when /^(\[.)?\(?[[:upper:]]/
-        w = w + 1
-      when /^(\[.)?\(?[[:lower:]]/
-        b = b + 1
+    n = Hash[%w[w b n].zip []]
+    if pieces.present?
+      pieces.each_pair do |kind, colors|
+        colors.each_pair do |color, pieces|
+          n[color] = n[color].to_i + pieces.split(/ /).size
+        end
       end
+      n.values.compact.join '+'
+    else
+      'empty'
     end
-    "#{w}+#{b}"
-  end #----------------------------------------------------------------
+  end  #-------------------------------
   
   def fairy_synopsis
-    return '' unless position.match /\[|\(/
-    bc = []; wc = []; fp = {}
-    fen2arr.each do |piece|
-      case piece
-      when /\[x([a-z]+)\](..)/
-        bc.push $~[1].upcase + $~[2]
-      when /\[x([A-Z]+)\](..)/
-        wc.push $~[1] + $~[2]
-      when /\(([A-Z]+)\)(..)/i
-        name = Piece.where{code == $~[1].upcase}.first.et.name
-        name = 'unknown' if name.blank?
-        fp[name] ||= []
-        fp[name].push $~[2]
+    syn = {}
+    if pieces.present?
+      pieces.each_pair do |kind, colors|
+        hole = kind unless kind == 'a'
+        colors.each_pair do |color, pieces|
+          pieces.upcase.split(/ /).each do |piece|
+            piece.match /^(..?)(..)$/
+            next unless $~
+            p = Piece.where{code == $~[1]}.first
+            if p.blank? or p.name.blank?
+              name = 'unknown'
+              next
+            elsif p.orthodox
+              next
+            else
+              syn[p.name] ||= []
+              syn[p.name].push $~[2].downcase
+            end
+          end
+        end
       end
+      r = syn.map do |piece, squares|
+        piece.capitalize + ' ' + squares.join(', ')
+      end.join '; '
+      return r
     end
-    chameleons = (wc + bc).commatize.predifix('Chameleon ')
-    fp.map{|k,v| k.capitalize + ' ' + v.join(',') }.push(chameleons).semicolonize
+    ''
+
   end #----------------------------------------------------------------
 
   def stipulation_classified
@@ -137,7 +156,23 @@ class Diagram < ActiveRecord::Base
     i, j = -25, 0
     @dia = $board
 
-    if position.present?
+    if pieces.present?
+      pieces.each_pair do |kind, colors|
+        colors.each_pair do |color, pieces|
+          pieces.downcase.split(/ /).each do |piece|
+            m = piece.match /(..?)(.)(.)/
+            next unless m
+            fig = m[1]
+            fig = Piece.where{code == fig.upcase}.first.et.glyph1
+            y = (49 + 7 - m[3].ord) * 25
+            x = (m[2].ord - 97) * 25
+            prefix = kind == 'a' ? '' : 'x'
+            s = fig.present? ? prefix + color.to_s + fig.downcase : 'magic'
+            putFigM s, x, y
+          end
+        end
+      end
+    elsif position.present?
       slashed = position.split('/')
       slashed.collect! do |rank|
          # replace numbers with spaces
@@ -172,13 +207,41 @@ class Diagram < ActiveRecord::Base
     'data:image/png;base64,' + Base64.encode64(@dia.to_blob)
     
   end #----------------------------------------------------------------
+
   private
-#--------------------------------------------
 
   def putFigM(c, i, j)
     c.sub! /s/, 'n' # can't avoid it!
     fig = $figurines[c] || $figurines['magic']
     @dia = @dia.composite(fig, i+1, j+1, Magick::OverCompositeOp)
-  end
+  end  #-------------------------------
+
+  def build_pieces
+    swoop = Proc.new { |k, v| v.delete_if(&swoop) if v.kind_of?(Hash);  v.empty? }
+    if self.position != ''
+
+      self.pieces = Hash.new { |h,k| h[k] = Hash.new { |hh,kk| hh[kk] = '' } }
+      fen2arr(fen).map do |x|                   
+        case x
+        when /\[x([A-Z]\w?)\](..)$/
+          self.pieces[:Chameleon][:w]
+        when /\[x([a-z]\w?)\](..)$/
+          self.pieces[:Chameleon][:b]
+        when /^\(?([A-Z]+)\)?(..)$/
+          self.pieces['a']['w']
+        when /^\(?([a-z]+)\)?(..)$/
+          self.pieces['a']['b']
+        #end.push $~[1].downcase + $~[2]
+        end << (from_fen_again($~[1].downcase) + $~[2] + ' ')
+      end
+    else
+      self.position = ''
+      self.pieces.delete_if &swoop
+    end
+  end  #-------------------------------
+  def from_fen_again x
+    n = {k: :k, q: :d, r: :t, b: :l, n: :s, p: :p}[x.to_sym].to_s
+    n.present? ? n : x # no change
+  end  #-------------------------------
 
 end

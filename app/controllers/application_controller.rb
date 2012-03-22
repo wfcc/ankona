@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
     
   def check_geo
     if session[:geo].blank?   
-      c = GeoIP.new(Ya['geoipdat']).country(request.remote_ip)[3]
+      c = GeoIP.new(Settings.geoipdat).country(request.remote_ip)[3]
       session[:geo] = {value: c, expires: Time.now + 36000}
     end
   end

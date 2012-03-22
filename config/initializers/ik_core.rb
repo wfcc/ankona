@@ -51,31 +51,14 @@ class String
     "<b>#{self}</b>"
   end        
   
-  def s2n
-    case self
-    when 's'
-      'n'
-    when 'S'
-      'N'
-    else
-      self
-    end 
-  end
-        
-  def n2s
-    case self
-    when 'n'
-      's'
-    when 'N'
-      'S'
-    else
-      self
-    end      
-  end
 end
 
-
-#MetaWhere.operator_overload!
-
-Ya = YAML.load_file(Rails.root.join("config/config.yml"))[Rails.env]
-
+class PieceBlock < BinData::Record
+  array :pieces, initial_length: 0 do
+    bit3 :xx
+    bit3 :yy
+    bit3 :kind
+    bit8 :fairy_piece, onlyif: lambda {kind == 0b111}
+  end
+  bit3 :terminator, initial_value: 0b110
+end

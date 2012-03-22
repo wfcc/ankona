@@ -13,6 +13,22 @@ google.setOnLoadCallback(function() {
 
   initVars()                             
 
+  $('#squared select').live('change', function(e) {
+    //alert($(this).parent().data('kind'))
+    var select = $(this)
+    var selected = select.find('option:selected').val()
+    _(select.parent().next().next().children()).each(function(s){
+      $(s).attr('disabled', selected == '')
+      $(s).attr('name',
+        'diagram[pieces][' + selected + '][' + $(s).data('color') + ']'
+          ).attr('id',
+        'diagram_pieces_' + selected + '_' + $(s).data('color')
+          )
+      })
+    if (! $('#squared option[value=""]:selected').length) {
+      ik.blankTr.clone(true).appendTo($('#squared')).find('select').removeAttr('disabled')
+      }
+    })
 
   $('#change-view').click(function(e) {
     if(ik.solving_view = ! ik.solving_view) {
@@ -26,8 +42,6 @@ google.setOnLoadCallback(function() {
     }
   })
         
-
-
   $('#fen_button').click(function(e) {
     $('#fen-block').toggle()
     e.preventDefault()
@@ -37,21 +51,27 @@ google.setOnLoadCallback(function() {
     e.preventDefault()
   })
 
-  $('#solve').click(function(e) {
+  var solve = function(f) {
+
     var form = $('form')
-    $('#solve').val(' Solving... ')
+    if(f) $('#solve').val(' Solving... ')
     $.post('/diagrams/solve', 
       { stipulation: $('#diagram_stipulation').val()
       , position: $('#diagram_position').val()
+      , pieces: form.toJSON().diagram.pieces
       , twin: $('#diagram_twin').val()
       , pyopts: $('#pyopts').val()
+      , conds: $('#diagram_fairy').val()
+      , solve: f
       }, function(data) {
         $('#solution').html(data)
-        $('#solve').val('Finished.  Solve again.')
+        if(f) $('#solve').val('Finished.  Solve again.')
         }
     )
-    e.preventDefault()
-  })
+    }
+
+$('#solve').click(function(e){ solve(true); e.preventDefault()})
+$('#showpopeye').click(function(e) { solve(false); e.preventDefault()})
 
   $('#authors_ids').tokenInput('/authors/json',
     { hintText: "Start typing author's name or handle"
@@ -66,17 +86,11 @@ google.setOnLoadCallback(function() {
       }    
     })  
 
-  $('#diagram_white').bind('keyup', updateFen)
-  $('#diagram_black').bind('keyup', updateFen)
-  $('#diagram_position').bind('keyup', updateFromFen)
-  $('#white_c').bind('keyup', updateFen)
-  $('#black_c').bind('keyup', updateFen)
+  $('#pieceinputs input[type=text]:not(#diagram_position)').live('keyup blur', fromNotation)
+  $('#diagram_position').bind('keyup', fromFen)
 
-  if (! $('#diagram_position').val()) {
-    updateFen({keyCode: 50}) 
-    } else {
-    updateFromFen()
-    }
+  treeToBoard()
+  fromInternal()
 
   $('#diagram_white').focus()
 
@@ -88,68 +102,65 @@ google.setOnLoadCallback(function() {
     , zIndex: 5
     })
 
+  // p class="sprite-#{color}#{figurine} todrag" data-id=figurine data-color=color data-kind='a'
   $('#blank').droppable(
     { drop: function(event, ui) {
       var board = $('#blank').offset()
         , piece = ui.draggable  
-      
       ik.board
         [Math.floor((ui.offset.top - board.top + 12) / 25)]
-        [Math.floor((ui.offset.left - board.left + 12) / 25)] = piece.data('id')
+        [Math.floor((ui.offset.left - board.left + 12) / 25)] =
+          { p: piece.data('id')
+          , k: piece.data('kind')
+          , c: piece.data('color')
+          , u: piece.data('u') || Math.random()
+          }
       if (piece.hasClass('pieceOnBoard')) { // remove
-        ik.board[piece.data('x')][piece.data('y')] = '1'
+        ik.board[piece.data('x')][piece.data('y')] = undefined
         piece.remove()
         }
       fromInternal()
       }
     })
   
-
   $('.moveboard').button()
   $('.moveboard').click(function() { // move position left/up/down/up
     // ◁ ▽ △ ▷
-    var newBoard
-    switch ($(this).data('name')) {
+    var newBoard, rotate
+    newBoard = [[],[],[],[],[],[],[],[]]
+    switch ($(this).text()) {
     case '▷' :
-        $.each(ik.board, function(i,row) {
-          row.unshift('1')
-          row.pop()
-        })
+        _.each(ik.board, function(row) {
+          row.unshift(undefined)
+          if(row.length > 8) row.pop()
+          })
         break
     case '◁' :
-        $.each(ik.board, function(i,row)
-          { row.shift()
-          ; row.push('1')
-        })
-        ; break
+        _.each(ik.board, function(row) { 
+          row.shift()
+          row.push(undefined)
+          })
+        break
     case '△' :
         ik.board.shift()
-        ik.board.push(ik.arrayOfOnes)
+        ik.board.push([])
         break
     case '▽' :
         ik.board.pop()
-        ik.board.unshift(ik.arrayOfOnes)
+        ik.board.unshift([])
         break
     case '↺' :
-      newBoard = []
-      ik.eight.each (function() {newBoard.push(ik.arrayOfOnes.slice(0))})
-      ik.eight.each (function(i, x) {
-        ik.eight.each (function(j, y) {
-          newBoard[7-j][i] = ik.board[i][j]
+      rotate = function(i,j,pcs){ newBoard[7-j][i] = pcs }
+    case '↻' :
+      rotate = rotate || function(i,j,pcs){ newBoard[j][7-i] = pcs }
+      _(ik.board).each(function(row, i){
+        _(row).each(function(pcs, j){
+          rotate(i,j,pcs)
+          })
         })
-      })
       ik.board = newBoard
       break
     case '↻' :
-      newBoard = []
-      ik.eight.each (function() {newBoard.push(ik.arrayOfOnes.slice(0))})
-      ik.eight.each (function(i, x) {
-        ik.eight.each (function(j, y) {
-          newBoard[j][7-i] = ik.board[i][j]
-        })
-      })
-      ik.board = newBoard
-      break
     case '↕' :
         ik.board.reverse()
         break
@@ -157,35 +168,30 @@ google.setOnLoadCallback(function() {
     fromInternal()
     return false
   }) //*************************************
-  function clearBoard() {
-
-    for(var i=0;i<8;++i) { ik.board[i] = ik.arrayOfOnes.slice(0) }
-  } //*************************************
   function initVars(){
 
+    ik.fenish = {k:'k',d:'q',t:'r',l:'b',s:'n',p:'p','1':'1'}
     ik.solving_view = false
     ik.board = []
-    ik.arrayOfOnes = ['1','1','1','1','1','1','1','1']
-    ik.eight = $(ik.arrayOfOnes)
+    ik.form = $('form.simple_form')
+    ik.tree = ik.form.toJSON()
+    ik.onex8 = '11111111'
+    ik.blankTr = $('tr[data-id=NEW]').clone(true)
+    //ik.figurines = $('<p>').css('background-image', 'url(' + ik.fig_path + 'figurines.gif' + ')')
 
-    ik.e2f = {K:'K',Q:'D',R:'T',B:'L',N:'S',P:'p'}
-    ik.f2e = {k:'k',d:'q',t:'r',l:'b',s:'n',p:'p'}
     ik.boobs = /^\[(.)(.+)\]/
-    var allPieces =
-      [ 'wk','wq','wr','wb','wn','wp'
-      , 'bk','bq','br','bb','bn','bp'
-      , 'xwk','xwq','xwr','xwb','xwn','xwp'
-      , 'xbk','xbq','xbr','xbb','xbn','xbp']
-      , aPieces = {}                                       
-    ik.imgPieces = {}
-    $.each(allPieces, function(i,p) {
-      aPieces[p] = ik.fig_path + p + '.gif'
-      ik.imgPieces[p] = $('<img>').attr('src', aPieces[p])
-      })
+
+    } //*************************************
+  function e2f(piece){
+    var x = {K:'K',Q:'D',R:'T',B:'L',N:'S',P:'p'}[piece.toUpperCase()]
+    if (!x) return undefined
+    return x.toLowerCase()
+
   } //*************************************
-  function fenToInternal(){
+  function fenToBoard(){
     
-    var fen = $('#diagram_position').val().trim()
+    ik.board = [[],[],[],[],[],[],[],[]]
+    var fen = $('#diagram_position').val().trim(), p, color
 
     fen = fen
       .replace(/\d+/g, function(x){return '1'.times(Number(x))})
@@ -198,66 +204,41 @@ google.setOnLoadCallback(function() {
     /bK/   —> /bK111111/
     ----------------------------    */
     _.each(fen.split('/'), function(row, i) {
-      ik.board[i] = row.split(/(?!\w*[\)|\]])/)
-      })
-
-  } //*************************************
-  function notationToInternal(){
-
-    var prefix, postfix, ifwhite, p, piece, file, rank, m
-    clearBoard()
-    $(['#diagram_white', '#diagram_black', '#white_c', '#black_c'])
-      .each (function(i_color ,color) {
-      $($(color).val().toLowerCase().split(/\W/)).each (function(j,p) {
-         if (p.length < 2) return
-         if (p.length == 2) p = 'p' + p // implicit pawn
-         p = p.toLowerCase()
-         m = p.match(/(..?)(..)$/)
-         piece = m[1]
-         file = m[2].charCodeAt(0)
-         rank = m[2].charAt(1)
-         if (file< 97 || file>104) return; // a — h
-         if (rank<'1' || rank>'8') return;
-         switch (true) {
-         case i_color > 1 :
-            prefix = '[x'
-            postfix = ']'
-            break
-         default:
-            prefix = postfix = ''
-         }
-         ifwhite = i_color % 2 == 0 ? function(x){return x.toUpperCase()} : idem
-         ik.board[8 - rank][file - 97]
-            = prefix
-            + ifwhite( ik.f2e[piece] || '('+piece+')' )
-            + postfix
-        })
-      })
-  } //*************************************
-  function internalToDiagram(){
-    var p, im, x, dataid
-      , top, left, oldPiece
-      , color, pp, gf_cond = ''
-    _(ik.board).each(function(row, i) {
-      _(row).each(function(p, j) {
-        oldPiece = $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]')
-        if (oldPiece.data('id') == p) return 
-        if (p == '1') return oldPiece.remove()
-
-        dataid = p
-        pp = p.match(ik.boobs) // general fairy piece condition
-        if(pp) {p = pp[2] ;  gf_cond= 'x' }
-        else { gf_cond = '' }
-        oldPiece.remove()
-        if (pp = p.match(/\((.+)\)/)) {
-          x = _(ik.pieces).find(function(x){ return x.code == pp[1].toUpperCase() })
-          x = x ? wb(pp[1]) + x.glyph1 : 'magic'
-          im = $('<img>').attr('src', ik.fig_path + x + '.gif')
-          }
+      _.each(row.split(''), function(piece, j) {
+        var p = e2f(piece)
+        if (!p) return // '1' included
         else {
-          im = ik.imgPieces[ gf_cond + wb(p) + p.toLowerCase() ].clone()
+          ik.board[i][j] =
+            { k: 'a'
+            , c: piece < 'a' ? 'w' : 'b'
+            , p: e2f(piece).toUpperCase()
+            , u: Math.random()
+            }
           }
-        $('#divBlank').append(im)
+      })
+    })
+
+  } //*************************************
+  function notationToTree(){ // new
+    ik.tree = ik.form.toJSON()
+  } //*************************************
+  function boardToDiagram(){
+    var p, im, x, top, left, oldPiece, color, squared
+    _(ik.board).each(function(row, i) {
+      _.each(_.range(8), function(p, j) {
+        oldPiece = $('.pieceOnBoard[data-x="' + i + '"][data-y="' + j + '"]')
+        p = row[j]
+        if (p) {
+          if (oldPiece.data('u') == p['u'] && p['u']) return
+          } else { return oldPiece.remove() }
+        squared = p.k && p.k != 'a' ? 'x' : ''
+        color   = p.c
+        oldPiece.remove()
+        x = _(ik.pieces).find(function(x){ return x.code == p.p.toUpperCase() })
+        x = x ? x.glyph1 : f2easy(p.p)
+        x = squared + color + x
+        im = $('<p>') //ik.figurines.clone()
+        im.addClass('sprite-' + x)
         left = j * 25 + 1
         top = i * 25 + 1
         im.css(
@@ -267,19 +248,23 @@ google.setOnLoadCallback(function() {
             })
           .attr('data-x', i)
           .attr('data-y', j)
-          .data('id', dataid)
-          .addClass('pieceOnBoard ui-draggable')
+          .data('id', p.p)
+          .data('kind', p.k)
+          .data('color', p.c)
+          .data('u', p['u'] || Math.random())
+          .addClass('pieceOnBoard')
           .draggable(
             { revert: false
             , zIndex: 5
             , stop: function(e,ui) { // remove off board
               var fig = $(this)
-              ik.board[fig.data('x')][fig.data('y')] = '1'
-              internalToNotation()
-              internalToFen()
+              ik.board[fig.data('x')][fig.data('y')] = undefined
+              boardToNotation()
+              boardToFen()
               fig.remove()
               }
             })
+        $('#divBlank').append(im)
         })
       })
     var b = ik.board.join('').match(/[a-z]/g)
@@ -287,49 +272,50 @@ google.setOnLoadCallback(function() {
     // $('#pcount').html('(' + (w?w.length:'0') +' + '+ (b?b.length:'0')+')')
 
   } //*************************************
-  function internalToFen(){
+  function boardToFen(){ // new
 
-    var x
-    x = _(ik.board).map(function(row) { return row.join('') })
-        .join('/')
-        .replace(/\d+/g,function(x){return x.length})
-
-    $('#diagram_position').val(x)
-
-  } //*************************************
-  function internalToNotation(){
-    var piece, pp, ham, f, fairy
-      , fields = {diagram_white: [], diagram_black: [], white_c: [], black_c: []}
-    _(ik.board).each(function(row, i) {
-      _(row).each(function(piece, j) {
-        pp = piece.match(ik.boobs)
-        if(pp) { ham = true ; piece = pp[2] }
-        else { ham = false }
-
-        var white = function(x){ return x.match(/^\(?[A-Z]/) ? true : false }
-        
-        if (piece !== '1') {
-          switch (true) {
-          case !ham && white(piece) :
-            f = 'diagram_white'; break
-          case !ham && !white(piece) :
-            f = 'diagram_black'; break
-          case ham && white(piece) :
-            f = 'white_c'; break
-          case ham && !white(piece) :
-            f = 'black_c'; break
-            }
-
-          piece = piece.toUpperCase()            
-          fields[f].push(
-            (ik.e2f[piece] || piece.replace(/\(|\)/g,'')) +
-            String.fromCharCode(j+97) + (8-i).toString())
+    var abort = false, p
+    var x = _(ik.board).map(function(row) { 
+      var r = ik.onex8
+      _(row).each(function(pcs, pos) {
+        if (pcs) {
+          p = fenize(pcs)
+          abort = 
+            abort ||
+            pcs.k != 'a' ||
+            pcs.c == 'n' ||
+            pcs.p.length != 1 || !p
+          if (abort) return
+          r = r.replaceAt(pos, p)
           }
         })
+      return r
       })
-    for (var x in fields) {
-      $('#' + x).val(fields[x].sort(sortPieces).join(' '))
-      }
+      .join('/')
+      .replace(/\d+/g,function(x){return x.length})
+
+    $('#diagram_position').val(abort ? '' : x)
+
+  } //*************************************
+
+  function boardToNotation(){ // new
+
+    var field = {}, index
+    _(ik.board).each(function(row, i) {
+      _(row).each(function(piece, j) {
+        if (!piece) return
+        index = piece.k + '_' + piece.c
+        piece = piece.p
+        field[index] = field[index] ? field[index] : []
+        field[index].push(piece.pawnDown() + String.fromCharCode(j+97) + (8-i).toString())
+        })
+      })
+    _.each(field, function(value, key){
+      $('#diagram_pieces_' + key).val(value.sort(sortPieces).join(' '))
+      })
+
+    return
+
   } //*************************************
   function validateForm(){
      ; if ($('diagram_stipulation').value.length < 2)
@@ -341,19 +327,24 @@ google.setOnLoadCallback(function() {
      }
      ; return true
   } //*************************************
-  function updateFen(e){
-     if (e.keyCode < 32 || e.keyCode > 58) return false;
-     notationToInternal()
-     internalToDiagram()
-     internalToFen()
-     return true
+  function fromNotation(e){
+    if (e.keyCode > 32 && e.keyCode < 91 || e.keyCode == 8 || e.type == 'focusout') {
+      notationToTree()
+      treeToBoard()
+      boardToDiagram()
+      boardToFen()
+      }
+    if (e.type == 'focusout') { boardToNotation() }
+    return true
   } //*************************************
-  function updateFromFen(e){
-     fenToInternal()
-     internalToDiagram()
-     internalToNotation()
-     return true
-  } //*************************************
+  function fromFen(e){
+    if (e.keyCode > 45 && e.keyCode < 91 || e.keyCode == 8 ) {
+      fenToBoard()
+      boardToDiagram()
+      boardToNotation()
+      return true
+      } else { return false }
+    } //*************************************
   function sortPieces(a,b) {
     var x
     if (x = a.match(ik.boobs)) { a = x[2] }
@@ -361,10 +352,6 @@ google.setOnLoadCallback(function() {
     var pcs = 'KDTLSp'
     return pcs.indexOf(a.substr(0,1)) -
         pcs.indexOf(b.substr(0,1)) 
-  } //*************************************
-  function addFairyCondition() {
-    $('#showfairy').hide()
-    $('#fairy').show()
   } //*************************************
   function updateTwin(e){
 
@@ -391,14 +378,50 @@ google.setOnLoadCallback(function() {
      }))
   } //*************************************
   function fromInternal() {
-    internalToDiagram()
-    internalToNotation()
-    internalToFen()
+    boardToDiagram()
+    boardToNotation()
+    boardToFen()
     } //***************************************
   function wb(p) {
+    if (!p) return undefined
     return p < 'a' ? 'w' : 'b'
     } //***************************************
-  })
+  function treeToBoard() {
+    var m, file, rank
+    ik.board = [[],[],[],[],[],[],[],[]]
+    _(ik.tree.diagram.pieces).each(function(data, kind) {
+      _(data).each(function(pcs, color){
+        _(pcs.split(' ')).each(function(piece){
+          piece = piece.toLowerCase()
+          //if (piece.length === 0) return
+          //if (piece.length === 2) piece = 'p' + piece // add pawn
+          m = piece.match(/^(..?)(..)$/)
+          if (!m) return ''
+          file = m[2].charCodeAt(0)
+          rank = m[2].charAt(1)
+          if (isNaN(rank) || rank-0 > 8 || rank-0 < 1) return ''
+          if (file > 122 || file < 97) return ''
+          ik.board[8-rank][file-97] =
+            { k: kind
+            , c: color
+            , p: m[1].toUpperCase()
+            , u: Math.random()
+            }
+          })
+        })
+      })
+    } //***************************************
+  function f2easy(piece) {
+    var r = ik.fenish[piece.toLowerCase()]
+    return r || 'magic'
+    } //***************************************
+  function fenize(piece) {
+    if (!piece) return
+    var p = ik.fenish[piece.p.toLowerCase()]
+    if (!p) return
+    return piece.c.toLowerCase() === 'w'
+      ? p.toUpperCase()
+      : p.toLowerCase()
+    } //***************************************
 
-
-
+  }) // EOF

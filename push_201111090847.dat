@@ -1,1 +1,0 @@
-{"klass":"Taps::Push","database_url":"postgres://ike@127.0.0.1/shakodat_development?encoding=utf8","remote_url":"http://heroku:osui59a24am79x@taps19.heroku.com","session_uri":"/sessions/3064333191","stream_state":{},"completed_tables":[],"table_filter":"(^pieces$)","local_tables_info":{"pieces":9}}

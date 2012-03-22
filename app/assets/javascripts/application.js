@@ -3,9 +3,10 @@
 //= require jquery-tokeninput
 //= require jquery-ui
 //= require jquery_tablesorter
+//= require jquery.to_json
 //= require underscore
+//= require settings
 //= require_self
-// require fairy-pieces
 
 google =
   { load: function(){} // dummy for now
@@ -26,18 +27,25 @@ google.load("jqueryui", "1.8.11")
     while (str.length < length) str = str + padString
     return str
     }
+  String.prototype.replaceAt=function(index, char) {
+    return this.substr(0, index) + char + this.substr(index+char.length);
+    }
+  String.prototype.pawnDown=function() {
+    if (this.toLowerCase() === 'p') return 'p'
+    return this.toUpperCase()
+    }
 
   function arrays_equal(a,b) { return !(a<b || b<a) }
   
   idem = function(x) {return x}
   
-  ik = {}
   ik.fig_path = '/assets/fig/'
   ik.figurines = 
     $('<img>').attr('src', '/assets/fig/figurines.gif')
     .appendTo('body')
     .hide()
   
+
   })(jQuery)
 // -------------------------------------------------------------------
 ; $(document).ready(function() {
@@ -49,4 +57,22 @@ google.load("jqueryui", "1.8.11")
   $('input[type="text"]:first:visible:enabled').focus();
   
   })
-
+/*
+  jQuery.fn.extend({ val: function (newValue) {
+    if (newValue == null) {
+      if ($(this).hasClass("placeholder")) {
+        var pText = $(this).attr("placeholder");
+        var val = $(this).attr("value");
+        if (pText) {
+          if (pText == val) {
+            return '';
+            }
+          }
+        }
+        return $(this).val(); }
+      else {
+        $(this).val(newValue);
+        }
+      }
+    })
+*/

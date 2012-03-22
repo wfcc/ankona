@@ -2,7 +2,7 @@ DiaX::Application.routes.draw do
 
   resources :pieces
 
- devise_for :users do
+  devise_for :users do
     get 'login', to: 'devise/sessions#new'
     post 'login', to: 'devise/sessions#create'
     get 'logout', to: 'devise/sessions#destroy'

@@ -20,11 +20,11 @@
     - @diagram.position = '' if @diagram.position.blank?
     -#= image_tag '/fen/' + @diagram.position, id: 'blank'
     %img{src: @diagram.embedded_diagram, id: :blank}
-    .stipulation= @diagram.stipulation
     .piece_balance= @diagram.piece_balance
+    .stipulation= @diagram.stipulation
     .twins= @diagram.twin
-    - if @diagram.position =~ /\[|\(/
-      .fairy_synopsis= @diagram.fairy_synopsis
+    .fairy_synopsis= @diagram.fairy
+    .fairy_synopsis= @diagram.fairy_synopsis
     .d
     
   /- @diagram.tested = 0 if @diagram.tested.blank?

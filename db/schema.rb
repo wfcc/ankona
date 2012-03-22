@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130125323) do
+ActiveRecord::Schema.define(:version => 20111130125327) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20111130125323) do
     t.string   "fairy"
     t.integer  "tested"
     t.string   "issue"
+    t.text     "pieces"
   end
 
   create_table "diagrams_collections", :id => false, :force => true do |t|
@@ -126,10 +127,12 @@ ActiveRecord::Schema.define(:version => 20111130125323) do
   add_index "marks", ["diagram_id", "section_id", "user_id"], :name => "index_marks_on_diagram_id_and_section_id_and_user_id", :unique => true
 
   create_table "pieces", :force => true do |t|
-    t.string "code"
-    t.string "name"
-    t.string "glyph1"
-    t.string "glyph2"
+    t.string  "code"
+    t.string  "name"
+    t.string  "glyph1"
+    t.string  "glyph2"
+    t.string  "popeye"
+    t.boolean "orthodox"
   end
 
   create_table "posts", :force => true do |t|

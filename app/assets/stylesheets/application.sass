@@ -339,7 +339,6 @@ table.zero
 
 img.blank
   position: absolute
-  z-index: -1
 
 .login
   position: fixed
@@ -423,6 +422,9 @@ input.author_name
 .todrag
   display: block
   padding: 2px
+
+p.todrag
+  background-image: url(fig/figurines.gif)
   
 div.usa  
   margin-bottom: 1em
@@ -576,7 +578,8 @@ table.judging
   float: left  
 
 .twins
-  text-align: center  
+  text-align: center
+  margin-top: 1em
 
 .fairy_synopsis
   clear: both
@@ -643,3 +646,36 @@ td.diagram
   
 #share_results
   color: DarkGreen
+
+.pieceOnBoard
+  z-index: 5
+  background-image: url(fig/figurines.gif)
+
+#pieceinputs
+  input[type=text]
+    width: 30em
+
+
+
+input[type="text"].c30p
+  width: 30%
+
+#fairy-block
+  width: 70%
+  backround-color: #aaa
+  border: 1px solid #bbb
+  border-radius: 5px
+  padding: 1em 3em 1em 1em
+  position: relative  
+  margin: 1ex 0 0
+  input[type=text]
+    width: 20em
+  #squared
+    input[type="text"]
+      width: 10em
+      margin-bottom: 2px
+      display: inline
+    td
+      vertical-align: top
+    //  border: 1px dotted green
+  

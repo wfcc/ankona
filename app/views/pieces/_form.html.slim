@@ -1,4 +1,4 @@
-= form_for @piece do |f|
+= simple_form_for @piece do |f|
   -if @piece.errors.any?
     #error_explanation
       h2 = "#{pluralize(@piece.errors.count, "error")} prohibited this piece from being saved:"
@@ -7,16 +7,12 @@
           li= msg
 
   .field
-    = f.label :code
-    = f.text_field :code
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :glyph1
-    = f.text_field :glyph1
-  .field
-    = f.label :glyph2
-    = f.text_field :glyph2
+    = f.input :code
+    = f.input :popeye
+    = f.input :name
+    = f.input :glyph1
+    - if is_admin?
+      = f.input :orthodox
+    /= f.label :glyph2
   .actions
     = f.submit 'Save'
