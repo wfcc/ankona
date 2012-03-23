@@ -207,6 +207,9 @@ class Diagram < ActiveRecord::Base
     'data:image/png;base64,' + Base64.encode64(@dia.to_blob)
     
   end #----------------------------------------------------------------
+  def afen
+    
+  end #----------------------------------------------------------------
 
   private
 
