@@ -1,10 +1,4 @@
 GIT
-  remote: https://github.com/ryanb/nested_form.git
-  revision: 486e0f0e93f3ca455d5d0fc7869053257b6afce2
-  specs:
-    nested_form (0.2.0)
-
-GIT
   remote: https://github.com/wideopenspaces/wicked.git
   revision: dcd1b0e29f6a729fa4ea9422e02275f08be61452
   specs:
@@ -235,7 +229,6 @@ DEPENDENCIES
   itslog
   jquery-rails
   mocha
-  nested_form!
   nifty-generators
   pg
   rails (~> 3.2)
