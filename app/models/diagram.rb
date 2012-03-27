@@ -208,7 +208,15 @@ class Diagram < ActiveRecord::Base
     
   end #----------------------------------------------------------------
   def afen
-    
+#    x = PieceBlock.new
+#    pieces.each_pair do |kind, colors|
+#      colors.each_pair do |color, pieces|
+#        pieces.split(/ /).each do |piece|
+#          if color == 'w'
+#            x.pieces[0].push
+
+
+
   end #----------------------------------------------------------------
 
   private

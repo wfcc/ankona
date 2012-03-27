@@ -72,6 +72,8 @@ h2 Editing problem #{@diagram.id}
       = link_to " Don't save and exit ", diagram_path(@diagram), class: :button
       = link_to ' Discard changes ', edit_diagram_path(@diagram), class: [:button, :clearboth]
 
+    = f.input :public, hint: 'visible to everyone', label: 'public problem'
+
   #catalog.span-12.last
     .label Authors
     #authors
