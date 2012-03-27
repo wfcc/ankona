@@ -5,11 +5,12 @@
 
 %ul.menu-small
   - if can? :manage, @diagram and @diagram.sections.count < 1
-    %li= link_to 'Edit', edit_diagram_path(@diagram), class: :button
+    %li= link_to ' Edit ', edit_diagram_path(@diagram), class: :button
     %li= link_to 'Destroy', @diagram, confirm: 'Are you sure?', method: :delete, class: :button
-  %li= link_to 'New problem', new_diagram_path, class: [:button, "margin-left"]
+  - if user_signed_in?
+    %li= link_to 'New problem', new_diagram_path, class: [:button, "margin-left"]
 
-- unless (may_edit? @diagram and @diagram.sections.count < 1)
+- if (may_edit? @diagram and @diagram.sections.count > 0)
   %h4 This problem has been submitted to competition.  You may not edit it.
 .span-7.append-1
   %div{ :style => "text-align:left;margin-top:1em" }
@@ -30,11 +31,11 @@
   /- @diagram.tested = 0 if @diagram.tested.blank?
   /.xs!= Status.where(:table.eq => 'diagrams', :value.eq => @diagram.tested)[0].h_display
   %p.xs.clear.padding-top
-    FEN:
-    = @diagram.position
-    %br
-    Entered by:
-    = @diagram.user.nick || 'system'
+    /FEN:
+    /= @diagram.position
+    /%br
+    /Entered by:
+    /= @diagram.user.nick || 'system'
     .fine.id= @diagram.id
 .span-8
   %pre.solution><=@diagram.solution

@@ -19,24 +19,24 @@ class Diagram < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 20
 
-  def neutral; self.pieces[:a][:n] end
-  def neutral=(x); self.pieces[:a][:n] = x end
+#  def neutral; self.pieces[:a][:n] end
+#  def neutral=(x); self.pieces[:a][:n] = x end
 
-  def self.serialized_attr_accessor(*args)
-    args.each do |method_name|
-      eval "
-        def #{method_name}
-          (self.pieces || {})[:#{method_name}]
-        end
-        def #{method_name}=(value)
-          self.pieces ||= {}
-          self.pieces[:#{method_name}] = value
-        end
-      "
-    end
-  end  #-------------------------------
+#  def self.serialized_attr_accessor(*args)
+#    args.each do |method_name|
+#      eval "
+#        def #{method_name}
+#          (self.pieces || {})[:#{method_name}]
+#        end
+#        def #{method_name}=(value)
+#          self.pieces ||= {}
+#          self.pieces[:#{method_name}] = value
+#        end
+#      "
+#    end
+#  end  #-------------------------------
  
-  serialized_attr_accessor :a, :chameleon
+#  serialized_attr_accessor :a, :chameleon
   
   def save_authors
     authors.each do |author|
@@ -208,7 +208,15 @@ class Diagram < ActiveRecord::Base
     
   end #----------------------------------------------------------------
   def afen
-    
+#    x = PieceBlock.new
+#    pieces.each_pair do |kind, colors|
+#      colors.each_pair do |color, pieces|
+#        pieces.split(/ /).each do |piece|
+#          if color == 'w'
+#            x.pieces[0].push
+
+
+
   end #----------------------------------------------------------------
 
   private

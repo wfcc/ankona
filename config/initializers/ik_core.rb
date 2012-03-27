@@ -52,13 +52,3 @@ class String
   end        
   
 end
-
-class PieceBlock < BinData::Record
-  array :pieces, initial_length: 0 do
-    bit3 :xx
-    bit3 :yy
-    bit3 :kind
-    bit8 :fairy_piece, onlyif: lambda {kind == 0b111}
-  end
-  bit3 :terminator, initial_value: 0b110
-end

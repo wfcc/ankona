@@ -1,5 +1,5 @@
 # coding: utf-8
-class DiagramsController < AuthorizedController
+class DiagramsController < NonauthorizedController
 
   require 'open3'
   require "uri"
