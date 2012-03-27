@@ -37,10 +37,8 @@
           .em1
           %div= diagram.stipulation
           %div= diagram.twin
-          -#%div= diagram.tested ? 'C+' : ''
         %td.board
           %div{:style => "padding:0; position:relative"}
-            -#= image_tag '/fen/' + diagram.position, class: :noBorder if diagram.position
             %img{src: diagram.embedded_diagram, class: :noBorder}
         %td{:style => "vertical-align:top"}
           %pre.solution= h diagram.solution

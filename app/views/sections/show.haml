@@ -36,7 +36,6 @@
           .fine= diagram.award
           %p= diagram.solution
         %td
-          -#= image_tag '/fen/' + diagram.position
           %img{src: diagram.embedded_diagram}
         - @k.each_index do |judge|
           - mark = @r[id][0].zip(@r[id][1])[judge]

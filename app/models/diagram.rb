@@ -180,7 +180,6 @@ class Diagram < ActiveRecord::Base
       end
     end
 
-    #send_data @dia.to_blob, type: 'image/png', disposition: 'inline'
     'data:image/png;base64,' + Base64.encode64(@dia.to_blob)
     
   end #----------------------------------------------------------------
