@@ -11,7 +11,6 @@ class Diagram < ActiveRecord::Base
   validates_presence_of :stipulation
   #validates_presence_of :authors
   validates_associated :authors
-#  after_update :save_authors
   before_save :build_pieces
   after_find :build_pieces
   serialize :pieces, Hash
@@ -38,29 +37,6 @@ class Diagram < ActiveRecord::Base
 #  end  #-------------------------------
  
 #  serialized_attr_accessor :a, :chameleon
-  
-  def save_authors
-    authors.each do |author|
-      author.save false
-    end
-  end  #-------------------------------
-
-  def existing_author_attributes=(author_attributes)
-    authors.reject(&:new_record?).each do |author|
-      attributes = author_attributes[author.id.to_s]
-      if attributes
-        author.attributes = attributes
-      else
-        authors.delete(author)
-      end
-    end
-  end  #-------------------------------
-
-  def new_author_attributes=(author_attributes)
-    author_attributes.each do |attributes|
-      authors.build(attributes)
-    end
-  end  #-------------------------------
 
   def fen
     position
@@ -229,25 +205,29 @@ class Diagram < ActiveRecord::Base
   end  #-------------------------------
 
   def build_pieces
+
+    return unless Diagram.column_names.include? 'pieces'
+    return unless pieces.blank?
+
     swoop = Proc.new { |k, v| v.delete_if(&swoop) if v.kind_of?(Hash);  v.empty? }
-    if self.position != ''
+    if position != ''
 
       self.pieces = Hash.new { |h,k| h[k] = Hash.new { |hh,kk| hh[kk] = '' } }
       fen2arr(fen).map do |x|                   
         case x
         when /\[x([A-Z]\w?)\](..)$/
-          self.pieces[:Chameleon][:w]
+          pieces[:Chameleon][:w]
         when /\[x([a-z]\w?)\](..)$/
-          self.pieces[:Chameleon][:b]
+          pieces[:Chameleon][:b]
         when /^\(?([A-Z]+)\)?(..)$/
-          self.pieces['a']['w']
+          pieces['a']['w']
         when /^\(?([a-z]+)\)?(..)$/
-          self.pieces['a']['b']
+          pieces['a']['b']
         #end.push $~[1].downcase + $~[2]
         end << (from_fen_again($~[1].downcase) + $~[2] + ' ')
       end
-    else
       self.position = ''
+    else
       self.pieces.delete_if &swoop
     end
   end  #-------------------------------

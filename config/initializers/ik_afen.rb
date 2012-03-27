@@ -1,4 +1,5 @@
 
+__END__
 #Object.send(:remove_const, :PieceBlock)
 class PieceBlock < BinData::Record
   #array :pieces, read_until: lambda {element.kind == 0b110} do

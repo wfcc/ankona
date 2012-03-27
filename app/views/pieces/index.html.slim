@@ -20,7 +20,7 @@ table
       td= piece.name
       td= image_tag "fig/w#{piece.glyph1}.gif"
       td= image_tag "fig/w#{piece.glyph2}.gif" if piece.glyph2.present?
-      td= piece.orthodox
+      td= piece.orthodox if can? :edit, piece
       td= link_to 'Edit', edit_piece_path(piece) if can? :edit, piece
       td= link_to 'Destroy', piece, :confirm => 'Are you sure?', :method => :delete if can? :destroy, piece
 

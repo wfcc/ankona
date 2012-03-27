@@ -34,6 +34,7 @@
           .d= diagram.authors.map(&:name).commatize
           .fine= [ diagram.source, diagram.issue, diagram.label ].commatize
           .fine= diagram.award
+          %p= diagram.solution
         %td
           -#= image_tag '/fen/' + diagram.position
           %img{src: diagram.embedded_diagram}
