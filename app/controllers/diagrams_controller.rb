@@ -5,7 +5,7 @@ class DiagramsController < NonauthorizedController
   require "uri"
   require "net/http"
 
-  before_filter :require_user, {:except => [:index, :show]}
+  before_filter :require_user, {:except => [:show]}
 
   def index
 

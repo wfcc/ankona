@@ -1,4 +1,3 @@
-
 class FaqsController < NonauthorizedController
 
   #before_filter :require_admin, :except => :show
