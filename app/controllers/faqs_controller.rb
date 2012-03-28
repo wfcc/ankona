@@ -5,6 +5,10 @@ class FaqsController < NonauthorizedController
   #caches_page :show
 
   # GET /faqs
+  def shield
+    @faq = Faq.first
+    render :show
+  end
   def index
     @faqs = Faq.all
   end

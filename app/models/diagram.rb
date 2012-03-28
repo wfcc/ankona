@@ -134,13 +134,13 @@ class Diagram < ActiveRecord::Base
     @dia = $board
 
     if pieces.present?
-logger.warn '****>>>'
-logger.warn pieces.inspect
-logger.warn '****<<<'      
+#logger.warn '****>>>'
+#logger.warn pieces.inspect
+#logger.warn '****<<<'      
       pieces.each_pair do |kind, colors|
-logger.warn '****>'
-logger.warn colors.inspect
-logger.warn '****<'      
+#logger.warn '****>'
+#logger.warn colors.inspect
+#logger.warn '****<'      
         colors.each_pair do |color, pieces|
           pieces.downcase.split(/ /).each do |piece|
             m = piece.match /(..?)(.)(.)/

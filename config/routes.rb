@@ -1,6 +1,11 @@
 DiaX::Application.routes.draw do
 
-  resources :pieces
+  #root :to => 'controller#index', :constraints => lambda{|req| !req.session[:user_id].blank?}
+  #match '/' => 'faqs#shield', :constraints => lambda{|req| req.host == 'localhosta'}
+  #match '/:x' => 'faqs#shield', 
+  #  :constraints => lambda { |req|
+  #    (controller.controller_name != 'faqs') and req.host == 'localhost'
+  #  }
 
   devise_for :users do
     get 'login', to: 'devise/sessions#new'
@@ -15,8 +20,6 @@ DiaX::Application.routes.draw do
   put 'users/add_name_save'
   get 'users/show'
   
-  #match "/stylesheets/:package.css" => AssetsApp.action(:stylesheets), as: 'stylesheets'
-
   root to: 'faqs#show', id: 1
   match 'fen/(*id)' => 'fen#index'
 
@@ -47,7 +50,7 @@ DiaX::Application.routes.draw do
   end
 
   resources :roles, :collections, :authors, :posts, :imports,
-    :statuses, :faqs, :invites, :password_resets
+    :statuses, :faqs, :invites, :password_resets, :pieces
     
   match 'diagrams/section/:id' => 'diagrams#section'
 

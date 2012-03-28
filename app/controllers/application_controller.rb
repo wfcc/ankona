@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user_session, :current_user, 
     :is_admin?, :may_edit?, :has_role?, :is_director?
-  before_filter :check_geo
+  #before_filter :check_geo
   
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
@@ -121,8 +121,8 @@ class ApplicationController < ActionController::Base
       session[:return_to] = nil
     end
 
-    def autovivifying_hash
-      Hash.new {|ht,k| ht[k] = autovivifying_hash}
-    end
+    #def autovivifying_hash
+    #  Hash.new {|ht,k| ht[k] = autovivifying_hash}
+    #end
 
 end

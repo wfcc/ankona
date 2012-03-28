@@ -1,9 +1,7 @@
 %h1
   Editing faq
-= form_for(@faq) do |f|
-  = f.error_messages
-  = f.label :body
-  = f.text_area :body, :cols => 50
+= simple_form_for(@faq) do |f|
+  = f.input :body
   = f.submit 'Update'
 
 = link_to 'Show', @faq
