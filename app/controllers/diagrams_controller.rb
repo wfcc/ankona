@@ -6,7 +6,7 @@ class DiagramsController < NonauthorizedController
   require "net/http"
 
   before_filter :require_user, {:except => [:show]}
-  around_filter :catch_not_found
+  #around_filter :catch_not_found
 
   def index
 
@@ -27,7 +27,7 @@ class DiagramsController < NonauthorizedController
 logger.warn '**************'
 logger.warn params
 logger.warn '**************'
-    #@diagram = Diagram.find_by_id(params[:id])
+    @diagram = Diagram.find_by_id(params[:id])
     @diagram = nil
     if @diagram
       @shared_with = User.joins{roles}.where{
@@ -136,11 +136,11 @@ logger.warn '**************'
 
   private
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  def catch_not_found
-    yield
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_url, :flash => { :error => "Diagram not found." }
-  end #--------------------------------------------------------
+#  def catch_not_found
+#    yield
+#  rescue ActiveRecord::RecordNotFound
+#    redirect_to root_url, :flash => { :error => "Diagram not found." }
+#  end #--------------------------------------------------------
 
   def to_english_py pieces
     pieces.upcase.split(' ').map do |p|
