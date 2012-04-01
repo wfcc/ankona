@@ -24,11 +24,7 @@ class DiagramsController < NonauthorizedController
 
   def show
 
-logger.warn '**************'
-logger.warn params
-logger.warn '**************'
     @diagram = Diagram.find_by_id(params[:id])
-    @diagram = nil
     if @diagram
       @shared_with = User.joins{roles}.where{
         (roles.name == 'reader') &
@@ -37,7 +33,7 @@ logger.warn '**************'
         }
     else
       flash[:error] = 'Diagram not found'
-      redirect_to root_url
+      #redirect_to root_url
     end
 
   end #--------------------------------------------------------
