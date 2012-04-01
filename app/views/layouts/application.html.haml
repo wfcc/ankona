@@ -28,6 +28,7 @@
           %li= link_to 'My problems', diagrams_path
         - if user_signed_in? and (current_user.sections.present? or Section.find_by_user_id current_user.id)
           %li= link_to 'My judgements', sections_path
+        %li= link_to '?', about_path
       - flash.each do |key, message|
         = content_tag :p, message, class: key
       .container

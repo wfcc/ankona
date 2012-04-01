@@ -41,6 +41,7 @@ class PiecesController < NonauthorizedController
   # POST /pieces.json
   def create
     params[:piece][:code].upcase!
+    params[:piece][:popeye].upcase!
     @piece = Piece.new(params[:piece])
 
     respond_to do |format|
@@ -59,6 +60,7 @@ class PiecesController < NonauthorizedController
   def update
     @piece = Piece.find(params[:id])
     params[:piece][:code].upcase!
+    params[:piece][:popeye].upcase!
 
     respond_to do |format|
       if @piece.update_attributes(params[:piece])

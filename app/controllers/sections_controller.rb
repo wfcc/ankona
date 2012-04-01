@@ -28,12 +28,12 @@ class SectionsController < AuthorizedController
     # select sections where a user is a judge or a director
     current_user_id = current_user.id
     @sections =
-    Section \
+    (Section \
       .joins{users} \
       .select('Distinct(SECTIONS.*)') \
       .where{(users.id == current_user_id)} + \
     Section \
-      .joins{user}.where{user.id == current_user_id}
+      .joins{user}.where{user.id == current_user_id}).sort.uniq
       
   end
   
