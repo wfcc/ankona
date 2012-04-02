@@ -1,6 +1,6 @@
 %h1 Competition
-= semantic_form_for(@competition) do |f|
-  = f.error_messages
+= simple_form_for(@competition) do |f|
+  -#= f.error_messages
   -# = f.inputs
   .span-10.append-1
     %p
@@ -13,7 +13,7 @@
         :value, :name                                                           |
     %p
       = f.label 'Name of this competition'
-      = f.text_field :name, :size => 80
+      = f.text_field :name #, :size => 80
     %p
       = f.label 'Announcement text'
       = f.text_area :announce, :style => 'height:23em'
@@ -43,7 +43,7 @@
     - 1.times {@competition.sections.build}
 
     - i = 0
-    = f.semantic_fields_for :sections, :sections do |ff|
+    = f.simple_fields_for :sections, :sections do |ff|
       %fieldset
         %legend 
           = " Section #{i+=1} "
