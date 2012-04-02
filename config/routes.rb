@@ -32,15 +32,16 @@ DiaX::Application.routes.draw do
 
   resources :diagrams do
     member do
-      put :section
+      put  :section
       post :share
-      get :mine
+      get  :mine
+      post :solve
     end
   end
   resources :competitions, has_many: :sections
   resources :sections do
     member do
-      get :judge
+      get  :judge
       post :mark
     end
   end
