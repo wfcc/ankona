@@ -24,7 +24,8 @@ class DiagramsController < NonauthorizedController
 
   def show
 
-    @diagram = Diagram.find_by_id(params[:id])
+#    @diagram = Diagram.find_by_id(params[:id])
+
     if @diagram
       @shared_with = User.joins{roles}.where{
         (roles.name == 'reader') &
@@ -150,7 +151,6 @@ class DiagramsController < NonauthorizedController
 
   def twin_to_py(t)
     s = ''
-    logger.warn " #{t} "
     word = t.match(/nul|н.ль|zero|зеро/i) ? 'Zero' : 'Twin'
     t.split(/\s?\;?\s?.\)/).each do |x|
       x.split(/,/).each do |y|
@@ -170,7 +170,6 @@ class DiagramsController < NonauthorizedController
       end
       word = 'Twin'
     end
-    logger.warn "==<<== #{s} ==>>=="
     return s
   end #----------------------------------------------------------------
 

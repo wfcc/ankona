@@ -1,5 +1,7 @@
 DiaX::Application.routes.draw do
 
+  root to: 'faqs#show', id: 1, as: :news
+
   devise_for :users do
     get 'login', to: 'devise/sessions#new'
     post 'login', to: 'devise/sessions#create'
@@ -16,7 +18,6 @@ DiaX::Application.routes.draw do
   put 'users/add_name_save'
   get 'users/show'
   
-  root to: 'faqs#show', id: 1, as: :news
   match 'fen/(*id)' => 'fen#index'
 
   match 'authors/json'
@@ -24,10 +25,6 @@ DiaX::Application.routes.draw do
   match 'collections/data'
   match 'collections/dbaction'
 
-  get 'diagrams/mine'  
-  get 'diagrams/section'  
-  post 'diagrams/solve'
-  
   match 'invites/accept/:code', controller: 'invites', action: 'react', accepted: true
   match 'invites/decline/:code', controller: 'invites', action: 'react', accepted: false
 
@@ -37,6 +34,7 @@ DiaX::Application.routes.draw do
     member do
       put :section
       post :share
+      get :mine
     end
   end
   resources :competitions, has_many: :sections

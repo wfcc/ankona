@@ -24,6 +24,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    flash[:alert] = 'The object you tried to access does not exist. Check the address.'
+    #render :not_found   # or e.g. redirect_to :action => :index
+    redirect_to '/', :alert => exception.message
+  end
+
 #  rescue_from ActiveRecord::RecordNotFound do |exception|
 #    Rails.logger.debug "RecordNotFound on #{exception.inspect}"
 #    redirect_to root_url, alert: 'There is no such thing.'
