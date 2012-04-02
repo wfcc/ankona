@@ -14,7 +14,7 @@ class DiagramsController < NonauthorizedController
     params[:q][:user_id_eq] = current_user.id
 
     @q = Diagram.search params[:q]
-    @diagrams = @q.result \
+    @diagrams = @q.result.uniq \
       .order {created_at.desc}
       .paginate page: params[:page], per_page: 7
 #    @collection_source = current_user \
