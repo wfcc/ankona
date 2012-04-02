@@ -31,11 +31,10 @@ DiaX::Application.routes.draw do
   match 'competitions/judge'
 
   resources :diagrams do
+    post :solve, on: :collection
     member do
       put  :section
       post :share
-      get  :mine
-      post :solve
     end
   end
   resources :competitions, has_many: :sections
@@ -49,7 +48,7 @@ DiaX::Application.routes.draw do
   resources :roles, :collections, :authors, :posts, :imports,
     :statuses, :faqs, :invites, :password_resets, :pieces
     
-  match 'diagrams/section/:id' => 'diagrams#section'
+  #match 'diagrams/section/:id' => 'diagrams#section'
 
   get ':id' => 'diagrams#show', constraints: {id: /\d\d\d\d\d+/}
 
