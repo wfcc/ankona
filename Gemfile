@@ -36,6 +36,8 @@ gem 'hashie'
 gem 'rails_config'
 gem 'base62'
 gem 'bindata'
+gem 'wirble'
+gem 'hirb'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -52,8 +54,6 @@ end
 
 group :development, :test do
   gem 'haml2slim'
-  gem 'wirble'
-  gem 'hirb'
   gem 'nifty-generators'   
   gem 'ya2yaml'
 #  gem 'rspec-rails'

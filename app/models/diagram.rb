@@ -11,8 +11,8 @@ class Diagram < ActiveRecord::Base
   validates_presence_of :stipulation
   #validates_presence_of :authors
   validates_associated :authors
-  before_save :build_pieces
-  after_find :build_pieces
+  #before_edit :build_pieces
+  #after_find :build_pieces
   serialize :pieces, Hash
 
 
@@ -67,13 +67,14 @@ class Diagram < ActiveRecord::Base
 
   def piece_balance
     n = Hash[%w[w b n].zip []]
+    n = {}
     if pieces.present?
       pieces.each_pair do |kind, colors|
         colors.each_pair do |color, pieces|
           n[color] = n[color].to_i + pieces.split(/ /).size
         end
       end
-      n.values.compact.join '+'
+      n.values.reject{|x|x==0}.join '+'
     else
       'empty'
     end
@@ -209,36 +210,5 @@ class Diagram < ActiveRecord::Base
     @dia = @dia.composite(fig, i+1, j+1, Magick::OverCompositeOp)
   end  #-------------------------------
 
-  def build_pieces
-
-    return unless Diagram.column_names.include? 'pieces'
-    return unless pieces.blank?
-
-    swoop = Proc.new { |k, v| v.delete_if(&swoop) if v.kind_of?(Hash);  v.empty? }
-    if position != ''
-
-      self.pieces = Hash.new { |h,k| h[k] = Hash.new { |hh,kk| hh[kk] = '' } }
-      fen2arr(fen).map do |x|                   
-        case x
-        when /\[x([A-Z]\w?)\](..)$/
-          pieces[:Chameleon][:w]
-        when /\[x([a-z]\w?)\](..)$/
-          pieces[:Chameleon][:b]
-        when /^\(?([A-Z]+)\)?(..)$/
-          pieces['a']['w']
-        when /^\(?([a-z]+)\)?(..)$/
-          pieces['a']['b']
-        #end.push $~[1].downcase + $~[2]
-        end << (from_fen_again($~[1].downcase) + $~[2] + ' ')
-      end
-      self.position = ''
-    else
-      self.pieces.delete_if &swoop
-    end
-  end  #-------------------------------
-  def from_fen_again x
-    n = {k: :k, q: :d, r: :t, b: :l, n: :s, p: :p}[x.to_sym].to_s
-    n.present? ? n : x # no change
-  end  #-------------------------------
 
 end
