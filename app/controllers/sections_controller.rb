@@ -7,10 +7,7 @@ class SectionsController < AuthorizedController
     new_section_form = render_to_string layout: false
     new_section_form.gsub!("[#{@section.id}]", "[#{Time.now.to_i}]")
     render text: new_section_form, layout: false
-  end
-
-  # DELETE /parents/1/children/1 (AJAX)
-# ---------------
+  end # ---------------
   def destroy
     competition = Competition.find(params[:competition_id])
     unless competition.sections.exists?(params[:id])
@@ -22,8 +19,7 @@ class SectionsController < AuthorizedController
     else
       render text: { success: false, msg: 'something unexpected happened.' }.to_json
     end
-  end
-# ---------------
+  end # ---------------
   def index
     # select sections where a user is a judge or a director
     current_user_id = current_user.id
@@ -35,9 +31,7 @@ class SectionsController < AuthorizedController
     Section \
       .joins{user}.where{user.id == current_user_id}).sort.uniq
       
-  end
-  
-# ---------------
+  end # ---------------
   def judge
 
     if params[:q].blank?
@@ -51,8 +45,7 @@ class SectionsController < AuthorizedController
     @section = Section.find params[:q][:sections_id_eq]
     #@diagrams = @section.diagrams.paginate page: params[:page], per_page: 10
     @marks = @section.marks.select{|x| x.user_id == current_user.id}
-  end
-# ---------------
+  end # ---------------
   def mark
   
     render nothing: true
@@ -81,8 +74,7 @@ class SectionsController < AuthorizedController
     end
     m.save
       
-  end
-# ---------------
+  end # ---------------
   def show
   
     @r = {}
@@ -91,13 +83,16 @@ class SectionsController < AuthorizedController
     @k = marks.map{|x| x.user_id}.uniq
 
     marks.each do |mark|
-      @r[mark.diagram_id] ||= [[], [], 0]
+      @r[mark.diagram_id] ||= [[], [], 0, Diagram.find_by_id(mark.diagram_id).label]
       @r[mark.diagram_id][0][@k.index(mark.user_id)] = mark.nummark
       @r[mark.diagram_id][1][@k.index(mark.user_id)] = mark.comment
       @r[mark.diagram_id][2] = @r[mark.diagram_id][0].inject{|s,x| s.to_f + x.to_f}
     end
 
-  end
+  end # ---------------
+  def textual
+    show
+  end # ---------------
   
 
 end
