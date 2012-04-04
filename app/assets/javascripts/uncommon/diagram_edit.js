@@ -12,6 +12,8 @@ google.setOnLoadCallback(function() {
   $('#solving').hide()  
 
   initVars()                             
+  treeToBoard()
+  fromInternal()
 
   $('#squared select').live('change', function(e) {
     //alert($(this).parent().data('kind'))
@@ -89,9 +91,6 @@ $('#showpopeye').click(function(e) { solve(false); e.preventDefault()})
   $('#pieceinputs input[type=text]:not(#diagram_position)').live('keyup blur', fromNotation)
   $('#diagram_position').bind('keyup', fromFen)
 
-  treeToBoard()
-  fromInternal()
-
   $('#diagram_white').focus()
 
   $('.todrag').draggable( // from cassettes, static pieces
@@ -160,7 +159,6 @@ $('#showpopeye').click(function(e) { solve(false); e.preventDefault()})
         })
       ik.board = newBoard
       break
-    case '↻' :
     case '↕' :
         ik.board.reverse()
         break

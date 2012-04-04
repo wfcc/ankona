@@ -1,11 +1,12 @@
 # coding: utf-8
+require 'open3'
+require "uri"
+require "net/http"
+
 class DiagramsController < NonauthorizedController
 
-  require 'open3'
-  require "uri"
-  require "net/http"
-
   before_filter :require_user, {:except => [:show]}
+  before_filter :build_pieces, only: :edit
   #around_filter :catch_not_found
 
   def index
@@ -51,7 +52,6 @@ class DiagramsController < NonauthorizedController
   def edit
     ActiveRecord::Base.include_root_in_json = false
     @pieces = Piece.all.to_json except: [:id, :created_at, :updated_at, :glyph2, :orthodox]
-    @diagram = Diagram.find(params[:id])
     @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
     @showIfFairy = @diagram.fairy.blank? ? 'display:none' : 'display:visible'
 
@@ -203,6 +203,42 @@ class DiagramsController < NonauthorizedController
       flash[:error] = 'Problem was not saved due to errors.'
       render :edit
     end
+  end #----------------------------------------------------------------
+
+  def build_pieces
+
+    @diagram = Diagram.find(params[:id])
+    return unless Diagram.column_names.include? 'pieces'
+    return unless @diagram.pieces.blank?
+
+    #swoop = Proc.new { |k, v| v.delete_if(&swoop) if v.kind_of?(Hash);  v.empty? }
+
+    pieces = Hash.new { |h,k| h[k] = Hash.new { |hh,kk| hh[kk] = '' } }
+    #pieces = {}
+    fen2arr(@diagram.fen).map do |x|
+      convert = false
+      case x
+      when /\[x([A-Z]\w?)\](..)$/
+        pieces[:Chameleon][:w]
+      when /\[x([a-z]\w?)\](..)$/
+        pieces[:Chameleon][:b]
+      when /^\(([A-Z]+)\)(..)$/
+        pieces['a']['w']
+      when /^\(([a-z]+)\)(..)$/
+        pieces['a']['b']
+      when /^([A-Z]+)(..)$/
+        convert = true; pieces['a']['w']
+      when /^([a-z]+)(..)$/
+        convert = true; pieces['a']['b']
+      end << (from_fen_again($~[1].downcase, convert) + $~[2] + ' ')
+    end
+    @diagram.pieces = pieces
+  end #----------------------------------------------------------------
+
+  def from_fen_again x, convert
+    return x unless convert
+    n = {k: :k, q: :d, r: :t, b: :l, n: :s, p: :p}[x.to_sym].to_s
+    n.present? ? n : x # no change
   end #----------------------------------------------------------------
 
 end

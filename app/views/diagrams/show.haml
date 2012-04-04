@@ -26,17 +26,9 @@
     .twins= @diagram.twin
     .fairy_synopsis= @diagram.fairy
     .fairy_synopsis= @diagram.fairy_synopsis
-    .d
-    
-  /- @diagram.tested = 0 if @diagram.tested.blank?
-  /.xs!= Status.where(:table.eq => 'diagrams', :value.eq => @diagram.tested)[0].h_display
-  %p.xs.clear.padding-top
-    /FEN:
-    /= @diagram.position
-    /%br
-    /Entered by:
-    /= @diagram.user.nick || 'system'
-    .fine.id= @diagram.id
+    .d{style: 'margin-top: 3em'}
+      .fine.id= @diagram.id
+      .xs= @diagram.position
 .span-8
   %pre.solution><=@diagram.solution
 .span-7.last

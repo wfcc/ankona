@@ -14,7 +14,7 @@ class Ability
     can [:mark, :judge], Section, users: {id: user.id}
     can :manage, Diagram, user_id: user.id
     can :read, Diagram do |diagram|
-       diagram.persent? and (diagram.public or user.is_reader_of? diagram)
+       diagram.present? and (diagram.public or user.is_reader_of? diagram)
     end  
     can :read, Faq
     can :index, Piece
