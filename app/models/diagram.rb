@@ -1,3 +1,5 @@
+class NilClass; def glyph1; nil end end
+
 class Diagram < ActiveRecord::Base
 
   belongs_to :user
@@ -66,7 +68,6 @@ class Diagram < ActiveRecord::Base
 
 
   def piece_balance
-    n = Hash[%w[w b n].zip []]
     n = {}
     if pieces.present?
       pieces.each_pair do |kind, colors|
@@ -76,7 +77,9 @@ class Diagram < ActiveRecord::Base
       end
       n.values.reject{|x|x==0}.join '+'
     else
-      'empty'
+      a = fen2arr fen
+      [a.select{|x| x.match /[[:upper:]][\W]?\w\w$/}.size,
+      a.select{|x| x.match /[[:lower:]][\W]?\w\w$/}.size].join '+'
     end
   end  #-------------------------------
   
@@ -135,19 +138,14 @@ class Diagram < ActiveRecord::Base
     @dia = $board
 
     if pieces.present?
-#logger.warn '****>>>'
-#logger.warn pieces.inspect
-#logger.warn '****<<<'      
       pieces.each_pair do |kind, colors|
-#logger.warn '****>'
-#logger.warn colors.inspect
-#logger.warn '****<'      
         colors.each_pair do |color, pieces|
           pieces.downcase.split(/ /).each do |piece|
             m = piece.match /(..?)(.)(.)/
             next unless m
             fig = m[1]
-            fig = Piece.where{code == fig.upcase}.first.et.glyph1
+            #fig = Piece.where{code == fig.upcase}.first.et.glyph1
+            fig = Piece.find_by_code(fig.upcase).glyph1
             y = (49 + 7 - m[3].ord) * 25
             x = (m[2].ord - 97) * 25
             prefix = kind == 'a' ? '' : 'x'
@@ -176,7 +174,7 @@ class Diagram < ActiveRecord::Base
           prefix = 'x'; fig = $~[1]
         when /\((\w+)\)/
           fig = $~[1]
-          fig = Piece.where{code == fig.upcase}.first.et.glyph1
+          fig = Piece.find_by_code(fig.upcase).glyph1
         end
         color = p.match(/^(\(|\[.)?[A-Z]/) ? 'w' : 'b'
         if fig.present?
