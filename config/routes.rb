@@ -40,6 +40,7 @@ DiaX::Application.routes.draw do
   resources :competitions, has_many: :sections
   resources :sections do
     member do
+      get  :textual
       get  :judge
       post :mark
     end

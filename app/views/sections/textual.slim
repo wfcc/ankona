@@ -1,0 +1,9 @@
+/= @r.sort{|b,a| a[1][2] <=> b[1][2]}.inspect
+- @r.sort{|b,a| a[1][2] <=> b[1][2]}.each do |p|
+  span
+    span = p[1][3]
+    |: 
+    - t =  p[1][1][0]
+    - t.gsub! /A-(\d+)/, '<a href="/\1">A-\1</a>'
+    span = t.html_safe
+  br

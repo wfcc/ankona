@@ -4,7 +4,10 @@
     { $("table.section-stats").tablesorter(
     { headers: {1: {sorter: false}} }
     )})
-    
+
+%p
+  = @r.inspect    
+
 %h2= @section.competition.name
 %h3 Statistics for #{@section.name}
 
