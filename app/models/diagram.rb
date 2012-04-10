@@ -9,44 +9,55 @@ class Diagram < ActiveRecord::Base
   has_many :publications
   has_many :marks
   has_many :roles, as: :resource
+  has_many :versions
 
   validates_presence_of :stipulation
   #validates_presence_of :authors
   validates_associated :authors
-  #before_edit :build_pieces
-  #after_find :build_pieces
   serialize :pieces, Hash
-
+  accepts_nested_attributes_for :versions
 
   cattr_reader :per_page
   @@per_page = 20
 
-#  def neutral; self.pieces[:a][:n] end
-#  def neutral=(x); self.pieces[:a][:n] = x end
+  def fen; position end  #-------------------------------
 
-#  def self.serialized_attr_accessor(*args)
-#    args.each do |method_name|
-#      eval "
-#        def #{method_name}
-#          (self.pieces || {})[:#{method_name}]
-#        end
-#        def #{method_name}=(value)
-#          self.pieces ||= {}
-#          self.pieces[:#{method_name}] = value
-#        end
-#      "
-#    end
-#  end  #-------------------------------
- 
-#  serialized_attr_accessor :a, :chameleon
+  def fen=(p); position = p end  #-------------------------------
 
-  def fen
-    position
-  end  #-------------------------------
+  def afen
+    '*' + afen_struct.to_binary_s.unpack('H*')[0].to_i(16).base62_encode
+  end #----------------------------------------------------------------
 
-  def fen=(p)
-    position = p
-  end  #-------------------------------
+  def afen_struct
+    x = PieceBlock.new
+    pieces.each_pair do |variety, colors|
+      colors.each_pair do |color, pieces|
+        pieces.split(/ /).each do |piece|
+          piece =~ /^(?<piece>..?)(?<file>.)(?<rank>.)$/
+          coords = {xy: [
+              $~[:file].downcase.ord - 97,
+              $~[:rank].downcase.ord - 49]}
+          if piece = piece3bit($~[:piece]) and variety == 'a'
+            piecespec = {kind: piece, piece: coords}
+          else
+            piecespec = {kind: 0b111, piece: coords.merge({fairy_piece: encode_fp($~[:piece], variety)})}
+          end
+          x.wbn[color3bit(color)].push piecespec
+        end
+      end
+    end
+    x.wbn.each{|y| y.push kind: 0b110} # stop codon
+    fef = FefBlock.new
+    fef.version = Settings.fef_version
+    fef.piece_block = x
+    fef
+  end #----------------------------------------------------------------
+  def deafen
+    a = afen
+    a.gsub! /^\*/, ''
+    fef = FefBlock.new
+    fef.read [a.base62_decode.to_s(16)].pack('H*')
+  end #----------------------------------------------------------------
 
   def kings
     cols = 8
@@ -188,17 +199,6 @@ class Diagram < ActiveRecord::Base
     'data:image/png;base64,' + Base64.encode64(@dia.to_blob)
     
   end #----------------------------------------------------------------
-  def afen
-#    x = PieceBlock.new
-#    pieces.each_pair do |kind, colors|
-#      colors.each_pair do |color, pieces|
-#        pieces.split(/ /).each do |piece|
-#          if color == 'w'
-#            x.pieces[0].push
-
-
-
-  end #----------------------------------------------------------------
 
   private
 
@@ -208,5 +208,26 @@ class Diagram < ActiveRecord::Base
     @dia = @dia.composite(fig, i+1, j+1, Magick::OverCompositeOp)
   end  #-------------------------------
 
+  def piece3bit p
+    {k: 0, d: 1, t: 2, l: 3, s: 4, p: 5}[p.downcase.to_sym]
+  end  #-------------------------------
+
+  def color3bit p
+    {w: 0, b: 1, n: 2}[p.downcase.to_sym]
+  end  #-------------------------------
+
+  def encode_fp p, variety
+    p = p.downcase.ljust(2)
+    x = FairyPiece.new
+    x.letter1 = p[0].ord
+    x.letter2 = p[1].ord
+    if variety != 'a'
+      x.not_a = 1
+      x.variety = Settings.fairy_variant.index(variety)
+    else
+      x.not_a = 0
+    end
+    x
+  end  #-------------------------------
 
 end

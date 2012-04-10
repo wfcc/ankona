@@ -5,6 +5,7 @@
 //= require jquery_tablesorter
 //= require jquery.to_json
 //= require underscore
+//= require nested_form
 //= require settings
 //= require_self
 

@@ -1,12 +1,7 @@
 class FenController < ApplicationController
 
+  include Magick
 
-include Magick
-
-FIGDIR = 'app/assets/images/fig/'
-SUFFIX = '.gif'
-
-###########################################################
   def index
     cols, rows = 8, 8
     i, j = -25, 0
@@ -44,10 +39,9 @@ SUFFIX = '.gif'
     end
 
     send_data @dia.to_blob, type: 'image/png', disposition: 'inline'
-  end
-#--------------------------------------------
+  end #--------------------------------------------
+
   private
-#--------------------------------------------
 
   def putFigM(c, i, j)
     #c = 'magic' unless File.readable?(FIGDIR + c + SUFFIX)
@@ -68,6 +62,6 @@ SUFFIX = '.gif'
 #    else
       @dia = @dia.composite(fig, i+1, j+1, Magick::OverCompositeOp)
 #    end
-  end
-###########################################################
+  end #--------------------------------------------
+
 end
