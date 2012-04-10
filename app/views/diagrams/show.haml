@@ -28,7 +28,18 @@
     .fairy_synopsis= @diagram.fairy_synopsis
     .d{style: 'margin-top: 3em'}
       .fine.id= @diagram.id
-      .xs= @diagram.position
+      %table
+        %tr
+          %td
+            .xs FEN:
+          %td
+            .xs= @diagram.position
+          %tr
+          %td
+            .xs FEF:
+          %td
+            .xs= @diagram.afen
+
 .span-8
   %pre.solution><=@diagram.solution
 .span-7.last
@@ -63,7 +74,7 @@
       .d
         %strong
           = @shared_with.map(&:nick).commatize
-        can view this problem.
+          can view this problem.
 
   /
     = form_for @diagram do |f|

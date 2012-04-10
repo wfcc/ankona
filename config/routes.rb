@@ -36,6 +36,7 @@ DiaX::Application.routes.draw do
       put  :section
       post :share
     end
+    resources :versions
   end
   resources :competitions, has_many: :sections
   resources :sections do

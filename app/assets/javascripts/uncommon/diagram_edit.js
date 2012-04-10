@@ -2,14 +2,12 @@
 // Expects input fields with IDs "diagram_white" and "diagram_black" with English notation
 // Depends upon jQuery
 //
-// Iļja Ketris (c) 2008-2011
+// Iļja Ketris (c) 2008-2012
 //
 
 google.setOnLoadCallback(function() {
 
   'use strict' // don't remove this line.  It's good for you.
-
-  $('#solving').hide()  
 
   initVars()                             
   treeToBoard()
@@ -32,18 +30,9 @@ google.setOnLoadCallback(function() {
       }
     })
 
-  $('#change-view').click(function(e) {
-    if(ik.solving_view = ! ik.solving_view) {
-      $('#change-view').button({label: ' Change to data entry view '})
-      $('#catalog').hide()
-      $('#solving').show()
-    } else {
-      $('#change-view').button({label: ' Change to solving view '})
-      $('#catalog').show()
-      $('#solving').hide()
-    }
-  })
-        
+  $('#tabs').tabs()
+  $('a.add_nested_fields').click()
+
   $('#fen_button').click(function(e) {
     $('#fen-block').toggle()
     e.preventDefault()
@@ -72,8 +61,18 @@ google.setOnLoadCallback(function() {
     )
     }
 
-$('#solve').click(function(e){ solve(true); e.preventDefault()})
-$('#showpopeye').click(function(e) { solve(false); e.preventDefault()})
+  $('#solve').click(function(e){ solve(true); e.preventDefault()})
+  $('#showpopeye').click(function(e) { solve(false); e.preventDefault()})
+  $('#saveversion').click(function(e){
+    var id = $('#diagram_id').val()
+    $.post('/diagrams/' + id + '/versions',
+      { 'description': $('#verdes').val()
+      }, function(data){
+        $('#versions_table').html(data)
+        }
+      )
+    e.preventDefault()
+    })
 
   $('#authors_ids').tokenInput('/authors/json',
     { hintText: "Start typing author's name or handle"
