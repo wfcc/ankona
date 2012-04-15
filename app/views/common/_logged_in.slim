@@ -1,0 +1,19 @@
+ul.nav.pull-right.nav-pills
+  li.dropdown
+    a.dropdown-toggle data-toggle='dropdown' href='#'
+      =' user_signed_in? ? current_user.nick(false) : 'Login or register'
+      b.caret
+    ul.dropdown-menu
+     - if user_signed_in?
+        li = link_to account_path do
+          i.icon-user
+          '
+          | My account
+        li = link_to logout_path do
+          i.icon-off
+          '
+          | Logout
+        li
+     - else
+        li= link_to 'Log in', login_path
+        li= link_to 'Register', signup_path

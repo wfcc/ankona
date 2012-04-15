@@ -27,18 +27,16 @@ class UsersController < ApplicationController
     when name =~ /^CREATE_(.+)$/
       @user.build_author name: $1
       @user.name = $1
-      flash[:notice] = "Account registered, new name recorded."
     when author = Author.where(code: name).first
       @user.author = author
       @user.name = author.name
-      flash[:notice] = "Your account registered, #{author.name}."
     else  
       flash[:error] = "Malformed name."
       render action: :add_name
       return
     end
     if @user.save
-      flash[:notice] = "Your account registered, #{@user.author.name}.  Your handle is #{@user.author.code}."
+      flash[:notice] = "Welcome, #{@user.author.name}!  Your handle is #{@user.author.code}."
       redirect_to '/'
     else
       flash[:error] = "Error registering new account."

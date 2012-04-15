@@ -1,11 +1,10 @@
 class User < ActiveRecord::Base
-  include Rolify::Roles
-  extend Rolify::Dynamic
+	rolify
   has_and_belongs_to_many :roles #, :join_table => :users_roles
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   # :validatable
-  devise :database_authenticatable, :registerable, :encryptable,
+  devise :database_authenticatable, :registerable, :encryptable, :validatable,
          :recoverable, :rememberable, :trackable
 
   # Setup accessible (or protected) attributes for your model
@@ -21,13 +20,9 @@ class User < ActiveRecord::Base
   belongs_to :author, autosave: true
 
   has_many :collections
-  validates_uniqueness_of :email
+  #validates_presence_of :email, :password
+  #validates_uniqueness_of :email
   accepts_nested_attributes_for :author
-
-  #acts_as_authentic do |c|
-  #  c.logged_in_timeout = 1
-  #  c.transition_from_crypto_providers = Authlogic::CryptoProviders::Sha1
-  #end
 
   def nick(you = true)
     nick = if self.author.present? 

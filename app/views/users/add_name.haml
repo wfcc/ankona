@@ -3,9 +3,9 @@
   = javascript_include_tag 'uncommon/users.js'
 
 
-= form_for @user, url: '/users/add_name_save' do |f|
-  .span-12.prepend-2
-    = f.error_messages
+= simple_form_for @user, url: '/users/add_name_save' do |f|
+  .span7.offset1
+    /= f.error_messages
     %h2 We need your real name.  Do it right.
     .usa
       We may already have your name in the system. Start typing your name in the box below and choose it if you see a match.
@@ -23,19 +23,21 @@
           of names, this may save us some trouble in the future.
         %li Follow initials with period.
     .usa
-      %table
-        %tr
-          %td Good examples
-          %td Bad examples
-        %tr
-          %td.good
-            Göran Jönsson<br>
-            Göran Å. Jönsson<br>
-            Göran Åke Jönsson
-          %td.bad
-            G. Jönsson<br>
-            Goeran A JONSSON<br>
-            Jönsson, Göran Åke
+      %table.table
+        %thead
+          %tr
+            %td Good examples
+            %td Bad examples
+        %tbody
+          %tr
+            %td.good
+              Göran Jönsson<br>
+              Göran Å. Jönsson<br>
+              Göran Åke Jönsson
+            %td.bad
+              G. Jönsson<br>
+              Goeran A JONSSON<br>
+              Jönsson, Göran Åke
 
     = f.label :name, 'Your full name, first name first'
     = text_field_tag :name_handle, '', style: 'width:20em'
@@ -47,7 +49,7 @@
       This will uniquely identify you for WFCC, this is why it's important
       to have your name recorded right from the beginning.
 
-    = f.submit " Yes, this is my name, register me. ", id: :update, class: :button, disabled: :disabled
+    = f.submit " Yes, this is my name, register me. ", id: :update, class: 'btn-large btn-success', disabled: :disabled
     .usa
     .usa.fine
       Please be aware that we may change the spelling of your name to

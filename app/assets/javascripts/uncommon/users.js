@@ -12,8 +12,8 @@ $(function()  {
         return true
         }
     , theme: 'facebook'
-    , onAdd: function(){ $('#update').button('enable') }
-    , onDelete: function(){ $('#update').button('disable') }
+    , onAdd: function(){ $('#update').removeAttr('disabled') }
+    , onDelete: function(){ $('#update').attr('disabled', 'disabled') }
     , onBeforeAdd: function(item){
       var matches
       if ( (isNaN(item.id)) && (matches = item.id.match(/^CREATE_(.+?)$/)) ) {

@@ -1,4 +1,6 @@
-//= require screen
+//    require screen
+//= require bootstrap_and_overrides
+//= require variables
 //= require jquery-ui-1.8.16.custom
 //= require token-input
 //= require token-input-facebook
@@ -32,15 +34,8 @@ h1
   vertical-align: center
   margin: 0 auto 8px
 
-body
-  background-color: white
-  color: #333333
-  margin: 5px
-  //font-family: verdana, arial, helvetica, sans-serif
-  font-family: 'Open Sans', sans-serif
-  font-size: 13px
 
-form
+formXX
   margin-bottom: 3em
   textarea
     display: block
@@ -249,9 +244,15 @@ td.solution
 .stdout
   color: blue
 
-.fine
+.fine, p.help-block
   font-size: smaller
   color: #bbbbbb
+
+p.help-block
+  font-size: smaller
+  color: #bbbbbb
+  padding-top: 1px
+  margin-top: 1px
 
 span.fine
   font-size: x-small
@@ -259,15 +260,6 @@ span.fine
 img.board
   width: 202px
   height: 202px
-
-.clickable
-  margin-bottom: 1em
-  border: 1px solid #AAA
-  &:hover
-    -background-color: #dddddd
-    cursor: pointer
-    border: 1px double black
-    margin-bottom: 1em
 
 pre.solution
   white-space: pre-wrap
@@ -287,7 +279,7 @@ table.competitions
   h3
     margin-top: 1em    
 
-table
+tableXX
   &.authors
     clear: both
     tr > th
@@ -331,7 +323,6 @@ table.zero
 
 #divBlank
   padding: 0
-  margin-top: 10px
   width: 202px
   //height: 202px
   position: relative
@@ -360,19 +351,6 @@ img.blank
 
 .cgreen
   color: #228811
-
-form.formtastic
-  li
-    list-style-type: none
-  p.inline-hints
-    font-size: smaller
-    color: #bbbbbb
-    margin: 0
-    padding: 0
-  input[type="text"]
-    width: 80%
-  input[type="text"].c30p
-    width: 30%
 
 legend
   padding: 1em 0
@@ -414,37 +392,20 @@ input.author_name
   padding-left: 2em
   
 .cassete
-  border: 1px solid Grey
+  border: 1px solid #ddd
   float: left
-  margin: 10px
-  padding: 5px
+  margin: 0 10px
+  padding: 3px
   
 .todrag
   display: block
-  padding: 2px
+  //padding: 2px
 
 p.todrag
   background-image: url(fig/figurines.gif)
   
 div.usa  
   margin-bottom: 1em
-
-#lg_submenu ul
-  +rounded(4px)
-  border: 1px solid #AAA
-  list-style: none
-  padding: 5px
-  font-size: small  
-  background-color: #DDD
-  right: -10px
-  white-space: nowrap
-  text-align: left
-  margin: 0
-  a
-    color: #666
-  a:hover
-    background-color: inherit
-    color: black
 
 .current
   font-size: larger        
@@ -491,8 +452,8 @@ table.userlist
   float: left
   clear: left
   
-form input[type="submit"].no-margin  
-  margin: 4px
+//form input[type="submit"].no-margin  
+//  margin: 4px
   
 .clearfix:after
   visibility: hidden
@@ -656,26 +617,24 @@ td.diagram
     width: 30em
 
 
-
-input[type="text"].c30p
-  width: 30%
-
 #fairy-block
-  width: 70%
-  backround-color: #aaa
-  border: 1px solid #bbb
-  border-radius: 5px
-  padding: 1em 3em 1em 1em
-  position: relative  
+  width: 80%
   margin: 1ex 0 0
   input[type=text]
     width: 20em
   #squared
     input[type="text"]
       width: 10em
-      margin-bottom: 2px
-      display: inline
     td
       vertical-align: top
     //  border: 1px dotted green
-  
+
+#arrows
+  clear: both
+  //margin: 14px
+  padding: 10px
+
+table.table-borderless
+  border: 0 !important
+  td, th
+    border: 0 !important

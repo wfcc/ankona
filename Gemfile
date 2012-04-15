@@ -39,6 +39,9 @@ gem 'bindata'
 gem 'wirble'
 gem 'hirb'
 gem 'nested_form', git: 'https://github.com/ryanb/nested_form.git'
+gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'bootstrap-will_paginate'
+gem 'handlebars-rails', git: 'git://github.com/svenfuchs/handlebars-rails.git'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'

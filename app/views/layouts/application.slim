@@ -1,0 +1,45 @@
+-# encoding: utf-8
+doctype 5
+html
+  head
+    meta charset='utf-8'
+    title = content_for?(:title) ? yield(:title) : 'ankona'
+    = stylesheet_link_tag :application
+    -#= render partial: 'layouts/cdn'
+    = javascript_include_tag :application
+    = yield :scripts
+    = csrf_meta_tag
+    = render partial: 'layouts/google_analytics'
+    link rel='shortcut icon' type='image/ico' href='/favicon.ico'
+    link href='http://fonts.googleapis.com/css?family=Ubuntu:400,500|Open+Sans:400,600&subset=cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'
+  body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          a.btn.btn-navbar data-toggle='collapse' data-target='nav-collapse'
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          = link_to 'ankona', '/', class: :brand
+          .nav-collapse
+            ul.nav
+              li.divider-vertical
+              li= link_to 'Competitions', competitions_path
+              li= link_to 'People', authors_path
+              - if user_signed_in?
+                li= link_to 'My problems', diagrams_path
+              - if user_signed_in? and (current_user.sections.present? or Section.find_by_user_id current_user.id)
+                li= link_to 'My judgements', sections_path
+              li.divider-vertical
+              li= link_to '?', about_path
+            = render 'common/logged_in'    
+    .container
+      = render 'common/ie6'
+      - klass = {alert: 'error', notice: 'success', error: 'error'}
+      - flash.each do |key, message|
+        = content_tag :div, class: ['alert alert-block', 'alert-' + klass[key]] do
+          h4.alert-heading = message
+
+      = yield
+      = render 'common/footer'
+

@@ -20,6 +20,10 @@ class Diagram < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 20
 
+  @@wbn = {w: 0, b: 1, n: 2}
+  @@fef_pieces = %w[K D T L S P]
+
+
   def fen; position end  #-------------------------------
 
   def fen=(p); position = p end  #-------------------------------
@@ -52,11 +56,26 @@ class Diagram < ActiveRecord::Base
     fef.piece_block = x
     fef
   end #----------------------------------------------------------------
-  def deafen
-    a = afen
+  def deafen a=afen
     a.gsub! /^\*/, ''
     fef = FefBlock.new
-    fef.read [a.base62_decode.to_s(16)].pack('H*')
+    s16 = a.base62_decode.to_s(16)
+    s16 = '0' + s16 if s16.size & 1 # pad if odd
+    fef.read [s16].pack('H*')
+
+    pieces = Hash.new { |h,k| h[k] = Hash.new { |hh,kk| hh[kk] = '' } }
+    @@wbn.each_pair do |color, n|
+      fef['piece_block']['wbn'][n].each do |c|
+        next if c['kind'] == 6
+        next if c['kind'] == 7
+        k = @@fef_pieces[c['kind']]
+        x = (c['piece']['xy'][0].to_i + 97).chr
+        y = c['piece']['xy'][1].to_i + 1
+        pieces['a'][color.to_s] += "#{k}#{x}#{y} "
+      end
+    end
+    pieces
+
   end #----------------------------------------------------------------
 
   def kings
@@ -213,7 +232,7 @@ class Diagram < ActiveRecord::Base
   end  #-------------------------------
 
   def color3bit p
-    {w: 0, b: 1, n: 2}[p.downcase.to_sym]
+    @@wbn[p.downcase.to_sym]
   end  #-------------------------------
 
   def encode_fp p, variety

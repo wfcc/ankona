@@ -127,8 +127,9 @@ class DiagramsController < NonauthorizedController
     diagram = Diagram.find params[:id]
     my = params[:handle].upcase
     if @u = User.joins{author}.where{author.code == my}.first
-      @u.has_role 'reader', diagram
+      @u.add_role 'reader', diagram
     end
+    render layout: false
   end #--------------------------------------------------------
 
   private

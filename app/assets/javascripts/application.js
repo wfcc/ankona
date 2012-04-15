@@ -1,5 +1,8 @@
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
+//= require_tree ./bootstrap/
+//= require_tree ./lib/
 //= require jquery-tokeninput
 //= require jquery-ui
 //= require jquery_tablesorter
@@ -51,29 +54,11 @@ google.load("jqueryui", "1.8.11")
 // -------------------------------------------------------------------
 ; $(document).ready(function() {
 
-  $('.button').button()
+  $('.dropdown-toggle').dropdown()
+  //$('.button').button()
   $('#lg_menu').click(function() {
     $('#lg_submenu').toggle()
     })            
   $('input[type="text"]:first:visible:enabled').focus();
   
   })
-/*
-  jQuery.fn.extend({ val: function (newValue) {
-    if (newValue == null) {
-      if ($(this).hasClass("placeholder")) {
-        var pText = $(this).attr("placeholder");
-        var val = $(this).attr("value");
-        if (pText) {
-          if (pText == val) {
-            return '';
-            }
-          }
-        }
-        return $(this).val(); }
-      else {
-        $(this).val(newValue);
-        }
-      }
-    })
-*/
