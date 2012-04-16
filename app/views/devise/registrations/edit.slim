@@ -10,17 +10,21 @@
         span.badge.badge-success = resource.author.code
 
   .row
-    .span3.offset2
+    .span5.offset2
       = f.input :email
       = f.input :country, hint: 'you have to live somewhere after all', as: :string
       = f.input :password, hint: "leave blank if you don't want to change it"
       = f.input :password_confirmation
 
 
-    .span3
+    .span5
       = f.input :current_password, hint: 'we need your current password to confirm your changes'
       = f.submit "Update", class: 'btn'
 
+      p
+      p
+        ' Unhappy?
+        =' link_to "Cancel my account", registration_path(resource_name), confirm: "Delete account?", method: :delete
       /
         - if @user.author.present?
           - author_json = [@user.author].map{|a| {id: a.id, name: a.name}}.to_json
@@ -33,9 +37,4 @@
         = f.label :name, 'Name'
         = text_field_tag :name_handle, '', style: 'width:20em'
         p#ajax_error.bigred
-
-
-    .span3
-      ' Unhappy?
-      =' link_to "Cancel my account", registration_path(resource_name), confirm: "Delete account?", method: :delete
 

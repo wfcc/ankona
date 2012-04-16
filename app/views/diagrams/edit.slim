@@ -16,18 +16,18 @@
 = simple_nested_form_for @diagram do |f|
   = f.hidden_field :id
   .row
-    .span5.offset1
+    .span6.offset1
       - if @diagram.persisted?
         span.badge.badge-info = @diagram.id
       - else
         span.badge.badge-warning new
       h2 Editing problem
-      #pieceinputs
+      #pieceinputs.control-group
         label Position (w/b)
-        = text_field_tag 'diagram[pieces][a][w]', @diagram.pieces['a']['w']
+        = text_field_tag 'diagram[pieces][a][w]', @diagram.pieces['a']['w'], class: :span4
         /= f.input :white, label: false
         .fine  ↕ FIDE piece notation (KDTLSP), our notation for fairy pieces
-        = text_field_tag 'diagram[pieces][a][b]', @diagram.pieces['a']['b']
+        = text_field_tag 'diagram[pieces][a][b]', @diagram.pieces['a']['b'], class: :span4
         /= f.input :black, label: false
         p.clear
           button#fen_button.btn FEN ▼
@@ -103,7 +103,7 @@
           p for="pyopts" class="modest" Popeye “options” line
           = text_field_tag :pyopts, ''
           p.fine = 'try, setplay, duplex, maxsolutions <n>, intelligent, …'
-          #solution: span.fine Popeye solution will go here (first run may be slow)
+          #solution.pre: span.fine Popeye solution will go here (first run may be slow)
 
         #versions.tab-pane
           = f.input :reference, input_html: {class: :span1}, hint: 'you own reference number or ID, use it as you will (not publicly displayed)'
