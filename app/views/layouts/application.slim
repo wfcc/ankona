@@ -16,7 +16,7 @@ html
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
-          a.btn.btn-navbar data-toggle='collapse' data-target='nav-collapse'
+          a.btn.btn-navbar data-toggle='collapse' data-target='.nav-collapse'
             span.icon-bar
             span.icon-bar
             span.icon-bar
@@ -26,6 +26,7 @@ html
               li.divider-vertical
               li= link_to 'Competitions', competitions_path
               li= link_to 'People', authors_path
+              li.divider-vertical
               - if user_signed_in?
                 li= link_to 'My problems', diagrams_path
               - if user_signed_in? and (current_user.sections.present? or Section.find_by_user_id current_user.id)

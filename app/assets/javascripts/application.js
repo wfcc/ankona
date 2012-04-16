@@ -54,11 +54,9 @@ google.load("jqueryui", "1.8.11")
 // -------------------------------------------------------------------
 ; $(document).ready(function() {
 
+  $('a.btn.btn-navbar').collapse()
   $('.dropdown-toggle').dropdown()
-  //$('.button').button()
-  $('#lg_menu').click(function() {
-    $('#lg_submenu').toggle()
-    })            
+  
   $('input[type="text"]:first:visible:enabled').focus();
   
   })

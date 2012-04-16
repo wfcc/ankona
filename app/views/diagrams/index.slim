@@ -31,19 +31,22 @@
           tr onclick="window.location.href = '#{url_for diagram}'"
             td: span.badge.badge-info = diagram.id
             td
-              h3= diagram.authors.collect(&:name).commatize
+              h4= diagram.authors.collect(&:name).commatize
               .p= [ diagram.source, diagram.issue, diagram.label ].commatize
               .p= diagram.award
               .em1
               div= diagram.stipulation
               div= diagram.twin
+              - if diagram.sections.present?
+                .well
+                  = diagram.sections.first.competition.name
+                  br
+                  = diagram.sections.first.name
             td.board
               img.noBorder src=diagram.embedded_diagram
             td
               - if diagram.solution.present?
                 pre.solution =  diagram.solution
-            td style="color:#281"
-              = diagram.sections.collect(&:name).commatize
 
     = will_paginate @diagrams
     .pagestat= page_entries_info @diagrams
