@@ -106,7 +106,7 @@
           #solution.pre: span.fine Popeye solution will go here (first run may be slow)
 
         #versions.tab-pane
-          = f.input :reference, input_html: {class: :span1}, hint: 'you own reference number or ID, use it as you will (not publicly displayed)'
+          = f.input :reference, input_html: {class: :span1}, hint: 'your own reference number or ID, use it as you will (not publicly displayed)'
           - unless @diagram.persisted?
             | Save problem first to use versions.
           - else
