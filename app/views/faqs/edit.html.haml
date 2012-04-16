@@ -1,9 +1,10 @@
-%h1
-  Editing faq
-= simple_form_for(@faq) do |f|
-  = f.input :body
-  = f.submit 'Update'
+.span12
+  %h1
+    Editing faq
+  = simple_form_for(@faq) do |f|
+    = f.input :body, input_html: {class: :span6}
+    = f.submit 'Update'
 
-= link_to 'Show', @faq
-|
-= link_to 'Back', faqs_path
+  = link_to 'Show', @faq
+  |
+  = link_to 'Back', faqs_path

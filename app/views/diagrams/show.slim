@@ -21,14 +21,16 @@
       ' FEN:
       =' @diagram.position
       br
-    ' FEF:
-    =' @diagram.afen
+    - if @diagram.pieces.present?
+      ' FEF:
+      =' @diagram.afen
 
 .row style="padding-top:1em"
   .span2
     - if can? :manage, @diagram and @diagram.sections.count < 1
-      =' link_to edit_diagram_path(@diagram), class: 'btn btn-primary' do
+      =' link_to edit_diagram_path(@diagram), class: 'btn btn-primary btn-large' do
         = iconic_text :edit, :Edit, true
+      p
       =' link_to @diagram, confirm: 'Are you sure?', method: :delete, class: 'btn' do
         = iconic_text :trash, :Delete
     - if can? :manage, @diagram and @diagram.sections.count > 0

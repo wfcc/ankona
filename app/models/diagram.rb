@@ -43,7 +43,7 @@ class Diagram < ActiveRecord::Base
               $~[:rank].downcase.ord - 49]}
           if piece = piece3bit($~[:piece]) and variety == 'a'
             piecespec = {kind: piece, piece: coords}
-          else
+          else # fairy piece
             piecespec = {kind: 0b111, piece: coords.merge({fairy_piece: encode_fp($~[:piece], variety)})}
           end
           x.wbn[color3bit(color)].push piecespec
@@ -66,12 +66,19 @@ class Diagram < ActiveRecord::Base
     pieces = Hash.new { |h,k| h[k] = Hash.new { |hh,kk| hh[kk] = '' } }
     @@wbn.each_pair do |color, n|
       fef['piece_block']['wbn'][n].each do |c|
-        next if c['kind'] == 6
-        next if c['kind'] == 7
-        k = @@fef_pieces[c['kind']]
-        x = (c['piece']['xy'][0].to_i + 97).chr
-        y = c['piece']['xy'][1].to_i + 1
-        pieces['a'][color.to_s] += "#{k}#{x}#{y} "
+        next if c['kind'] == 6 # stop codon
+        p = c['piece']
+        x = (p['xy'][0].to_i + 97).chr
+        y =  p['xy'][1].to_i + 1
+        v = 'a'
+        if c['kind'] == 7 # fairy
+          fp = p['fairy_piece'] 
+          k = fp['letter1'].chr + fp['letter2'].chr
+          v = Settings.fairy_variant[fp['variety']] if fp['not_a'] > 0
+        else
+          k = @@fef_pieces[c['kind']]
+        end
+        pieces[v][color.to_s] += "#{k}#{x}#{y} "
       end
     end
     pieces
@@ -236,7 +243,7 @@ class Diagram < ActiveRecord::Base
   end  #-------------------------------
 
   def encode_fp p, variety
-    p = p.downcase.ljust(2)
+    p = p.upcase.rjust(2)
     x = FairyPiece.new
     x.letter1 = p[0].ord
     x.letter2 = p[1].ord

@@ -1,1 +1,3 @@
-| alert("#{ @pieces }")
+| ik.tree.diagram.pieces = $.parseJSON('#{ escape_javascript @pieces}');
+| ik.treeToBoard();
+| ik.fromInternal();

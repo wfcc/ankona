@@ -6,7 +6,7 @@ class VersionsController < ApplicationController
   
   def index
     @versions = @diagram.versions
-    render json: @versions
+    render json: find_versions
   end
 
   def create
@@ -16,7 +16,7 @@ class VersionsController < ApplicationController
     else
       @error = nil
       @diagram.versions.create fef: d.afen, description: params[:description]
-      @versions = @diagram.versions.to_json(only: [:fef, :description, :id]).html_safe
+      find_versions
     end
 
     respond_with @versions do |format|
@@ -27,15 +27,14 @@ class VersionsController < ApplicationController
   def destroy
     @version = Version.find_by_id params[:id]
     @version.destroy
-    @versions = @diagram.versions.to_json(only: [:fef, :description, :id]).html_safe
-
+    find_versions
     render 'table'
   end
 
   def show
     @version = Version.find_by_id params[:id]
     d = Diagram.new
-    @pieces = d.deafen @version.fef
+    @pieces = d.deafen(@version.fef).to_json.html_safe
   end
   
   private # -----------------------------------------------------------------
@@ -44,4 +43,7 @@ class VersionsController < ApplicationController
     @diagram = Diagram.find_by_id params[:diagram_id]
   end
 
+  def find_versions
+    @versions = @diagram.versions.to_json(methods: :fef5, only: [:fef5, :description, :id]).html_safe
+  end
 end

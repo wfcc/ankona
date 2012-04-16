@@ -31,7 +31,15 @@ class AuthorsController < NonauthorizedController
   end
 # GET /authors/1------------------------------------------------------
   def show
-    @author = Author.find(params[:id])
+    if params[:handle].present?
+      @author = Author.find_by_code(params[:handle])
+    else
+      @author = Author.find_by_id(params[:id])
+    end
+    unless @author
+      flash[:alert] = 'No such handle or id, sorry.'
+      redirect_to authors_path
+    end
   end
 # GET /authors/new ----------------------------------------------------------
   def new

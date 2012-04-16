@@ -11,8 +11,8 @@
   'use strict' // don't remove this line.  It's good for you.
 
   initVars()                             
-  treeToBoard()
-  fromInternal()
+  ik.treeToBoard()
+  ik.fromInternal()
   initHdb()
 
   $('#squared select').live('change', function(e) {
@@ -125,7 +125,7 @@
         ik.board[piece.data('x')][piece.data('y')] = undefined
         piece.remove()
         }
-      fromInternal()
+      ik.fromInternal()
       }
     })
   
@@ -170,7 +170,7 @@
         ik.board.reverse()
         break
     }
-    fromInternal()
+    ik.fromInternal()
     return false
 
   }) //*************************************
@@ -198,6 +198,36 @@
     //ik.figurines = $('<p>').css('background-image', 'url(' + ik.fig_path + 'figurines.gif' + ')')
 
     ik.boobs = /^\[(.)(.+)\]/
+    ik.fromInternal = function fromInternal() {
+      boardToDiagram()
+      boardToNotation()
+      boardToFen()
+      } //***************************************
+    ik.treeToBoard = function treeToBoard() {
+      var m, file, rank
+      ik.board = [[],[],[],[],[],[],[],[]]
+      _(ik.tree.diagram.pieces).each(function(data, kind) {
+        _(data).each(function(pcs, color){
+          _(pcs.split(' ')).each(function(piece){
+            piece = piece.toLowerCase()
+            //if (piece.length === 0) return
+            //if (piece.length === 2) piece = 'p' + piece // add pawn
+            m = piece.match(/^(..?)(..)$/)
+            if (!m) return ''
+            file = m[2].charCodeAt(0)
+            rank = m[2].charAt(1)
+            if (isNaN(rank) || rank-0 > 8 || rank-0 < 1) return ''
+            if (file > 122 || file < 97) return ''
+            ik.board[8-rank][file-97] =
+              { k: kind
+              , c: color
+              , p: m[1].toUpperCase()
+              , u: Math.random()
+              }
+            })
+          })
+        })
+      } //***************************************
 
     } //*************************************
   function e2f(piece){
@@ -328,6 +358,7 @@
         field[index].push(piece.pawnDown() + String.fromCharCode(j+97) + (8-i).toString())
         })
       })
+    $('input[id^=diagram_pieces_]').val('')
     _.each(field, function(value, key){
       $('#diagram_pieces_' + key).val(value.sort(sortPieces).join(' '))
       })
@@ -348,7 +379,7 @@
   function fromNotation(e){
     if (e.keyCode > 32 && e.keyCode < 91 || e.keyCode == 8 || e.type == 'focusout') {
       notationToTree()
-      treeToBoard()
+      ik.treeToBoard()
       boardToDiagram()
       boardToFen()
       }
@@ -395,39 +426,9 @@
       $('#twin').attr('value', $('#twin').attr('value') + ('Twin ' + r + "\n"))
      }))
   } //*************************************
-  function fromInternal() {
-    boardToDiagram()
-    boardToNotation()
-    boardToFen()
-    } //***************************************
   function wb(p) {
     if (!p) return undefined
     return p < 'a' ? 'w' : 'b'
-    } //***************************************
-  function treeToBoard() {
-    var m, file, rank
-    ik.board = [[],[],[],[],[],[],[],[]]
-    _(ik.tree.diagram.pieces).each(function(data, kind) {
-      _(data).each(function(pcs, color){
-        _(pcs.split(' ')).each(function(piece){
-          piece = piece.toLowerCase()
-          //if (piece.length === 0) return
-          //if (piece.length === 2) piece = 'p' + piece // add pawn
-          m = piece.match(/^(..?)(..)$/)
-          if (!m) return ''
-          file = m[2].charCodeAt(0)
-          rank = m[2].charAt(1)
-          if (isNaN(rank) || rank-0 > 8 || rank-0 < 1) return ''
-          if (file > 122 || file < 97) return ''
-          ik.board[8-rank][file-97] =
-            { k: kind
-            , c: color
-            , p: m[1].toUpperCase()
-            , u: Math.random()
-            }
-          })
-        })
-      })
     } //***************************************
   function f2easy(piece) {
     var r = ik.fenish[piece.toLowerCase()]
