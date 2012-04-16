@@ -1,0 +1,53 @@
+/ coding: utf-8
+
+.span10.offset1
+  - if @diagrams.blank?
+    h4 You have no problems.  Let''s create some!
+    = link_to 'New problem', new_diagram_path, class: 'btn btn-primary'
+  - else
+    = link_to 'New problem', new_diagram_path, class: 'btn btn-primary'
+
+    = search_form_for @q, html: {class: 'form-search'} do |q|
+        ' Filter search by author:
+        =' q.text_field :authors_name_cont, class: 'search-query'
+        ' stipulation:
+        =' q.text_field :stipulation_eq, class: 'span1 search-query'
+        ' label:
+        =' q.text_field :label_matches, class: 'span1 search-query'
+        =' q.submit 'Apply filter', class: 'btn'
+
+
+    /  collection:
+    /  = collection_select :search, :collections, @collection_source, |
+    /    :id, :name, {:include_blank => true, :selected => @scoll} |
+    - if current_user
+      -# p.fine Other people''s “Public” collections will not be shown, only those created by you.
+    - else
+      p.fine Only “public” collections will be shown, as you are not logged in.
+    br.clearboth
+    table.table
+      tbody
+        - @diagrams.each do |diagram|
+          tr onclick="window.location.href = '#{url_for diagram}'"
+            td: span.badge.badge-info = diagram.id
+            td
+              h4= diagram.authors.collect(&:name).commatize
+              .p= [ diagram.source, diagram.issue, diagram.label ].commatize
+              .p= diagram.award
+              .em1
+              div= diagram.stipulation
+              div= diagram.twin
+              - if diagram.sections.present?
+                .well
+                  = diagram.sections.first.competition.name
+                  br
+                  = diagram.sections.first.name
+            td.board
+              img.noBorder src=diagram.embedded_diagram
+            td
+              - if diagram.solution.present?
+                pre.solution =  diagram.solution
+
+    = will_paginate @diagrams
+    .pagestat= page_entries_info @diagrams
+    

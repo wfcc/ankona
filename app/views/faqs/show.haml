@@ -1,4 +1,4 @@
-%p
+.span8.offset1
   != RedCloth.new(@faq.body).to_html.force_encoding('utf-8')
 - if is_admin?
   = link_to 'Edit', edit_faq_path(@faq)

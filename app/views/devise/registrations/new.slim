@@ -1,26 +1,16 @@
 - content_for :scripts do
   script src='/assets/users.js'
-  
 
+= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  /= devise_error_messages!
+  .span10.offset1
+    h2 Registration form
+    = f.input :email, hint: 'it will be used as login'
+    /= f.label :password
+    /= f.password_field :password, class: :short
+    = f.input :password
+    = f.input :password_confirmation, hint: 'be reasonable, use hard passwords'
 
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-  = devise_error_messages!
-  .span-12.prepend-2
-    h2 Register
-    p
-      = f.label :email, 'Your email, it will be used as login'
-      = f.email_field :email, class: :short
-      .fine It may also be used for password recovery and other functions
-    p
-      = f.label :password
-      = f.password_field :password, class: :short
-      .fine Be reasonable, use hard passwords
-    p
-      = f.label :password_confirmation
-      = f.password_field :password_confirmation, class: :short
-          
-      
-
-    = f.submit " Register ", id: :submit, class: :button
+    = f.button :submit, 'Proceed', class: 'btn-large'
     p You will enter your name on the next screen.
 

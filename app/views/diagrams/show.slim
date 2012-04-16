@@ -1,0 +1,98 @@
+- content_for :title do
+  =' @diagram.stipulation
+  ' by
+  =' @diagram.authors.map(&:name).commatize
+
+.row
+  span5.offset2.badge.badge-info
+    = @diagram.id
+.row style="padding-top:1em"
+  .span2
+    - if user_signed_in?
+      = link_to 'New problem', new_diagram_path, class: 'btn btn-large'
+    | &nbsp;
+  .span3
+    div
+      h3 = @diagram.authors.collect(&:name).commatize
+      .p= [ @diagram.source, @diagram.issue, @diagram.label ].commatize
+      .p= @diagram.award
+  .span5.fine
+    - if @diagram.position.present?
+      ' FEN:
+      =' @diagram.position
+      br
+    ' FEF:
+    =' @diagram.afen
+
+.row style="padding-top:1em"
+  .span2
+    - if can? :manage, @diagram and @diagram.sections.count < 1
+      =' link_to edit_diagram_path(@diagram), class: 'btn btn-primary' do
+        = iconic_text :edit, :Edit, true
+      =' link_to @diagram, confirm: 'Are you sure?', method: :delete, class: 'btn' do
+        = iconic_text :trash, :Delete
+    - if can? :manage, @diagram and @diagram.sections.count > 0
+      .alert.alert-error This problem has been submitted to competition.  You may not edit it.
+    | &nbsp;
+  .span3
+    #divBlank
+      - @diagram.position = '' if @diagram.position.blank?
+      -#= image_tag '/fen/' + @diagram.position, id: 'blank'
+      img#blank src=@diagram.embedded_diagram
+      .piece_balance= @diagram.piece_balance
+      .stipulation= @diagram.stipulation
+      .twins= @diagram.twin
+      .fairy_synopsis= @diagram.fairy
+      .fairy_synopsis= @diagram.fairy_synopsis
+
+  .span5
+    pre.solution = @diagram.solution
+
+
+.row style="padding-top:3em"
+  .span2
+    | &nbsp;
+  .span3
+    - if may_edit? @diagram
+      .well
+        = form_for @diagram, url: share_diagram_path(@diagram), method: :post, html: {class: 'form-horizontal'},remote: true do |f|
+          p Let other users view this diagram.
+          p Enter handle (e.g. HA3H):
+          =' text_field_tag :handle, '', style: 'text-transform:uppercase', class: :span1
+          =' submit_tag ' Share ', class: 'btn'
+        #share_results
+        - if @shared_with.present?
+          .d
+            strong
+              =' @shared_with.map(&:nick).commatize
+              ' can view this problem.
+    '
+  .span5
+    - if may_edit? @diagram and @diagram.sections.count < 1
+      - sections =  Section.joins{competition}.where{(competition.private != true) & (competition.status == 1)}
+      - if sections.first.et.competition.et.automatic
+        - sections = sections[0,1]
+      .well
+        | You may submit this problem to an open competition:
+        = simple_form_for @diagram, url: section_diagram_path(@diagram) do |f|
+          =' collection_select :diagram, :section_ids, sections, :id, :name_cs, {selected: nil, include_blank: true },  {name: 'diagram[section_ids][]' }
+          =' f.submit ' Submit to competition ', class: :btn
+          .fine You will not be able to edit this diagram after submission.
+
+    - unless @diagram.sections.empty?
+      .greeny-highlight
+        .d Submitted to competitions:
+        b= @diagram.sections[0].name_cs
+
+
+    /
+      = form_for @diagram do |f|
+        = f.label 'Collections'
+        = collection_select :diagram, :collection_ids, Collection.all(:conditions => {:public => true }) | [] | (current_user ? current_user.collections : []), :id, :name, { :selected => @diagram.collection_ids }, { :multiple => true, :name => 'diagram[collection_ids][]', :style => 'width:24em' }
+        .fine multiple select: Ctrl-click / ⌘-click
+        = f.submit 'Save changes to collections', class: :button
+      .cgreen= @diagram.collections.collect(&:name).join(', ')
+      
+    /li= link_to 'Back', diagrams_path, class: :button
+
+

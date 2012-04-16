@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130125329) do
+ActiveRecord::Schema.define(:version => 20111130125330) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20111130125329) do
     t.string   "issue"
     t.text     "pieces"
     t.boolean  "public"
+    t.string   "reference"
   end
 
   create_table "diagrams_collections", :id => false, :force => true do |t|

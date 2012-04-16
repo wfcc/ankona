@@ -12,7 +12,7 @@
     Section director:
     %b= @section.user.et.nick
     - if i_am_director
-      = link_to ' Section report ', section_path(@section), class: :button
+      = link_to ' Section report ', section_path(@section)
     %br
     Section judges:
     %b= @section.users.map(&:nick).commatize
@@ -32,7 +32,7 @@
     /= q.text_field :marks_nummark_gt, size: 5
     /= q.text_field :section_id_eq
     = hidden_field_tag 'q[sections_id_eq]', @section.id
-    = q.submit 'Apply filter', class: 'no-margin'
+    = q.submit 'Apply filter', class: 'btn'
 
 .page-bar.clearfix
   = will_paginate @diagrams
@@ -51,7 +51,7 @@
     - judge_author      = (diagram.authors & @section.users.map(&:author)).present?
 
     = form_for mark, remote: true, url: mark_section_path(@section), html: {method: :post} do |f|
-      %table.judging
+      %table.judging.table
         %tr
           %td.first
             %div
@@ -94,7 +94,7 @@
                       = x
           %tr
             %td
-              = f.submit ' Update comment ', disable_with: ' Updating... '
+              = f.submit ' Update comment ', disable_with: ' Updating... ', class: 'btn btn-large'
               = f.hidden_field :diagram_id
               = f.hidden_field :section_id
               = f.hidden_field :id

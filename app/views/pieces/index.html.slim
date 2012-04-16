@@ -5,28 +5,29 @@ p New pieces may be added upon request.
 p "Code" is what you should use when entering problems.  
   "English Popeye code" helps you identify the piece if the code is different.
 
-table
-  tr
-    th Code
-    th English Popeye code
-    th Name
-    th Figurine
-    th 
-    th 
-    th
-    th
+= link_to 'New piece', new_piece_path, class: 'btn btn-primary' if can? :create, Piece
 
-  - @pieces.each do |piece|
+table.table
+  thead
     tr
-      td= piece.code
-      td= piece.popeye
-      td= piece.name
-      td= image_tag "fig/w#{piece.glyph1}.gif"
-      td= image_tag "fig/w#{piece.glyph2}.gif" if piece.glyph2.present?
-      td= piece.orthodox if can? :edit, piece
-      td= link_to 'Edit', edit_piece_path(piece) if can? :edit, piece
-      td= link_to 'Destroy', piece, :confirm => 'Are you sure?', :method => :delete if can? :destroy, piece
+      th Code
+      th English Popeye code
+      th Name
+      th Figurine
+      th 
+      th
+      th
+      th
+  tbody
+    - @pieces.each do |piece|
+      tr
+        td= piece.code
+        td= piece.popeye
+        td= piece.name
+        td= image_tag "fig/w#{piece.glyph1}.gif"
+        td= image_tag "fig/w#{piece.glyph2}.gif" if piece.glyph2.present?
+        td= piece.orthodox if can? :edit, piece
+        td= link_to 'Edit', edit_piece_path(piece) if can? :edit, piece
+        td= link_to 'Destroy', piece, :confirm => 'Are you sure?', :method => :delete if can? :destroy, piece
 
-br
 
-= link_to 'New Piece', new_piece_path if can? :create, Piece

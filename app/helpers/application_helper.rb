@@ -14,5 +14,10 @@ module ApplicationHelper
     '<h1>ankona <span class=fine>storing, solving, submitting chess problems</span></h1>'.html_safe
   end
 
+  def iconic_text icon, text, white=false
+    inverse = white ? ' icon-white' : ''
+    content_tag(:i, '', class: 'icon-' + icon.to_s + inverse) + ' ' + text.to_s
+  end
+
 end
     

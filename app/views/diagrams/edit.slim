@@ -13,116 +13,120 @@
   - else
     | new problem
 
-.prepend-12
-
-h2 Editing problem #{@diagram.id}
 = simple_nested_form_for @diagram do |f|
   = f.hidden_field :id
-  #first.span-12
-    #pieceinputs
-      .label Position (w/b)
-      = text_field_tag 'diagram[pieces][a][w]', @diagram.pieces['a']['w']
-      /= f.input :white, label: false
-      .fine  ↕ FIDE piece notation (KDTLSP), our notation for fairy pieces
-      = text_field_tag 'diagram[pieces][a][b]', @diagram.pieces['a']['b']
-      /= f.input :black, label: false
-      p.clear
-        button#fen_button FEN ▼
-        button#fairy_button Fairy stuff ▼
-        #fen-block style="display:none"
-          = f.input :position, label: :FEN, hint: 'KQRBNP notation for FEN'
-        #fairy-block style="display:none"
-          .label Neutral pieces
-          = text_field_tag 'diagram[pieces][a][n]', @diagram.pieces['a']['n'], style: 'width:80%'
-          = f.input :fairy, label: 'Conditions', hint: 'circe, andernach, etc.'
-          .label Fairy behaviors
-          table#squared
-            - @diagram.pieces['NEW'] = {'a' => {w: '', b: '', n: ''}}
-            - @diagram.pieces.each_pair do |kind, colors|
-              - next if kind == 'a'
-              tr data-id=kind
-                td = select_tag :family, options_for_select(Settings.fairy_variant, kind)
-                td
-                  - %w[w b n].each do |color|
-                    p = color.upcase + ':'
-                td
-                  - %w[w b n].each do |color|
-                    = text_field_tag "diagram[pieces][#{kind}][#{color}]", colors[color], 'data-color' => color, disabled: kind == 'NEW'
-                    br
-
-    - %w{b w}.each do |color|
-      .cassete
-        - %w{k q r b n p}.each do |fig|
-          p.todrag class="sprite-#{color}#{fig}" data-id=fen2again(fig) data-color=color data-kind='a'
-      - if color == 'b'
-        #divBlank 
-         = image_tag '/fen', id: 'blank'
-    .clear
-      - %w{◁ ▽ △ ▷ ↻ ↺ ↕}.each do |direction|
-        button.moveboard.button type="button" = direction
-
-    = f.input :stipulation, :input_html => {:class => 'c30p'}, :hint => '#2 | s#3 | h#2.5 | win | …'
-    = f.input :twin, :hint => 'b) Se5->e6 | b) -Th3, c) Lh8<->La2 | 2.1;1.1 | …'
-    / = f.label 'Computer tested'
-    / = f.select :tested, Status.where{table == :diagrams}.collect {|i| [i.name, i.value] }
-
-    = f.submit ' Save and exit ', class: :button
-    - if @diagram.persisted?
-      = link_to " Don't save and exit ", diagram_path(@diagram), class: :button
-      = link_to ' Discard changes ', edit_diagram_path(@diagram), class: [:button, :clearboth]
-
-    = f.input :public, hint: 'visible to everyone', label: 'public problem'
-
-  .span-11.last#tabs
-    ul
-      li: a href="#catalog" Catalog
-      li: a href="#solving" Solving
+  .row
+    .span6.offset1
       - if @diagram.persisted?
-        li: a href="#versions" Versions
-    #catalog
-      .label Authors
-      #authors
-        = hidden_field_tag :authors_json, @authors_json
-        = text_field_tag :authors_ids, '', style: 'width:30em'
-      table.zero
-        tr
-          td= f.input :source, input_html: {size: 20}
-          td= f.input :issue, input_html: {size: 10}
-        tr
-          td= f.input :label, hint: 'Problem number, or label, as given in the source', input_html:  {size: 10}
-          td= f.input :award, input_html: {size: 10}
-      / This is ugly.  FIXME some time.
-      == (f.input :solution, input_html: {rows: 20, cols: 5}, hint: 'Please adhere to FIDE piece notation: KDTLS.').gsub /\r\n/, '&#13;'
+        span.badge.badge-info = @diagram.id
+      - else
+        span.badge.badge-warning new
+      h2 Editing problem
+      #pieceinputs.control-group
+        label Position (w/b)
+        = text_field_tag 'diagram[pieces][a][w]', @diagram.pieces['a']['w'], class: :span4
+        /= f.input :white, label: false
+        .fine  ↕ FIDE piece notation (KDTLSP), our notation for fairy pieces
+        = text_field_tag 'diagram[pieces][a][b]', @diagram.pieces['a']['b'], class: :span4
+        /= f.input :black, label: false
+        p.clear
+          button#fen_button.btn FEN ▼
+          '
+          button#fairy_button.btn Fairy stuff ▼
+          #fen-block style="display:none"
+            = f.input :position, label: :FEN, hint: 'KQRBNP notation for FEN'
+          #fairy-block.well style="display:none"
+            label Neutral pieces
+            = text_field_tag 'diagram[pieces][a][n]', @diagram.pieces['a']['n']
+            = f.input :fairy, label: 'Conditions', hint: 'circe, andernach, etc.'
+            label Fairy behaviors
+            table#squared.control-group
+              - @diagram.pieces['NEW'] = {'a' => {w: '', b: '', n: ''}}
+              - @diagram.pieces.each_pair do |kind, colors|
+                - next if kind == 'a'
+                tr data-id=kind
+                  td = select_tag :family, options_for_select(Settings.fairy_variant, kind)
+                  td
+                    - %w[w b n].each do |color|
+                      p = color.upcase + ':'
+                  td.controls
+                    - %w[w b n].each do |color|
+                      = text_field_tag "diagram[pieces][#{kind}][#{color}]", colors[color], 'data-color' => color, disabled: kind == 'NEW', class: :span1
+                      br
 
-    #solving
-      = f.submit ' Solve with popeye ', id: :solve, class: :button
-      = f.submit ' Show popeye input ', id: :showpopeye, class: :button
-      p for="pyopts" class="modest" Popeye “options” line
-      = text_field_tag :pyopts, ''
-      p.fine = 'try, setplay, duplex, maxsolutions <n>, intelligent, …'
-      #solution: span.fine Popeye solution will go here (first run may be slow)
+      - %w{b w}.each do |color|
+        .cassete
+          - %w{k q r b n p}.each do |fig|
+            p.todrag class="sprite-#{color}#{fig}" data-id=fen2again(fig) data-color=color data-kind='a'
+        - if color == 'b'
+          #divBlank 
+           = image_tag '/fen', id: 'blank'
+      #arrows.btn-group
+        - %w{◁ ▽ △ ▷ ↻ ↺ ↕}.each do |direction|
+          button.moveboard.btn.btn-large = direction
 
-    - if @diagram.persisted?
-      #versions
-        table
-          = f.simple_fields_for :versions do |ff|
-            tr
-              td: a href='xxx' style='color:blue' = ff.object.fef
-              td
-                - if ff.object.persisted? 
-                  = ff.object.description
-                - else
-                  = ff.input :description, input_html: {size: 40}, hint: 'Save new version of this problem'
-              td
-                - if ff.object.persisted? 
-                  = ff.link_to_remove '⨯'
-        = f.link_to_add 'Add version', :versions, style: 'visibility:hidden'
-      /
-        = f.submit ' Save this position as version ', id: :saveversion, class: :button
-        = label :verdes, 'Description'
-        = text_field_tag :verdes, ''
-        table#versions_table
-          - @diagram.versions.each do |version|
-            tr
-              td = version.fef
-              td = version.description
+      = f.input :stipulation, input_html: {class: :span1}, :hint => '#2 | s#3 | h#2.5 | win | …'
+      = f.input :twin, :hint => 'b) Se5->e6 | b) -Th3, c) Lh8<->La2 | 2.1;1.1 | …', label: 'Twins'
+      / = f.label 'Computer tested'
+      / = f.select :tested, Status.where{table == :diagrams}.collect {|i| [i.name, i.value] }
+
+      =' f.submit ' Save and exit ', class: 'btn btn-large'
+      - if @diagram.persisted?
+        =' link_to " Don't save and exit ", diagram_path(@diagram), class: 'btn btn-large'
+        =' link_to ' Revert ', edit_diagram_path(@diagram), class: 'btn btn-large clearboth'
+
+      =' f.input :public, hint: 'visible to everyone', label: 'public problem'
+
+    .span5.tabbable
+      ul.nav.nav-tabs
+        li: a data-toggle='tab' href="#catalog" Catalog
+        li: a data-toggle='tab' href="#solving" Solving
+        - if @diagram.persisted?
+          li: a data-toggle='tab' href="#versions" Versions
+      .tab-content
+        #catalog.tab-pane.active
+          label Authors
+          #authors
+            = hidden_field_tag :authors_json, @authors_json
+            = text_field_tag :authors_ids, '', style: 'width:30em'
+            = f.input :source
+            = f.input :issue, input_html: {class: :span2}
+            = f.input :label, input_html: {class: :span1}, hint: 'Problem number, or label, as given in the source'
+            = f.input :award
+            / This is ugly.  FIXME some time.
+            /== (f.input :solution, hint: 'Please adhere to FIDE piece notation: KDTLS.').gsub /\r\n/, '&#13;'
+            = f.input :solution, hint: 'Please adhere to FIDE piece notation: KDTLS.', input_html: {class: :span5}
+
+        #solving.tab-pane
+          =' f.submit ' Solve with popeye ', id: :solve, class: 'btn btn-large btn-primary'
+          =' f.submit ' Show popeye input ', id: :showpopeye, class: 'btn btn-large btn-info'
+          p for="pyopts" class="modest" Popeye “options” line
+          = text_field_tag :pyopts, ''
+          p.fine = 'try, setplay, duplex, maxsolutions <n>, intelligent, …'
+          #solution.pre: span.fine Popeye solution will go here (first run may be slow)
+
+        #versions.tab-pane
+          = f.input :reference, input_html: {class: :span1}, hint: 'you own reference number or ID, use it as you will (not publicly displayed)'
+          - unless @diagram.persisted?
+            | Save problem first to use versions.
+          - else
+            script#versions-template type="text/x-handlebars-template"
+              | {{#versions}}
+              tr
+                td
+                td = link_to "{{fef}}", diagram_path(@diagram)+"/versions/{{id}}", remote: :true
+                td {{description}}
+                td = link_to 'x', diagram_path(@diagram)+"/versions/{{id}}", method: :delete, remote: :true
+              | {{/versions}}
+            table.table
+              thead : tr
+                th #
+                th FEF
+                th description
+              tbody#versions-body
+          
+            =' label :verdes, 'Save current position as version with description:'
+            =' text_field_tag :verdes, '', class: :span4
+            br
+            =' f.submit ' Save as version ', id: :saveversion, class: :btn, remote: true
+

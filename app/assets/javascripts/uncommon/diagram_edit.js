@@ -5,13 +5,15 @@
 // Iļja Ketris (c) 2008-2012
 //
 
-google.setOnLoadCallback(function() {
+//google.setOnLoadCallback(function() {
+; $(document).ready(function() {
 
   'use strict' // don't remove this line.  It's good for you.
 
   initVars()                             
   treeToBoard()
   fromInternal()
+  initHdb()
 
   $('#squared select').live('change', function(e) {
     //alert($(this).parent().data('kind'))
@@ -30,8 +32,9 @@ google.setOnLoadCallback(function() {
       }
     })
 
-  $('#tabs').tabs()
-  $('a.add_nested_fields').click()
+  $('a.show_version').live('click', function(e) {
+    alert($(this).data('fef'))
+  })
 
   $('#fen_button').click(function(e) {
     $('#fen-block').toggle()
@@ -63,12 +66,17 @@ google.setOnLoadCallback(function() {
 
   $('#solve').click(function(e){ solve(true); e.preventDefault()})
   $('#showpopeye').click(function(e) { solve(false); e.preventDefault()})
+
   $('#saveversion').click(function(e){
     var id = $('#diagram_id').val()
+    $('#saveversion').attr('disabled', 'disabled')
     $.post('/diagrams/' + id + '/versions',
-      { 'description': $('#verdes').val()
+      { description: $('#verdes').val()
+      , pieces: $('form').toJSON().diagram.pieces
       }, function(data){
         $('#versions_table').html(data)
+        $('#verdes').val('')
+        $('#saveversion').removeAttr('disabled')
         }
       )
     e.preventDefault()
@@ -121,7 +129,7 @@ google.setOnLoadCallback(function() {
       }
     })
   
-  $('.moveboard').button()
+  //$('.moveboard').button()
   $('.moveboard').click(function() { // move position left/up/down/up
     // ◁ ▽ △ ▷
     var newBoard, rotate
@@ -164,7 +172,20 @@ google.setOnLoadCallback(function() {
     }
     fromInternal()
     return false
+
   }) //*************************************
+  function initHdb(){
+
+    var diagram_id = $('#diagram_id').val()
+    ik.verTemplate = Handlebars.compile($('#versions-template').html())
+
+    $.getJSON('/diagrams/' + diagram_id + '/versions', function(data){
+      var hbdata = { versions: data }
+      $('#versions-body').html(ik.verTemplate(hbdata))
+      })
+
+
+    } //*************************************
   function initVars(){
 
     ik.fenish = {k:'k',d:'q',t:'r',l:'b',s:'n',p:'p','1':'1'}

@@ -1,0 +1,8 @@
+| var error = "#{ @error }";
+| if (error == "") {
+|   var versions = $.parseJSON('#{ escape_javascript @versions}');
+| 	$('#versions-body').html(ik.verTemplate({versions: versions}));
+|   }
+| else {
+| 	alert(error);
+| 	}

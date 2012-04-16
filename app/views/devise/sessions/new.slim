@@ -1,15 +1,11 @@
-= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  .span-12.prepend-2
+= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+  .span10.offset1
     h2 Log in
-    p
-      = f.label :email
-      = f.email_field :email, class: :short
-    p
-      = f.label :password
-      = f.password_field :password, class: :short
+    = f.input :email, required: false
+    = f.input :password, required: false
     - if devise_mapping.rememberable?
-      p
-        = f.label :remember_me
-        = f.check_box :remember_me
-    p= f.submit " Log in ", class: :button
+      = f.check_box :remember_me
+      ' remember me
+    br
+    = f.button :submit, " Log in ", class: 'btn-large btn-success'
     = render :partial => "devise/shared/links"
