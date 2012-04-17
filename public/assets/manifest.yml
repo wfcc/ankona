@@ -192,17 +192,10 @@ tablesorter/bg.gif: tablesorter/bg-61c7385e45058827510b007816db25e1.gif
 tablesorter/desc.gif: tablesorter/desc-853bc24ebc2ce1e221d904b57539991e.gif
 application.js: application-39f6b5b5fe7ac648a50022246a80b7d0.js
 uncommon/authors_edit.js: uncommon/authors_edit-f6efd388793977e3628683882f9e1fb1.js
-<<<<<<< HEAD
 uncommon/diagram_edit.js: uncommon/diagram_edit-4d77eb35b1af28df6491c4ee1394db85.js
 uncommon/sections_judge.js: uncommon/sections_judge-7702d7c4af65d479ebc416d05c9ed4c2.js
 uncommon/users.js: uncommon/users-b993d83bbd4e4f6b066e236162ea69e1.js
 application.css: application-41fa289ce6ce402f6e52d02ab1818dfb.css
-=======
-uncommon/diagram_edit.js: uncommon/diagram_edit-14f392970ef2b29831053571952807ad.js
-uncommon/sections_judge.js: uncommon/sections_judge-7702d7c4af65d479ebc416d05c9ed4c2.js
-uncommon/users.js: uncommon/users-b993d83bbd4e4f6b066e236162ea69e1.js
-application.css: application-8736f60748684b4f01c2cb47eea80f56.css
->>>>>>> 94b0f0569ad8bc48ee4ee74a5bdbc2410f24276e
 fontawesome-webfont.eot: fontawesome-webfont-1f8e9dbbe907059cb6e3baec653586a0.eot
 fontawesome-webfont.svg: fontawesome-webfont-869dd1e757499116df7e4ef027dbb9f4.svg
 fontawesome-webfont.svgz: fontawesome-webfont-a17497597045c7309efd181fe2294c26.svgz
