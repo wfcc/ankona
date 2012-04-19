@@ -67,6 +67,14 @@
   $('#solve').click(function(e){ solve(true); e.preventDefault()})
   $('#showpopeye').click(function(e) { solve(false); e.preventDefault()})
 
+  $('#revertposition').click(function(e){
+    ik.tree.diagram.pieces = $.parseJSON(ik.pieces_saved)
+
+    ik.treeToBoard()
+    ik.fromInternal()
+    e.preventDefault()
+    })
+
   $('#saveversion').click(function(e){
     var id = $('#diagram_id').val()
     $('#saveversion').attr('disabled', 'disabled')
@@ -193,6 +201,7 @@
     ik.board = []
     ik.form = $('form.simple_form')
     ik.tree = ik.form.toJSON()
+    ik.pieces_saved = JSON.stringify(ik.tree.diagram.pieces)
     ik.onex8 = '11111111'
     ik.blankTr = $('tr[data-id=NEW]').clone(true)
     //ik.figurines = $('<p>').css('background-image', 'url(' + ik.fig_path + 'figurines.gif' + ')')
