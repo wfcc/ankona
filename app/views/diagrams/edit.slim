@@ -73,7 +73,7 @@
       =' f.submit ' Save and exit ', class: 'btn btn-large'
       - if @diagram.persisted?
         =' link_to " Don't save and exit ", diagram_path(@diagram), class: 'btn btn-large'
-        =' link_to ' Revert ', edit_diagram_path(@diagram), class: 'btn btn-large clearboth'
+        /=' link_to ' Revert ', edit_diagram_path(@diagram), class: 'btn btn-large clearboth'
 
       =' f.input :public, hint: 'visible to everyone', label: 'public problem'
 
@@ -127,4 +127,6 @@
             =' text_field_tag :verdes, '', class: :span4
             br
             =' f.submit ' Save as version ', id: :saveversion, class: :btn, remote: true
+            p
+            =' f.submit ' Revert to original position ', id: :revertposition, class: :btn, remote: true
 
