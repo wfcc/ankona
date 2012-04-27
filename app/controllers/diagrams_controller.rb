@@ -6,7 +6,7 @@ require "net/http"
 class DiagramsController < NonauthorizedController
 
   #respond_to_mobile_requests
-  include Mobylette::RespondToMobileRequests
+  #include Mobylette::RespondToMobileRequests
 
 
   before_filter :require_user, {:except => [:show]}
