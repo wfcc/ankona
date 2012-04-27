@@ -11,13 +11,9 @@ class VersionsController < ApplicationController
 
   def create
     d = Diagram.new pieces: params[:pieces]
-    if @diagram.afen == d.afen
-      @error = 'Position is the same, not saving version.'
-    else
-      @error = nil
-      @diagram.versions.create fef: d.afen, description: params[:description]
-      find_versions
-    end
+    @error = nil
+    @diagram.versions.create fef: d.afen, description: params[:description]
+    find_versions
 
     respond_with @versions do |format|
       format.js { render action: 'table' }

@@ -32,10 +32,6 @@
       }
     })
 
-  $('a.show_version').live('click', function(e) {
-    alert($(this).data('fef'))
-  })
-
   $('#fen_button').click(function(e) {
     $('#fen-block').toggle()
     e.preventDefault()
@@ -45,10 +41,10 @@
     e.preventDefault()
   })
 
-  var solve = function(f) {
+  var solve = function(isSolve) {
 
     var form = $('form')
-    if(f) $('#solve').val(' Solving... ')
+    if(isSolve) $('#solve').val(' Solving... ')
     $.post('/diagrams/solve', 
       { stipulation: $('#diagram_stipulation').val()
       , position: $('#diagram_position').val()
@@ -56,12 +52,9 @@
       , twin: $('#diagram_twin').val()
       , pyopts: $('#pyopts').val()
       , conds: $('#diagram_fairy').val()
-      , solve: f
-      }, function(data) {
-        $('#solution').html(data)
-        if(f) $('#solve').val('Finished.  Solve again.')
-        }
-    )
+      , solve: isSolve
+      }, $.executeObject
+      )
     }
 
   $('#solve').click(function(e){ solve(true); e.preventDefault()})

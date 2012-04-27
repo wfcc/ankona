@@ -4,7 +4,7 @@
     = f.input :email, required: false
     = f.input :password, required: false
     - if devise_mapping.rememberable?
-      = f.check_box :remember_me
+      =' f.check_box :remember_me
       ' remember me
     br
     = f.button :submit, " Log in ", class: 'btn-large btn-success'

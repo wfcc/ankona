@@ -7,8 +7,11 @@
 //= require jquery-ui
 //= require jquery_tablesorter
 //= require jquery.to_json
+//= require jquery.execute-object
 //= require underscore
 //= require nested_form
+//  require sencha-touch-all
+
 //= require settings
 //= require_self
 

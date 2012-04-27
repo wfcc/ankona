@@ -42,6 +42,8 @@ gem 'nested_form', git: 'https://github.com/ryanb/nested_form.git'
 gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'bootstrap-will_paginate'
 gem 'handlebars-rails', git: 'git://github.com/svenfuchs/handlebars-rails.git'
+#gem 'mobylette'
+#gem 'sencha-touch-rails', git: 'git://github.com/AlexVangelov/sencha-touch-rails.git'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -51,9 +53,7 @@ end
 
 group :development do
   gem 'rails-footnotes'
-#  gem 'passenger'
   gem 'heroku'
-#  gem 'ruby-debug19', require: 'ruby-debug'
 end
 
 group :development, :test do

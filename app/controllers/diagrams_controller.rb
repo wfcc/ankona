@@ -5,6 +5,10 @@ require "net/http"
 
 class DiagramsController < NonauthorizedController
 
+  #respond_to_mobile_requests
+  include Mobylette::RespondToMobileRequests
+
+
   before_filter :require_user, {:except => [:show]}
   before_filter :build_pieces, only: :edit
   #around_filter :catch_not_found
@@ -114,12 +118,13 @@ class DiagramsController < NonauthorizedController
     EOD
 
     unless params['solve'] == 'true'
-      render text: input
+      render json: {'#solution' => input}
     else
       res = Net::HTTP.post_form URI.parse(Settings.popeye_url),
         input: input,
         popeye: Settings.popeye_location
-      render text: res.body
+      render json: {'#solution' => res.body, '#solve' => 'Finished. Solve again!'}
+
     end
   end #--------------------------------------------------------
 
@@ -129,7 +134,9 @@ class DiagramsController < NonauthorizedController
     if @u = User.joins{author}.where{author.code == my}.first
       @u.add_role 'reader', diagram
     end
-    render layout: false
+    text = @u.present? ? "Just shared with #{@u.nick}!" : '** No such user found **'
+    json = {'#share_results' => ['text', text], '#handle' => ['val', '']}
+    render js: "$.executeObject( #{json.to_json} )"
   end #--------------------------------------------------------
 
   private
