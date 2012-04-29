@@ -40,8 +40,3 @@ table.table.table-striped
 
 = will_paginate @authors
 .pagestat= page_entries_info @authors
-
-.clearboth
-  - if can? :add, Author
-    = link_to ' New person ', new_author_path, class: :button
-

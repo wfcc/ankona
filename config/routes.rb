@@ -35,6 +35,7 @@ DiaX::Application.routes.draw do
     member do
       put  :section
       post :share
+      get  :clone
     end
     resources :versions
   end
@@ -52,7 +53,7 @@ DiaX::Application.routes.draw do
     
   #match 'diagrams/section/:id' => 'diagrams#section'
 
-  get ':id' => 'diagrams#show', constraints: {id: /\d\d\d\d\d+/}
+  get ':id' => 'diagrams#show', constraints: {id: /\d\d\d\d\d+/}, as: :thediagram
   get ':handle' => 'authors#show', constraints: {handle: /[A-Z][A-Z]\d+[A-Z]/}
 
 end

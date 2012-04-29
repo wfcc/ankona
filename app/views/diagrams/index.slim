@@ -9,11 +9,13 @@
 
     = search_form_for @q, html: {class: 'form-search'} do |q|
         ' Filter search by author:
-        =' q.text_field :authors_name_cont, class: 'search-query'
+        =' q.text_field :authors_name_cont, class: 'span2 search-query'
         ' stipulation:
         =' q.text_field :stipulation_eq, class: 'span1 search-query'
         ' label:
         =' q.text_field :label_matches, class: 'span1 search-query'
+        ' reference:
+        =' q.text_field :reference_matches, class: 'span1 search-query'
         =' q.submit 'Apply filter', class: 'btn'
 
 

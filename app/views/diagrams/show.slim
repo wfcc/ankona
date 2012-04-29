@@ -28,10 +28,13 @@
 .row style="padding-top:1em"
   .span2
     - if can? :manage, @diagram and @diagram.sections.count < 1
-      =' link_to edit_diagram_path(@diagram), class: 'btn btn-primary btn-large' do
+      p = link_to edit_diagram_path(@diagram), class: 'btn btn-primary btn-large' do
         = iconic_text :edit, :Edit, true
-      p
-      =' link_to @diagram, confirm: 'Are you sure?', method: :delete, class: 'btn' do
+    - if user_signed_in?
+      p = link_to clone_diagram_path, class: 'btn btn' do
+        = iconic_text :plus, :Clone
+
+    =' link_to @diagram, confirm: 'Are you sure?', method: :delete, class: 'btn' do
         = iconic_text :trash, :Delete
     - if can? :manage, @diagram and @diagram.sections.count > 0
       .alert.alert-error This problem has been submitted to competition.  You may not edit it.

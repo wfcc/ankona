@@ -23,12 +23,12 @@
         span.badge.badge-warning new
       h2 Editing problem
       #pieceinputs.control-group
-        label Position (w/b)
-        = text_field_tag 'diagram[pieces][a][w]', @diagram.pieces['a']['w'], class: :span4
-        /= f.input :white, label: false
+        label Position
+        = text_field_tag 'diagram[pieces][a][w]', @diagram.pieces['a']['w'],
+          class: :span4, placeholder: :White
         .fine  ↕ FIDE piece notation (KDTLSP), our notation for fairy pieces
-        = text_field_tag 'diagram[pieces][a][b]', @diagram.pieces['a']['b'], class: :span4
-        /= f.input :black, label: false
+        = text_field_tag 'diagram[pieces][a][b]', @diagram.pieces['a']['b'],
+          class: :span4, placeholder: :Black
         p.clear
           button#fen_button.btn FEN ▼
           '
@@ -67,15 +67,10 @@
 
       = f.input :stipulation, input_html: {class: :span1}, :hint => '#2 | s#3 | h#2.5 | win | …'
       = f.input :twin, :hint => 'b) Se5->e6 | b) -Th3, c) Lh8<->La2 | 2.1;1.1 | …', label: 'Twins'
-      / = f.label 'Computer tested'
-      / = f.select :tested, Status.where{table == :diagrams}.collect {|i| [i.name, i.value] }
 
       =' f.submit ' Save and exit ', class: 'btn btn-large'
       - if @diagram.persisted?
         =' link_to " Don't save and exit ", diagram_path(@diagram), class: 'btn btn-large'
-        /=' link_to ' Revert ', edit_diagram_path(@diagram), class: 'btn btn-large clearboth'
-
-      =' f.input :public, hint: 'visible to everyone', label: 'public problem'
 
     .span5.tabbable
       ul.nav.nav-tabs
@@ -89,24 +84,32 @@
           #authors
             = hidden_field_tag :authors_json, @authors_json
             = text_field_tag :authors_ids, '', style: 'width:30em'
-            = f.input :source
+            = f.input :source, placeholder: 'Magazine, book, website etc.'
             = f.input :issue, input_html: {class: :span2}
             = f.input :label, input_html: {class: :span1}, hint: 'Problem number, or label, as given in the source'
             = f.input :award
-            / This is ugly.  FIXME some time.
-            /== (f.input :solution, hint: 'Please adhere to FIDE piece notation: KDTLS.').gsub /\r\n/, '&#13;'
-            = f.input :solution, hint: 'Please adhere to FIDE piece notation: KDTLS.', input_html: {class: :span5}
+            .well
+              = f.input :comment, label: 'Notes', 
+                placeholder: 'Your private notes, (not publicly shown)',
+                input_html: {class: :span5, rows: 6}
+              = f.input :reference, input_html: {class: :span1},
+                hint: 'your own reference number or ID, use it as you will (not publicly shown)'
+              =' f.input :public,
+                hint: 'visible to everyone as ' + (@diagram.persisted? ? thediagram_url(@diagram) : ''),
+                label: 'Public problem'
 
         #solving.tab-pane
           =' f.submit ' Solve with popeye ', id: :solve, class: 'btn btn-large btn-primary'
           =' f.submit ' Show popeye input ', id: :showpopeye, class: 'btn btn-large btn-info'
+          p
           p for="pyopts" class="modest" Popeye “options” line
           = text_field_tag :pyopts, ''
           p.fine = 'try, setplay, duplex, maxsolutions <n>, intelligent, …'
           #solution.pre: span.fine Popeye solution will go here (first run may be slow)
+          = f.input :solution, placeholder: 'Please adhere to FIDE piece notation: KDTLS.',
+            input_html: {class: :span5}
 
         #versions.tab-pane
-          = f.input :reference, input_html: {class: :span1}, hint: 'your own reference number or ID, use it as you will (not publicly displayed)'
           - unless @diagram.persisted?
             | Save problem first to use versions.
           - else

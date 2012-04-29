@@ -11,7 +11,6 @@ class DiagramsController < NonauthorizedController
 
   before_filter :require_user, {:except => [:show]}
   before_filter :build_pieces, only: :edit
-  #around_filter :catch_not_found
 
   def index
 
@@ -118,12 +117,12 @@ class DiagramsController < NonauthorizedController
     EOD
 
     unless params['solve'] == 'true'
-      render json: {'#solution' => input}
+      render json: {'#solution' => ['text', input]}
     else
       res = Net::HTTP.post_form URI.parse(Settings.popeye_url),
         input: input,
         popeye: Settings.popeye_location
-      render json: {'#solution' => res.body, '#solve' => 'Finished. Solve again!'}
+      render json: {'#solution' => ['text', res.body], '#solve' => ['val', 'Finished. Solve again!']}
 
     end
   end #--------------------------------------------------------
@@ -136,7 +135,19 @@ class DiagramsController < NonauthorizedController
     end
     text = @u.present? ? "Just shared with #{@u.nick}!" : '** No such user found **'
     json = {'#share_results' => ['text', text], '#handle' => ['val', '']}
-    render js: "$.executeObject( #{json.to_json} )"
+    #render js: "$.executeObject( #{json.to_json} )"
+    #render json: json, callback: '$.executeObject'
+    respond_to do |format|
+      format.js { render json: json, callback: '$.executeObject' }
+    end
+  end #--------------------------------------------------------
+
+  def clone
+    d = Diagram.find params[:id]
+    @diagram = d.dup
+    @diagram.comment = "Copy of A-#{d.id}.\n\n#{d.comment}"
+    render :edit
+
   end #--------------------------------------------------------
 
   private
