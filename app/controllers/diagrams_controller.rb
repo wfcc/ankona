@@ -8,9 +8,9 @@ class DiagramsController < NonauthorizedController
   #respond_to_mobile_requests
   #include Mobylette::RespondToMobileRequests
 
-
   before_filter :require_user, {:except => [:show]}
-  before_filter :build_pieces, only: :edit
+  #before_filter :build_pieces, only: :edit
+
 
   def index
 
@@ -30,16 +30,25 @@ class DiagramsController < NonauthorizedController
 
 #    @diagram = Diagram.find_by_id(params[:id])
 
-    if @diagram
-      @shared_with = User.joins{roles}.where{
-        (roles.name == 'reader') &
-        (roles.resource_id == my{params[:id]}) &
-        (roles.resource_type == 'Diagram')
-        }
-    else
-      flash[:error] = 'Diagram not found'
-      #redirect_to root_url
+    respond_to do |format|
+      format.html do
+        if @diagram
+          @shared_with = User.joins{roles}.where{
+            (roles.name == 'reader') &
+            (roles.resource_id == my{params[:id]}) &
+            (roles.resource_type == 'Diagram')
+            }
+        else
+          flash[:error] = 'Diagram not found'
+          #redirect_to root_url
+        end
+      end
+      format.png do
+        t = @diagram ? @diagram.embedded_diagram(true) : $board
+        send_data t, type: 'image/png', disposition: 'inline'
+      end
     end
+
 
   end #--------------------------------------------------------
 
@@ -53,6 +62,7 @@ class DiagramsController < NonauthorizedController
   end #--------------------------------------------------------
 
   def edit
+    build_pieces true
     ActiveRecord::Base.include_root_in_json = false
     @pieces = Piece.all.to_json except: [:id, :created_at, :updated_at, :glyph2, :orthodox]
     @hideIfFairy = @diagram.fairy.blank? ? 'display:visible' : 'display:none'
@@ -98,7 +108,7 @@ class DiagramsController < NonauthorizedController
     params[:pieces].each do |kind,v|
       v.each do |color, pcs|
         next unless pcs.present?
-        x += {w: 'White', b: 'Black', n: 'Neutral'}[color.to_sym] + ' '
+        x += {w: "\n\tWhite", b: "\n\tBlack", n: "\n\tNeutral"}[color.to_sym] + ' '
         x += kind + ' ' unless kind == 'a'
         x += to_english_py(pcs) + ' '
       end
@@ -122,7 +132,7 @@ class DiagramsController < NonauthorizedController
       res = Net::HTTP.post_form URI.parse(Settings.popeye_url),
         input: input,
         popeye: Settings.popeye_location
-      render json: {'#solution' => ['text', res.body], '#solve' => ['val', 'Finished. Solve again!']}
+      render json: {'#diagram_solution' => ['text', res.body], '#solve' => ['val', 'Finished. Solve again!']}
 
     end
   end #--------------------------------------------------------
@@ -135,8 +145,6 @@ class DiagramsController < NonauthorizedController
     end
     text = @u.present? ? "Just shared with #{@u.nick}!" : '** No such user found **'
     json = {'#share_results' => ['text', text], '#handle' => ['val', '']}
-    #render js: "$.executeObject( #{json.to_json} )"
-    #render json: json, callback: '$.executeObject'
     respond_to do |format|
       format.js { render json: json, callback: '$.executeObject' }
     end
@@ -146,6 +154,9 @@ class DiagramsController < NonauthorizedController
     d = Diagram.find params[:id]
     @diagram = d.dup
     @diagram.comment = "Copy of A-#{d.id}.\n\n#{d.comment}"
+    #@authors_json = @diagram.authors.map{|a| {id: a.id, name: a.name}}.to_json
+    build_pieces false
+    #redirect_to new_diagram_path #(@diagram)
     render :edit
 
   end #--------------------------------------------------------
@@ -224,9 +235,11 @@ class DiagramsController < NonauthorizedController
     end
   end #----------------------------------------------------------------
 
-  def build_pieces
+  def build_pieces edit
 
-    @diagram = Diagram.find(params[:id])
+    if edit
+      @diagram = Diagram.find(params[:id])
+    end
     return unless Diagram.column_names.include? 'pieces'
     return unless @diagram.pieces.blank?
 

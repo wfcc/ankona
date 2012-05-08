@@ -68,7 +68,7 @@
       = f.input :stipulation, input_html: {class: :span1}, :hint => '#2 | s#3 | h#2.5 | win | …'
       = f.input :twin, :hint => 'b) Se5->e6 | b) -Th3, c) Lh8<->La2 | 2.1;1.1 | …', label: 'Twins'
 
-      =' f.submit ' Save and exit ', class: 'btn btn-large'
+      =' f.submit ' Save and exit ', class: 'btn btn-large btn-primary'
       - if @diagram.persisted?
         =' link_to " Don't save and exit ", diagram_path(@diagram), class: 'btn btn-large'
 
@@ -90,7 +90,7 @@
             = f.input :award
             .well
               = f.input :comment, label: 'Notes', 
-                placeholder: 'Your private notes, (not publicly shown)',
+                placeholder: 'Your private notes (not publicly shown)',
                 input_html: {class: :span5, rows: 6}
               = f.input :reference, input_html: {class: :span1},
                 hint: 'your own reference number or ID, use it as you will (not publicly shown)'
@@ -100,14 +100,15 @@
 
         #solving.tab-pane
           =' f.submit ' Solve with popeye ', id: :solve, class: 'btn btn-large btn-primary'
-          =' f.submit ' Show popeye input ', id: :showpopeye, class: 'btn btn-large btn-info'
           p
           p for="pyopts" class="modest" Popeye “options” line
           = text_field_tag :pyopts, ''
           p.fine = 'try, setplay, duplex, maxsolutions <n>, intelligent, …'
-          #solution.pre: span.fine Popeye solution will go here (first run may be slow)
           = f.input :solution, placeholder: 'Please adhere to FIDE piece notation: KDTLS.',
-            input_html: {class: :span5}
+            input_html: {class: :span5},
+            hint: 'overwritten if solved with popeye'
+          =' f.submit ' Show popeye input ', id: :showpopeye, class: 'btn btn-large btn-info'
+          #solution.pre: span.fine Popeye input
 
         #versions.tab-pane
           - unless @diagram.persisted?

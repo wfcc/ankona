@@ -169,7 +169,7 @@ class Diagram < ActiveRecord::Base
     end
   end #----------------------------------------------------------------
 
-  def embedded_diagram
+  def embedded_diagram raw=false
     cols, rows = 8, 8
     i, j = -25, 0
     @dia = $board
@@ -222,7 +222,11 @@ class Diagram < ActiveRecord::Base
       end
     end
 
-    'data:image/png;base64,' + Base64.encode64(@dia.to_blob)
+    if raw
+      @dia.to_blob
+    else
+      ('data:image/png;base64,' + Base64.encode64(@dia.to_blob)).html_safe
+    end
     
   end #----------------------------------------------------------------
 

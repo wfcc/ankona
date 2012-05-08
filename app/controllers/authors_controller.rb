@@ -32,7 +32,7 @@ class AuthorsController < NonauthorizedController
 # GET /authors/1------------------------------------------------------
   def show
     if params[:handle].present?
-      @author = Author.find_by_code(params[:handle])
+      @author = Author.find_by_code(params[:handle].upcase)
     else
       @author = Author.find_by_id(params[:id])
     end

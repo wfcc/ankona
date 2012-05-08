@@ -54,6 +54,6 @@ DiaX::Application.routes.draw do
   #match 'diagrams/section/:id' => 'diagrams#section'
 
   get ':id' => 'diagrams#show', constraints: {id: /\d\d\d\d\d+/}, as: :thediagram
-  get ':handle' => 'authors#show', constraints: {handle: /[A-Z][A-Z]\d+[A-Z]/}
+  get ':handle' => 'authors#show', constraints: {handle: /[[:alpha:]][[:alpha:]]\d+[[:alpha:]]/}
 
 end

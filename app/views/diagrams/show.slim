@@ -37,6 +37,7 @@
     =' link_to @diagram, confirm: 'Are you sure?', method: :delete, class: 'btn' do
         = iconic_text :trash, :Delete
     - if can? :manage, @diagram and @diagram.sections.count > 0
+      p
       .alert.alert-error This problem has been submitted to competition.  You may not edit it.
     | &nbsp;
   .span3
