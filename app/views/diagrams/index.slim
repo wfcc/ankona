@@ -37,11 +37,12 @@
               p = diagram.award
               p
               p
+              div = diagram.fairy
               div = diagram.stipulation
               div = diagram.twin
               - if diagram.sections.present?
                 .well
-                  = diagram.sections.first.competition.name
+                  = diagram.sections.first.competition.et.name
                   br
                   = diagram.sections.first.name
             td.board

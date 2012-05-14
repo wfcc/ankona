@@ -10,6 +10,8 @@
 %h3 Statistics for #{@section.name}
 
 .d= "Total of #{@r.size} problems."
+.d
+  Click on column headers to sort.
 
 %table.section-stats.tablesorter.table
   %thead
@@ -35,7 +37,7 @@
           .d= diagram.authors.map(&:name).commatize
           .fine= [ diagram.source, diagram.issue, diagram.label ].commatize
           .fine= diagram.award
-          %p= diagram.solution
+          %pre.solution= diagram.solution
         %td
           %img{src: diagram.embedded_diagram}
         - @k.each_index do |judge|

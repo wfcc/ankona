@@ -8,6 +8,14 @@
 //= require_self
 //= require tablesorter/style
 
+@font-face
+  font-family: Cheq
+  src: url('/assets/cheq_tt.ttf')
+
+.cheq
+  font-family: Cheq
+  font-size: 32px
+
 =rounded($radius: 5px)
   -moz-border-radius: $radius
   -webkit-border-radius: $radius
@@ -225,6 +233,8 @@ pre.solution
   white-space: pre-wrap
   overflow: auto
   text-indent: 0
+  color: black
+  font-size: larger
 
 table.competitions
   border-collapse: separate
@@ -418,11 +428,10 @@ table.marks
 table.section-stats
   border-spacing: 3px
   th
-    +rounded(4px)
-    border: 1px solid Grey
+    font-size: larger
   td
     vertical-align: top
-    background-color: AliceBlue
+    background-color: #F8FAFF
     +rounded(4px)
   td.kings
     padding: 0 2em
@@ -444,6 +453,8 @@ table.section-stats
   //+rounded(4px)
 
 table.judging
+  tr.last
+    border-bottom: 1px solid #EEE
   tr td .id
     vertical-align: top
     //color: #46D
@@ -518,12 +529,12 @@ table.judging
   length: 100%
   
 .page-bar
-  padding: 3px
-  background-color: #eee
-  border: 1px solid #ccc
-  +rounded(5px)
-  margin-bottom: 5px
-  position: fixed
+  //padding: 3px
+  //background-color: #eee
+  //border: 1px solid #ccc
+  //+rounded(5px)
+  //margin-bottom: 5px
+  //position: fixed
   bottom: 10px
   right: 5px
 
