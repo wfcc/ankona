@@ -1,8 +1,8 @@
 %h2 Current competitions
 
-%br.clearboth
 - if can? :create, Competition
-  = link_to 'New competition', new_competition_path, class: :button
+  = link_to 'New competition', new_competition_path, class: 'btn btn-primary'
+
 
 %table.competitions
   - @competitions.each do |competition|
@@ -12,7 +12,8 @@
     = content_tag :tr, tail do
       %td.clickable
         - if can? :manage, competition
-          = link_to ' Edit ', edit_competition_path(competition), class: [:button, :clearboth]
+          = link_to ' Edit competition texts and sections ', edit_competition_path(competition), class: 'btn'
+          %p
         %span(style = "font-size:x-large;clear:right")= h competition.name
         %br
         - if competition.private
@@ -46,6 +47,3 @@
           %p= competition.results
         /
       / %= link_to 'Destroy', competition, :confirm => 'Are you sure?', :method => :delete %
-%br.clearboth
-- if can? :create, Competition
-  = link_to 'New competition', new_competition_path, class: :button

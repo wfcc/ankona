@@ -2,7 +2,7 @@ only_latvia: false
 geoipdat: config/GeoIP.dat
 google_api: ABQIAAAAxRbqCxIbOGgElhIu7KGMFBTJQa0g3IQ9GZqIMmInSLzwtGDKaBQQ-ZTjZJ-tYo0txuieHFrSPCX2gQ
 
-popeye_url: http://util.dia-x.info/cgi/popeye.sh
+popeye_url: http://util.ankona.ch/cgi/popeye.sh
 popeye_location: /home/ike/cgi/py
 fairy_variant:
   - ''
