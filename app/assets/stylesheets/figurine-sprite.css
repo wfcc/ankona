@@ -8,7 +8,6 @@
 .sprite-bko{ background-position: 0 -210px; width: 25px; height: 25px; } 
 .sprite-bkw{ background-position: 0 -240px; width: 25px; height: 25px; } 
 .sprite-bkz{ background-position: 0 -270px; width: 25px; height: 25px; } 
-.sprite-bo{ background-position: 0 -300px; width: 25px; height: 25px; } 
 .sprite-bp{ background-position: 0 -330px; width: 25px; height: 25px; } 
 .sprite-bpo{ background-position: 0 -360px; width: 25px; height: 25px; } 
 .sprite-bpw{ background-position: 0 -390px; width: 25px; height: 25px; } 
@@ -25,8 +24,6 @@
 .sprite-bno{ background-position: 0 -840px; width: 25px; height: 25px; } 
 .sprite-bnw{ background-position: 0 -870px; width: 25px; height: 25px; } 
 .sprite-bnz{ background-position: 0 -900px; width: 25px; height: 25px; } 
-.sprite-wbw{ background-position: 0 -930px; width: 25px; height: 25px; } 
-.sprite-wbz{ background-position: 0 -960px; width: 25px; height: 25px; } 
 .sprite-hole{ background-position: 0 -990px; width: 25px; height: 25px; } 
 .sprite-i{ background-position: 0 -1020px; width: 25px; height: 25px; } 
 .sprite-k{ background-position: 0 -1050px; width: 25px; height: 25px; } 
@@ -60,14 +57,17 @@
 .sprite-nnw{ background-position: 0 -1980px; width: 25px; height: 25px; } 
 .sprite-nnz{ background-position: -30px 0; width: 25px; height: 25px; } 
 
-.sprite-p{ background-position: -30px -30px; width: 25px; height: 25px; } 
 
+.sprite-wbo{ background-position: 0 -300px; width: 25px; height: 25px; } 
+.sprite-wbw{ background-position: 0 -930px; width: 25px; height: 25px; } 
+.sprite-wbz{ background-position: 0 -960px; width: 25px; height: 25px; } 
+
+.sprite-p{ background-position: -30px -30px; width: 25px; height: 25px; } 
 .sprite-wpo{ background-position: -30px -60px; width: 25px; height: 25px; } 
 .sprite-wpw{ background-position: -30px -90px; width: 25px; height: 25px; } 
 .sprite-wpz{ background-position: -30px -120px; width: 25px; height: 25px; } 
 
 .sprite-q{ background-position: -30px -150px; width: 25px; height: 25px; } 
-
 .sprite-wqo{ background-position: -30px -180px; width: 25px; height: 25px; } 
 .sprite-wqw{ background-position: -30px -210px; width: 25px; height: 25px; } 
 .sprite-wqz{ background-position: -30px -240px; width: 25px; height: 25px; } 
